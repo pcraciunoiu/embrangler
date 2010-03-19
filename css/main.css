@@ -1,0 +1,225 @@
+/* Global Reset */
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+}
+
+:focus {
+    outline: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-size: 100%;
+}
+
+/*****************************************************************************/
+/*
+/* Common
+/*
+/*****************************************************************************/
+
+.clear {
+    clear: both;
+}
+
+body {
+    background-color: #fff;
+    font: 17.6px helvetica, arial, clean, sans-serif;
+    text-align: center;
+}
+
+h1 {
+    margin-bottom: 0.5em;
+    font-size: 200%;
+    font-weight: bold;
+}
+
+h2 {
+    font-size: 166%;
+}
+
+h3 {
+    font-size: 130%;
+}
+
+p {
+    margin: 1em 0;
+}
+
+a, a:visited {
+    color: #047617;
+    border-bottom: 1px solid #ddd;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #0c9e24;
+}
+
+table {
+    font-size: inherit;
+    font: 100%;
+}
+
+#header {
+    border-bottom: 3px solid #eee;
+    margin-bottom: 1.5em;
+    padding-bottom: 1em;
+}
+
+h1.title {
+    margin-bottom: 0.2em;
+    font-size: 220%;
+}
+
+.site h1 a, .site h2 a {
+    text-decoration: one;
+    border: none;
+    font-variant: small-caps;
+}
+
+h2.subtitle {
+    font-size: 100%;
+    font-weight: normal;
+    font-variant: small-caps;
+}
+
+h2.subtitle a span {
+    color: #999;
+    display: none;
+    }
+
+h2.subtitle a {
+    border-bottom: none;
+    color: #999;
+}
+
+.subtitle a:hover span {
+    display: inline;
+}
+
+.site {
+    font-size: 100%;
+    width: 45em;
+    margin: 2em auto;
+    line-height: 1.5em;
+    text-align: left;
+}
+
+#footer {
+    font-size: 80%;
+    color: #666;
+    border-top: 3px solid #ddd;
+    margin-top: 2em;
+    padding-top: 1em;
+    overflow: hidden;
+}
+
+#footer .quote {
+    clear: both;
+    margin-top: 2em;
+    text-align: center;
+}
+
+#footer .contact {
+    text-align: center;
+    margin: 1em 0;
+    color: #047617;
+}
+
+
+/*****************************************************************************/
+/*
+/* Home
+/*
+/*****************************************************************************/
+
+.post {
+    width: 45%;
+    height: 20em;
+    float: left;
+    margin: 0; padding: 0;
+}
+.post.first {
+    margin-right: 2em;
+    clear: left;
+}
+.post.last {
+    margin-left: 2em;
+}
+
+.post-meta span {
+    color: #999;
+}
+
+.post p a {
+    float: right;
+    margin-right: 0.5em;
+}
+
+/*****************************************************************************/
+/*
+/* Posts
+/*
+/*****************************************************************************/
+
+#post h1 {
+    font-variant: small-caps;
+    margin-bottom: 0;
+}
+
+#post .meta {
+    margin: 0.2em 0 1em 0;
+    color: #999;
+}
+#post pre {
+    border: 1px solid #ddd;
+    background-color: #eef;
+    padding: 0 .4em;
+}
+
+#post ul,
+#post ol {
+    margin-left: 1.25em;
+}
+
+#post code {
+    border: 1px solid #ddd;
+    background-color: #eef;
+    font-size: 95%;
+    padding: 0 .2em;
+}
+
+#post pre code {
+    border: none;
+}
+
+/* terminal */
+
+#post pre.terminal {
+    border: 1px solid black;
+    background-color: #333;
+    color: white;
+}
+
+#post pre.terminal code {
+    background-color: #333;
+}
+
+#related {
+    margin-top: 3em;
+}
+
+#related h3 {
+    margin-bottom: 1em;
+}
+
+#related ul {
+    padding-left: 2em;
+}
+
