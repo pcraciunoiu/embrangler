@@ -1,0 +1,133 @@
+--- 
+wordpress_id: 49
+layout: post
+title: ED60 - David Labaree - Public goods, private goods, the American struggle over educational goals
+wordpress_url: http://embrangler.com/?p=49
+---
+As part of my education 60 class, we have to read a paper by David Labaree, on schools: seen as a private vs public goal.
+
+Summary:
+
+* Three alternative goals for american education:
+	* __democratic equality__: for citizens, everyone needs to know as much as possible, education needs to be accessible to everyone in order to create a true democracy, so anyone can contribute (public good)
+	* __social efficiency__: for workers, everyone benefits from more skilled workers, make education more practical by offering more practical study matters and some degree of stratification (private training for public benefit)
+	* __social mobility__: for individuals, the benefit largely goes to the individual consumer, who gains a salary increase or mainains his/her position on the social scale; this provides further stratification and differentiation between institutions (even with similar programs), as well as within institutions (from remedial to gifted)
+
+* __Democratic equality__ - Summary:
+	* Most political purpose of American education
+	* Three distinct operational forms:
+	* Citizenship training -- prevent selfishness, instill dedication to public, "it's hard to make Republicans," need to training
+	* Equal treatment -- Horace Mann, fear of class conflict, sense of shared membership and community, egalitarian to sex, race, ethnicity
+	* Equal access -- everyone should have an equal opportunity, provide enough schools, higher education becomes the norm
+
+* __Social efficiency__ - Summary:
+	* Practical constraints, vocationalism: make the school curriculum more responsive to job needs
+	* Ruled by the simple reality that students eventually leave schools and join the workforce
+	* Result was the creation of vocational programs, particularly at high school and community college levels
+	* General education seen as impractical: "For a long time all boys were trained to be President... Now we are training them to get jobs." (Robert and Helen Lynd)
+	* Compelling logic: benefits public (anyone) to spend on education. It is in the interest of the taxpayer (sound investment)
+
+* __Social mobility__ - Summary:
+	* Individual benefit, status attainment. Private good.
+	* Asks "what can a school do for me, the individual consumer?"
+	* Education understood as a way to get ahead or stay in sync.
+	* Grading, hierarchy, more selective at higher levels to ensure distinction
+	* Qualitative differences between institutions
+	* Qualitative differences within institutions
+	* Contrasts with previous two, education is seen as an _exchange_ value rather than a _use_ value
+	* "Students quickly come to the conclusion that what matters most is not the knowledge they learn in school but the credentials they acquire there" (Labaree)
+	* Education becomes more _meritocratic_, leads to competition and wariness =&gt; fairness
+	* Meritocracy much more visible in higher levels
+
+* Historical patterns of goal ascendancy
+	* 19th century was dominated by democratic equality
+	* increasing number of students led to need for distinction, potential for getting ahead =&gt; social mobility and efficiency
+	* 1960s - 1970s - democratic equality again, for racial and sex discrimination
+	* 1980s - 1990s - shifted back to social efficiency + mobility, for educational standards and usefulness of education
+	* More and more, education goals emphasize winning over learning, opportunity over efficiency
+	* Resulted from decentralized control (little federal and state ruling), which led to market/local education, consumer choice, competition, stratified curriculum, local autonomy for schools
+
+* __Social mobility vs social efficiency__
+	* (agree with democratic equality) Social mobility supports greater access to schooling for people to have an equal chance of getting ahead
+	* (agree with democratic equality) Social mobility allocates rewards based on individual achievement, not race, gender, ethnicity, class, etc
+
+	* Ideology of the three programs:
+		* democratic equality: politically democratic, socially egalitarian
+		* social mobility: politically liberal, socially meritocratic
+		* common ground between the above two, socially + politically is considered a progressive view
+		* social efficiency: politically conservative, socially reproductive (reinforce existing structure)
+
+	* Successes from coalition between social mobility and democratic equality:
+		* variety of choices
+		* less discrimination
+		* accepting returning students
+		* hiring because of credentials rather than characteristics
+
+	* Primary opposition comes from social efficiency
+		* need for positions in job market is not met
+		* rising costs for poor families
+		* more worry about getting a job than getting ahead
+		* as taxpayers, contributing to education for _other people's children_
+		* produce workforce to provide measurable economic benefits to society as a whole
+	* Dispute over tracking, guidance and vocationalism
+	* Result is a bold mixture of purposes in American education, anyone has a possibility to get to the top (_contest mobility_, acc. to Turner), but with low probability
+
+	* Contrasts:
+		* greater access (mobility) vs reducing costs (effective)
+		* concentrate resources on highest levels (mobility) vs high quality on all levels (effective)
+		* undercuts learning by promoting minimum level to attain credentials (mobility) vs need to upgrade skills of the workforce (effective)
+
+	* Similarities:
+		* schools need to adapt to the structure of inequality
+		* subordinate schools to needs of market
+		* lead to highly stratified structure of education
+		* providing high access to highest end, most desirable jobs is counterproductive and also not giving an edge to a select few
+
+	* Social mobility can only be promoted to the extent that it reduce the chance for the lower end to get to the top (opposite of democratic equality)
+
+* __Social mobility vs democratic equality__
+	* both for equal access
+	* mobility against equal treatment and civic virtue
+	* equal _treatment _opposite of equal _educational treatment_
+	* *civic virtue* is about politics as opposed to the market. social mobility is for market value (progressive individualism, capitalist ideology), not political value
+	* progressive individualism = individual pursuing competitive success in the market
+	* purpose of democratic equality: republicans
+	* purpose of social efficiency: workers
+	* purpose of social mobility: winners
+	* social mobility caused school to have value not for its intrinsic usefulness (things you learn), but for its exchangeability
+	* citizenship training has become, as a result, much less present
+	* good citizenship has morphed into behaving in accordance with school rules
+	* social mobility encourages _surrogate learning_ - ___as long as credits are gained, what occurs in classrooms is allowed to pass for education___
+	* exchange value is assumed (mistakenly) to reflect use value
+	* schooling for mobility is like farming for the market -- maximize the exchange value
+	* Labaree suggests that the reason students are less successful from the perspective of academic achievement is because the purpose of schooling is, at its core, anti-educational --&gt; students are well schooled but poorly educated, master of forms but not of content. The classic question "Will this be on the test?" illustrates this.
+	* "levels of educational attainment keep rising, while levels of social mobility remain the same" (pg 70)
+
+* Conclusion
+
+	* Contradiction:
+		* these three goals created a contradiction that is contradictory and frequently counterproductive
+		* we _distinguish_ students by merit and grades, but undermine this through _homogenizing_ practices such as grade inflation, social promotion
+		* we bring all students under the same roof, but make sure everyone has a different experience there
+		* we offer everyone access to higher education, while assuming social benefits are sharply stratified
+		* we focus on preparing students for work, but devote our efforts to providing a thoroughly general education
+		* education is deficient at carrying out any of its goals effectively -- we continue to ask ends that are mutually exclusive
+
+	* Credentialism
+		* translating educational attainment into social attainment
+		* since the interests are either job competency or general knowledge (from gen ed), credentials are expected to be irrelevant
+		* the reality, however, is the opposite -- Boudon's model predicts this
+		* elevates schooling into an instrument for achieving the American dream
+		* credentials market is where aspirations raised by education meet the cold reality of socioeconomic limits
+		* educational opportunities grow faster than job opportunities
+		* the ability of a diploma to buy a good job declines
+		* credentialism undermines learning, promotes spending time and money for little economic benefit
+		* carries out in a manner that is individually rational and collectively irrational
+
+	* Possibility
+		* biggest problem in society nowadays is not that these three major ideals exist and are in conflict, but the thread of social mobility overshadowing the other two =&gt; education as private good
+		* need to draw on core goal of education -- to provide everyone with the capacities required for full political participation and working abilities
+
+And that's the summary of a 45 page article!
+
+I look forward to writing an essay based on this, in 2 weeks time.

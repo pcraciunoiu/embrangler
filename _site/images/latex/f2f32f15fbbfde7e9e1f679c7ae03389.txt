@@ -1,0 +1,3 @@
+<blahtex>
+<error><id>UnexpectedNextRow</id><message>The command "\\" may only appear inside a "\begin ... \end" block</message></error>
+</blahtex>

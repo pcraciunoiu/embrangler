@@ -1,0 +1,7 @@
+<blahtex>
+<png>
+<height>16</height>
+<depth>5</depth>
+<md5>914628e1bd8224812b2f3ce877434eb8</md5>
+</png>
+</blahtex>

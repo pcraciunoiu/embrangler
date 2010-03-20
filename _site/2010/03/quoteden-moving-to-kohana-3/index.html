@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+   <title>Quoteden: Moving to Kohana 3</title>
+   <meta name="author" content="Paul Craciunoiu" />
+   <link href="http://feeds.feedburner.com/embrangler" rel="alternate" title="Paul Craciunoiu" type="application/atom+xml" />
+
+   <!-- syntax highlighting CSS -->
+   <link rel="stylesheet" href="/css/syntax.css" type="text/css" />
+
+   <!-- Homepage CSS -->
+   <link rel="stylesheet" href="/css/main.css" type="text/css" media="screen, projection" />
+
+</head>
+<body>
+
+<div class="site">
+
+    <div id="header" role="banner">
+        <h1 class="title">
+            <a href="/">Disembrangling Programming</a>
+        </h1>
+        <h2 class="subtitle">
+            <a href="/about" title="About Paul Craciunoiu">The simple life of a web developer &mdash; by Paul Craciunoiu<span> (About)</span></a>
+        </h2>
+    </div>
+    <div id="content" role="main">    
+    <div id="post">
+<h1>Quoteden: Moving to Kohana 3</h1>
+
+<p><em>This post is written in collaboration with Marius Craciunoiu, my brother, and designer of Quote Den and <a href='http://craciunoiu.net'>other</a> <a href='http://awesomemath.org'>sites</a>.</em></p>
+
+<p>Hooray! 2 weeks after it started, <a href='http://quoteden.net'>Quote Den</a>&#8217;s migration from <a href='http://drupal.org'>Drupal</a> 6 to <a href='http://kohanaphp.com/'>Kohana</a> 3 is complete. This post offers a summary of that process, and lists some of the design improvements and implementation accomplishments. Along the way, it links to some of the resources used.<!--more--></p>
+
+<p>Table of contents:</p>
+
+<ul>
+<li><a href='#why-change'>Why change?</a></li>
+
+<li><a href='#redesign-details'>Redesign details</a></li>
+
+<li><a href='#implementation-process'>Implementation process</a></li>
+
+<li><a href='#conclusion'>Conclusion</a></li>
+</ul>
+
+<h2 id='why_change'>Why change?</h2>
+
+<p>First of all, why the change? The reason for the change is threefold.</p>
+
+<ol>
+<li><strong>Redesign opportunity</strong> - First of all, <em>Quote Den</em> needed a redesign. Almost every part of the site was going to be affected. This was a great opportunity to move on to a better platform.</li>
+
+<li><strong>Ease of development</strong> - The <a href='http://en.wikipedia.org/wiki/Presentation-abstraction-control'>(H)MVC</a> model is a pleasure to work with, and once you get it, it&#8217;s clear where your code goes, when you want to do something. While Drupal uses a similar model (module is similar to controller, template is similar to view), it is not exactly a <a href='http://buytaert.net/drupal-learning-curve'>breeze</a> to develop in, and having worked with <a href='http://craciunoiu.net/'>several</a>, <a href='http://quality.mozilla.org/'>drupal</a> <a href='http://spreadfirefox.com/'>sites</a>, must say Kohana is much nicer.</li>
+
+<li><strong>Flexibility</strong> - Using custom built models in a framework allows for more flexibility and ultimately control over the application. Basically, you can make it do what you want without having to hack it.</li>
+
+<li><strong>Performance</strong> - Kohana is a fairly simple framework. Compared to <a href='http://framework.zend.com/'>Zend</a>, for example, it offers fewer features and is perfect for a simpler website such as <a href='http://quoteden.net'>Quote Den</a>. We didn&#8217;t need all of the features that Drupal offers either. Finally, Kohana works quite a bit faster than Drupal for Quote Den&#8217;s purposes. As a comparison, the new site now loads in ~0.5s versus ~0.75s on my computer (over an average of 20 page loads). Here is a YSlow comparison of <a href='http://embrangler.com/wp-content/uploads/2010/02/quoteden-stage.html'>new</a> versus <a href='http://embrangler.com/wp-content/uploads/2010/02/quoteden.html'>old</a>. Content caching is not yet in place.</li>
+</ol>
+
+<h2 id='redesign_details'>Redesign details</h2>
+
+<p>In terms of design, the old site suffered quite a bit. Some of the pre-launch issues include:</p>
+
+<ul>
+<li>lacking a clear and consistent navigation</li>
+
+<li>inconsistent design across the website</li>
+
+<li>inconsistent spacing and centering of elements</li>
+
+<li>search pages were not very useful</li>
+
+<li>individual quote pages were almost empty (now they list related quotes)</li>
+
+<li>there was no link to the landing page (besides the logo)</li>
+
+<li>Drupal and the quotes module did not offer good administrative options</li>
+
+<li>the site had no contact link</li>
+</ul>
+
+<p>The rest of this section summarizes some of the improvements in more detail.</p>
+
+<h2 id='search_engine'>Search engine</h2>
+
+<p>The older search was the default Drupal search, presumably using MySQL fulltext search. The new implementation uses Sphinx search, which does <a href='http://en.wikipedia.org/wiki/Stemming'>stemming</a>, and searches for other inflections of the same word. For example, searching for &#8220;hopeless&#8221; includes results with &#8220;hopelessness&#8221;, or searching for &#8220;loving&#8221; includes results with &#8220;love&#8221;. The new search is also much faster, at least in part because it does not need to query the database. You can read more about Sphinx search <a href='http://sphinxsearch.com/'>here</a>. It is worth noting that Drupal could also be <a href='http://drupal.org/project/sphinx'>configured with Sphinx</a>.</p>
+
+<h2 id='navigation'>Navigation</h2>
+
+<p>When we first designed the website, we wanted it to be as simple as possible. This meant stripping it down of all features except the basics: a page to list quotes and a search function. Later on, this became a problem because we added other features, such as the <em>Top Rated</em> page and categories for each quote. We wanted to add a <a href='http://quoteden.net/quote/top'>Top Rated</a> link to the header, but there wasn&#8217;t a good place for it. If it were placed next to the search bar, it seemed to be the label for the input box, but if it were placed too far away, it looked alienated.</p>
+<div class='img-wrap'><div class='img'>
+    <img title='top-rated-link' src='/images/quoteden/top-rated-link.jpg' alt='Top Rated placement in previous design' />
+    <div>Top Rated placement in previous design</div>
+</div></div>
+<p>This issue was solved with the introduction of the <em>tabbed navigation</em> menu. The <em>Top Rated</em> tab is now located next to the &#8220;Newest&#8221; tab. The menu also solved another issue: the user can now see which page they are located on because the active tab changes color.</p>
+<div class='img-wrap'><div class='img'>
+    <img title='navigation' src='/images/quoteden/navigation.jpg' alt='Top Rated placement in new design' />
+    <div>Top Rated placement in new design</div>
+</div></div>
+<h2 id='categories'>Categories</h2>
+
+<p>Another feature introduced after the initial launch of the website was the addition of categories. In the old design, they were placed at the top of the quote, which caused the quote itself to receive less attention. To fix this, the new design shows the categories under the quote and reduces the font size.</p>
+<div class='img-wrap'><div class='img'>
+    <img title='categories-design' src='/images/quoteden/categories-design.jpg' alt='Categories -- before (right), after (left)' />
+    <div>Categories -- before (right), after (left)</div>
+</div></div>
+<p>When categories were first added, there wasn&#8217;t a page to list them all. They offered the benefit of seeing quotes in the same category, and were also included in search. Now, we have a <em>Categories</em> page.</p>
+<div class='img-wrap'><div class='img'>
+    <img title='categories' src='/images/quoteden/categories.jpg' alt='The new categories page' />
+    <div>The new categories page</div>
+</div></div>
+<h2 id='polishing_the_design'>Polishing the design</h2>
+
+<p>One of the issues with the old Quote Den was an inconsistent design. For example, the heading &#8220;Top Rated Quotes&#8221; did not match the general style of the website. To solve this, we removed page headings altogether. The active page is now shown by the navigation menu.</p>
+<div class='img-wrap'><div class='img'>
+    <img title='headings' src='/images/quoteden/headings.jpg' alt='Top Rated page is now consistent with new design (left)' />
+    <div>Top Rated page is now consistent with new design (left)</div>
+</div></div>
+<p>The <em>search</em> page looked completely different than the rest of the website. Users could click anywhere on the quote to go to the individual quote, although there was no distinction made to indicate this. The quote ID and rating were missing from the results, which diminishes their value across the website and possibly discourages users from rating. If no one would see the rating while searching, then what&#8217;s the point of rating? The search page is now styled just like the other pages. In terms of usability, we made it easier for users to find what they&#8217;re looking for. If users see a quote they like in the search results, they can vote on it right away.</p>
+<div class='img-wrap'><div class='img'>
+    <img title='search' src='/images/quoteden/search.jpg' alt='Search uses highlighting and is also consistent' />
+    <div>Search uses highlighting and is also consistent</div>
+</div></div>
+<p>Part of perfecting the design was to <a href='http://webdesign.about.com/od/webdesignbasics/p/aabalance.htm'>balance</a> all the elements on the page. The first and foremost stage in this process was to make sure all the elements are equally apart from their surrounding elements. For example, the ID and Rating were closer to the bottom of the quote than the top. Second, the stars were too small to balance the visual weight of the ID. To solve these problems, we enlarged the stars and centered them with the quote area.</p>
+<div class='img-wrap'><div class='img'>
+    <img title='rating-compare' src='/images/quoteden/rating-compare.jpg' alt='Balance in whitespace and larger stars (on the left)' />
+    <div>Balance in whitespace and larger stars (on the left)</div>
+</div></div>
+<h2 id='administrative_options'>Administrative Options</h2>
+<div class='img-wrap'><div class='img'>
+    <img title='rating-compare' src='/images/quoteden/add-quotes.jpg' alt='Admin: quote creation form (left is new)' />
+    <div>Admin: quote creation form (left is new)</div>
+</div></div>
+<p>Although probably none of you may see this anytime soon, one of the reasons we redesigned Quote Den was because it was a pain to add quotes. The add form was incredibly complex. To give you an idea of how BIG this thing was, you should know it had:</p>
+<table>
+<tr>
+<td>Before</td>
+<td>and</td>
+<td>After</td>
+</tr>
+<tr>
+<td>
+<ul>
+* 9 input fields
+* 2 drop down menus
+* 6 radio buttons
+* 5 check boxes
+* 48 lines of text
+</ul>
+</td>
+<td>vs</td>
+<td>
+<ul>
+* 3 input fields
+* 4 lines of text
+</ul>
+</td>
+</tr>
+</table>
+<h2 id='feedback'>Feedback</h2>
+
+<p>Of course no website would be complete without the almighty contact us link, so we added one on the bottom. We hope our viewers will contact us about anything related to the website, whether that is feedback on the site or suggestions on the quotes themselves.</p>
+
+<h2 id='implementation_process'>Implementation process</h2>
+
+<p>We actually started with Kohana 2, unsure about how easy it will be to migrate. A major concern was how quickly we could get Quote Den up and running on the new platform. Following <a href='http://http//stackoverflow.com/questions/394175/searching-for-a-kohana-beginners-tutorial-for-php'>tutorials</a> (mostly, a <a href='http://http//learn.kohanaphp.com/2008/03/26/blog-tutorial-1/'>blog tutorial</a>), getting a simple quote+author page going was quick and painless, so we decided to go ahead and use Kohana.</p>
+
+<p>As soon as the quote and author models were finalized and tested to work, a quick attempt at a migration was necessary. This turned out to be quick and easy.</p>
+
+<p>Next, we had templates. Using Kohana&#8217;s <a href='http://kerkness.ca/wiki/doku.php?id=template-site:extending_the_template_controller'>Controller_Template</a>, set up Controller_Quote. Then wrote a quotes template (under <code>views/quotes/quotes.php</code>, extending <code>views/base/template.php</code>).</p>
+
+<p>Afterwards, we added <a href='http://code.google.com/p/minify/'>minify</a>, categories, author pages. Since quotes use categories everywhere they are displayed, a good option was to overwrote the quote model constructor to always grab the related categories, sorted.</p>
+<div class='highlight'><pre><code class='php'><span class='cp'>&lt;?php</span>
+<span class='k'>class</span> <span class='nc'>Model_Quote</span> <span class='k'>extends</span> <span class='nx'>ORM</span> <span class='p'>{</span>
+  <span class='c'>// ...</span>
+  <span class='k'>public</span> <span class='k'>function</span> <span class='nf'>__construct</span><span class='p'>(</span><span class='nv'>$id</span> <span class='o'>=</span> <span class='k'>NULL</span><span class='p'>)</span> <span class='p'>{</span>
+    <span class='k'>parent</span><span class='o'>::</span><span class='na'>__construct</span><span class='p'>(</span><span class='nv'>$id</span><span class='p'>);</span>
+    <span class='nv'>$this</span><span class='o'>-&gt;</span><span class='na'>_object</span><span class='p'>[</span><span class='s1'>&#39;categories_list&#39;</span><span class='p'>]</span> <span class='o'>=</span> <span class='nv'>$this</span><span class='o'>-&gt;</span><span class='na'>categories</span>
+         <span class='o'>-&gt;</span><span class='na'>order_by</span><span class='p'>(</span><span class='s1'>&#39;name&#39;</span><span class='p'>,</span> <span class='s1'>&#39;asc&#39;</span><span class='p'>)</span>
+         <span class='o'>-&gt;</span><span class='na'>find_all</span><span class='p'>();</span>
+  <span class='p'>}</span>
+<span class='p'>}</span>
+</code></pre>
+</div>
+<p>Then pagination. There is a simple pagination module documented on the <a href='http://kerkness.ca/wiki/doku.php?id=how_to_use_the_pagination_module'>unofficial wiki</a> which works beautifully.</p>
+
+<p>On to search. We decided on using Sphinx, since Paul is already familiar with it from <a href='http://support.mozilla.com/'>SUMO</a> and knew how to set it up. Sphinx has many advantages - it scales, it&#8217;s fast, it&#8217;s powerful and customizable. There is a bit of a learning curve to it, but you can mostly learn by examples. Paul started with <a href='http://viewvc.svn.mozilla.org/vc/projects/sumo/trunk/scripts/sphinx/sphinx.conf'>SUMO&#8217;s sphinx.conf</a> and drastically simplified it, then modified it to match my database structure. Finally, set up a crontab on my VPS to reindex and rotate every 24 hours.</p>
+
+<p>The final crucial aspect was having a way to add and edit content. This required user authentication &#8211; which, fortunately, comes with Kohana 3 and works well. We just use the default auth module and we haven&#8217;t had any problems. Here&#8217;s a code sample:</p>
+<div class='highlight'><pre><code class='php'><span class='cp'>&lt;?php</span>
+<span class='c'>// application/classes/controller/user.php</span>
+  <span class='k'>public</span> <span class='k'>function</span> <span class='nf'>action_login</span><span class='p'>()</span> <span class='p'>{</span>
+    <span class='c'>// ...</span>
+    <span class='c'>// if posted data</span>
+    <span class='k'>if</span> <span class='p'>(</span><span class='nv'>$_POST</span><span class='p'>)</span> <span class='p'>{</span>
+    <span class='nv'>$user</span> <span class='o'>=</span> <span class='nx'>ORM</span><span class='o'>::</span><span class='na'>factory</span><span class='p'>(</span><span class='s1'>&#39;user&#39;</span><span class='p'>);</span>
+
+    <span class='c'>// check auth</span>
+    <span class='k'>if</span> <span class='p'>(</span><span class='nv'>$user</span><span class='o'>-&gt;</span><span class='na'>login</span><span class='p'>(</span><span class='nv'>$_POST</span><span class='p'>))</span> <span class='p'>{</span>
+      <span class='c'>// redirect to my account</span>
+    <span class='p'>}</span> <span class='k'>else</span> <span class='p'>{</span>
+      <span class='nv'>$view</span><span class='o'>-&gt;</span><span class='na'>errors</span> <span class='o'>=</span> <span class='nv'>$_POST</span><span class='o'>-&gt;</span><span class='na'>errors</span><span class='p'>(</span><span class='s1'>&#39;login&#39;</span><span class='p'>);</span>
+      <span class='nv'>$this</span><span class='o'>-&gt;</span><span class='na'>template</span><span class='o'>-&gt;</span><span class='na'>title</span> <span class='o'>=</span> <span class='s1'>&#39;Error logging in&#39;</span><span class='p'>;</span>
+      <span class='k'>return</span> <span class='p'>;</span>
+    <span class='p'>}</span>
+  <span class='p'>}</span>
+<span class='p'>}</span>
+</code></pre>
+</div>
+<p>After this, all that was left was the rating system. After some searching for good ways to do it using only CSS, we found a great one <a href='http://www.komodomedia.com/blog/2007/01/css-rating-redux/' title='how to write a css rating system'>here</a>, and then went on to write a model/controller for it. Rating only works through javascript at the moment, but that will change once we implement a mobile-friendly version.</p>
+
+<p><a href='http://kerkness.ca/wiki/doku.php?id=working_with_atom_and_rss_feeds'>Setting up an RSS feed</a> took Paul literally 20 minutes, and then the final page left to write was the <a href='http://quoteden.net/quote/top'>Top Rated</a> page.</p>
+
+<p>To top it off, we have also put in place a bunch of .htaccess RewriteRules for handling redirects from old Drupal URLs.</p>
+
+<h2 id='result'>Result</h2>
+
+<p>So that&#8217;s it. The Quote Den Drupal-&gt;Kohana work summarized. The benefits: performance improvements of more than 50% (in page load time), more flexibility, consistency in the design, and Sphinx search.</p>
+
+<p>And if you&#8217;re learning Kohana, and would like some help, shoot us a comment below.</p>
+</div>
+
+<div id="related">
+  <h2>Related Posts</h2>
+  <ul>
+    
+      <li><a href="/2009/11/hacking-wordpress-check-contact-messages-for-spam-using-wordpress-built-in-akismet-spam-for-comments">Hacking Wordpress: check contact messages for spam using Wordpress' built-in Akismet spam for comments</a> &mdash; 14 Nov 2009</li>
+    
+      <li><a href="/2009/10/ed60-labaree">ED60 - David Labaree - Public goods, private goods, the American struggle over educational goals</a> &mdash; 05 Oct 2009</li>
+    
+      <li><a href="/2010/01/my-sumo-local-development-environment">My SUMO local development environment</a> &mdash; 04 Jan 2010</li>
+    
+  </ul>
+</div>
+
+    </div>
+
+    <div id="footer" role="contentinfo">
+        <div class="about">
+        <p>Hi, I'm Paul Craciunoiu! I work as a web developer for <a href="http://mozilla.com">Mozilla</a>, with main focus on <a href="http://www.djangoproject.com/">Django</a>, Python, and PHP. Occasionally, I write tutorials or post other information I find interesting.</p>
+        <p>I enjoy doing freelance work for other websites, mostly non-profits. If you're interested in my services, contact me through one of the links below.</p>
+        </p>
+        </div>
+        <div class="contact">
+            <a href="http://twitter.com/embrangler/">Follow me</a> -- 
+            <a href="http://craciunoiu.net/contact/paul">Email me</a> -- 
+            <a href="http://github.com/pcraciunoiu/">My GitHub</a>
+        </div>
+        <div class="quote">
+        <p>
+            Success is a journey, not a destination. The doing is often more important than the outcome. &mdash; <a href="http://quoteden.net/author/id/337">Arthur Robert Ashe, Jr</a>
+        </p>
+        <p>&copy; Paul Craciunoiu. Some rights reserved. Brought to you by <a href="http://wiki.github.com/mojombo/jekyll/">Jekyll</a></p>
+        </div>
+    </div>
+</div><!-- site -->
+
+</body>
+</html>

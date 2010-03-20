@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+   <title>Hacking Wordpress: check contact messages for spam using Wordpress' built-in Akismet spam for comments</title>
+   <meta name="author" content="Paul Craciunoiu" />
+   <link href="http://feeds.feedburner.com/embrangler" rel="alternate" title="Paul Craciunoiu" type="application/atom+xml" />
+
+   <!-- syntax highlighting CSS -->
+   <link rel="stylesheet" href="/css/syntax.css" type="text/css" />
+
+   <!-- Homepage CSS -->
+   <link rel="stylesheet" href="/css/main.css" type="text/css" media="screen, projection" />
+
+</head>
+<body>
+
+<div class="site">
+
+    <div id="header" role="banner">
+        <h1 class="title">
+            <a href="/">Disembrangling Programming</a>
+        </h1>
+        <h2 class="subtitle">
+            <a href="/about" title="About Paul Craciunoiu">The simple life of a web developer &mdash; by Paul Craciunoiu<span> (About)</span></a>
+        </h2>
+    </div>
+    <div id="content" role="main">    
+    <div id="post">
+<h1>Hacking Wordpress: check contact messages for spam using Wordpress' built-in Akismet spam for comments</h1>
+
+<p>This article explains how to easily create a contact form with spam filtering in Wordpress.</p>
+
+<p><strong>Duration:</strong> 30 minutes<br /> <strong>Demo:</strong> <a href='http://awesomemath.org/'>http://awesomemath.org/</a> (see footer)<br /> <strong>Software:</strong> Wordpress 2.8.6 (latest as of this writing)<br /></p>
+
+<p>Don&#8217;t you wish there was a nice and easy Wordpress plugin to add a contact form anywhere on your site, with the benefit of spam filtering <em>without</em> Captchas? I do. And that&#8217;s what prompted me to do things this way.</p>
+
+<p><em>Why not use Captchas?</em> Hey, don&#8217;t take my word for it: <a href='http://www.seomoz.org/blog/captchas-affect-on-conversion-rates' title='Captcha effect on conversion rates'>other people have spent time showing why</a>. In short, Captchas are not user friendly, and, frankly, to me, they are frustrating. Every time I want to send a comment or submit some data to a website - bam, I have to spend that extra few to stare at some deformed text. I hate Captchas.</p>
+
+<p><em>So what instead?</em> Well, you&#8217;re in luck: Wordpress offers a free, well-integrated spam service called <a href='http://akismet.com/' title='Akismet spam service'>Akismet</a>, which works really well, and is <a href='http://codex.wordpress.org/Plugins/Akismet' title='Wordpress 2.0 or later comes with Akismet'>integrated into Wordpress by default</a>.</p>
+
+<p>This article shows you how to quickly integrate Akismet into a contact form, and it&#8217;s all built from scratch.</p>
+
+<h2 id='step_1_the_frontend_html__php__jquery'>Step 1: The frontend (HTML + PHP + jQuery)</h2>
+
+<p>I needed my contact form to be on every page (in the footer), so I created a widget. I used the ExecPHP plugin to include PHP code in it. I also limit submission to 1 every so often, based on a cookie. I also use jQuery to submit this form with AJAX for a snappy sense of response ;)</p>
+
+<h3 id='step_1a_the_html_and_php'>Step 1a: The HTML and PHP:</h3>
+<div class='highlight'><pre><code class='html'><span class='nt'>&lt;div</span> <span class='na'>id=</span><span class='s'>&quot;contact_thanks&quot;</span> <span class='err'>&lt;?</span><span class='na'>php</span>
+  <span class='na'>if</span> <span class='err'>(!$</span><span class='na'>_GET</span><span class='err'>[&#39;</span><span class='na'>contacted</span><span class='err'>&#39;]</span> <span class='err'>&amp;&amp;</span> <span class='err'>!$</span><span class='na'>_COOKIE</span><span class='err'>[&#39;</span><span class='na'>examplesite_contact</span><span class='err'>&#39;])</span>
+    <span class='na'>echo</span> <span class='err'>&#39;</span><span class='na'>style=</span><span class='s'>&quot;display:none;&quot;</span><span class='err'>&#39;;</span>
+<span class='err'>?</span><span class='nt'>&gt;</span>&gt;
+    Thank you for contacting example site!
+<span class='nt'>&lt;/div&gt;</span>
+<span class='cp'>&lt;?php if (!$_GET[&#39;contacted&#39;] &amp;&amp; !$_COOKIE[&#39;examplesite_contact&#39;]) { ?&gt;</span>
+<span class='nt'>&lt;form</span> <span class='na'>id=</span><span class='s'>&quot;contact_form&quot;</span> <span class='na'>method=</span><span class='s'>&quot;post&quot;</span> <span class='na'>action=</span><span class='s'>&quot;&quot;</span><span class='nt'>&gt;</span>
+    <span class='nt'>&lt;div</span> <span class='na'>id=</span><span class='s'>&quot;contact_msgbox&quot;</span> <span class='na'>style=</span><span class='s'>&quot;display:none;&quot;</span><span class='nt'>&gt;</span>
+        Put contact information here.
+    <span class='nt'>&lt;/div&gt;</span>
+    <span class='nt'>&lt;div</span> <span class='na'>id=</span><span class='s'>&quot;contact_error&quot;</span> <span class='na'>style=</span><span class='s'>&quot;display: none&quot;</span><span class='nt'>&gt;</span>
+        <span class='nt'>&lt;a</span> <span class='na'>href=</span><span class='s'>&quot;#&quot;</span> <span class='na'>class=</span><span class='s'>&quot;contact_error_close&quot;</span> <span class='err'>&quot;</span><span class='na'>Dismiss</span> <span class='na'>message</span><span class='err'>&quot;</span><span class='nt'>&gt;</span>x<span class='nt'>&lt;/a&gt;</span>
+        We couldn&#39;t submit your form for one or more of the following reasons:
+        <span class='nt'>&lt;ul&gt;</span>
+            <span class='nt'>&lt;li&gt;</span>All fields must be longer than 5 characters<span class='nt'>&lt;/li&gt;</span>
+            <span class='nt'>&lt;li&gt;</span>You must provide a valid email<span class='nt'>&lt;/li&gt;</span>
+        <span class='nt'>&lt;/ul&gt;</span>
+        Please resolve the above problems for the highlighted fields
+        and try again.
+    <span class='nt'>&lt;/div&gt;</span>
+    <span class='nt'>&lt;div</span> <span class='na'>id=</span><span class='s'>&quot;contact_info&quot;</span> <span class='na'>style=</span><span class='s'>&quot;display: none&quot;</span><span class='nt'>&gt;</span>
+        <span class='nt'>&lt;a</span> <span class='na'>href=</span><span class='s'>&quot;#&quot;</span> <span class='na'>class=</span><span class='s'>&quot;contact_error_close&quot;</span> <span class='err'>&quot;</span><span class='na'>Dismiss</span> <span class='na'>message</span><span class='err'>&quot;</span><span class='nt'>&gt;</span>x<span class='nt'>&lt;/a&gt;</span>
+        <span class='nt'>&lt;p&gt;&lt;strong&gt;</span>E-mail:<span class='nt'>&lt;/strong&gt;</span> <span class='nt'>&lt;a</span> <span class='na'>href=</span><span class='s'>&quot;#&quot;</span> <span class='na'>id=</span><span class='s'>&quot;contact_email_addr&quot;</span><span class='nt'>&gt;</span>
+        <span class='nt'>&lt;img</span> <span class='na'>src=</span><span class='s'>&quot;/photos/email.png&quot;</span> <span class='na'>alt=</span><span class='s'>&quot;email&quot;</span> <span class='nt'>/&gt;&lt;/a&gt;&lt;br/&gt;</span>
+    <span class='nt'>&lt;/div&gt;</span>
+    <span class='nt'>&lt;label</span> <span class='na'>id=</span><span class='s'>&quot;contact_message_label&quot;</span><span class='nt'>&gt;</span>Message:
+        <span class='nt'>&lt;br/&gt;</span>
+        <span class='nt'>&lt;textarea</span> <span class='na'>rows=</span><span class='s'>&quot;5&quot;</span> <span class='na'>cols =</span><span class='s'>&quot;25&quot;</span> <span class='na'>name=</span><span class='s'>&quot;contact_message&quot;</span>
+            <span class='na'>id=</span><span class='s'>&quot;contact_message&quot;</span> <span class='na'>tabindex=</span><span class='s'>&quot;3&quot;</span> <span class='nt'>&gt;&lt;/textarea&gt;</span>
+    <span class='nt'>&lt;/label&gt;</span>
+    <span class='nt'>&lt;label&gt;</span>Name:
+        <span class='nt'>&lt;br/&gt;</span>
+        <span class='nt'>&lt;input</span> <span class='na'>type=</span><span class='s'>&quot;text&quot;</span> <span class='na'>name=</span><span class='s'>&quot;contact_name&quot;</span> <span class='na'>tabindex=</span><span class='s'>&quot;1&quot;</span>
+            <span class='na'>id=</span><span class='s'>&quot;contact_name&quot;</span> <span class='nt'>/&gt;</span>
+    <span class='nt'>&lt;/label&gt;</span>
+    <span class='nt'>&lt;br/&gt;</span>
+    <span class='nt'>&lt;label&gt;</span>Email:
+        <span class='nt'>&lt;br/&gt;</span>
+        <span class='nt'>&lt;input</span> <span class='na'>type=</span><span class='s'>&quot;text&quot;</span> <span class='na'>name=</span><span class='s'>&quot;contact_email&quot;</span> <span class='na'>tabindex=</span><span class='s'>&quot;2&quot;</span>
+           <span class='na'>id=</span><span class='s'>&quot;contact_email&quot;</span> <span class='nt'>/&gt;</span>
+    <span class='nt'>&lt;/label&gt;</span>
+    <span class='nt'>&lt;div</span> <span class='na'>class=</span><span class='s'>&quot;btn-panel&quot;</span><span class='nt'>&gt;</span>
+        <span class='nt'>&lt;a</span> <span class='na'>class=</span><span class='s'>&quot;btn btn-brown&quot;</span> <span class='na'>href=</span><span class='s'>&quot;#&quot;</span> <span class='na'>id=</span><span class='s'>&quot;contact_form_info&quot;</span><span class='nt'>&gt;</span>
+            Contact Info
+        <span class='nt'>&lt;/a&gt;</span>
+        <span class='nt'>&lt;input</span> <span class='na'>type=</span><span class='s'>&quot;submit&quot;</span> <span class='na'>name=</span><span class='s'>&quot;contact&quot;</span> <span class='na'>value=</span><span class='s'>&quot;Submit&quot;</span>
+            <span class='na'>class=</span><span class='s'>&quot;btn btn-green&quot;</span> <span class='nt'>/&gt;</span>
+    <span class='nt'>&lt;/div&gt;</span><span class='c'>&lt;!-- btn-panel --&gt;</span>
+<span class='nt'>&lt;/form&gt;</span>
+<span class='cp'>&lt;?php } ?&gt;</span>
+</code></pre>
+</div>
+<p>That may look a bit complicated, but let&#8217;s strip this down to understand what&#8217;s going on. At first, we wish to display a thank you message if the form was submitted &#8211; either recently (through a cookie), or right after submission (using the URL parameter &#8220;contacted&#8221;). So, we hide the thank you message in any other situation. If the form hasn&#8217;t been submitted recently, we show it. This, too, breaks down into parts:</p>
+
+<ul>
+<li>I included a contact information box, too, but you may find that unnecessary. See the <a href='http://awesomemath.org'>demo</a> to get the picture.</li>
+
+<li>I also include an error message box, to help validate the submitted contact information.</li>
+
+<li>Finally, the inputs themselves, <em>Name</em>, <em>Email</em> and <em>Message</em>, each using tabindex attributes to ensure that the user fills them out in this order. Since, in my layout, the <code>&lt;textarea&gt;</code> comes before the two <code>&lt;input&gt;</code>, I need to use tabindex. I&#8217;m using this layout because I intend to float the <code>&lt;textarea&gt;</code> to the right. Then, the submit button and contact info button are grouped together in <code>&amp;div class=&quot;btn-panel&quot;&gt;</code></li>
+</ul>
+
+<h3 id='step_1b_the_jquery'>Step 1b: The jQuery:</h3>
+<div class='highlight'><pre><code class='javascript'><span class='kd'>var</span> <span class='nx'>MIN_FIELDLENGTH</span> <span class='o'>=</span> <span class='mi'>5</span><span class='o'>;</span>
+<span class='kd'>var</span> <span class='nx'>EMAIL_PREFIX</span> <span class='o'>=</span> <span class='s1'>&#39;me&#39;</span><span class='o'>;</span>
+<span class='kd'>var</span> <span class='nx'>EMAIL_END</span> <span class='o'>=</span> <span class='s1'>&#39;examplesite.com&#39;</span><span class='o'>;</span>
+<span class='nx'>jQuery</span><span class='p'>(</span><span class='nb'>document</span><span class='p'>).</span><span class='nx'>ready</span><span class='p'>(</span><span class='kd'>function</span><span class='p'>(</span><span class='nx'>$</span><span class='p'>)</span> <span class='p'>{</span>
+    <span class='kd'>function</span> <span class='nx'>is_valid_email_address</span><span class='p'>(</span><span class='nx'>email_address</span><span class='p'>)</span> <span class='p'>{</span>
+        <span class='kd'>var</span> <span class='nx'>pattern</span> <span class='o'>=</span> <span class='k'>new</span> <span class='nb'>RegExp</span><span class='p'>(</span><span class='sr'>/^((&quot;[\w-\s]+&quot;)|([\w-]+(?:\.[\w-]+)*)|(&quot;[\w-\s]+&quot;)([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i</span><span class='p'>);</span>
+        <span class='k'>return</span> <span class='nx'>pattern</span><span class='p'>.</span><span class='nx'>test</span><span class='p'>(</span><span class='nx'>email_address</span><span class='p'>);</span>
+    <span class='p'>}</span>
+    <span class='kd'>function</span> <span class='nx'>validate_submission</span><span class='p'>(</span><span class='nx'>field</span><span class='p'>)</span> <span class='p'>{</span>
+        <span class='k'>if</span> <span class='p'>(</span><span class='nx'>field</span><span class='p'>)</span> <span class='p'>{</span>
+            <span class='kd'>var</span> <span class='nx'>fields</span> <span class='o'>=</span> <span class='p'>[</span><span class='nx'>field</span><span class='p'>];</span>
+        <span class='p'>}</span>
+        <span class='k'>else</span> <span class='p'>{</span>
+            <span class='kd'>var</span> <span class='nx'>fields</span> <span class='o'>=</span> <span class='p'>[</span><span class='s1'>&#39;name&#39;</span><span class='o'>,</span> <span class='s1'>&#39;email&#39;</span><span class='o'>,</span> <span class='s1'>&#39;message&#39;</span><span class='p'>];</span>
+        <span class='p'>}</span>
+        <span class='kd'>var</span> <span class='nx'>returnval</span> <span class='o'>=</span> <span class='kc'>true</span><span class='o'>;</span>
+        <span class='kd'>var</span> <span class='nx'>text</span><span class='o'>;</span>
+        <span class='k'>for</span> <span class='p'>(</span><span class='kd'>var</span> <span class='nx'>i</span> <span class='k'>in</span> <span class='nx'>fields</span><span class='p'>)</span> <span class='p'>{</span>
+            <span class='nx'>text</span> <span class='o'>=</span> <span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#contact_&#39;</span><span class='o'>+</span><span class='nx'>fields</span><span class='p'>[</span><span class='nx'>i</span><span class='p'>]).</span><span class='nx'>val</span><span class='p'>();</span>
+            <span class='nx'>minlen</span> <span class='o'>=</span> <span class='nx'>MIN_FIELDLENGTH</span><span class='o'>;</span>
+            <span class='k'>if</span> <span class='p'>(</span><span class='nx'>fields</span><span class='p'>[</span><span class='nx'>i</span><span class='p'>]</span> <span class='o'>==</span> <span class='s1'>&#39;message&#39;</span><span class='p'>)</span> <span class='nx'>minlen</span> <span class='o'>*=</span> <span class='mi'>10</span><span class='o'>;</span>
+            <span class='k'>if</span> <span class='p'>((</span><span class='nx'>text</span><span class='p'>.</span><span class='nx'>length</span> <span class='o'>&lt;</span> <span class='nx'>minlen</span><span class='p'>)</span>
+                <span class='o'>||</span> <span class='p'>((</span><span class='nx'>fields</span><span class='p'>[</span><span class='nx'>i</span><span class='p'>]</span> <span class='o'>==</span> <span class='s1'>&#39;email&#39;</span><span class='p'>)</span>
+                <span class='o'>&amp;&amp;</span> <span class='o'>!</span><span class='nx'>is_valid_email_address</span><span class='p'>(</span><span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#contact_&#39;</span><span class='o'>+</span><span class='nx'>fields</span><span class='p'>[</span><span class='nx'>i</span><span class='p'>]).</span><span class='nx'>val</span><span class='p'>())))</span>
+            <span class='p'>{</span>
+                <span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#contact_&#39;</span><span class='o'>+</span><span class='nx'>fields</span><span class='p'>[</span><span class='nx'>i</span><span class='p'>]).</span><span class='nx'>attr</span><span class='p'>(</span><span class='s1'>&#39;class&#39;</span><span class='o'>,</span> <span class='s1'>&#39;chighlight&#39;</span><span class='p'>);</span>
+                <span class='nx'>returnval</span> <span class='o'>=</span> <span class='kc'>false</span><span class='o'>;</span>
+            <span class='p'>}</span>
+            <span class='k'>else</span> <span class='p'>{</span>
+                <span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#contact_&#39;</span><span class='o'>+</span><span class='nx'>fields</span><span class='p'>[</span><span class='nx'>i</span><span class='p'>]).</span><span class='nx'>attr</span><span class='p'>(</span><span class='s1'>&#39;class&#39;</span><span class='o'>,</span> <span class='s1'>&#39;&#39;</span><span class='p'>);</span>
+            <span class='p'>}</span>
+        <span class='p'>};</span>
+        <span class='k'>return</span> <span class='nx'>returnval</span><span class='o'>;</span>
+    <span class='p'>}</span>
+    <span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#contact_name&#39;</span><span class='p'>).</span><span class='nx'>keypress</span><span class='p'>(</span><span class='kd'>function</span><span class='p'>()</span> <span class='p'>{</span>
+        <span class='nx'>validate_submission</span><span class='p'>(</span><span class='s1'>&#39;name&#39;</span><span class='p'>);</span>
+    <span class='p'>});</span>
+    <span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#contact_email&#39;</span><span class='p'>).</span><span class='nx'>keypress</span><span class='p'>(</span><span class='kd'>function</span><span class='p'>()</span> <span class='p'>{</span>
+        <span class='nx'>validate_submission</span><span class='p'>(</span><span class='s1'>&#39;email&#39;</span><span class='p'>);</span>
+    <span class='p'>});</span>
+    <span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#contact_message&#39;</span><span class='p'>).</span><span class='nx'>keypress</span><span class='p'>(</span><span class='kd'>function</span><span class='p'>()</span> <span class='p'>{</span>
+        <span class='nx'>validate_submission</span><span class='p'>(</span><span class='s1'>&#39;message&#39;</span><span class='p'>);</span>
+    <span class='p'>});</span>
+
+    <span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#contact_form&#39;</span><span class='p'>).</span><span class='nx'>submit</span><span class='p'>(</span><span class='kd'>function</span> <span class='p'>()</span> <span class='p'>{</span>
+        <span class='k'>if</span> <span class='p'>(</span><span class='nx'>validate_submission</span><span class='p'>())</span> <span class='p'>{</span>
+            <span class='kd'>var</span> <span class='nx'>formInput</span> <span class='o'>=</span> <span class='nx'>$</span><span class='p'>(</span><span class='k'>this</span><span class='p'>).</span><span class='nx'>serialize</span><span class='p'>();</span>
+            <span class='nx'>$</span><span class='p'>.</span><span class='nx'>post</span><span class='p'>(</span><span class='s1'>&#39;/contact_form.php&#39;</span><span class='o'>,</span> <span class='nx'>formInput</span><span class='o'>,</span> <span class='kd'>function</span><span class='p'>(</span><span class='nx'>data</span><span class='p'>){</span>
+                <span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#contact_form&#39;</span><span class='p'>).</span><span class='nx'>hide</span><span class='p'>();</span>
+                <span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#contact_thanks&#39;</span><span class='p'>).</span><span class='nx'>show</span><span class='p'>();</span>
+            <span class='p'>});</span>
+        <span class='p'>}</span>
+        <span class='k'>else</span> <span class='k'>if</span> <span class='p'>(</span><span class='nx'>showing_message</span> <span class='o'>!=</span> <span class='mi'>1</span><span class='p'>)</span> <span class='p'>{</span>
+            <span class='nx'>showing_message</span> <span class='o'>=</span> <span class='mi'>1</span><span class='o'>;</span>
+            <span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#contact_msgbox&#39;</span><span class='p'>).</span><span class='nx'>html</span><span class='p'>(</span><span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#contact_error&#39;</span><span class='p'>).</span><span class='nx'>html</span><span class='p'>());</span>
+            <span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#contact_msgbox&#39;</span><span class='p'>).</span><span class='nx'>addClass</span><span class='p'>(</span><span class='s1'>&#39;error&#39;</span><span class='p'>)</span>
+                                <span class='p'>.</span><span class='nx'>removeClass</span><span class='p'>(</span><span class='s1'>&#39;message&#39;</span><span class='p'>).</span><span class='nx'>show</span><span class='p'>();</span>
+            <span class='k'>if</span> <span class='p'>(</span><span class='nx'>msg_timeout</span><span class='p'>)</span> <span class='nx'>clearTimeout</span><span class='p'>(</span><span class='nx'>msg_timeout</span><span class='p'>);</span>
+            <span class='nx'>msg_timeout</span> <span class='o'>=</span> <span class='nx'>setTimeout</span><span class='p'>(</span><span class='kd'>function</span><span class='p'>(){</span> <span class='nx'>close_msgbox</span><span class='p'>();</span> <span class='p'>}</span><span class='o'>,</span> <span class='mi'>10000</span><span class='p'>);</span>
+        <span class='p'>}</span>
+        <span class='k'>return</span> <span class='kc'>false</span><span class='o'>;</span>
+    <span class='p'>});</span>
+
+    <span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#contact_form_info&#39;</span><span class='p'>).</span><span class='nx'>click</span><span class='p'>(</span><span class='kd'>function</span> <span class='p'>()</span> <span class='p'>{</span>
+        <span class='k'>if</span> <span class='p'>(</span><span class='nx'>showing_message</span> <span class='o'>==</span> <span class='mi'>2</span><span class='p'>)</span> <span class='p'>{</span>
+            <span class='nx'>close_msgbox</span><span class='p'>();</span>
+            <span class='k'>return</span> <span class='kc'>false</span><span class='o'>;</span>
+        <span class='p'>}</span>
+        <span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#contact_msgbox&#39;</span><span class='p'>).</span><span class='nx'>html</span><span class='p'>(</span><span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#contact_info&#39;</span><span class='p'>).</span><span class='nx'>html</span><span class='p'>());</span>
+        <span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#contact_msgbox&#39;</span><span class='p'>).</span><span class='nx'>removeClass</span><span class='p'>(</span><span class='s1'>&#39;error&#39;</span><span class='p'>)</span>
+                            <span class='p'>.</span><span class='nx'>addClass</span><span class='p'>(</span><span class='s1'>&#39;message&#39;</span><span class='p'>).</span><span class='nx'>show</span><span class='p'>();</span>
+        <span class='nx'>showing_message</span> <span class='o'>=</span> <span class='mi'>2</span><span class='o'>;</span>
+        <span class='k'>if</span> <span class='p'>(</span><span class='nx'>msg_timeout</span><span class='p'>)</span> <span class='nx'>clearTimeout</span><span class='p'>(</span><span class='nx'>msg_timeout</span><span class='p'>);</span>
+        <span class='nx'>msg_timeout</span> <span class='o'>=</span> <span class='nx'>setTimeout</span><span class='p'>(</span><span class='kd'>function</span><span class='p'>(){</span> <span class='nx'>close_msgbox</span><span class='p'>();</span> <span class='p'>}</span><span class='o'>,</span> <span class='mi'>10000</span><span class='p'>);</span>
+        <span class='k'>return</span> <span class='kc'>false</span><span class='o'>;</span>
+    <span class='p'>});</span>
+
+    <span class='kd'>function</span> <span class='nx'>close_msgbox</span><span class='p'>()</span> <span class='p'>{</span>
+        <span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#contact_msgbox&#39;</span><span class='p'>).</span><span class='nx'>hide</span><span class='p'>();</span>
+        <span class='nx'>showing_message</span> <span class='o'>=</span> <span class='mi'>0</span><span class='o'>;</span>
+        <span class='k'>return</span> <span class='kc'>false</span><span class='o'>;</span>
+    <span class='p'>}</span>
+
+   <span class='kd'>function</span> <span class='nx'>email_link</span><span class='p'>()</span> <span class='p'>{</span>
+        <span class='nb'>window</span><span class='p'>.</span><span class='nx'>location</span> <span class='o'>=</span> <span class='s2'>&quot;mailto:&quot;</span> <span class='o'>+</span> <span class='nx'>EMAIL_PREFIX</span> <span class='o'>+</span> <span class='s2'>&quot;@&quot;</span> <span class='o'>+</span> <span class='nx'>EMAIL_END</span><span class='o'>;</span>
+        <span class='k'>return</span> <span class='kc'>false</span><span class='o'>;</span>
+    <span class='p'>}</span>
+    <span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#contact_msgbox a:first-child&#39;</span><span class='p'>).</span><span class='nx'>live</span><span class='p'>(</span><span class='s1'>&#39;click&#39;</span><span class='o'>,</span> <span class='nx'>close_msgbox</span><span class='p'>);</span>
+    <span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#contact_email_addr&#39;</span><span class='p'>).</span><span class='nx'>live</span><span class='p'>(</span><span class='s1'>&#39;click&#39;</span><span class='o'>,</span> <span class='kd'>function</span><span class='p'>()</span> <span class='p'>{</span>
+      <span class='k'>return</span> <span class='nx'>email_link</span><span class='p'>();</span>
+    <span class='p'>});</span>
+<span class='p'>});</span>
+</code></pre>
+</div>
+<p>Okay. First we have a constant for the minimum length of each field. In the validation function, <code>validate_submission()</code>, fields get checked against this length. There&#8217;s a special case for the <code>&lt;textarea&gt;</code>, which has a minimum length of the constant value * 10 (times ten). Then two constants making up the email address for clicking on the image &#8211; this is nice, it keeps the functionality of the <code>mailto:</code> link, but protects it from spam. I doubt bots are smart enough to do string concatenation for every site they visit :)</p>
+
+<ul>
+<li><code>is_valid_email_address()</code> validates an email using a regex. There&#8217;s tons of these on the web. I wanted mine to be not too long, but long enough :)</li>
+
+<li><code>validate_submission()</code> either valides a certain field, or validates the entire form (latter if no parameters are passed</li>
+
+<li>The next three are jQuery events for <code>onkeypress</code> in the form fields. They just call the validation function for each field. To make this even better (but a bit more CPU intensive), you may consider additional events on <code>blur</code> or <code>change</code>.</li>
+
+<li>Next up, the submit function. This validates the entire form and submits data through ajax, using <a href='http://docs.jquery.com/Ajax/jQuery.post'>jQuery&#8217;s built-in $.post call</a>. Ideally, you should expect some kind of data response after posting, and show a thank you message based on that (or error otherwise) to ensure best functionality for the user, but I didn&#8217;t bother.</li>
+
+<li>Finally, we have the close button functionality, with a timeout. At the end, we add events for email and bindings for the close button. You can read about all of these in <a href='http://docs.jquery.com/Main_Page'>jQuery&#8217;s wonderful documentation</a>.</li>
+</ul>
+
+<h2 id='step_2_the_backend_php'>Step 2: The backend (PHP)</h2>
+
+<p>This is fairly short :)</p>
+<div class='highlight'><pre><code class='php'><span class='cp'>&lt;?php</span>
+<span class='nb'>define</span><span class='p'>(</span><span class='s1'>&#39;DEFAULT_POST_ID&#39;</span><span class='p'>,</span> <span class='nx'>post_id_here</span><span class='p'>);</span>
+<span class='c'>/* Contact form handling here */</span>
+<span class='k'>if</span> <span class='p'>(</span><span class='nv'>$_POST</span><span class='p'>[</span><span class='s1'>&#39;contact&#39;</span><span class='p'>])</span> <span class='p'>{</span>
+    <span class='k'>require_once</span><span class='p'>(</span> <span class='s1'>&#39;/wp-load.php&#39;</span> <span class='p'>);</span>
+    <span class='nv'>$contact_invalid</span> <span class='o'>=</span> <span class='k'>array</span><span class='p'>();</span>
+    <span class='nv'>$contact_data</span> <span class='o'>=</span> <span class='k'>array</span><span class='p'>();</span>
+    <span class='nv'>$contact_data</span><span class='p'>[</span><span class='s1'>&#39;name&#39;</span><span class='p'>]</span> <span class='o'>=</span> <span class='nx'>filter_var</span><span class='p'>(</span><span class='nv'>$_POST</span><span class='p'>[</span><span class='s1'>&#39;contact_name&#39;</span><span class='p'>],</span>
+        <span class='nx'>FILTER_SANITIZE_STRING</span><span class='p'>);</span>
+    <span class='nv'>$contact_data</span><span class='p'>[</span><span class='s1'>&#39;message&#39;</span><span class='p'>]</span> <span class='o'>=</span> <span class='nx'>filter_var</span><span class='p'>(</span><span class='nv'>$_POST</span><span class='p'>[</span><span class='s1'>&#39;contact_message&#39;</span><span class='p'>],</span>
+        <span class='nx'>FILTER_SANITIZE_STRING</span><span class='p'>);</span>
+    <span class='nv'>$contact_data</span><span class='p'>[</span><span class='s1'>&#39;email&#39;</span><span class='p'>]</span> <span class='o'>=</span> <span class='nx'>filter_var</span><span class='p'>(</span><span class='nv'>$_POST</span><span class='p'>[</span><span class='s1'>&#39;contact_email&#39;</span><span class='p'>],</span>
+        <span class='nx'>FILTER_VALIDATE_EMAIL</span><span class='p'>);</span>
+    <span class='k'>foreach</span> <span class='p'>(</span><span class='nv'>$contact_data</span> <span class='k'>as</span> <span class='nv'>$contact_key</span> <span class='o'>=&gt;</span> <span class='nv'>$contact_field</span><span class='p'>)</span> <span class='p'>{</span>
+        <span class='k'>if</span> <span class='p'>(</span><span class='o'>!</span><span class='nv'>$contact_field</span><span class='p'>)</span> <span class='p'>{</span>
+            <span class='nv'>$contact_invalid</span><span class='p'>[</span><span class='nv'>$contact_key</span><span class='p'>]</span> <span class='o'>=</span> <span class='k'>true</span><span class='p'>;</span>
+        <span class='p'>}</span>
+    <span class='p'>}</span>
+
+    <span class='k'>if</span> <span class='p'>(</span><span class='o'>!</span><span class='nv'>$contact_invalid</span> <span class='o'>&amp;&amp;</span> <span class='o'>!</span><span class='nv'>$_COOKIE</span><span class='p'>[</span><span class='s1'>&#39;awesomemath_contact&#39;</span><span class='p'>])</span> <span class='p'>{</span>
+        <span class='nv'>$comment_post_ID</span> <span class='o'>=</span> <span class='nx'>DEFAULT_POST_ID</span><span class='p'>;</span>
+        <span class='nv'>$comment_author</span> <span class='o'>=</span> <span class='nv'>$contact_data</span><span class='p'>[</span><span class='s1'>&#39;name&#39;</span><span class='p'>];</span>
+        <span class='nv'>$comment_author_email</span> <span class='o'>=</span> <span class='nv'>$contact_data</span><span class='p'>[</span><span class='s1'>&#39;email&#39;</span><span class='p'>];</span>
+        <span class='nv'>$comment_author_url</span> <span class='o'>=</span> <span class='s1'>&#39;&#39;</span><span class='p'>;</span>
+        <span class='nv'>$comment_content</span> <span class='o'>=</span> <span class='nv'>$contact_data</span><span class='p'>[</span><span class='s1'>&#39;message&#39;</span><span class='p'>];</span>
+        <span class='nv'>$comment_type</span> <span class='o'>=</span> <span class='s1'>&#39;&#39;</span><span class='p'>;</span>
+        <span class='nv'>$comment_parent</span> <span class='o'>=</span> <span class='m'>0</span><span class='p'>;</span>
+        <span class='nv'>$user_ID</span> <span class='o'>=</span> <span class='m'>0</span><span class='p'>;</span>
+
+        <span class='nv'>$commentdata</span> <span class='o'>=</span> <span class='nb'>compact</span><span class='p'>(</span><span class='s1'>&#39;comment_post_ID&#39;</span><span class='p'>,</span> <span class='s1'>&#39;comment_author&#39;</span><span class='p'>,</span>
+            <span class='s1'>&#39;comment_author_email&#39;</span><span class='p'>,</span> <span class='s1'>&#39;comment_author_url&#39;</span><span class='p'>,</span> <span class='s1'>&#39;comment_content&#39;</span><span class='p'>,</span>
+            <span class='s1'>&#39;comment_type&#39;</span><span class='p'>,</span> <span class='s1'>&#39;comment_parent&#39;</span><span class='p'>,</span> <span class='s1'>&#39;user_ID&#39;</span><span class='p'>);</span>
+        <span class='nv'>$comment_id</span> <span class='o'>=</span> <span class='nx'>wp_new_comment</span><span class='p'>(</span> <span class='nv'>$commentdata</span> <span class='p'>);</span>
+        <span class='nv'>$comment_approved</span> <span class='o'>=</span> <span class='nv'>$wpdb</span><span class='o'>-&gt;</span><span class='na'>get_results</span><span class='p'>(</span>
+           <span class='s2'>&quot;SELECT (comment_approved = &#39;spam&#39;)</span>
+<span class='s2'>                AS spam</span>
+<span class='s2'>            FROM wp_comments</span>
+<span class='s2'>            WHERE comment_ID = &#39;</span><span class='si'>{</span><span class='nv'>$comment_id</span><span class='si'>}</span><span class='s2'> LIMIT 1;&#39;&quot;</span>
+        <span class='p'>);</span>
+        <span class='c'>// allow contact again after one hour</span>
+        <span class='nb'>setcookie</span><span class='p'>(</span><span class='s1'>&#39;awesomemath_contact&#39;</span><span class='p'>,</span> <span class='m'>1</span><span class='p'>,</span> <span class='nb'>time</span><span class='p'>()</span> <span class='o'>+</span> <span class='m'>3600</span><span class='p'>,</span> <span class='s1'>&#39;/&#39;</span><span class='p'>);</span>
+        <span class='k'>if</span> <span class='p'>(</span><span class='nv'>$comment_id</span> <span class='o'>&amp;&amp;</span> <span class='o'>!</span><span class='nv'>$comment_approved</span><span class='o'>-&gt;</span><span class='na'>spam</span><span class='p'>)</span> <span class='p'>{</span>
+            <span class='c'>// not spam!</span>
+            <span class='nv'>$contact_headers</span> <span class='o'>=</span> 
+            <span class='s2'>&quot;From: </span><span class='si'>{</span><span class='nv'>$contact_data</span><span class='p'>[</span><span class='s1'>&#39;name&#39;</span><span class='p'>]</span><span class='si'>}</span><span class='s2'> &lt;</span><span class='si'>{</span><span class='nv'>$contact_data</span><span class='p'>[</span><span class='s1'>&#39;email&#39;</span><span class='p'>]</span><span class='si'>}</span><span class='s2'>&gt;</span><span class='se'>\r\n</span><span class='s2'>\\&quot;</span><span class='p'>;</span>
+            <span class='nx'>wp_mail</span><span class='p'>(</span><span class='nx'>get_option</span><span class='p'>(</span><span class='s1'>&#39;admin_email&#39;</span><span class='p'>),</span>
+                <span class='s1'>&#39;Examplesite Contact Form Message&#39;</span>
+                <span class='p'>,</span> <span class='nv'>$contact_data</span><span class='p'>[</span><span class='s1'>&#39;message&#39;</span><span class='p'>],</span> <span class='nv'>$contact_headers</span><span class='p'>);</span>
+            <span class='nv'>$contact_headers</span> <span class='o'>=</span>
+                <span class='s2'>&quot;From: Examplesite &lt;me@examplesite.com&gt;</span><span class='se'>\r\n</span><span class='s2'>\\&quot;</span><span class='p'>;</span>
+            <span class='nx'>wp_mail</span><span class='p'>(</span><span class='s2'>&quot;</span><span class='si'>{</span><span class='nv'>$contact_data</span><span class='p'>[</span><span class='s1'>&#39;name&#39;</span><span class='p'>]</span><span class='si'>}</span><span class='s2'> &lt;</span><span class='si'>{</span><span class='nv'>$contact_data</span><span class='p'>[</span><span class='s1'>&#39;email&#39;</span><span class='p'>]</span><span class='si'>}</span><span class='s2'>&gt;&quot;</span><span class='p'>,</span>
+                <span class='s1'>&#39;Thank you for contacting Examplesite!&#39;</span><span class='p'>,</span>
+                <span class='s1'>&#39;Thank you for contacting us. We will get back to you shortly.</span>
+
+<span class='s1'>Below is a copy of your message.</span>
+<span class='s1'>If for any reason we do not get back to you soon, simply reply to this email.</span>
+
+<span class='s1'>------------------------------</span>
+
+<span class='s1'>&#39;</span> <span class='o'>.</span> <span class='nv'>$contact_data</span><span class='p'>[</span><span class='s1'>&#39;message&#39;</span><span class='p'>],</span> <span class='nv'>$contact_headers</span><span class='p'>);</span>
+            <span class='c'>// redirect to prevent resubmission</span>
+            <span class='nb'>header</span><span class='p'>(</span><span class='s2'>&quot;Location: </span><span class='si'>{</span><span class='nv'>$_SERVER</span><span class='p'>[</span><span class='s1'>&#39;HTTP_REFERER&#39;</span><span class='p'>]</span><span class='si'>}</span><span class='s2'>?contacted=1&quot;</span><span class='p'>);</span>
+            <span class='k'>die</span><span class='p'>;</span>
+        <span class='p'>}</span>
+    <span class='p'>}</span>
+<span class='p'>}</span>
+</code></pre>
+</div>
+<p>See? That wasn&#8217;t so bad. Let me summarize the above. First, we validate data once again by using a simple php filter. See <a href='http://net.tutsplus.com/tutorials/php/getting-clean-with-php/'>this easy tutorial</a> for the basics of php filters.</p>
+
+<p>Then, we use Wordpress&#8217; built-in comment system to post contact messages as comments. We then check to see if the comments were potentially marked as spam. If they weren&#8217;t, we send an email to the site admin (it can be any email, really), with the contact message. Make sure to set DEFAULT_POST_ID to a post against which you can file these &#8220;comments&#8221;.</p>
+
+<p>I should add that this contact_form.php file is also included in my theme to support no-JS submission. But, really, nowadays, unless you&#8217;re on your phone, 99.9% of users have Javascript enabled in their web browsers.</p>
+
+<p>If I had time, I would turn this into a plugin with options and such. Wishlist:</p>
+
+<ul>
+<li>A separate panel for administering contact form messages, similar to the built-in WP comments.</li>
+
+<li>A built-in easy-to-customize widget</li>
+
+<li>Custom fields</li>
+</ul>
+
+<p>All-in-all, this was a quick and easy way to safely implement a contact form on a site without the hassle of using multiple plugins, having Captchas, or the inflexibility of requiring a subject line for the contact message (yet another reason I chose to implement my own contact form from scratch).</p>
+
+<p>Hope you found this article useful. Feedback welcome!</p>
+</div>
+
+<div id="related">
+  <h2>Related Posts</h2>
+  <ul>
+    
+      <li><a href="/2010/03/quoteden-moving-to-kohana-3">Quoteden: Moving to Kohana 3</a> &mdash; 12 Mar 2010</li>
+    
+      <li><a href="/2010/01/my-sumo-local-development-environment">My SUMO local development environment</a> &mdash; 04 Jan 2010</li>
+    
+      <li><a href="/2009/10/ed60-labaree">ED60 - David Labaree - Public goods, private goods, the American struggle over educational goals</a> &mdash; 05 Oct 2009</li>
+    
+  </ul>
+</div>
+
+    </div>
+
+    <div id="footer" role="contentinfo">
+        <div class="about">
+        <p>Hi, I'm Paul Craciunoiu! I work as a web developer for <a href="http://mozilla.com">Mozilla</a>, with main focus on <a href="http://www.djangoproject.com/">Django</a>, Python, and PHP. Occasionally, I write tutorials or post other information I find interesting.</p>
+        <p>I enjoy doing freelance work for other websites, mostly non-profits. If you're interested in my services, contact me through one of the links below.</p>
+        </p>
+        </div>
+        <div class="contact">
+            <a href="http://twitter.com/embrangler/">Follow me</a> -- 
+            <a href="http://craciunoiu.net/contact/paul">Email me</a> -- 
+            <a href="http://github.com/pcraciunoiu/">My GitHub</a>
+        </div>
+        <div class="quote">
+        <p>
+            Success is a journey, not a destination. The doing is often more important than the outcome. &mdash; <a href="http://quoteden.net/author/id/337">Arthur Robert Ashe, Jr</a>
+        </p>
+        <p>&copy; Paul Craciunoiu. Some rights reserved. Brought to you by <a href="http://wiki.github.com/mojombo/jekyll/">Jekyll</a></p>
+        </div>
+    </div>
+</div><!-- site -->
+
+</body>
+</html>

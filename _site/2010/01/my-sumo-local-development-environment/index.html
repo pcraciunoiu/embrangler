@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+   <title>My SUMO local development environment</title>
+   <meta name="author" content="Paul Craciunoiu" />
+   <link href="http://feeds.feedburner.com/embrangler" rel="alternate" title="Paul Craciunoiu" type="application/atom+xml" />
+
+   <!-- syntax highlighting CSS -->
+   <link rel="stylesheet" href="/css/syntax.css" type="text/css" />
+
+   <!-- Homepage CSS -->
+   <link rel="stylesheet" href="/css/main.css" type="text/css" media="screen, projection" />
+
+</head>
+<body>
+
+<div class="site">
+
+    <div id="header" role="banner">
+        <h1 class="title">
+            <a href="/">Disembrangling Programming</a>
+        </h1>
+        <h2 class="subtitle">
+            <a href="/about" title="About Paul Craciunoiu">The simple life of a web developer &mdash; by Paul Craciunoiu<span> (About)</span></a>
+        </h2>
+    </div>
+    <div id="content" role="main">    
+    <div id="post">
+<h1>My SUMO local development environment</h1>
+
+<h2 id='summary'>Summary</h2>
+
+<p>A while back, James wrote about <a href='http://coffeeonthekeyboard.com/local-web-development-323/' title='James&apos; local development environment'>his development environment</a>. I wanted to summarize my approach, and go into a bit more detail about the specific setup you would need to have SUMO work locally. For more information, see also <a href='http://https://wiki.mozilla.org/Support:Sumodev#Get_Involved'>this wiki page</a>.</p>
+
+<h2 id='my_lde_ubuntu_linux'>My LDE: Ubuntu Linux</h2>
+
+<p>My <abbr title='local development environment'>LDE</abbr> is slightly different: I dual boot Windows 7 and Kubuntu 9.10. As of now I&#8217;m still a student, and I work on my own machine. There are several reasons I find dual booting a great solution:</p>
+
+<ul>
+<li><strong>Best performance</strong> while developing. Although less and less of an issue, being in the native <abbr title='Operating System'>OS</abbr> is always be faster than running a <abbr title='Virtual Machine'>VM</abbr>.</li>
+
+<li>A <strong>full powered OS</strong> that I can use for other work. I do schoolwork and other contracting work, and sometimes Windows is not an option. Even a VM has its limitations when it comes to certain drivers (one example is audio &#8211; which I needed for a <a href='http://code.google.com/p/music-visualizer-cs160/' title='Music Visualizer for CMPS160'>graphics project</a>)</li>
+
+<li>Keeps my <strong>work and pleasure separate</strong> &#8211; having dual boot is basically like having two machines. Typically, when I&#8217;m in Linux, I do work, otherwise I&#8217;m in Windows to do personal things.</li>
+</ul>
+
+<p>The only downside is some additional wait time for rebooting if you need to switch to the other OS. Since I work on Linux only, I rarely need to switch while working. However, everything works fine for me on Linux &#8211; sound, video, even webcam and VPN (will blog later about all of these).</p>
+
+<h2 id='lamp'>LAMP</h2>
+
+<p>For web development in general, you&#8217;ll need to have the <a href='http://en.wikipedia.org/wiki/LAMP_%28software_bundle%29'>LAMP stack</a> installed. Fortunately, Ubuntu provides an easy way to do this in one line. From a terminal, run:</p>
+<div class='highlight'><pre><code class='bash'>sudo tasksel
+</code></pre>
+</div>
+<p>Select <em>LAMP server</em> from the list, and choose OK (TAB + ENTER). Follow the steps to choose a MySQL password and any other configuration there may be. Once that&#8217;s done, you should be able to go to <code>http://localhost</code> and see the &#8220;It works!&#8221; text. Here are some useful paths:</p>
+
+<ul>
+<li>Web root: <code>/var/www/</code></li>
+
+<li>Hosts file: <code>/etc/hosts</code></li>
+
+<li>Apache sites: <code>/etc/apache2/sites-available/</code> and <code>/etc/apache2/sites-enabled/</code></li>
+
+<li>PHP ini: <code>/etc/php5/apache2/php.ini</code></li>
+
+<li>MySQL ini: <code>/etc/php5/conf.d/mysql.ini</code></li>
+</ul>
+
+<h2 id='sumo_setup'>SUMO setup</h2>
+
+<p>What you&#8217;ll need:</p>
+
+<ul>
+<li>LAMP stack &#8211; see <a href='#lamp'>above</a></li>
+
+<li>A host (optional) &#8211; see <a href='#host'>below</a></li>
+
+<li>SSL &#8211; see <a href='http://www.tc.umn.edu/~brams006/selfsign_ubuntu.html'>this guide</a></li>
+
+<li>Sphinx &#8211; see <a href='https://wiki.mozilla.org/Support/Sphinx_Installation' title='installing Sphinx'>this guide</a></li>
+
+<li>Memcached &#8211; I just install the package and that&#8217;s enough: <code>sudo apt-get install memcached php5-memcache</code></li>
+
+<li>Virtualbox (optional) &#8211; for testing: <code>sudo apt-get install virtualbox</code></li>
+
+<li>A copy of our database &#8211; you may ask James, Laura or myself for this &#8211; <a href='#help'>see how, below</a></li>
+
+<li>SVN &#8211; <code>sudo apt-get install subversion</code></li>
+
+<li>Checking out and configuring the SUMO codebase &#8211; <a href='https://wiki.mozilla.org/Support/SUMO_install_process' title='checking out and configuring SUMO'>see this guide</a></li>
+</ul>
+<span id='host'>To set up a SUMO host, I add the entry for it in `/etc/hosts`. Here is the top of my file:</span><div class='highlight'><pre><code class='bash'>127.0.0.1   localhost
+127.0.1.2   sumo
+</code></pre>
+</div>
+<p>Then, add the site info to apache. Here&#8217;s my complete conf file (with SSL), in <code>/etc/apache2/sites-available/sumo</code>:</p>
+<div class='highlight'><pre><code class='bash'>&lt;VirtualHost 127.0.1.2:80&gt;
+    ServerAdmin webmaster@sumo
+    ServerName sumo
+    ServerAlias sumo
+    DocumentRoot /var/www/trunk/webroot
+    &lt;Directory /var/www/trunk/webroot&gt;
+        Options Indexes FollowSymLinks MultiViews
+        AllowOverride All
+        Order allow,deny
+        allow from all
+    &lt;/Directory&gt;
+&lt;/VirtualHost&gt;
+
+&lt;IfModule mod_ssl.c&gt;
+&lt;VirtualHost _default_:443&gt;
+
+    ServerAdmin webmaster@sumo
+    ServerName sumo
+    ServerAlias sumo
+    DocumentRoot /var/www/trunk/webroot
+    &lt;Directory /var/www/trunk/webroot&gt;
+        Options Indexes FollowSymLinks MultiViews
+        AllowOverride All
+        Order allow,deny
+        allow from all
+    &lt;/Directory&gt;
+    SSLEngine on
+    SSLCertificateFile /etc/apache2/ssl/apache.pem
+&lt;/VirtualHost&gt;
+&lt;/IfModule&gt;
+</code></pre>
+</div>
+<p>To enable the site, just do this:</p>
+<div class='highlight'><pre><code class='bash'><span class='nb'>cd</span> /etc/apache2/sites-enabled
+sudo ln -s ../sites-available/sumo
+</code></pre>
+</div>
+<p>Then, restart apache:</p>
+<div class='highlight'><pre><code class='bash'>sudo /etc/init.d/apache2 restart
+</code></pre>
+</div>
+<h2 id='testing'>Testing</h2>
+
+<p>For testing, I also use a VM in VirtualBox, running WinXP with multiple IEs. I chose WinXP to save space &#8211; only takes up 3GB. You should allow 4GB just in case you want to install more stuff. Using multiple IEs is not the best, as <a href='http://www.quirksmode.org/css/condcom.html'>quirksmode points out</a>, so you may consider running a VM for each IE version you wish to test. However, I haven&#8217;t experienced that many problems. On WinXP I&#8217;ve also installed Firefox (of course), Chrome, and Opera. On Ubuntu I just use the defaults: Firefox and Konqueror (since I&#8217;m running Kubuntu).</p>
+
+<h2 id='help'>Help?</h2>
+
+<p>I&#8217;ve tried to cover everything, but of course there may be stuff I missed. If you need additional info, you may leave a comment. To obtain a copy of our database, you can find <a href='https://wiki.mozilla.org/Support:Sumodev#Get_Involved'>us on IRC or contact us by email</a>.</p>
+</div>
+
+<div id="related">
+  <h2>Related Posts</h2>
+  <ul>
+    
+      <li><a href="/2010/03/quoteden-moving-to-kohana-3">Quoteden: Moving to Kohana 3</a> &mdash; 12 Mar 2010</li>
+    
+      <li><a href="/2009/11/hacking-wordpress-check-contact-messages-for-spam-using-wordpress-built-in-akismet-spam-for-comments">Hacking Wordpress: check contact messages for spam using Wordpress' built-in Akismet spam for comments</a> &mdash; 14 Nov 2009</li>
+    
+      <li><a href="/2010/02/upgrading-windows-vista-or-7rc-to-windows-7-on-dual-boot-with-linux-ubuntu">Upgrading Windows Vista or 7RC to Windows 7 on dual boot with Linux (Ubuntu)</a> &mdash; 27 Feb 2010</li>
+    
+  </ul>
+</div>
+
+    </div>
+
+    <div id="footer" role="contentinfo">
+        <div class="about">
+        <p>Hi, I'm Paul Craciunoiu! I work as a web developer for <a href="http://mozilla.com">Mozilla</a>, with main focus on <a href="http://www.djangoproject.com/">Django</a>, Python, and PHP. Occasionally, I write tutorials or post other information I find interesting.</p>
+        <p>I enjoy doing freelance work for other websites, mostly non-profits. If you're interested in my services, contact me through one of the links below.</p>
+        </p>
+        </div>
+        <div class="contact">
+            <a href="http://twitter.com/embrangler/">Follow me</a> -- 
+            <a href="http://craciunoiu.net/contact/paul">Email me</a> -- 
+            <a href="http://github.com/pcraciunoiu/">My GitHub</a>
+        </div>
+        <div class="quote">
+        <p>
+            Success is a journey, not a destination. The doing is often more important than the outcome. &mdash; <a href="http://quoteden.net/author/id/337">Arthur Robert Ashe, Jr</a>
+        </p>
+        <p>&copy; Paul Craciunoiu. Some rights reserved. Brought to you by <a href="http://wiki.github.com/mojombo/jekyll/">Jekyll</a></p>
+        </div>
+    </div>
+</div><!-- site -->
+
+</body>
+</html>

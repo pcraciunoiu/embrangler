@@ -1,0 +1,124 @@
+--- 
+wordpress_id: 64
+layout: post
+title: CS107 hw2
+wordpress_url: http://embrangler.com/?p=64
+---
+Homework 2
+
+page 44.
+1) Counting from 0 to 999,999 yields 1,000,000 numbers.
+
+Those which contain the digit 5 occur every 5th number: 0, 5, 10... Hence:
+$ \frac{1,000,000}{5} = 200,000$ 6 digit numbers contain the digit 5.
+
+3) Yes.
+
+To decide this, we need to find the total number of possible initials. There are 26 letters in the English alphabet, hence, the number of possible initials ($ n$) is:
+$ n = 26^3 = 17,576$
+
+Since there are only 17,576 possible sets of 3 initials, and 20,000 people live in the town, there must be at least two people with the same initials.
+
+page 45.
+
+18) The problem is asking for:
+
+The count of different numbers of 4 digits, with no repeating digits. This is equal to:
+
+$_{10} P_{4} = \frac{10!}{6!}  =  5040$. Of those:
+
+a) which do __not__ start with a 0. This is equal to:
+$ _{10} P_{4} - _{10} P_{3}= 5040 - 720 = 4320$
+
+b) how many do not start with 01. This is equal to:
+$ _{10} P_{4} - _{10} P_{2} = 5040 - 90 = 4950$
+
+page 52.
+
+16) The probability that a boy is sitting on a given chair (does not matter which one) is equal to:
+
+$ \frac{boys}{chairs} = \frac{12}{20} = \frac{3}{5}$
+
+Where boys = number of boys, chairs = total number of chairs
+Note that this solution assumes the 20 individuals are all occupying chairs at the same time and thus the events of occupying a chair are mutually exclusive.
+
+page 82.
+
+2) We call event $ E_1$ = soldier has antigen A, and event $ E_2$ = soldier has blood type A. Then:
+$ P(E_2 | E_1) =\frac{P(E_1 E_2)}{P(E_1)} = \frac{0.04}{0.04+0.41} = 0.0(8)$
+
+page 87.
+
+1) We call event $ E_1$ = Robert commits perjury, and event $ E_2$ = Susan has committed a crime. We want to calculate $ P(E_1 | E_2)$:
+$ P(E_1 | E_2) = \frac{P(E_1 \cdot E_2}{P(E_2)} = \frac{0.25 \cdot 0.65}{0.65} = 0.25$
+
+4) 8 defective, 12 nondefective items are inspected without replacement. We call events $ A_i$ = the i-th item inspected is defective, and events $ B_i$ = the i-th item inspected is nondefective.
+
+a) event $ E_1$ = first four items inspected are defective.
+$ P(E_1) = P(A_1 A_2 A_3  A_4) = P(A_1) \cdot P(A_2|A_1) \cdot P(A_3|A_1 A_2) \cdot P(A_4 | A_1 A_2 A_3)$
+
+To calculate the above probability, it would help us to calculate $ P(A_1 A_2), P(A_1 A_2 A_3)$. We already know $ P(A_1)$, so we can use that to calculate the others. Hence:
+$ P(A_1 A_2) = P(A_1) \cdot P(A_2|A_1) = \frac{8}{20} \cdot \frac{7}{19} \approx 0.147$
+$ P(A_1 A_2 A_3) = P(A_1) \cdot P(A_2 | A_1) \cdot P(A_3 | A_1 A_2) = \frac{8}{20} \cdot \frac{7}{19} \cdot \frac{6}{18} \approx 0.082$
+
+The reasoning behind the result of $ P(A_i | A_1 .. A_{i-1})$ is this: "What is the probability of selecting a(nother) defective item, __given__ that I have already selected $ i-1$ such items. Because of this dependency, we know the events that have to occur before this one, and what the numbers for defective and nondefective items are. Therefore:
+$ P(A_1 A_2 A_3 A_4) = P(A_1) \cdot P(A_2 | A_1) \cdot P(A_3 | A_1 A_2) \cdot P(A_4 | A_1 A_2 A_3)= \frac{8}{20} \cdot \frac{7}{19} \cdot \frac{6}{18} \cdot \frac{5}{17} = \approx 0.0241$
+Therefore, $ P(E_1) \approx 0.0241$
+
+b) Event $ E_2$ = from the first three items, at least two are defective. The possible results can be split into:
+
+* $ E_{21}$ = items 1 and 2 are defective
+$ P(A_1 A_2) = P(A_1) \cdot P(A_2|A_1) = \frac{8}{20} \cdot \frac{7}{19} \approx 0.147$
+* $ E_{22}$ = items 1 and 3 are defective, and item 2 is not (or we would have first case)
+$ P(A_1 B_2 A_3) = P(A_1) \cdot P(B_2|A_1) \cdot P(A_3 | A_1 B_2) = \frac{8}{20} \cdot \frac{12}{19} \cdot \frac{7}{18} \approx 0.0982$
+* $ E_{23}$ = items 2 and 3 are defective, and item 1 is not (or we would have first case)
+$ P(B_1 A_2 A_3) = P(B_1) \cdot P(A_2|B_1) \cdot P(A_3|B_1 A_2) = \frac{12}{20} \cdot \frac{8}{19} \cdot \frac{7}{18} \approx 0.0982$
+
+Therefore, $ P(E_2) \approx 0.3435$
+
+7) It does not matter. Some simple calculations for the case of 3 instead of 200 guests show that the probability of drawing the "you lose" paper is the same, no matter which order you choose.
+
+For example, assume there are 3 guests, and 3 papers, one of which says "you lose." The probability of drawing the "you lose" paper 1st, 2nd, or 3rd are:
+
+$ P(E_1) = \frac{1}{3}$
+$ P(E_2) = \frac{2}{3} \cdot \frac{1}{2}$, which is the probability of first guest drawing blank and me drawing "you lose."
+$ P(E_1) = \frac{2}{3} \cdot \frac{1}{2} \cdot 1$, which is the probability of first two guests drawing blank and me drawing "you lose." (since that is all that is left, we have a certainty)
+
+For the case of 200, clearly, drawing 1st yields a probability of losing of $ \frac{1}{200}$. Drawing 2nd:
+$ P(E_2) = \frac{199}{200} \cdot \frac{1}{199} = \frac{1}{200}$. By the following formula, we can show that the probability is the same for drawing "you lose" regardless of which order we choose:
+
+$ P(E_i) = (\prod_{j=1}^{i-1} \frac{200-j}{200-j+1}) \cdot \frac{1}{200-i+1}$. Expanding this product reduces the formula to:
+$ P(E_i) = \frac{1}{200}$
+
+page 97.
+
+8) Let $ G_i$ be the probability of hitting the target with gun i (i goes from 1 to 6). The probability of hitting a target by selecting a gun at random is:
+$ P(E_1) = \sum_{i=1}^6 (\frac{1}{6} \cdot P(G_i)) = \frac{1}{6} \cdot (0.6 + 0.5 + 0.7 + 0.9 + 0.7 + 0.8) = 0.7$
+
+11) Yes, the chances of getting a gold coin are equal for all participants. Intuitively, performing this experiment enough times yields equal probability for any person to receive a gold coin. More theoretically, we have shown in excercise 7 from page 87 (see above), that the order of drawing does not matter. This excercise is the same, except instead of drawing from 200 papers out of which 1 is distinct, we draw from 5 coins out of which 3 are distinct. Hence, the probability of each participant to get a gold coin is equal to 3/5.
+
+page 106.
+
+3) We will look at the probability that the suspect is guilty, given the new evidence that the criminal is (likely) left handed.
+
+$ P(G|L) = \frac{P(L|G) \cdot P(G)}{P(L|G) \cdot P(G) + P(L|I) \cdot P(I)}$, where L = criminal is left handed, G = suspect is guilty, I = suspect is innocent. Therefore:
+
+$ P(G|L) = \frac{0.23 \cdot 0.65}{0.23 \cdot 0.65 + 0.85 \cdot 0.35} = \frac{0.1495}{0.447} = 0.33$
+
+As we suspect, since only 23% of people are left-handed and a witness claims criminal is likely (85%) left handed, our suspect is less likely to be guilty.
+
+7) We look at the probability that a person has the cancer, given a positive test result.
+
+$ P(C|T) = \frac{P(T|C) \cdot P(C)}{P(T|C) \cdot P(C) + P(T|H) \cdot P(H)}$, where C = person has the cancer, T = test result is positive, H = the person is healthy (does not suffer from the cancer). Therefore:
+
+$ P(C|T) = \frac{0.92 \cdot 0.0002}{0.92 \cdot 0.0002 + 0.002 \cdot 0.9998} = \frac{0.000184}{0.0021836} = 0.0843$
+
+9) We look at the probability that the collector buys a piece that she thinks is original, but she is mistaken; in other terms, the probability that the piece is not original, given that she thinks it is.
+
+$ P(F|T) = \frac{P(T|F) \cdot P(F)}{P(T|F) \cdot P(F) + P(T|O) \cdot P(O)}$, where O = the painting is an original, F = the painting is a fake, T = the collector thinks the painting is original
+
+$ P(F|T) = \frac{0.15 \cdot 0.25}{0.15 \cdot 0.25 + 0.85 \cdot 0.75} = \frac{0.0375}{0.675} = 0.0(5)$
+
+page 119.
+
+8) No, Cardano was not correct. Since the event A had probability $ P(A) = \frac{3}{4}$, the occurence of that event in two _consecutive independent_ experiments was $ P(A A) = P(A) \cdot P(A) = \frac{3}{4} \cdot \frac{3}{4} = \frac{9}{16}$. So, the odds in favor were 9 to 7.

@@ -1,5 +1,11 @@
 lsi:         true
 pygments:    true
 permalink:   /:year/:month/:title
-markdown:    rdiscount
+paginate:    6
+markdown:    maruku
+maruku:
+  use_tex:    true
+  use_divs:   false
+  png_dir:    images/latex
+  png_url:    /images/latex/
 

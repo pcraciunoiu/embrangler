@@ -15,6 +15,8 @@ html, body {
 
 h1, h2, h3, h4, h5, h6 {
     font-size: 100%;
+    margin: 2em 0 .6em 0;
+    line-height: 125%;
 }
 
 /*****************************************************************************/
@@ -34,7 +36,6 @@ body {
 }
 
 h1 {
-    margin-bottom: 0.5em;
     font-size: 200%;
     font-weight: bold;
 }
@@ -48,17 +49,17 @@ h3 {
 }
 
 p {
-    margin: 1em 0;
+    margin: 1.25em 0;
 }
 
 a, a:visited {
     color: #047617;
-    border-bottom: 1px solid #ddd;
     text-decoration: none;
 }
 
 a:hover {
-    color: #0c9e24;
+    color: #666;
+    border-bottom: 1px solid #ddd;
 }
 
 table {
@@ -66,15 +67,34 @@ table {
     font: 100%;
 }
 
+ul, ol {
+    margin: .6em 0 .6em 2em;
+}
+
+ul li, ol li {
+    margin: 0.6em 0;
+}
+
+hr {
+    background-color: #ccc;
+    border: 0 none;
+    clear: both;
+    color: #ccc;
+    height: 1px;
+    margin: 2em auto;
+    width: 40%;
+}
+
 #header {
     border-bottom: 3px solid #eee;
     margin-bottom: 1.5em;
-    padding-bottom: 1em;
+    padding-bottom: 1.5em;
 }
 
 h1.title {
-    margin-bottom: 0.2em;
+    margin: .2em 0;
     font-size: 220%;
+    line-height: 100%;
 }
 
 .site h1 a, .site h2 a {
@@ -84,6 +104,8 @@ h1.title {
 }
 
 h2.subtitle {
+    margin: .2em 0 .2em;
+    line-height: 100%;
     font-size: 100%;
     font-weight: normal;
     font-variant: small-caps;
@@ -92,7 +114,7 @@ h2.subtitle {
 h2.subtitle a span {
     color: #999;
     display: none;
-    }
+}
 
 h2.subtitle a {
     border-bottom: none;
@@ -107,16 +129,17 @@ h2.subtitle a {
     font-size: 100%;
     width: 45em;
     margin: 2em auto;
-    line-height: 1.5em;
+    line-height: 1.8em;
     text-align: left;
 }
 
 #footer {
     font-size: 80%;
+    line-height: 1.5em;
     color: #666;
     border-top: 3px solid #ddd;
     margin-top: 2em;
-    padding-top: 1em;
+    padding: 1em 0;
     overflow: hidden;
 }
 
@@ -132,6 +155,10 @@ h2.subtitle a {
     color: #047617;
 }
 
+#footer .contact a {
+    margin: 0 .6em;
+}
+
 
 /*****************************************************************************/
 /*
@@ -139,9 +166,10 @@ h2.subtitle a {
 /*
 /*****************************************************************************/
 
+/* posts */
 .post {
     width: 45%;
-    height: 20em;
+    height: 25em;
     float: left;
     margin: 0; padding: 0;
 }
@@ -159,7 +187,7 @@ h2.subtitle a {
 
 .post p a {
     float: right;
-    margin-right: 0.5em;
+    margin-right: .5em;
 }
 
 /*****************************************************************************/
@@ -170,45 +198,12 @@ h2.subtitle a {
 
 #post h1 {
     font-variant: small-caps;
-    margin-bottom: 0;
+    margin: 0 0 1em 0;
 }
 
 #post .meta {
-    margin: 0.2em 0 1em 0;
+    margin: .2em 0 1em 0;
     color: #999;
-}
-#post pre {
-    border: 1px solid #ddd;
-    background-color: #eef;
-    padding: 0 .4em;
-}
-
-#post ul,
-#post ol {
-    margin-left: 1.25em;
-}
-
-#post code {
-    border: 1px solid #ddd;
-    background-color: #eef;
-    font-size: 95%;
-    padding: 0 .2em;
-}
-
-#post pre code {
-    border: none;
-}
-
-/* terminal */
-
-#post pre.terminal {
-    border: 1px solid black;
-    background-color: #333;
-    color: white;
-}
-
-#post pre.terminal code {
-    background-color: #333;
 }
 
 #related {
@@ -219,7 +214,80 @@ h2.subtitle a {
     margin-bottom: 1em;
 }
 
-#related ul {
-    padding-left: 2em;
+.img-wrap {
+    text-align: center;
+}
+.img {
+    background: #eee;
+    display: inline-block;
+    padding: 0.6em;
+    margin: 0 auto;
+    -moz-box-shadow: 1px 1px 5px #aaa;
+    -webkit-box-shadow: 1px 1px 5px #aaa;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+}
+
+.img div {
+   font-size: 80%;
+   line-height: 1em;
+}
+
+/* Paginators */
+ol.pagination {
+    list-style: none;
+    margin: 1em auto;
+    text-align: center;
+}
+
+ol.pagination > li {
+    list-style: none;
+    display: inline;
+    padding: 0 0.5em;
+}
+
+ol.pagination > li.selected a {
+    color: #000;
+}
+
+
+/*****************************************************************************/
+/*
+/* Syntax highlighting
+/*
+/*****************************************************************************/
+#post pre {
+    line-height: 150%;
+    font-family: "Courier New", courier, monospace;
+    font-size: 90%;
+    border: 1px solid #ddd;
+    background-color: #eef;
+    padding: 0 .4em;
+    overflow: auto;
+}
+code {
+    border: 1px solid #ddd;
+    font-family: "Courier New", courier, monospace;
+    background-color: #eef;
+    font-size: 90%;
+    padding: 0 .2em;
+    overflow: auto;
+}
+
+pre code {
+    font-size: 100%;
+    border: none;
+}
+
+/* terminal */
+
+pre.terminal {
+    border: 1px solid black;
+    background-color: #333;
+    color: white;
+}
+
+pre.terminal code {
+    background-color: #333;
 }
 

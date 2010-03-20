@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+   <title>Installing OpenGL + GLUT on Kubuntu 9.04</title>
+   <meta name="author" content="Paul Craciunoiu" />
+   <link href="http://feeds.feedburner.com/embrangler" rel="alternate" title="Paul Craciunoiu" type="application/atom+xml" />
+
+   <!-- syntax highlighting CSS -->
+   <link rel="stylesheet" href="/css/syntax.css" type="text/css" />
+
+   <!-- Homepage CSS -->
+   <link rel="stylesheet" href="/css/main.css" type="text/css" media="screen, projection" />
+
+</head>
+<body>
+
+<div class="site">
+
+    <div id="header" role="banner">
+        <h1 class="title">
+            <a href="/">Disembrangling Programming</a>
+        </h1>
+        <h2 class="subtitle">
+            <a href="/about" title="About Paul Craciunoiu">The simple life of a web developer &mdash; by Paul Craciunoiu<span> (About)</span></a>
+        </h2>
+    </div>
+    <div id="content" role="main">    
+    <div id="post">
+<h1>Installing OpenGL + GLUT on Kubuntu 9.04</h1>
+
+<p>I&#8217;m taking a Computer Graphics class, and during the first week we need to install OpenGL and write a first, very simple program. I looked around for tutorials and couldn&#8217;t find any simple ones, so I&#8217;ve compiled one below.</p>
+
+<p>This tutorial should help you install OpenGL + Glut on Debian-based Linux distributions.</p>
+
+<p>My OS: Kubuntu 9.04 i386 (32 bit)</p>
+
+<p>Installing GLUT:</p>
+<div class='highlight'><pre><code class='bash'>sudo apt-get install freeglut3 glut-doc
+</code></pre>
+</div>
+<p>In my case, I had to install an nvidia driver as well:</p>
+<div class='highlight'><pre><code class='bash'>sudo apt-get install nvidia-glx-180-dev
+</code></pre>
+</div>
+<p>For some of you, this might not be the case, and the mesa-common package would work:</p>
+<div class='highlight'><pre><code class='bash'>sudo apt-get install mesa-common-dev
+</code></pre>
+</div>
+<p>Then (and here&#8217;s the part that got me worried), you can try testing a simple example, but I got this error:</p>
+<div class='highlight'><pre><code class='bash'>OpenGL GLX extension not supported by display <span class='s1'>&#39;:0.0&#39;</span>
+</code></pre>
+</div>
+<p>To fix this, it was much simpler than I thought &#8211; I just needed to reboot. (If you don&#8217;t want to, for some reason, restarting X should work just fine.) If this problem doesn&#8217;t go away, I found a couple of resources in my search before rebooting, <a href='http://ubuntuforums.org/showthread.php?t=380175'>here</a> and <a href='http://www.linuxquestions.org/questions/linux-newbie-8/opengl-glx-extension-not-supported-by-display-0.0-107369/'>here</a>.</p>
+
+<p>After setting this up, I looked up tutorials, and decided to use this simple example: (found <a href='http://ubuntuforums.org/showthread.php?t=375425'>here</a>)</p>
+<div class='highlight'><pre><code class='cpp'><span class='cp'>#include &amp;lt;GL/glut.h&amp;gt;</span>
+
+<span class='cp'>#define window_width  640</span>
+<span class='cp'>#define window_height 480</span>
+
+<span class='c'>// Main loop</span>
+<span class='kt'>void</span> <span class='n'>main_loop_function</span><span class='p'>()</span>
+<span class='p'>{</span>
+   <span class='c'>// Z angle</span>
+   <span class='k'>static</span> <span class='kt'>float</span> <span class='n'>angle</span><span class='p'>;</span>
+   <span class='c'>// Clear color (screen)</span>
+   <span class='c'>// And depth (used internally to block obstructed objects)</span>
+   <span class='n'>glClear</span><span class='p'>(</span><span class='n'>GL_COLOR_BUFFER_BIT</span> <span class='o'>|</span> <span class='n'>GL_DEPTH_BUFFER_BIT</span><span class='p'>);</span>
+   <span class='c'>// Load identity matrix</span>
+   <span class='n'>glLoadIdentity</span><span class='p'>();</span>
+   <span class='c'>// Multiply in translation matrix</span>
+   <span class='n'>glTranslatef</span><span class='p'>(</span><span class='mi'>0</span><span class='p'>,</span><span class='mi'>0</span><span class='p'>,</span> <span class='o'>-</span><span class='mi'>10</span><span class='p'>);</span>
+   <span class='c'>// Multiply in rotation matrix</span>
+   <span class='n'>glRotatef</span><span class='p'>(</span><span class='n'>angle</span><span class='p'>,</span> <span class='mi'>0</span><span class='p'>,</span> <span class='mi'>0</span><span class='p'>,</span> <span class='mi'>1</span><span class='p'>);</span>
+   <span class='c'>// Render colored quad</span>
+   <span class='n'>glBegin</span><span class='p'>(</span><span class='n'>GL_QUADS</span><span class='p'>);</span>
+   <span class='n'>glColor3ub</span><span class='p'>(</span><span class='mi'>255</span><span class='p'>,</span> <span class='mo'>000</span><span class='p'>,</span> <span class='mo'>000</span><span class='p'>);</span> <span class='n'>glVertex2f</span><span class='p'>(</span><span class='o'>-</span><span class='mi'>1</span><span class='p'>,</span>  <span class='mi'>1</span><span class='p'>);</span>
+   <span class='n'>glColor3ub</span><span class='p'>(</span><span class='mo'>000</span><span class='p'>,</span> <span class='mi'>255</span><span class='p'>,</span> <span class='mo'>000</span><span class='p'>);</span> <span class='n'>glVertex2f</span><span class='p'>(</span> <span class='mi'>1</span><span class='p'>,</span>  <span class='mi'>1</span><span class='p'>);</span>
+   <span class='n'>glColor3ub</span><span class='p'>(</span><span class='mo'>000</span><span class='p'>,</span> <span class='mo'>000</span><span class='p'>,</span> <span class='mi'>255</span><span class='p'>);</span> <span class='n'>glVertex2f</span><span class='p'>(</span> <span class='mi'>1</span><span class='p'>,</span> <span class='o'>-</span><span class='mi'>1</span><span class='p'>);</span>
+   <span class='n'>glColor3ub</span><span class='p'>(</span><span class='mi'>255</span><span class='p'>,</span> <span class='mi'>255</span><span class='p'>,</span> <span class='mo'>000</span><span class='p'>);</span> <span class='n'>glVertex2f</span><span class='p'>(</span><span class='o'>-</span><span class='mi'>1</span><span class='p'>,</span> <span class='o'>-</span><span class='mi'>1</span><span class='p'>);</span>
+   <span class='n'>glEnd</span><span class='p'>();</span>
+   <span class='c'>// Swap buffers (color buffers, makes previous render visible)</span>
+    <span class='n'>glutSwapBuffers</span><span class='p'>();</span>
+   <span class='c'>// Increase angle to rotate</span>
+   <span class='n'>angle</span><span class='o'>+=</span><span class='mf'>0.25</span><span class='p'>;</span>
+<span class='p'>}</span>
+
+<span class='c'>// Initialze OpenGL perspective matrix</span>
+<span class='kt'>void</span> <span class='n'>GL_Setup</span><span class='p'>(</span><span class='kt'>int</span> <span class='n'>width</span><span class='p'>,</span> <span class='kt'>int</span> <span class='n'>height</span><span class='p'>)</span>
+<span class='p'>{</span>
+
+    <span class='n'>glViewport</span><span class='p'>(</span> <span class='mi'>0</span><span class='p'>,</span> <span class='mi'>0</span><span class='p'>,</span> <span class='n'>width</span><span class='p'>,</span> <span class='n'>height</span> <span class='p'>);</span>
+    <span class='n'>glMatrixMode</span><span class='p'>(</span> <span class='n'>GL_PROJECTION</span> <span class='p'>);</span>
+    <span class='n'>glEnable</span><span class='p'>(</span> <span class='n'>GL_DEPTH_TEST</span> <span class='p'>);</span>
+    <span class='n'>gluPerspective</span><span class='p'>(</span> <span class='mi'>45</span><span class='p'>,</span> <span class='p'>(</span><span class='kt'>float</span><span class='p'>)</span><span class='n'>width</span><span class='o'>/</span><span class='n'>height</span><span class='p'>,</span> <span class='mf'>.1</span><span class='p'>,</span> <span class='mi'>100</span> <span class='p'>);</span>
+    <span class='n'>glMatrixMode</span><span class='p'>(</span> <span class='n'>GL_MODELVIEW</span> <span class='p'>);</span>
+<span class='p'>}</span>
+
+<span class='c'>// Initialize GLUT and start main loop</span>
+<span class='kt'>int</span> <span class='n'>main</span><span class='p'>(</span><span class='kt'>int</span> <span class='n'>argc</span><span class='p'>,</span> <span class='kt'>char</span><span class='o'>**</span> <span class='n'>argv</span><span class='p'>)</span> <span class='p'>{</span>
+    <span class='n'>glutInit</span><span class='p'>(</span><span class='o'>&amp;</span><span class='n'>argc</span><span class='p'>,</span> <span class='n'>argv</span><span class='p'>);</span>
+
+    <span class='n'>glutInitWindowSize</span><span class='p'>(</span><span class='n'>window_width</span><span class='p'>,</span> <span class='n'>window_height</span><span class='p'>);</span>
+
+    <span class='n'>glutInitDisplayMode</span><span class='p'>(</span><span class='n'>GLUT_RGB</span> <span class='o'>|</span> <span class='n'>GLUT_DOUBLE</span><span class='p'>);</span>
+
+    <span class='n'>glutCreateWindow</span><span class='p'>(</span><span class='s'>&quot;GLUT Example!!!&quot;</span><span class='p'>);</span>
+
+    <span class='n'>glutIdleFunc</span><span class='p'>(</span><span class='n'>main_loop_function</span><span class='p'>);</span>
+
+    <span class='n'>GL_Setup</span><span class='p'>(</span><span class='n'>window_width</span><span class='p'>,</span> <span class='n'>window_height</span><span class='p'>);</span>
+   <span class='n'>glutMainLoop</span><span class='p'>();</span>
+<span class='p'>}</span>
+</code></pre>
+</div>
+<p>Thanks! I&#8217;m eager to update this tutorial with more information, so if you&#8217;re having problems, let me know!</p>
+
+<h2 id='additional_resources'>Additional resources:</h2>
+
+<ul>
+<li><a href='http://www.opengl.org/documentation/specs/glut/spec3/spec3.html'>GLUT documentation</a></li>
+
+<li><a href='http://www.spacesimulator.net/tutorials.html'>Tutorials on spacesimulator</a></li>
+
+<li><a href='http://www.gamedev.net/reference/list.asp?categoryid=31'>GameDev Forum</a></li>
+
+<li><a href='http://www.glprogramming.com/red/index.html'>OpenGL Programming guide</a></li>
+
+<li><a href='http://lazyfoo.net/SDL_tutorials/lesson36/index.php'>Using SDL with OpenGL</a> (part of <a href='http://lazyfoo.net/SDL_tutorials/index.php'>Beginning Game Programming</a>)</li>
+
+<li><a href='http://www.videotutorialsrock.com/'>OpenGL Video Tutorials</a></li>
+</ul>
+</div>
+
+<div id="related">
+  <h2>Related Posts</h2>
+  <ul>
+    
+      <li><a href="/2010/03/quoteden-moving-to-kohana-3">Quoteden: Moving to Kohana 3</a> &mdash; 12 Mar 2010</li>
+    
+      <li><a href="/2010/01/my-sumo-local-development-environment">My SUMO local development environment</a> &mdash; 04 Jan 2010</li>
+    
+      <li><a href="/2009/11/hacking-wordpress-check-contact-messages-for-spam-using-wordpress-built-in-akismet-spam-for-comments">Hacking Wordpress: check contact messages for spam using Wordpress' built-in Akismet spam for comments</a> &mdash; 14 Nov 2009</li>
+    
+  </ul>
+</div>
+
+    </div>
+
+    <div id="footer" role="contentinfo">
+        <div class="about">
+        <p>Hi, I'm Paul Craciunoiu! I work as a web developer for <a href="http://mozilla.com">Mozilla</a>, with main focus on <a href="http://www.djangoproject.com/">Django</a>, Python, and PHP. Occasionally, I write tutorials or post other information I find interesting.</p>
+        <p>I enjoy doing freelance work for other websites, mostly non-profits. If you're interested in my services, contact me through one of the links below.</p>
+        </p>
+        </div>
+        <div class="contact">
+            <a href="http://twitter.com/embrangler/">Follow me</a> -- 
+            <a href="http://craciunoiu.net/contact/paul">Email me</a> -- 
+            <a href="http://github.com/pcraciunoiu/">My GitHub</a>
+        </div>
+        <div class="quote">
+        <p>
+            Success is a journey, not a destination. The doing is often more important than the outcome. &mdash; <a href="http://quoteden.net/author/id/337">Arthur Robert Ashe, Jr</a>
+        </p>
+        <p>&copy; Paul Craciunoiu. Some rights reserved. Brought to you by <a href="http://wiki.github.com/mojombo/jekyll/">Jekyll</a></p>
+        </div>
+    </div>
+</div><!-- site -->
+
+</body>
+</html>

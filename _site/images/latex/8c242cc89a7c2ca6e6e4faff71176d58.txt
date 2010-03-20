@@ -1,0 +1,3 @@
+<blahtex>
+<error><id>IllegalFinalBackslash</id><message>Illegal backslash "\" at end of input</message></error>
+</blahtex>

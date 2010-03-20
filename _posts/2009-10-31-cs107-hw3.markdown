@@ -1,0 +1,127 @@
+--- 
+wordpress_id: 113
+layout: post
+title: CS107 hw3
+wordpress_url: http://embrangler.com/?p=113
+---
+Homework 3
+
+page 119.
+
+3) Let $ A_i = $the probability that pilot flies mission i safely.
+Then the probability that a pilot flies n consecutive missions safely is $ P(A_1 \cdot .. A_n) = (\frac{49}{50})^n$, since $ A_i, .. A_j$ are independent events. Hence, Jim is right that the probability of a pilot flying 49 consecutive missions safely is about 0.3716017. However, he is wrong about the odds of the pilot performing the 50th mission successfully. Since the probability is independent of other missions, this pilot's probability to perform the 50th mission successively is still $ \frac{49}{50}$. This is because $ P(A_{50} | A_{49} \cdot .. A_{1}) = P(A_{50})$ (from independence). Consequently, Mia is also wrong about the pilot needing to return after 49 successful consecutive missions. The probability of success for the pilot's 50th mission is simply the same, $ \frac{49}{50}$. So, both Mia and Jim are wrong.
+
+7) a) Let $ P(L) = 0.725$, where L = event that a 35-year-old US citizen lives to age 65. The events of John (A) and Jim (B) living to age 65 are independent, and hence $ P(AB) = 0.725^2 = 0.525625$
+b) $ P(\bar{A}\bar{B}) = 0.275^2 = 0.075625$
+
+page 137.
+
+16) Let E = Lorna guesses correctly, R = had is red, B = hat is blue. Then let:
+$ g_1 =$ correct guess, hat is red
+$ g_2 =$ correct guess, hat is blue
+$ g_3 =$ incorrect guess, hat is red
+$ g_4 =$ incorrect guess, hat is red
+Therefore:
+$ P(g_1) = \alpha \cdot \frac{1}{2} = \frac{\alpha}{2}$
+$ P(g_2) = (1 - \alpha) \cdot \frac{1}{2} = \frac{1 - \alpha}{2}$
+$ P(g_3) = \alpha \cdot \frac{1}{2} = \frac{\alpha}{2}$
+$ P(g_4) = (1 - \alpha) \cdot \frac{1}{2} = \frac{1 - \alpha}{2}$
+And chance of success:
+$ P(success) = P(g_1) + P(g_2) = \frac{1}{2}$
+It follows that there is no strategy to maximize Lorna's chance of success, since the chance of success is independent of $ \alpha$.
+
+17) Let events E = child is in the east wing, W = child is in the west wing, OE = officer in east finds the child, OW = officer in west finds the child, F = child is found, FE = child is found in east wing, FW = child is found in west wing. We are given:
+$ P(OE|E) = 0.4, P(OW|W) = 0.4, P(E) = 0.75, P(W) = 0.25$.
+For the west wing, the probability of finding the child with two officers searching (if the child is there):
+$ P(FW|W) = P(OW1 \cup OW2 | W) = P(OW1 | W) + P(OW2 | W) - P(OW1|W \cdot OW2|W) = 0.4 + 0.4 - 0.16 = 0.64$
+For the east wing, the same probability but with three officers searching:
+$ P(FE|E) = P(OE1 \cup OE2 \cup OE3 | E) = 0.64 + 0.4 - 0.256 = 0.784$
+But:
+$ P(FW|W) = \frac{P(FW \cdot W)}{P(W)}$ => $ P(FW) = 0.25 \cdot 0.64 = 0.16$
+similarly, $ P(FE) = 0.75 \cdot 0.784 = 0.588$
+Finally:
+$ P(F) = P(FE \cup FW) = 0.748$
+
+19) Let events S = professor smith passes Kevin, SF = professor smith fails Kevin, B and R similar to S, BF and RF similar to SF, K = Kevin is prepared, U = kevin is unprepared
+a) $ P(R | BF \cdot SF) = ?$
+To calculate this, we need to take into account whether Kevin is prepared or not:
+$ P(R | BF \cdot SF) = P(R | BF \cdot SF \cdot K) \cdot P(K | SF \cdot BF) + P(R | BF \cdot SF \cdot U) \cdot P(U | SF \cdot BF)$. We can calculate $ P(K | SF \cdot BF)$ using Bayes' theorem.
+$ P(K | SF \cdot BF) = \frac{P(SF \cdot BF | K) \cdot P(K)}{P(SF \cdot BF | K) \cdot P(K) + P(SF \cdot BF | U) \cdot P(U)}$, and, similarly:
+$ P(U | SF \cdot BF) = \frac{P(SF \cdot BF | U) \cdot P(U)}{P(SF \cdot BF | K) \cdot P(K) + P(SF \cdot BF | U) \cdot P(U)}$.
+Since examiners fail or pass independently from each other, but depending on whether the student is prepared or not:
+$ P(SF \cdot BF | K) = P(SF | K) \cdot P(BF | K) = 0.15^2 = 0.0225$, and
+$ P(SF \cdot BF | U) = P(SF | U) \cdot P(BF | U) = 0.8^2 = 0.64$. Hence:
+$ P(K | SF \cdot BF) = \frac{0.0225 \cdot 0.85}{0.0225 \cdot 0.85 + 0.64 \cdot 0.15} = \frac{0.019125}{0.115125} = 0.16612$
+$ P(U | SF \cdot BF) = \frac{0.64 \cdot 0.15}{0.0225 \cdot 0.85 + 0.64 \cdot 0.15} = \frac{0.096}{0.115125} = 0.83388$
+To calculate $ P(R | BF \cdot SF \cdot K)$, we use the fact that R, B and S are conditionally independent with respect to K, hence:
+$ P(R | BF \cdot SF \cdot K) = P(R | K) = 0.85$ and, similarly
+$ P(R | BF \cdot SF \cdot U) = P(R | U) = 0.15$.
+Therefore:
+$ P(R | BF \cdot SF) = 0.85 \cdot 0.16612 + 0.20 \cdot 0.83388 = 0.141202 + 0.166776 = 0.307978 \approx 0.308$
+
+b) In answer to the second question, of course, S, B and R are not independent. Otherwise the probability would have been a simple:
+$ P(R | BF \cdot SF) = 0.85 \cdot 0.85 + 0.20 \cdot 0.15 = 0.7225 + 0.03 = 0.7525$
+
+c) Yes. S, B and R are conditionally independent, depending on whether Kevin is or is not prepared.
+
+
+page 150.
+
+1) Possible values are: 5, 4, 3, 2, 1, 0.
+Probabilities:
+* 6 cases for difference = 0: (1, 1), (2, 2), ... (6, 6) ==> $ \frac{1}{6} = 0.1(6) $
+* 10 cases for difference = 1: (1, 2), (2, 1), ... (5, 6), (6, 5) ==> $ \frac{5}{18} = 0.2(7) $
+* 8 cases for difference = 2: (1, 3), (3, 1), ... (4, 6), (6, 4) ==> $ \frac{2}{9} = 0.(2) $
+* 6 cases for difference = 3: (1, 4), (4, 1), (2, 5), (5, 2), (3, 6), (6, 3) ==> $ \frac{1}{6} = 0.1(6) $
+* 4 cases for difference = 4: (1, 5), (5, 1), (2, 6), (6, 2) ==> $ \frac{1}{9} = 0.(1) $
+* 2 cases for difference = 5: (1, 6), (6, 1) ==> $ \frac{1}{18} = 0.0(5) $
+
+2) Possible values are: $-6 (2 red), $-2 (1 red, 1 blue), $-1 (1 red, 1 white), $2 (2 blue), $3 (1 blue, 1 white), $4 (2 white). Sample space contains a total of 9 events.
+Probabilities:
+* 1 case for -6 ==> $ \frac{1}{9} = 0.(1) $
+* 2 cases for -2 ==> $ \frac{2}{9} = 0.(2) $
+* 2 cases for -1 ==> $ \frac{2}{9} = 0.(2) $
+* 1 case for 2 ==> $ \frac{1}{9} = 0.(1) $
+* 2 cases for 3 ==> $ \frac{2}{9} = 0.(2) $
+* 1 case for 4 ==> $ \frac{1}{9} = 0.(1) $
+
+4) Volume is greater than 1.424 means that the side is greater than $ l = \sqrt[3]{1.424} \approx 1.125$
+The probability is, then:
+$ \frac{1.25 - \sqrt[3]{1.424}}{0.25} \approx 0.4998 \approx 0.5$
+
+page 173.
+
+2) The expected payment for parking illegally is:
+$ E[X] = 0.4 \cdot 0 + 0.6 \cdot 25 = 15 > 7$. Therefore the commuter should park at a lot.
+
+3) The expected winning amount for a single ticket:
+$ E[X] = \frac{4000}{2,000,000} \cdot 30 + \frac{500}{2,000,000} \cdot 800 + \frac{1}{2,000,000} \cdot 1,200,000 + \frac{1,995,499}{2,000,000} \cdot 0 = 0.06 + 0.2 + 0.6 = 0.86$
+
+
+page 182.
+
+3) We calculate variance using the formula: $ Var(X) = E(X^2) - [E(X)]^2 $
+So $ E(X) = (-3) \cdot \frac{7}{28} + (-2) \cdot \frac{6}{28} + (-1) \cdot \frac{5}{28} + 0 \cdot \frac{4}{28} + 1 \cdot \frac{3}{28} + 2 \cdot \frac{2}{28} + 3 \cdot \frac{1}{28} = \frac{1}{28} \cdot (-21-12-5+3+4+3) = -1$, and
+$ E(X^2) = (-3)^2 \cdot \frac{7}{28} + (-2)^2 \cdot \frac{6}{28} + (-1)^2 \cdot \frac{5}{28} + 0 \cdot \frac{4}{28} + 1^2 \cdot \frac{3}{28} + 2^2 \cdot \frac{2}{28} + 3^2 \cdot \frac{1}{28} = \frac{1}{28} \cdot (63+24+5+3+8+9) = \frac{112}{28} = 4$. Therefore:
+$ Var(X) = E(X^2) - [E(X)]^2 = 4 - 1^2 = 3$
+
+4) We calculate variance using the formula: $ Var(X) = E(X^2) - [E(X)]^2 $
+So $ E(X) = \int_{-3}^{\infty} \! F(x) \, dx = \int_{-3}^{0} \! \frac{3}{8} \, dx + \int_{0}^{6} \! \frac{3}{4} \, dx + \int_{6}^{\infty} \! 1 \, dx$
+As we can see, E(X) does not exist for this distribution, since F(x) is not continuous and $ \int_{6}^{\infty} \! 1 \, dx$ is not finite.
+
+page 238.
+
+1) a) To determine c, we use the property $ \int_{-\infty}^{\infty} \! f(x) \, dx = 1 $:
+$ \int_{-\infty}^{\infty} \! f(x) \, dx = \int_{0}^{\infty} \! ce^{-3x} \, dx = c \cdot \int_{0}^{\infty} \! e^{-3x} \, dx = c \cdot (-\frac{1}{3}) \cdot (-1) => c = 3$
+
+b) $ P(X \le 0.5) = f(0.5) = 3 \cdot e^{-1.5} = 0.78$
+
+3) a) To determine c, we use the property $ \int_{-\infty}^{\infty} \! f(x) \, dx = 1 $:
+$ \int_{-\infty}^{\infty} \! f(x) \, dx = \int_{1}^{2} \! c(x-1)(2-x) \, dx = c \cdot \int_{1}^{2} \! (-x^2 + 3x - 2) \, dx = c \cdot \frac{1}{6} => c = 6$
+
+b) Obviously, it takes 0 for the student to finish if x < 1.
+It takes $ \int_{1}^{2} \! 6 \cdot (-x^2 + 3x - 2) = -2x^3 + 9x^2 - 12x + 5, if 1 \le x < 2$ and 1, if $ x \ge 2$
+
+c) $ P(1.25) = -2 \cdot 1.25^3 + 9 \cdot 1.25^2 - 12 \cdot 1.25 + 5 = 0.15625$, probability to finish in 75 minutes.
+To finish between 1 + 1/2 and 2 hours, we take:
+$ P(1.5 \le X \le 2) = F(2) - F(1.5) = 1 - (-2 \cdot 1.5^3 + 9 \cdot 1.5^2 - 12 \cdot 1.5 + 5) = 0.5$
