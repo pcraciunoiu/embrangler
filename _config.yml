@@ -1,3 +1,4 @@
+server:      false
 lsi:         true
 pygments:    true
 permalink:   /:year/:month/:title

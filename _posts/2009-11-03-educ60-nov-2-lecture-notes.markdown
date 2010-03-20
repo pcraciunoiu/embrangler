@@ -3,6 +3,7 @@ wordpress_id: 125
 layout: post
 title: EDUC60 - nov 2 - lecture notes
 wordpress_url: http://embrangler.com/?p=125
+summary: Lecture notes from November 2, 2009, Education 60, a intro class at UC Santa Cruz
 ---
 Ideas about teaching:
 

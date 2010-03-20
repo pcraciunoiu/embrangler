@@ -3,6 +3,7 @@ wordpress_id: 128
 layout: post
 title: "Hacking Wordpress: check contact messages for spam using Wordpress' built-in Akismet spam for comments"
 wordpress_url: http://embrangler.com/?p=128
+summary: If you want a contact form that uses Akismet instead of Captcha to filter spam.
 ---
 This article explains how to easily create a contact form with spam filtering in Wordpress.
 

@@ -3,6 +3,7 @@ wordpress_id: 39
 layout: post
 title: Computer graphics - lecture notes - 10/05/09
 wordpress_url: http://embrangler.com/?p=39
+summary: Lecture notes from October 5, 2009 for CS160, a computer graphics class at UC Santa Cruz
 ---
 Filling in recursive calls
 <pre style="text-align: center;">x

@@ -62,9 +62,40 @@ a:hover {
     border-bottom: 1px solid #ddd;
 }
 
+.table-wrap {
+    text-align: center;
+}
+.table {
+    margin: 0 auto;
+    width: 90%;
+    background: #eee;
+    padding: 0.6em 0;
+    -moz-box-shadow: 1px 1px 5px #aaa;
+    -webkit-box-shadow: 1px 1px 5px #aaa;
+    -moz-border-radius: 16px;
+    -webkit-border-radius: 16px;
+}
+
 table {
     font-size: inherit;
     font: 100%;
+    width: 100%;
+    text-align: left;
+    line-height: 1.5em;
+}
+
+table th, .center {
+    text-align: center;
+}
+
+table tr:hover {
+    background: #f6f6f6;
+}
+
+.caption {
+    font-size: 80%;
+    line-height: 1em;
+    font-style: italic;
 }
 
 ul, ol {
@@ -169,7 +200,7 @@ h2.subtitle a {
 /* posts */
 .post {
     width: 45%;
-    height: 25em;
+    height: 16em;
     float: left;
     margin: 0; padding: 0;
 }
@@ -185,9 +216,13 @@ h2.subtitle a {
     color: #999;
 }
 
-.post p a {
+.post p a.more {
     float: right;
     margin-right: .5em;
+}
+
+.post h2 {
+    margin: 0;
 }
 
 /*****************************************************************************/
@@ -224,13 +259,14 @@ h2.subtitle a {
     margin: 0 auto;
     -moz-box-shadow: 1px 1px 5px #aaa;
     -webkit-box-shadow: 1px 1px 5px #aaa;
-    -moz-border-radius: 10px;
-    -webkit-border-radius: 10px;
+    -moz-border-radius: 16px;
+    -webkit-border-radius: 16px;
 }
 
 .img div {
-   font-size: 80%;
-   line-height: 1em;
+    font-size: 80%;
+    line-height: 1em;
+    font-style: italic;
 }
 
 /* Paginators */
@@ -290,4 +326,3 @@ pre.terminal {
 pre.terminal code {
     background-color: #333;
 }
-

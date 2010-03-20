@@ -3,6 +3,7 @@ wordpress_id: 163
 layout: post
 title: "Quoteden: Moving to Kohana 3"
 wordpress_url: http://embrangler.com/?p=163
+summary: The migration process of <a href="http://quoteden.net">Quote Den</a>, from Drupal 6 to Kohana 3.
 ---
 _This post is written in collaboration with Marius Craciunoiu, my brother, and designer of Quote Den and [other](http://craciunoiu.net) [sites](http://awesomemath.org)._
 
@@ -100,31 +101,34 @@ Part of perfecting the design was to [balance](http://webdesign.about.com/od/web
 
 Although probably none of you may see this anytime soon, one of the reasons we redesigned Quote Den was because it was a pain to add quotes. The add form was incredibly complex. To give you an idea of how BIG this thing was, you should know it had:
 
-<table>
+<div class="table-wrap"><div class="table">
+<table cellspacing="0" border="0">
 <tr>
-<td>Before</td>
-<td>and</td>
-<td>After</td>
+<th style="width: 30%">Before</th>
+<th style="width: 40%">and</th>
+<th>After</th>
 </tr>
 <tr>
 <td>
 <ul>
-* 9 input fields
-* 2 drop down menus
-* 6 radio buttons
-* 5 check boxes
-* 48 lines of text
+<li>9 input fields</li>
+<li>2 drop down menus</li>
+<li>6 radio buttons</li>
+<li>5 check boxes</li>
+<li>48 lines of text</li>
 </ul>
 </td>
-<td>vs</td>
+<td class="center">vs</td>
 <td>
 <ul>
-* 3 input fields
-* 4 lines of text
+<li>3 input fields</li>
+<li>4 lines of text</li>
 </ul>
 </td>
 </tr>
 </table>
+<div class="caption">Quote creation form, improvements</div>
+</div></div>
 
 ## Feedback
 Of course no website would be complete without the almighty contact us link, so we added one on the bottom. We hope our viewers will contact us about anything related to the website, whether that is feedback on the site or suggestions on the quotes themselves.

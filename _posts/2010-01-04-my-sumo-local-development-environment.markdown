@@ -3,6 +3,7 @@ wordpress_id: 151
 layout: post
 title: My SUMO local development environment
 wordpress_url: http://embrangler.com/?p=151
+summary: How I set things up locally to develop for Mozilla's <a href="http://support.mozilla.com">SUMO</a>.
 ---
 ## Summary
 A while back, James wrote about [his development environment](http://coffeeonthekeyboard.com/local-web-development-323/ "James' local development environment"). I wanted to summarize my approach, and go into a bit more detail about the specific setup you would need to have SUMO work locally. For more information, see also [this wiki page](http://https://wiki.mozilla.org/Support:Sumodev#Get_Involved).

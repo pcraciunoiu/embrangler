@@ -3,6 +3,7 @@ wordpress_id: 49
 layout: post
 title: ED60 - David Labaree - Public goods, private goods, the American struggle over educational goals
 wordpress_url: http://embrangler.com/?p=49
+summary: A summary of David Labaree's article on public goods vs private goods, for Education 60, a intro class at UC Santa Cruz
 ---
 As part of my education 60 class, we have to read a paper by David Labaree, on schools: seen as a private vs public goal.
 

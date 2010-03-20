@@ -11,7 +11,7 @@ title: Disembrangling Programming - Paul Craciunoiu
             <span>{{ post.date | date_to_string }}</span>
         </div>
         <p>
-            {{ post.content | strip_html | truncatewords: 35 }} <a href="{{ post.url }}" title="Read the rest of this post">Read it</a>
+            {{ post.summary }} <a class="more" href="{{ post.url }}" title="Read this post">Read it</a>
         </p>
     </div>
     {% endfor %}

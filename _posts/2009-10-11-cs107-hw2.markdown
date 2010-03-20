@@ -3,6 +3,7 @@ wordpress_id: 64
 layout: post
 title: CS107 hw2
 wordpress_url: http://embrangler.com/?p=64
+summary: Homework 2 for CMPE 107, a statistics course for engineers at UC Santa Cruz.
 ---
 Homework 2
 

@@ -3,6 +3,7 @@ wordpress_id: 96
 layout: post
 title: Computer graphics - lecture notes - 10/14/09
 wordpress_url: http://embrangler.com/?p=96
+summary: Lecture notes from October 14, 2009 for CS160, a computer graphics class at UC Santa Cruz
 ---
 Reflection:
 

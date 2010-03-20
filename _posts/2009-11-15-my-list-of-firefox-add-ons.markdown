@@ -3,6 +3,7 @@ wordpress_id: 148
 layout: post
 title: My list of Firefox add-ons
 wordpress_url: http://embrangler.com/?p=148
+summary: A list of addons I'm using, periodically updated as I discover new ones or get tired of ones used.
 ---
 __UPDATE (27 Feb 2010)__ [BarTab](https://addons.mozilla.org/en-US/firefox/addon/67651) is an awesome extension.
 
