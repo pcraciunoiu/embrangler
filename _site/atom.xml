@@ -4,7 +4,7 @@
  <title>Disembrangling Programming - Paul Craciunoiu</title>
  <link href="http://embrangler.com/atom.xml" rel="self"/>
  <link href="http://embrangler.com/"/>
- <updated>2010-03-21T15:16:14-07:00</updated>
+ <updated>2010-03-21T15:23:28-07:00</updated>
  <id>http://embrangler.com/</id>
  <author>
    <name>Paul Craciunoiu</name>
@@ -195,7 +195,7 @@
 
 &lt;li&gt;&lt;strong&gt;Flexibility&lt;/strong&gt; - Using custom built models in a framework allows for more flexibility and ultimately control over the application. Basically, you can make it do what you want without having to hack it.&lt;/li&gt;
 
-&lt;li&gt;&lt;strong&gt;Performance&lt;/strong&gt; - Kohana is a fairly simple framework. Compared to &lt;a href='http://framework.zend.com/'&gt;Zend&lt;/a&gt;, for example, it offers fewer features and is perfect for a simpler website such as &lt;a href='http://quoteden.net'&gt;Quote Den&lt;/a&gt;. We didn&amp;#8217;t need all of the features that Drupal offers either. Finally, Kohana works quite a bit faster than Drupal for Quote Den&amp;#8217;s purposes. As a comparison, the new site now loads in ~0.5s versus ~0.75s on my computer (over an average of 20 page loads). Here is a YSlow comparison of &lt;a href='http://embrangler.com/wp-content/uploads/2010/02/quoteden-stage.html'&gt;new&lt;/a&gt; versus &lt;a href='http://embrangler.com/wp-content/uploads/2010/02/quoteden.html'&gt;old&lt;/a&gt;. Content caching is not yet in place.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Performance&lt;/strong&gt; - Kohana is a fairly simple framework. Compared to &lt;a href='http://framework.zend.com/'&gt;Zend&lt;/a&gt;, for example, it offers fewer features and is perfect for a simpler website such as &lt;a href='http://quoteden.net'&gt;Quote Den&lt;/a&gt;. We didn&amp;#8217;t need all of the features that Drupal offers either. Finally, Kohana works quite a bit faster than Drupal for Quote Den&amp;#8217;s purposes. As a comparison, the new site now loads in ~0.5s versus ~0.75s on my computer (over an average of 20 page loads). Here is a YSlow comparison of &lt;a href='/files/quoteden/quoteden-stage.html'&gt;new&lt;/a&gt; versus &lt;a href='/files/quoteden/quoteden.html'&gt;old&lt;/a&gt;. Content caching is not yet in place.&lt;/li&gt;
 &lt;/ol&gt;
 
 &lt;h2 id='redesign_details'&gt;Redesign details&lt;/h2&gt;

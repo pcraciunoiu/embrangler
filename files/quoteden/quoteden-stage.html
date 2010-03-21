@@ -1,0 +1,351 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"><title></title><style type="text/css">/* ***** BEGIN LICENSE BLOCK *****
+ *
+ * Version: MPL 1.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is: YSlow 2
+ *
+ * The Initial Developer of the Original Code is Yahoo! Inc.
+ *
+ * Copyright (C) 2009, Yahoo! Inc. All Rights Reserved.
+ *
+ * Contributor(s):
+ *     Antonia Kwok
+ *
+ * ***** END LICENSE BLOCK ***** */
+
+body table tr td th div span img a ul li h1 h2 h3 h4 {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    font-family: Lucida Grande, Tahoma, sans-serif;
+    font-size: 10pt;
+}
+
+table {
+    empty-cells: show;
+}
+
+/* printable view */
+#printableDiv {
+    background: #fff;
+    padding: 0 10px;
+}
+
+#printableDiv #print-title {
+    font-size: 1.5em;
+    color: #E05000;
+    margin: 2px;
+}
+
+#printableDiv #print-title img {
+    padding-right: 5px;
+}
+
+#printableDiv .pageURL {
+    margin-bottom: 10px;
+    font-size: 1.5em;
+}
+
+#printableDiv  .pageURL span {
+    margin-left: 10px;
+}
+
+#printableDiv  #yslowDiv .section .title {
+    font-size: 1.5em;
+    margin-top: 10px;
+}
+
+#printableDiv  #yslowDiv .section .contentDiv {
+    width: auto;
+    height: auto;
+    position: relative;
+    margin-bottom: 20px;
+    border: 4px #F9F9F9 ridge;
+    padding-bottom: 10px;
+}
+
+#printableDiv .copyright {
+    text-align: center;
+    font-size: 10pt;
+    margin-top: 20px;
+}
+
+#yslowDiv {
+    width: 950px;
+    margin: 0px auto;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+#yslowDiv a {
+    color: #006CA2; /* blue */
+}
+
+#yslowDiv #summary {
+    display: inline;
+    white-space: nowrap;
+    color: #101010;
+}
+
+#yslowDiv #summary .view-title {
+    display: none;
+}
+
+#yslowDiv #summary .number,
+#yslowDiv .section-summary .number {
+    font-weight: bold;
+    color: #101010;
+}
+
+/* START stats */
+#statsDiv {
+    margin: 0 10px 10px 10px;
+    height: 275px;
+}
+
+#statsDiv .section-header {
+    font-size: 10pt;
+    color: #101010;
+    border-bottom: 1px solid #676767;
+    padding-top: 20px;
+}
+
+#statsDiv .stats-graph {
+    margin: 10px 0;
+    padding: 5px 0;
+}
+
+#statsDiv .stats-graph .canvas-title {
+    text-align: center;
+    padding-bottom: 5px;
+}
+
+#statsDiv #primed-cache,
+#statsDiv #empty-cache {
+    width: 435px;
+    margin-top: 10px;
+}
+
+#statsDiv #empty-cache {
+    margin-left: 15px;
+    float: left;
+    border-right: 1px solid #676767;
+    padding-left: 10px;
+}
+
+#statsDiv #primed-cache {
+    margin-right: 15px;
+}
+
+#statsDiv #stats-detail {
+    margin-left: 180px;
+}
+
+#statsDiv #stats-detail .summary-row, 
+#statsDiv #stats-detail .summary-row-2 {
+    font-weight: bold;
+    font-size: 10pt;
+    color: #101010;
+    padding: 5px 0;
+}
+
+#statsDiv #stats-detail #stats-table {
+    margin-right: 20px;
+    font-size: 9pt;
+    border-spacing: 0;
+}
+
+#statsDiv #stats-detail #stats-table tr {
+    height: 18px;
+    border-top: 1px solid #676767;
+}
+
+#statsDiv #stats-detail #stats-table tr {
+    border-top: 1px solid #676767;
+}
+
+#statsDiv #stats-detail #stats-table td {
+    height: 18px;
+    border-top: 1px solid #676767;
+    margin: 2px 2px;
+}
+
+#statsDiv #stats-detail #stats-table td.legend {
+    width: 22px;
+}
+
+#statsDiv #stats-detail #stats-table td .stats-legend {
+    width: 10px;
+    height: 10px;
+    margin: 6px 6px;
+}
+
+#statsDiv #stats-detail #stats-table td.count {
+    width: 28px;
+    text-align: right;
+}
+
+#statsDiv #stats-detail #stats-table td.type {
+    width: 100px;
+    padding-left: 5px;
+}
+
+#statsDiv #stats-detail #stats-table td.size {
+    width: 50px;
+    text-align: right;
+}
+
+
+/* END stats */
+
+/* BEGIN components */
+#componentsDiv #expand-all {
+    display: none;
+}
+
+#componentsDiv #components table {
+    margin: 10px 10px;
+    border: solid #676767;
+    border-width: 0 1px 1px 0;
+    border-spacing: 0;
+    font-size: 0.85em;
+}
+ 
+#componentsDiv #components th {
+    border: solid #676767;
+    border-width: 1px 0 0 1px;
+}
+
+#componentsDiv #components td {
+    border: solid #676767;
+    border-width: 1px 0 0 1px;
+    padding: 2px 5px;
+    height: 30px;
+    max-width: 350px;
+}
+
+#componentsDiv #components td.size,
+#componentsDiv #components td.gzip,
+#componentsDiv #components td.cookie,
+#componentsDiv #components td.set-cookie,
+#componentsDiv #components td.respTime {
+    text-align: right;
+}
+
+#componentsDiv #components td.components, 
+#componentsDiv #components td.headers {
+    text-align: center;
+}
+
+#componentsDiv #components tr.compError td {
+    color: #f00;
+}
+
+/* END components*/
+
+/* BEGIN Performance */
+
+#reportDiv table {
+    border-spacing: 0;
+    width: 100%;
+    font-size: 10pt;
+}
+
+#reportDiv tr.header {
+    font-weight: bold;
+    background: #dfdfdf;
+}
+
+#reportDiv tr.header td {
+    border: none;
+}
+
+#reportDiv td {
+    border: solid #676767;
+    padding: 5px 5px;
+}
+
+#reportDiv td.grade {
+    width: 30px;
+    border-width: 0 0 0 5px;
+    text-align: center;
+    vertical-align: top;
+    font-weight: bold;
+    border-bottom: 1px solid #676767;
+}
+
+#reportDiv td.desc {
+    border-width: 0 0 1px 1px;
+}
+
+#reportDiv td.desc div.message,
+#reportDiv td.desc ul {
+    color: #ff0000;
+}
+
+#reportDiv .grade-A {
+    border-color: #34a234;
+}
+
+#reportDiv .grade-B {
+    border-color: #a4cb58;
+}
+
+#reportDiv .grade-C {
+    border-color: #fadd3d;
+}
+
+#reportDiv .grade-D {
+    border-color: #f5a249;
+}
+
+#reportDiv .grade-E {
+    border-color: #e46648;
+}
+
+#reportDiv .grade-F {
+    border-color: #df4444;
+}
+
+
+/* END Performance */
+
+.floatRight {
+    float: right;
+}
+
+.floatLeft {
+    float: left;
+}
+
+tr.odd {
+    background: #ffffff;
+}
+
+tr.even {
+    background: #efefef;
+}</style></head><body><div id="printableDiv"><div id="print-title"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAADAFBMVEUAABAA/wAICCkICDEIEEoIIVIQEBgQEDkQEEIQEEoQIVoQMWsYGCkYGDkYGEoYGFIhISEhISkhITkhIUohIVIhIVohIWMhIWshKVIhKVohKWMhKXshKYQhMYQhWpwpKSkpKUopKVopKWMpKWspKXMpKXspKYQpKYwpMUopMWspMXspc8YxGEIxMTExMUoxMVIxMXsxMYQxMYwxMZQxOVoxOZQxWpw5KXM5OTE5OTk5OVI5OVo5OYw5OZQ5OZw5QmM5QoQ5QqU5Sns5Uow5e8ZCEEJCQkJCQnNCQoRCQoxCQpRCQpxCQqVCY6VCc7VCe8ZKKWtKSkJKSkpKSlJKSmtKSoxKSpRKUmtKUpxKhMZSGDFSGFpSUkpSUlJSUlpSUmNSUoxSUqVSWmtSjM5SjNZaWlpaWoxaWpxalM5jY2NjY2tja4xja5Rja61je71jjM5jlNZjnNZjnN5rGEpra2tra3NrlM5zc2tzc3Nzc3tzc6Vze4RzjMZ7CBh7EDF7e3t7e5x7e717pdaECCGEe4SEhISEhLWEhMaEjL2EpdaErdaMABCMY4yMY5SMjIyMjJSMlLWMpdaMrd6UlJSUlJyUlKWUpdaUtd6cGDmcMVKcnJycnL2cnM6cpb2crdactd6lpaWlpb2ltdaltd6tra2trc6ttb2tvd61AAC1ECm1ta21tbW1tb21td61vca1vda1vd69vb29xt69xufGY3vGxr3GxsbGxt7Gzt7Ozs7Ozt7OzufW1tbW1t7W1ufeABDeKTHe3t7n5+fn5/fvAAjvOULv7+/v7/f39/f39///AAD/GBD/ISH/Y1r///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////8H2aaQAAAAAnRSTlP/AOW3MEoAAAJUSURBVHjaY2BkxA8YGEcVYCo4uHPjxm07cSg4tnPj6m1ABUtmtbYuOYipYOe2QyfOHdy4bdvqjRsXtJb3H0RVcHDnsRPbSgTYBHl4BAUsSmZNrshcjazg4MFzOwPZeJVUlD1y3BUVNXRTWytSJx+EKzh48Fgfm4KnoaGhSs7SNCklSRG9oJKSWLAKBoh8K4PB2u2Ghg4qbduBCqQUG8KDyzPdFhwCK9gJklc2zT00R9VQFaxAcuGuEN64kli3jSAFxw4eXM2mbGdr2rg711A1vcqj2HXCsWw+Pr2sTLeSnUAFB3ceDOZztLOz80r0cjB00ApojpqbIyIizBtfEau7+hgD0IbVDB0n2r3s7GxtgM6UndEtDHSliHC4fkWmZclOhoM7d2byec05sS/R0NTQUFU6en8tl6ioSMiyc1OTKtx0NzIc3LaTTcVW3avRR11d3VBVdeWRKC5JzpBd6+zZeftj5Wcx7Ny2hMHWyFRd3cjISNVQJvrICh2gAXzs7Oy8TP2p8vUMGzdOZjJUB1oOwqrmK091i4iK8vPxgRRUl+imMqze2M8UERpmY6imamhovvLMqTpuJVE+PgVrKyuh0nqQgiV9Qru3b1/qYBOWm9dz9OyZmX6+zposDYdOnOgHKwBGP5NnaHpV26JNixdN23L0QE9RRkpKpJmTtR5bdb08UMHkegaVhNnbN61fNG9aZ1NHTWF+cnKkv4u2HBfDlEyBVIZtrX0MVdu3r1+/af3ixYvmT5/e1dXZVJaR4aKtzb0mhq2VYWdrtZslTsC2gPJkDwDMVt/8Gc046gAAAABJRU5ErkJggg==" align="absbottom">YSlow for Firebug</div><hr><div class="pageURL"><span>URL:</span><span><a href="http://stage.quoteden.net/" onclick="javascript:document.ysview.openLink('http://stage.quoteden.net/'); return false;">http://stage.quoteden.net/</a></span></div><div id="yslowDiv"><div class="section"><div class="title">Grade</div><div class="contentDiv"><div id="reportDiv"><table><tbody><tr class="header"><td colspan="2">Overall Grade: A  (Ruleset applied: YSlow(V2))</td></tr><tr><td class="grade grade-A"><b>A</b></td><td class="desc"><p>Make fewer HTTP requests<br></p><div class="message"></div><p></p></td></tr><tr><td class="grade grade-F"><b>F</b></td><td class="desc"><p>Use a Content Delivery Network (CDN)<br></p><div class="message">There are 8 static components that are not on CDN. <ul><li><a rel="css" title="http://stage.quoteden.net/min/?g=css" href="http://stage.quoteden.net/min/?g=css" onclick="javascript:document.ysview.openLink('http://stage.quoteden.net/min/?g=css'); return false;">http://stage.quoteden.net/min/?...</a></li><li><a rel="js" title="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" href="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" onclick="javascript:document.ysview.openLink('http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js'); return false;">http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js</a></li><li><a rel="js" title="http://stage.quoteden.net/min/?g=js" href="http://stage.quoteden.net/min/?g=js" onclick="javascript:document.ysview.openLink('http://stage.quoteden.net/min/?g=js'); return false;">http://stage.quoteden.net/min/?...</a></li><li><a rel="cssimage" title="http://stage.quoteden.net/img/quotessprite.png" href="http://stage.quoteden.net/img/quotessprite.png" onclick="javascript:document.ysview.openLink('http://stage.quoteden.net/img/quotessprite.png'); return false;">http://stage.quoteden.net/img/quotessprite.png</a></li><li><a rel="cssimage" title="http://stage.quoteden.net/img/stars.png" href="http://stage.quoteden.net/img/stars.png" onclick="javascript:document.ysview.openLink('http://stage.quoteden.net/img/stars.png'); return false;">http://stage.quoteden.net/img/stars.png</a></li><li><a rel="cssimage" title="http://stage.quoteden.net/img/qmark2.png" href="http://stage.quoteden.net/img/qmark2.png" onclick="javascript:document.ysview.openLink('http://stage.quoteden.net/img/qmark2.png'); return false;">http://stage.quoteden.net/img/qmark2.png</a></li><li><a rel="cssimage" title="http://stage.quoteden.net/img/footer.png" href="http://stage.quoteden.net/img/footer.png" onclick="javascript:document.ysview.openLink('http://stage.quoteden.net/img/footer.png'); return false;">http://stage.quoteden.net/img/footer.png</a></li><li><a rel="favicon" title="http://stage.quoteden.net/img/favicon.ico" href="http://stage.quoteden.net/img/favicon.ico" onclick="javascript:document.ysview.openLink('http://stage.quoteden.net/img/favicon.ico'); return false;">http://stage.quoteden.net/img/favicon.ico</a></li></ul><p>You can specify CDN hostnames in your preferences. See <a href="javascript:document.ysview.openLink('http://developer.yahoo.com/yslow/faq.html#faq_cdn')">YSlow FAQ</a> for details.</p></div><p></p></td></tr><tr><td class="grade grade-A"><b>A</b></td><td class="desc"><p>Add Expires headers<br></p><div class="message"></div><p></p></td></tr><tr><td class="grade grade-A"><b>A</b></td><td class="desc"><p>Compress components with gzip<br></p><div class="message"></div><p></p></td></tr><tr><td class="grade grade-A"><b>A</b></td><td class="desc"><p>Put CSS at top<br></p><div class="message"></div><p></p></td></tr><tr><td class="grade grade-A"><b>A</b></td><td class="desc"><p>Put JavaScript at bottom<br></p><div class="message"></div><p></p></td></tr><tr><td class="grade grade-A"><b>A</b></td><td class="desc"><p>Avoid CSS expressions<br></p><div class="message"></div><p></p></td></tr><tr><td class="grade grade-n/a"><b>n/a</b></td><td class="desc"><p>Make JavaScript and CSS external<br></p><div class="message">Only consider this if your property is a common user home page.</div><ul class="comps-list"><li>There are a total of 2 inline scripts</li></ul><br><p></p></td></tr><tr><td class="grade grade-A"><b>A</b></td><td class="desc"><p>Reduce DNS lookups<br></p><div class="message"></div><p></p></td></tr><tr><td class="grade grade-A"><b>A</b></td><td class="desc"><p>Minify JavaScript and CSS<br></p><div class="message"></div><p></p></td></tr><tr><td class="grade grade-B"><b>B</b></td><td class="desc"><p>Avoid URL redirects<br></p><div class="message">There are 2 redirects</div><ul class="comps-list"><li>http://stage.quoteden.net/min?...<br> redirects to <br>http://stage.quoteden.net/min/?...</li><li>http://stage.quoteden.net/min?...<br> redirects to <br>http://stage.quoteden.net/min/?...</li></ul><br><p></p></td></tr><tr><td class="grade grade-A"><b>A</b></td><td class="desc"><p>Remove duplicate JavaScript and CSS<br></p><div class="message"></div><p></p></td></tr><tr><td class="grade grade-A"><b>A</b></td><td class="desc"><p>Configure entity tags (ETags)<br></p><div class="message"></div><p></p></td></tr><tr><td class="grade grade-A"><b>A</b></td><td class="desc"><p>Make AJAX cacheable<br></p><div class="message"></div><p></p></td></tr><tr><td class="grade grade-A"><b>A</b></td><td class="desc"><p>Use GET for AJAX requests<br></p><div class="message"></div><p></p></td></tr><tr><td class="grade grade-A"><b>A</b></td><td class="desc"><p>Reduce the number of DOM elements<br></p><div class="message"></div><p></p></td></tr><tr><td class="grade grade-A"><b>A</b></td><td class="desc"><p>Avoid HTTP 404 (Not Found) error<br></p><div class="message"></div><p></p></td></tr><tr><td class="grade grade-A"><b>A</b></td><td class="desc"><p>Reduce cookie size<br></p><div class="message"></div><p></p></td></tr><tr><td class="grade grade-A"><b>A</b></td><td class="desc"><p>Use cookie-free domains<br></p><div class="message"></div><p></p></td></tr><tr><td class="grade grade-A"><b>A</b></td><td class="desc"><p>Avoid AlphaImageLoader filter<br></p><div class="message"></div><p></p></td></tr><tr><td class="grade grade-A"><b>A</b></td><td class="desc"><p>Do not scale images in HTML<br></p><div class="message"></div><p></p></td></tr><tr><td class="grade grade-A"><b>A</b></td><td class="desc"><p>Make favicon small and cacheable<br></p><div class="message"></div><p></p></td></tr></tbody></table></div></div></div><div class="section"><div class="title">Components</div><div class="contentDiv"><div id="componentsDiv"><div id="summary"><span class="view-title">Components</span>The page has a total of <span class="number">11</span> components and a total weight of <span class="number">47.5K</span> bytes</div><div id="expand-all"><a href="javascript:document.ysview.expandAll(document)"><b>»</b><span id="expand-all-text">Expand All</span></a></div><div id="components"><table id="components-table"><tbody><tr><th class=" sortBy">TYPE</th><th>SIZE<br> (KB)</th><th>GZIP<br> (KB)</th><th>COOKIE&nbsp;RECEIVED<br>(bytes)</th><th>COOKIE&nbsp;SENT<br>(bytes)</th><th>URL</th><th>EXPIRES<br>(Y/M/D)</th><th>RESPONSE<br> TIME&nbsp;(ms)</th><th>ETAG</th></tr><tr class="even type-doc"><td class="type">doc</td><td class="size">13.4K</td><td class="gzip">2.5K</td><td class="set-cookie"></td><td class="cookie">250</td><td class="url"><a rel="doc" href="http://stage.quoteden.net/" onclick="javascript:document.ysview.openLink('http://stage.quoteden.net/'); return false;">http://stage.quoteden.net/</a></td><td class="expires">1981/11/19</td><td class="respTime">189</td><td class="etag"></td></tr><tr id="compHeaders1" class="headers" style="display: none;"><td colspan="12"><table><tbody><tr class="respHeaders"><td colspan="2">Response Headers</td></tr><tr><td class="param-name">Date</td><td class="param-value">Fri, 26 Feb 2010 01:03:01 GMT</td></tr><tr><td class="param-name">Server</td><td class="param-value">Apache/2.2.13 (Fedora)</td></tr><tr><td class="param-name">X-Powered-By</td><td class="param-value">PHP/5.2.12</td></tr><tr><td class="param-name">Expires</td><td class="param-value">Thu, 19 Nov 1981 08:52:00 GMT</td></tr><tr><td class="param-name">Cache-Control</td><td class="param-value">no-store, no-cache, must-revalidate, post-check=0, pre-check=0</td></tr><tr><td class="param-name">Pragma</td><td class="param-value">no-cache</td></tr><tr><td class="param-name">Content-Encoding</td><td class="param-value">gzip</td></tr><tr><td class="param-name">Vary</td><td class="param-value">Accept-Encoding</td></tr><tr><td class="param-name">Content-Length</td><td class="param-value">2501</td></tr><tr><td class="param-name">Connection</td><td class="param-value">close</td></tr><tr><td class="param-name">Content-Type</td><td class="param-value">text/html; charset=utf-8</td></tr><tr class="reqHeaders"><td colspan="2">Request Headers</td></tr><tr><td class="param-name">Host</td><td class="param-value"><p>stage.quoteden.net</p></td></tr><tr><td class="param-name">User-Agent</td><td class="param-value"><p>Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.8) Gecko/20100214 Ubuntu/9.10 (karmic) Firefox/3.5.8</p></td></tr><tr><td class="param-name">Accept</td><td class="param-value"><p>text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</p></td></tr><tr><td class="param-name">Accept-Language</td><td class="param-value"><p>en-us,en;q=0.5</p></td></tr><tr><td class="param-name">Accept-Encoding</td><td class="param-value"><p>gzip,deflate</p></td></tr><tr><td class="param-name">Accept-Charset</td><td class="param-value"><p>ISO-8859-1,utf-8;q=0.7,*;q=0.7</p></td></tr><tr><td class="param-name">Keep-Alive</td><td class="param-value"><p>300</p></td></tr><tr><td class="param-name">Connection</td><td class="param-value"><p>keep-alive</p></td></tr><tr><td class="param-name">Cookie</td><td class="param-value"><p>SESSf409382e0c2e1943b059316e72bfdabf=oukgaebplqrg1io7uaudsqju13;
+__utma=165948734.1389032419.1265331586.1267134976.1267137213.31;
+__utmz=165948734.1265331586.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none);
+quoteden-login=eg5d6o18efn0u1culhjv7lkia7</p></td></tr><tr><td class="param-name">Authorization</td><td class="param-value"><p>Basic cGF1bDoxMjNwYXVs</p></td></tr><tr><td class="param-name">Cache-Control</td><td class="param-value"><p>max-age=0</p></td></tr></tbody></table></td></tr><tr class="odd type-js"><td class="type">js</td><td class="size">72.1K</td><td class="gzip">24.6K</td><td class="set-cookie"></td><td class="cookie"></td><td class="url"><a rel="js" href="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" onclick="javascript:document.ysview.openLink('http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js'); return false;">http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js</a></td><td class="expires">2011/2/25</td><td class="respTime">267</td><td class="etag"></td></tr><tr id="compHeaders4" class="headers" style="display: none;"><td colspan="12"><table><tbody><tr class="respHeaders"><td colspan="2">Response Headers</td></tr><tr><td class="param-name">Content-Type</td><td class="param-value">text/javascript; charset=UTF-8</td></tr><tr><td class="param-name">Last-Modified</td><td class="param-value">Mon, 15 Feb 2010 23:30:12 GMT</td></tr><tr><td class="param-name">Date</td><td class="param-value">Fri, 26 Feb 2010 01:02:18 GMT</td></tr><tr><td class="param-name">Expires</td><td class="param-value">Sat, 26 Feb 2011 01:02:18 GMT</td></tr><tr><td class="param-name">Vary</td><td class="param-value">Accept-Encoding</td></tr><tr><td class="param-name">X-Content-Type-Options</td><td class="param-value">nosniff</td></tr><tr><td class="param-name">Server</td><td class="param-value">GFE/2.0</td></tr><tr><td class="param-name">Content-Encoding</td><td class="param-value">gzip</td></tr><tr><td class="param-name">Cache-Control</td><td class="param-value">public, max-age=31536000</td></tr><tr><td class="param-name">Age</td><td class="param-value">43</td></tr><tr><td class="param-name">Content-Length</td><td class="param-value">24678</td></tr><tr><td class="param-name">X-XSS-Protection</td><td class="param-value">0</td></tr></tbody></table></td></tr><tr class="even type-js"><td class="type">js</td><td class="size">2.3K</td><td class="gzip">0.9K</td><td class="set-cookie"></td><td class="cookie"></td><td class="url"><a rel="js" href="http://stage.quoteden.net/min/?g=js" onclick="javascript:document.ysview.openLink('http://stage.quoteden.net/min/?g=js'); return false;">http://stage.quoteden.net/min/?g=js</a></td><td class="expires">2010/3/27</td><td class="respTime">267</td><td class="etag">"pub1267138910;gz"</td></tr><tr id="compHeaders5" class="headers" style="display: none;"><td colspan="12"><table><tbody><tr class="respHeaders"><td colspan="2">Response Headers</td></tr><tr><td class="param-name">Date</td><td class="param-value">Fri, 26 Feb 2010 01:03:01 GMT</td></tr><tr><td class="param-name">Server</td><td class="param-value">Apache/2.2.13 (Fedora)</td></tr><tr><td class="param-name">X-Powered-By</td><td class="param-value">PHP/5.2.12</td></tr><tr><td class="param-name">Expires</td><td class="param-value">Sun, 28 Mar 2010 01:03:01 GMT</td></tr><tr><td class="param-name">Vary</td><td class="param-value">Accept-Encoding</td></tr><tr><td class="param-name">Last-Modified</td><td class="param-value">Thu, 25 Feb 2010 23:01:50 GMT</td></tr><tr><td class="param-name">Etag</td><td class="param-value">"pub1267138910;gz"</td></tr><tr><td class="param-name">Cache-Control</td><td class="param-value">max-age=2592000, public</td></tr><tr><td class="param-name">Content-Length</td><td class="param-value">968</td></tr><tr><td class="param-name">Content-Encoding</td><td class="param-value">gzip</td></tr><tr><td class="param-name">Content-Type</td><td class="param-value">application/x-javascript; charset=utf-8</td></tr></tbody></table></td></tr><tr class="odd type-css"><td class="type">css</td><td class="size">8.3K</td><td class="gzip">2.4K</td><td class="set-cookie"></td><td class="cookie"></td><td class="url"><a rel="css" href="http://stage.quoteden.net/min/?g=css" onclick="javascript:document.ysview.openLink('http://stage.quoteden.net/min/?g=css'); return false;">http://stage.quoteden.net/min/?g=css</a></td><td class="expires">2010/3/27</td><td class="respTime">29</td><td class="etag">"pub1267139349;gz"</td></tr><tr id="compHeaders2" class="headers" style="display: none;"><td colspan="12"><table><tbody><tr class="respHeaders"><td colspan="2">Response Headers</td></tr><tr><td class="param-name">Date</td><td class="param-value">Fri, 26 Feb 2010 01:03:01 GMT</td></tr><tr><td class="param-name">Server</td><td class="param-value">Apache/2.2.13 (Fedora)</td></tr><tr><td class="param-name">X-Powered-By</td><td class="param-value">PHP/5.2.12</td></tr><tr><td class="param-name">Expires</td><td class="param-value">Sun, 28 Mar 2010 01:03:01 GMT</td></tr><tr><td class="param-name">Vary</td><td class="param-value">Accept-Encoding</td></tr><tr><td class="param-name">Last-Modified</td><td class="param-value">Thu, 25 Feb 2010 23:09:09 GMT</td></tr><tr><td class="param-name">Etag</td><td class="param-value">"pub1267139349;gz"</td></tr><tr><td class="param-name">Cache-Control</td><td class="param-value">max-age=2592000, public</td></tr><tr><td class="param-name">Content-Length</td><td class="param-value">2482</td></tr><tr><td class="param-name">Content-Encoding</td><td class="param-value">gzip</td></tr><tr><td class="param-name">Content-Type</td><td class="param-value">text/css; charset=utf-8</td></tr></tbody></table></td></tr><tr class="even type-cssimage"><td class="type">cssimage</td><td class="size">14.2K</td><td class="gzip"></td><td class="set-cookie"></td><td class="cookie"></td><td class="url"><a rel="cssimage" href="http://stage.quoteden.net/img/quotessprite.png" onclick="javascript:document.ysview.openLink('http://stage.quoteden.net/img/quotessprite.png'); return false;">http://stage.quoteden.net/img/quotessprite.png</a></td><td class="expires">2010/3/27</td><td class="respTime">266</td><td class="etag"></td></tr><tr id="compHeaders7" class="headers" style="display: none;"><td colspan="12"><table><tbody><tr class="respHeaders"><td colspan="2">Response Headers</td></tr><tr><td class="param-name">Date</td><td class="param-value">Fri, 26 Feb 2010 01:03:01 GMT</td></tr><tr><td class="param-name">Server</td><td class="param-value">Apache/2.2.13 (Fedora)</td></tr><tr><td class="param-name">Last-Modified</td><td class="param-value">Thu, 25 Feb 2010 23:09:09 GMT</td></tr><tr><td class="param-name">Accept-Ranges</td><td class="param-value">bytes</td></tr><tr><td class="param-name">Content-Length</td><td class="param-value">14279</td></tr><tr><td class="param-name">Cache-Control</td><td class="param-value">max-age=2592000</td></tr><tr><td class="param-name">Expires</td><td class="param-value">Sun, 28 Mar 2010 01:03:01 GMT</td></tr><tr><td class="param-name">Content-Type</td><td class="param-value">image/png</td></tr></tbody></table></td></tr><tr class="odd type-cssimage"><td class="type">cssimage</td><td class="size">0.3K</td><td class="gzip"></td><td class="set-cookie"></td><td class="cookie"></td><td class="url"><a rel="cssimage" href="http://stage.quoteden.net/img/stars.png" onclick="javascript:document.ysview.openLink('http://stage.quoteden.net/img/stars.png'); return false;">http://stage.quoteden.net/img/stars.png</a></td><td class="expires">2010/3/27</td><td class="respTime">265</td><td class="etag"></td></tr><tr id="compHeaders8" class="headers" style="display: none;"><td colspan="12"><table><tbody><tr class="respHeaders"><td colspan="2">Response Headers</td></tr><tr><td class="param-name">Date</td><td class="param-value">Fri, 26 Feb 2010 01:03:01 GMT</td></tr><tr><td class="param-name">Server</td><td class="param-value">Apache/2.2.13 (Fedora)</td></tr><tr><td class="param-name">Last-Modified</td><td class="param-value">Tue, 23 Feb 2010 07:11:49 GMT</td></tr><tr><td class="param-name">Accept-Ranges</td><td class="param-value">bytes</td></tr><tr><td class="param-name">Content-Length</td><td class="param-value">394</td></tr><tr><td class="param-name">Cache-Control</td><td class="param-value">max-age=2592000</td></tr><tr><td class="param-name">Expires</td><td class="param-value">Sun, 28 Mar 2010 01:03:01 GMT</td></tr><tr><td class="param-name">Content-Type</td><td class="param-value">image/png</td></tr></tbody></table></td></tr><tr class="even type-cssimage"><td class="type">cssimage</td><td class="size">0.3K</td><td class="gzip"></td><td class="set-cookie"></td><td class="cookie"></td><td class="url"><a rel="cssimage" href="http://stage.quoteden.net/img/qmark2.png" onclick="javascript:document.ysview.openLink('http://stage.quoteden.net/img/qmark2.png'); return false;">http://stage.quoteden.net/img/qmark2.png</a></td><td class="expires">2010/3/27</td><td class="respTime">265</td><td class="etag"></td></tr><tr id="compHeaders9" class="headers" style="display: none;"><td colspan="12"><table><tbody><tr class="respHeaders"><td colspan="2">Response Headers</td></tr><tr><td class="param-name">Date</td><td class="param-value">Fri, 26 Feb 2010 01:03:01 GMT</td></tr><tr><td class="param-name">Server</td><td class="param-value">Apache/2.2.13 (Fedora)</td></tr><tr><td class="param-name">Last-Modified</td><td class="param-value">Wed, 17 Feb 2010 18:18:58 GMT</td></tr><tr><td class="param-name">Accept-Ranges</td><td class="param-value">bytes</td></tr><tr><td class="param-name">Content-Length</td><td class="param-value">313</td></tr><tr><td class="param-name">Cache-Control</td><td class="param-value">max-age=2592000</td></tr><tr><td class="param-name">Expires</td><td class="param-value">Sun, 28 Mar 2010 01:03:01 GMT</td></tr><tr><td class="param-name">Content-Type</td><td class="param-value">image/png</td></tr></tbody></table></td></tr><tr class="odd type-cssimage"><td class="type">cssimage</td><td class="size">0.1K</td><td class="gzip"></td><td class="set-cookie"></td><td class="cookie"></td><td class="url"><a rel="cssimage" href="http://stage.quoteden.net/img/footer.png" onclick="javascript:document.ysview.openLink('http://stage.quoteden.net/img/footer.png'); return false;">http://stage.quoteden.net/img/footer.png</a></td><td class="expires">2010/3/27</td><td class="respTime">265</td><td class="etag"></td></tr><tr id="compHeaders10" class="headers" style="display: none;"><td colspan="12"><table><tbody><tr class="respHeaders"><td colspan="2">Response Headers</td></tr><tr><td class="param-name">Date</td><td class="param-value">Fri, 26 Feb 2010 01:03:01 GMT</td></tr><tr><td class="param-name">Server</td><td class="param-value">Apache/2.2.13 (Fedora)</td></tr><tr><td class="param-name">Last-Modified</td><td class="param-value">Wed, 17 Feb 2010 18:18:58 GMT</td></tr><tr><td class="param-name">Accept-Ranges</td><td class="param-value">bytes</td></tr><tr><td class="param-name">Content-Length</td><td class="param-value">153</td></tr><tr><td class="param-name">Cache-Control</td><td class="param-value">max-age=2592000</td></tr><tr><td class="param-name">Expires</td><td class="param-value">Sun, 28 Mar 2010 01:03:01 GMT</td></tr><tr><td class="param-name">Content-Type</td><td class="param-value">image/png</td></tr></tbody></table></td></tr><tr class="even type-favicon"><td class="type">favicon</td><td class="size">1.1K</td><td class="gzip"></td><td class="set-cookie"></td><td class="cookie"></td><td class="url"><a rel="favicon" href="http://stage.quoteden.net/img/favicon.ico" onclick="javascript:document.ysview.openLink('http://stage.quoteden.net/img/favicon.ico'); return false;">http://stage.quoteden.net/img/favicon.ico</a></td><td class="expires">2010/3/27</td><td class="respTime">266</td><td class="etag"></td></tr><tr id="compHeaders11" class="headers" style="display: none;"><td colspan="12"><table><tbody><tr class="respHeaders"><td colspan="2">Response Headers</td></tr><tr><td class="param-name">Date</td><td class="param-value">Fri, 26 Feb 2010 01:02:00 GMT</td></tr><tr><td class="param-name">Server</td><td class="param-value">Apache/2.2.13 (Fedora)</td></tr><tr><td class="param-name">Last-Modified</td><td class="param-value">Thu, 18 Feb 2010 06:44:36 GMT</td></tr><tr><td class="param-name">Accept-Ranges</td><td class="param-value">bytes</td></tr><tr><td class="param-name">Content-Length</td><td class="param-value">1150</td></tr><tr><td class="param-name">Cache-Control</td><td class="param-value">max-age=2592000</td></tr><tr><td class="param-name">Expires</td><td class="param-value">Sun, 28 Mar 2010 01:02:00 GMT</td></tr><tr><td class="param-name">Content-Type</td><td class="param-value">image/vnd.microsoft.icon</td></tr></tbody></table></td></tr><tr class="odd type-redirect"><td class="type">redirect</td><td class="size">0.3K</td><td class="gzip"></td><td class="set-cookie"></td><td class="cookie">250</td><td class="url"><a rel="redirect" href="http://stage.quoteden.net/min?g=css" onclick="javascript:document.ysview.openLink('http://stage.quoteden.net/min?g=css'); return false;">http://stage.quoteden.net/min?g=css</a></td><td class="expires">2010/2/25</td><td class="respTime">62</td><td class="etag"></td></tr><tr id="compHeaders3" class="headers" style="display: none;"><td colspan="12"><table><tbody><tr class="respHeaders"><td colspan="2">Response Headers</td></tr><tr><td class="param-name">Date</td><td class="param-value">Fri, 26 Feb 2010 01:03:01 GMT</td></tr><tr><td class="param-name">Server</td><td class="param-value">Apache/2.2.13 (Fedora)</td></tr><tr><td class="param-name">Location</td><td class="param-value">http://stage.quoteden.net/min/?g=css</td></tr><tr><td class="param-name">Cache-Control</td><td class="param-value">max-age=0</td></tr><tr><td class="param-name">Expires</td><td class="param-value">Fri, 26 Feb 2010 01:03:01 GMT</td></tr><tr><td class="param-name">Content-Length</td><td class="param-value">328</td></tr><tr><td class="param-name">Connection</td><td class="param-value">close</td></tr><tr><td class="param-name">Content-Type</td><td class="param-value">text/html; charset=iso-8859-1</td></tr><tr class="reqHeaders"><td colspan="2">Request Headers</td></tr><tr><td class="param-name">Host</td><td class="param-value"><p>stage.quoteden.net</p></td></tr><tr><td class="param-name">User-Agent</td><td class="param-value"><p>Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.8) Gecko/20100214 Ubuntu/9.10 (karmic) Firefox/3.5.8</p></td></tr><tr><td class="param-name">Accept</td><td class="param-value"><p>text/css,*/*;q=0.1</p></td></tr><tr><td class="param-name">Accept-Language</td><td class="param-value"><p>en-us,en;q=0.5</p></td></tr><tr><td class="param-name">Accept-Encoding</td><td class="param-value"><p>gzip,deflate</p></td></tr><tr><td class="param-name">Accept-Charset</td><td class="param-value"><p>ISO-8859-1,utf-8;q=0.7,*;q=0.7</p></td></tr><tr><td class="param-name">Keep-Alive</td><td class="param-value"><p>300</p></td></tr><tr><td class="param-name">Connection</td><td class="param-value"><p>keep-alive</p></td></tr><tr><td class="param-name">Referer</td><td class="param-value"><p>http://stage.quoteden.net/</p></td></tr><tr><td class="param-name">Cookie</td><td class="param-value"><p>SESSf409382e0c2e1943b059316e72bfdabf=oukgaebplqrg1io7uaudsqju13;
+__utma=165948734.1389032419.1265331586.1267134976.1267137213.31;
+__utmz=165948734.1265331586.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none);
+quoteden-login=eg5d6o18efn0u1culhjv7lkia7</p></td></tr><tr><td class="param-name">Authorization</td><td class="param-value"><p>Basic cGF1bDoxMjNwYXVs</p></td></tr><tr><td class="param-name">Cache-Control</td><td class="param-value"><p>max-age=0</p></td></tr></tbody></table></td></tr><tr class="even type-redirect"><td class="type">redirect</td><td class="size">0.3K</td><td class="gzip"></td><td class="set-cookie"></td><td class="cookie">250</td><td class="url"><a rel="redirect" href="http://stage.quoteden.net/min?g=js" onclick="javascript:document.ysview.openLink('http://stage.quoteden.net/min?g=js'); return false;">http://stage.quoteden.net/min?g=js</a></td><td class="expires">2010/2/25</td><td class="respTime">26</td><td class="etag"></td></tr><tr id="compHeaders6" class="headers" style="display: none;"><td colspan="12"><table><tbody><tr class="respHeaders"><td colspan="2">Response Headers</td></tr><tr><td class="param-name">Date</td><td class="param-value">Fri, 26 Feb 2010 01:03:01 GMT</td></tr><tr><td class="param-name">Server</td><td class="param-value">Apache/2.2.13 (Fedora)</td></tr><tr><td class="param-name">Location</td><td class="param-value">http://stage.quoteden.net/min/?g=js</td></tr><tr><td class="param-name">Cache-Control</td><td class="param-value">max-age=0</td></tr><tr><td class="param-name">Expires</td><td class="param-value">Fri, 26 Feb 2010 01:03:01 GMT</td></tr><tr><td class="param-name">Content-Length</td><td class="param-value">327</td></tr><tr><td class="param-name">Connection</td><td class="param-value">close</td></tr><tr><td class="param-name">Content-Type</td><td class="param-value">text/html; charset=iso-8859-1</td></tr><tr class="reqHeaders"><td colspan="2">Request Headers</td></tr><tr><td class="param-name">Host</td><td class="param-value"><p>stage.quoteden.net</p></td></tr><tr><td class="param-name">User-Agent</td><td class="param-value"><p>Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.8) Gecko/20100214 Ubuntu/9.10 (karmic) Firefox/3.5.8</p></td></tr><tr><td class="param-name">Accept</td><td class="param-value"><p>*/*</p></td></tr><tr><td class="param-name">Accept-Language</td><td class="param-value"><p>en-us,en;q=0.5</p></td></tr><tr><td class="param-name">Accept-Encoding</td><td class="param-value"><p>gzip,deflate</p></td></tr><tr><td class="param-name">Accept-Charset</td><td class="param-value"><p>ISO-8859-1,utf-8;q=0.7,*;q=0.7</p></td></tr><tr><td class="param-name">Keep-Alive</td><td class="param-value"><p>300</p></td></tr><tr><td class="param-name">Connection</td><td class="param-value"><p>keep-alive</p></td></tr><tr><td class="param-name">Referer</td><td class="param-value"><p>http://stage.quoteden.net/</p></td></tr><tr><td class="param-name">Cookie</td><td class="param-value"><p>SESSf409382e0c2e1943b059316e72bfdabf=oukgaebplqrg1io7uaudsqju13;
+__utma=165948734.1389032419.1265331586.1267134976.1267137213.31;
+__utmz=165948734.1265331586.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none);
+quoteden-login=eg5d6o18efn0u1culhjv7lkia7</p></td></tr><tr><td class="param-name">Authorization</td><td class="param-value"><p>Basic cGF1bDoxMjNwYXVs</p></td></tr><tr><td class="param-name">Cache-Control</td><td class="param-value"><p>max-age=0</p></td></tr></tbody></table></td></tr></tbody></table></div><div class="legend">* type column indicates the component is loaded after window onload event<br>† denotes 1x1 pixels image that may be image beacon</div></div></div></div><div class="section"><div class="title">Stats</div><div class="contentDiv"><div id="statsDiv"><div id="summary"><span class="view-title">Statistics</span>The page has a total of <span class="number">11</span> HTTP requests and a total weight of <span class="number">47.5K</span> bytes with empty cache</div><div class="section-header">WEIGHT GRAPHS</div><div id="primed-cache" class="floatRight"><div class="stats-graph floatLeft"><div class="canvas-title">Primed Cache</div><canvas id="comp-canvas-primed" width="150" height="150"></canvas></div><div class="yslow-stats-primed"><div id="stats-detail"><div class="summary-row">HTTP Requests - 3</div><div class="summary-row-2">Total Weight - 3.1K</div><table id="stats-table"><tbody><tr><td class="legend"><div class="stats-legend" style="background: rgb(137, 99, 223) none repeat scroll 0% 0%; -moz-background-clip: border; -moz-background-origin: padding; -moz-background-inline-policy: continuous;">&nbsp;</div></td><td class="count">1</td><td class="type">HTML/Text</td><td class="size">2.5K</td></tr><tr><td class="legend"><div class="stats-legend" style="background: rgb(252, 140, 140) none repeat scroll 0% 0%; -moz-background-clip: border; -moz-background-origin: padding; -moz-background-inline-policy: continuous;">&nbsp;</div></td><td class="count">2</td><td class="type">Redirect</td><td class="size">0.6K</td></tr></tbody></table></div></div></div><div id="empty-cache"><div class="stats-graph floatLeft"><div class="canvas-title">Empty Cache</div><canvas id="comp-canvas-empty" width="150" height="150"></canvas></div><div class="yslow-stats-empty"><div id="stats-detail"><div class="summary-row">HTTP Requests - 11</div><div class="summary-row-2">Total Weight - 47.5K</div><table id="stats-table"><tbody><tr><td class="legend"><div class="stats-legend" style="background: rgb(137, 99, 223) none repeat scroll 0% 0%; -moz-background-clip: border; -moz-background-origin: padding; -moz-background-inline-policy: continuous;">&nbsp;</div></td><td class="count">1</td><td class="type">HTML/Text</td><td class="size">2.5K</td></tr><tr><td class="legend"><div class="stats-legend" style="background: rgb(159, 208, 232) none repeat scroll 0% 0%; -moz-background-clip: border; -moz-background-origin: padding; -moz-background-inline-policy: continuous;">&nbsp;</div></td><td class="count">2</td><td class="type">JavaScript File</td><td class="size">25.6K</td></tr><tr><td class="legend"><div class="stats-legend" style="background: rgb(171, 165, 235) none repeat scroll 0% 0%; -moz-background-clip: border; -moz-background-origin: padding; -moz-background-inline-policy: continuous;">&nbsp;</div></td><td class="count">1</td><td class="type">Stylesheet File</td><td class="size">2.4K</td></tr><tr><td class="legend"><div class="stats-legend" style="background: rgb(103, 122, 184) none repeat scroll 0% 0%; -moz-background-clip: border; -moz-background-origin: padding; -moz-background-inline-policy: continuous;">&nbsp;</div></td><td class="count">4</td><td class="type">CSS Image</td><td class="size">15.1K</td></tr><tr><td class="legend"><div class="stats-legend" style="background: rgb(162, 108, 0) none repeat scroll 0% 0%; -moz-background-clip: border; -moz-background-origin: padding; -moz-background-inline-policy: continuous;">&nbsp;</div></td><td class="count">1</td><td class="type">Favicon</td><td class="size">1.1K</td></tr><tr><td class="legend"><div class="stats-legend" style="background: rgb(252, 140, 140) none repeat scroll 0% 0%; -moz-background-clip: border; -moz-background-origin: padding; -moz-background-inline-policy: continuous;">&nbsp;</div></td><td class="count">2</td><td class="type">Redirect</td><td class="size">0.6K</td></tr></tbody></table></div></div></div></div></div></div></div>
+<br><hr><div class="copyright">Copyright © 2009 Yahoo! Inc. All rights reserved.</div></div></body></html>
