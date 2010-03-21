@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Embrangler: Moving to Jekyll</title>
+    <meta name="author" content="Paul Craciunoiu" />
+    <link href="http://feeds.feedburner.com/embrangler" rel="alternate" title="Paul Craciunoiu" type="application/atom+xml" />
+    <link type="image/x-icon" href="/favicon.ico" rel="shortcut icon">
+
+    <!-- syntax highlighting CSS -->
+    <link rel="stylesheet" href="/css/syntax.css" type="text/css" />
+
+    <!-- Homepage CSS -->
+    <link rel="stylesheet" href="/css/main.css" type="text/css" media="screen, projection" />
+</head>
+<body>
+
+<div class="site">
+
+    <div id="header" role="banner">
+        <h1 class="title">
+            <a href="/">Disembrangling Programming</a>
+        </h1>
+        <h2 class="subtitle">
+            <a href="/about" title="About Paul Craciunoiu">The simple life of a web developer &mdash; by Paul Craciunoiu<span> (About)</span></a>
+        </h2>
+    </div>
+    <div id="content" role="main">    
+    <div id="post">
+<h1>Embrangler: Moving to Jekyll</h1>
+
+<p>It took only three days to migrate my blog from <a href='http://wordpress.org'>Wordpress</a> to <a href='http://wiki.github.com/mojombo/jekyll/'>Jekyll</a>. For anyone who plans to do this, I&#8217;m summarizing the whole process below.</p>
+
+<p>Table of contents:</p>
+
+<ul>
+<li><a href='#why_change'>Why change?</a></li>
+
+<li><a href='#why_jekyll'>Why Jekyll?</a></li>
+
+<li><a href='#migration_process'>Migration process</a></li>
+
+<li><a href='#conclusion'>Conclusion</a></li>
+</ul>
+
+<h2 id='why_change'>Why change?</h2>
+
+<p>While I realize Wordpress the most popular blogging platform for a reason, I was bothered by the workflow involved with having a WP blog. Some of the (arguable) inconveniences I found were:</p>
+
+<ul>
+<li>the WYSIWYG editor doesn&#8217;t handle some of the markup I would like (headings, tables aren&#8217;t great either), so I would constantly switch between the Visual and HTML tabs to format things the way I wanted to. While I realize this could be fixed by customizing the editor, why should I have to do that? Plus, I have long given up hope of the ideal WYSIWYG editor. Besides not handling markup very well, it would sometimes reformat some of my plain HTML and break it.</li>
+
+<li>creating posts is pretty much the only thing I do. I don&#8217;t use categories, tags, or any other features. Yet I had this admin area cluttered with features.</li>
+
+<li>I&#8217;m not too fond of WP&#8217;s version control. I would often see the message that &#8220;a more recent version of this post is available&#8221; erroneously, I&#8217;m still not sure why. While changing versions worked well enough, I find the idea of an actual version control system more appealing.</li>
+
+<li>My blog could use a redesign. For a while, I was using the <a href='http://wordpress.org/extend/themes/carrington-text'>Carrington Text</a> theme, which was ok but not great. I wanted to make it feel more like <em>my</em> blog &#8211; no sidebar, larger font, a better home page to name a few.</li>
+</ul>
+
+<h2 id='why_jekyll'>Why Jekyll?</h2>
+
+<p>A few weeks before I decided to switch off of Wordpress, I found out about static site-generator engines alternatives that would use available version control software such as git or svn. After looking around I hesitated to switch to any of these because they were mostly Ruby-based, and I was unfamliar with how they work. However, all other alternatives seem to be heading towards full-fledged <abbr title='Content Management System'>CMS</abbr>&#8217;s.</p>
+
+<p>A quick note on static sites: they have virtually no security holes (well, in theory), because there is no server-side handling of data submission. I&#8217;m using a <abbr title='Virtual Private Server'>VPS</abbr> too, so I was fond of having less CPU usage on the server (due to not having to process, say, PHP scripts for Wordpress).</p>
+
+<p>Some of the alternatives to Jekyll that I considered are <a href='http://www.cloudhead.io/toto'>Toto</a>, <a href='http://www.staceyapp.com/'>StaceyApp</a>, <a href='http://chyrp.net/'>Chyrp</a>, <a href='http://subtextproject.com/'>Subtext</a> and <a href='http://typosphere.org/'>Typo</a>. I picked <a href='http://wiki.github.com/mojombo/jekyll/'>Jekyll</a> for two main reasons:</p>
+
+<ul>
+<li>popularity &#8211; looking at the <a href='http://wiki.github.com/mojombo/jekyll/'>project&#8217;s github</a> watches/forks</li>
+
+<li>documentation and examples &#8211; there is actually a <a href='http://wiki.github.com/mojombo/jekyll/sites'>Sites</a> page, leading to other sites and their github hosted sources, immensely helpful when starting out</li>
+</ul>
+
+<h2 id='migration_process'>Migration process</h2>
+
+<p>I followed these instructions:</p>
+
+<ul>
+<li><a href='http://wiki.github.com/mojombo/jekyll/install'>Installation steps from the Jekyll documentation</a></li>
+
+<li><a href='http://blog.favrik.com/2009/03/02/installing-jekyll-on-ubuntu-8-10/'>Installing Jekyll on Ubuntu</a></li>
+</ul>
+
+<p>&#8230; and started by looking at <a href='http://tom.preston-werner.com/'>Tom Preston-Werner&#8217;s blog</a> and its <a href='http://github.com/mojombo/mojombo.github.com'>source on github</a>.</p>
+
+<h3 id='migrating_posts'>Migrating posts</h3>
+
+<p>After I got the redesign to look good on Jekyll, the next step was migrating my Wordpress posts. Fortunately, <a href='http://wiki.github.com/mojombo/jekyll/blog-migrationsl'>there is documentation for that too</a>.</p>
+
+<p>Unfortunately, the automatic migration did not convert some of the markup very well, such as LaTex, images with captions, most lists and links. Yet I had less than 15 posts, so I just went through them and checked everything. Because I&#8217;m using <a href='http://www.latex-project.org/'>LaTeX</a> in some of my posts, I used <a href='http://maruku.rubyforge.org/maruku.html'>maruku</a> (instead of <a href='http://github.com/rtomayko/rdiscount'>rdiscount</a>) to parse them. I couldn&#8217;t find LaTeX support for rdiscount, which is a faster parser.</p>
+
+<p>I&#8217;m also using lsi for related posts, and <a href='http://pygments.org/'>python-pygments</a> for syntax highlighting. The latter is simply a wonderful tool, and I recommend it to anyone posting code on the web. Of course, all of these are documented in the Jekyll documentation, so it was easy to get it all working.</p>
+
+<p>The code for this site is up on github as well, so you can <a href='http://github.com/pcraciunoiu/embrangler/'>check it out there</a> to see how it works.</p>
+
+<h3 id='migrating_comments'>Migrating comments</h3>
+
+<p>This took me about 20 minutes :), following <a href='http://disqus.com/comments/wordpress/'>these instructions</a>.</p>
+
+<h3 id='server_setup_and_more'>Server setup and more</h3>
+
+<p>I actually didn&#8217;t want to install jekyll on my server, and preferred to do all the generating locally. My server only works with plain html this way. The one thing I did do, however, was use github&#8217;s post-receive-hook service. I ended up having something <a href='http://forum.webfaction.com/viewtopic.php?id=964'>similar to this</a>:</p>
+
+<ol>
+<li>github posts data to a php file on my server</li>
+
+<li>this file verifies the posted data, logs the commit, and runs a C script.</li>
+
+<li>the C script runs <code>git pull</code></li>
+</ol>
+
+<p>Here&#8217;s the code for all of this:</p>
+
+<ol>
+<li>php script</li>
+</ol>
+<div class='highlight'><pre><code class='php'><span class='cp'>&lt;?php</span>
+
+<span class='k'>if</span> <span class='p'>(</span><span class='o'>!</span><span class='nv'>$_POST</span><span class='p'>[</span><span class='s1'>&#39;payload&#39;</span><span class='p'>])</span> <span class='k'>die</span><span class='p'>(</span><span class='s1'>&#39;Nothing to do&#39;</span><span class='p'>);</span>
+
+<span class='nb'>define</span><span class='p'>(</span><span class='s1'>&#39;HOOKLOG&#39;</span><span class='p'>,</span> <span class='s1'>&#39;../logs/hooks.log&#39;</span><span class='p'>);</span>
+<span class='nv'>$fh</span> <span class='o'>=</span> <span class='nb'>fopen</span><span class='p'>(</span><span class='nx'>HOOKLOG</span><span class='p'>,</span> <span class='s1'>&#39;w&#39;</span><span class='p'>)</span> <span class='k'>or</span> <span class='k'>die</span><span class='p'>(</span><span class='s2'>&quot;Can&#39;t open file&quot;</span><span class='p'>);</span>
+<span class='nv'>$data</span> <span class='o'>=</span> <span class='s1'>&#39;&#39;</span><span class='p'>;</span>
+
+<span class='nv'>$hook</span> <span class='o'>=</span> <span class='nx'>json_decode</span><span class='p'>(</span><span class='nv'>$_POST</span><span class='p'>[</span><span class='s1'>&#39;payload&#39;</span><span class='p'>]);</span>
+
+<span class='k'>if</span> <span class='p'>(</span><span class='nv'>$hook</span><span class='o'>-&gt;</span><span class='na'>repository</span><span class='o'>-&gt;</span><span class='na'>owner</span><span class='o'>-&gt;</span><span class='na'>name</span> <span class='o'>!=</span> <span class='s1'>&#39;pcraciunoiu&#39;</span><span class='p'>)</span> <span class='p'>{</span>
+    <span class='nb'>header</span><span class='p'>(</span><span class='s1'>&#39;HTTP/1.0 403 Forbidden&#39;</span><span class='p'>);</span>
+    <span class='k'>exit</span><span class='p'>;</span>
+<span class='p'>}</span>
+
+<span class='nv'>$cs</span> <span class='o'>=</span> <span class='nv'>$hook</span><span class='o'>-&gt;</span><span class='na'>commits</span><span class='p'>;</span>
+
+<span class='k'>foreach</span> <span class='p'>(</span><span class='nv'>$cs</span> <span class='k'>as</span> <span class='nv'>$c</span><span class='p'>)</span> <span class='p'>{</span>
+    <span class='nv'>$data</span> <span class='o'>.=</span> <span class='nv'>$c</span><span class='o'>-&gt;</span><span class='na'>timestamp</span> <span class='o'>.</span> <span class='s2'>&quot;</span><span class='se'>\n</span><span class='s2'>&quot;</span><span class='p'>;</span>
+    <span class='nv'>$data</span> <span class='o'>.=</span> <span class='nv'>$c</span><span class='o'>-&gt;</span><span class='na'>author</span><span class='o'>-&gt;</span><span class='na'>name</span>
+        <span class='o'>.</span> <span class='s1'>&#39; (&#39;</span> <span class='o'>.</span> <span class='nv'>$c</span><span class='o'>-&gt;</span><span class='na'>author</span><span class='o'>-&gt;</span><span class='na'>email</span> <span class='o'>.</span> <span class='s1'>&#39;)&#39;</span>
+        <span class='o'>.</span> <span class='s1'>&#39; pushed to &#39;</span> <span class='o'>.</span> <span class='nv'>$hook</span><span class='o'>-&gt;</span><span class='na'>repository</span><span class='o'>-&gt;</span><span class='na'>url</span> <span class='o'>.</span> <span class='s2'>&quot;</span><span class='se'>\n</span><span class='s2'>&quot;</span>
+        <span class='o'>.</span> <span class='s1'>&#39;View commit at &#39;</span> <span class='o'>.</span> <span class='nv'>$c</span><span class='o'>-&gt;</span><span class='na'>url</span> <span class='o'>.</span> <span class='s2'>&quot;</span><span class='se'>\n</span><span class='s2'>&quot;</span>
+        <span class='o'>.</span> <span class='s2'>&quot;</span><span class='se'>\n\n</span><span class='s2'>Commit message was:</span><span class='se'>\n</span><span class='s2'>&quot;</span> <span class='o'>.</span> <span class='nv'>$c</span><span class='o'>-&gt;</span><span class='na'>message</span> <span class='o'>.</span> <span class='s2'>&quot;</span><span class='se'>\n\n</span><span class='s2'>&quot;</span>
+    <span class='p'>;</span>
+<span class='p'>}</span>
+
+<span class='nb'>fwrite</span><span class='p'>(</span><span class='nv'>$fh</span><span class='p'>,</span> <span class='nv'>$data</span><span class='p'>);</span>
+<span class='nb'>fclose</span><span class='p'>(</span><span class='nv'>$fh</span><span class='p'>);</span>
+
+<span class='c'>// set this to your path</span>
+<span class='k'>echo</span> <span class='nb'>exec</span><span class='p'>(</span><span class='s1'>&#39;/path/to/site/pull_script&#39;</span><span class='p'>);</span>
+</code></pre>
+</div>
+<ol>
+<li>the c file</li>
+</ol>
+<div class='highlight'><pre><code class='c'><span class='cp'>#include &lt;stddef.h&gt;</span>
+<span class='cp'>#include &lt;stdlib.h&gt;</span>
+<span class='cp'>#include &lt;unistd.h&gt;</span>
+
+<span class='kt'>int</span> <span class='nf'>main</span><span class='p'>(</span><span class='kt'>void</span><span class='p'>)</span> <span class='p'>{</span>
+    <span class='n'>execl</span><span class='p'>(</span><span class='s'>&quot;/usr/bin/git&quot;</span><span class='p'>,</span> <span class='s'>&quot;git&quot;</span><span class='p'>,</span> <span class='s'>&quot;pull&quot;</span><span class='p'>,</span> <span class='s'>&quot;origin&quot;</span><span class='p'>,</span> <span class='s'>&quot;master&quot;</span><span class='p'>,</span> <span class='p'>(</span><span class='k'>const</span> <span class='kt'>char</span> <span class='o'>*</span><span class='p'>)</span> <span class='nb'>NULL</span><span class='p'>);</span>
+
+    <span class='k'>return</span> <span class='n'>EXIT_FAILURE</span><span class='p'>;</span>
+<span class='p'>}</span>
+</code></pre>
+</div>
+<p>Compile this with</p>
+<div class='highlight'><pre><code class='bash'>gcc pull_script.c -o pull_script
+</code></pre>
+</div>
+<p>So now, every time I push to github, the server automatically updates. Really cool way of publishing!</p>
+
+<h2 id='conclusion'>Conclusion</h2>
+
+<p>I enjoy using git, and having a static site. My comments are offloaded to a separate server, and I write plain text files using the markdown syntax, automatically published when I <code>git push</code>.</p>
+
+<p>Goodbye Wordpress!</p>
+</div>
+
+<div id="related">
+  <h2>Related Posts</h2>
+  <ul>
+    
+      <li><a href="/2010/03/quoteden-moving-to-kohana-3">Quoteden: Moving to Kohana 3</a> &mdash; 12 Mar 2010</li>
+    
+      <li><a href="/2009/11/hacking-wordpress-check-contact-messages-for-spam-using-wordpress-built-in-akismet-spam-for-comments">Hacking Wordpress: check contact messages for spam using Wordpress' built-in Akismet spam for comments</a> &mdash; 14 Nov 2009</li>
+    
+      <li><a href="/2010/01/my-sumo-local-development-environment">My SUMO local development environment</a> &mdash; 04 Jan 2010</li>
+    
+  </ul>
+</div>
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  (function() {
+   var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+   dsq.src = 'http://blogpaulcraciunoiu.disqus.com/embed.js';
+   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript=blogpaulcraciunoiu">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+<script type="text/javascript">
+//<![CDATA[
+(function() {
+    var links = document.getElementsByTagName('a');
+    var query = '?';
+    for(var i = 0; i < links.length; i++) {
+    if(links[i].href.indexOf('#disqus_thread') >= 0) {
+        query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
+    }
+    }
+    document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/blogpaulcraciunoiu/get_num_replies.js' + query + '"></' + 'script>');
+})();
+//]]>
+</script>
+    </div>
+
+    <div id="footer" role="contentinfo">
+        <div class="about">
+        <p>I work as a web developer for <a href="http://mozilla.com">Mozilla</a>, with main focus on <a href="http://www.djangoproject.com/">Django</a>, Python, and PHP. Occasionally, I write tutorials or post other information I find interesting.</p>
+        <p>I enjoy doing freelance work for other websites, mostly non-profits. If you're interested in my services, contact me through one of the links below.</p>
+        </p>
+        </div>
+        <div class="contact">
+            <a href="http://twitter.com/embrangler/">Follow me</a> -- 
+            <a href="http://craciunoiu.net/contact/paul">Email me</a> -- 
+            <a href="http://github.com/pcraciunoiu/">My GitHub</a>
+        </div>
+        <div class="quote">
+        <p>
+            Success is a journey, not a destination. The doing is often more important than the outcome. &mdash; <a href="http://quoteden.net/author/id/337">Arthur Robert Ashe, Jr</a>
+        </p>
+        <p>&copy; Paul Craciunoiu. Some rights reserved. Brought to you by <a href="http://wiki.github.com/mojombo/jekyll/">Jekyll</a></p>
+        </div>
+    </div>
+</div><!-- site -->
+
+</body>
+</html>

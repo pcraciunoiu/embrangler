@@ -7,7 +7,7 @@ summary: The migration process of <a href="http://quoteden.net">Quote Den</a>, f
 ---
 _This post is written in collaboration with Marius Craciunoiu, my brother, and designer of Quote Den and [other](http://craciunoiu.net) [sites](http://awesomemath.org)._
 
-Hooray! 2 weeks after it started, [Quote Den](http://quoteden.net)'s migration from [Drupal](http://drupal.org) 6 to [Kohana](http://kohanaphp.com/) 3 is complete. This post offers a summary of that process, and lists some of the design improvements and implementation accomplishments. Along the way, it links to some of the resources used.<!--more-->
+Hooray! 2 weeks after it started, [Quote Den](http://quoteden.net)'s migration from [Drupal](http://drupal.org) 6 to [Kohana](http://kohanaphp.com/) 3 is complete. This post offers a summary of that process, and lists some of the design improvements and implementation accomplishments. Along the way, it links to some of the resources used.
 
 Table of contents:
 

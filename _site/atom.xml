@@ -4,7 +4,7 @@
  <title>Disembrangling Programming - Paul Craciunoiu</title>
  <link href="http://embrangler.com/atom.xml" rel="self"/>
  <link href="http://embrangler.com/"/>
- <updated>2010-03-21T12:46:48-07:00</updated>
+ <updated>2010-03-21T15:08:58-07:00</updated>
  <id>http://embrangler.com/</id>
  <author>
    <name>Paul Craciunoiu</name>
@@ -13,13 +13,164 @@
 
  
  <entry>
+   <title>Embrangler: Moving to Jekyll</title>
+   <link href="http://embrangler.com/2010/03/embrangler-moving-to-jekyll"/>
+   <updated>2010-03-21T00:00:00-07:00</updated>
+   <id>http://embrangler.com/2010/03/embrangler-moving-to-jekyll</id>
+   <content type="html">&lt;p&gt;It took only three days to migrate my blog from &lt;a href='http://wordpress.org'&gt;Wordpress&lt;/a&gt; to &lt;a href='http://wiki.github.com/mojombo/jekyll/'&gt;Jekyll&lt;/a&gt;. For anyone who plans to do this, I&amp;#8217;m summarizing the whole process below.&lt;/p&gt;
+
+&lt;p&gt;Table of contents:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href='#why_change'&gt;Why change?&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='#why_jekyll'&gt;Why Jekyll?&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='#migration_process'&gt;Migration process&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='#conclusion'&gt;Conclusion&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id='why_change'&gt;Why change?&lt;/h2&gt;
+
+&lt;p&gt;While I realize Wordpress the most popular blogging platform for a reason, I was bothered by the workflow involved with having a WP blog. Some of the (arguable) inconveniences I found were:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;the WYSIWYG editor doesn&amp;#8217;t handle some of the markup I would like (headings, tables aren&amp;#8217;t great either), so I would constantly switch between the Visual and HTML tabs to format things the way I wanted to. While I realize this could be fixed by customizing the editor, why should I have to do that? Plus, I have long given up hope of the ideal WYSIWYG editor. Besides not handling markup very well, it would sometimes reformat some of my plain HTML and break it.&lt;/li&gt;
+
+&lt;li&gt;creating posts is pretty much the only thing I do. I don&amp;#8217;t use categories, tags, or any other features. Yet I had this admin area cluttered with features.&lt;/li&gt;
+
+&lt;li&gt;I&amp;#8217;m not too fond of WP&amp;#8217;s version control. I would often see the message that &amp;#8220;a more recent version of this post is available&amp;#8221; erroneously, I&amp;#8217;m still not sure why. While changing versions worked well enough, I find the idea of an actual version control system more appealing.&lt;/li&gt;
+
+&lt;li&gt;My blog could use a redesign. For a while, I was using the &lt;a href='http://wordpress.org/extend/themes/carrington-text'&gt;Carrington Text&lt;/a&gt; theme, which was ok but not great. I wanted to make it feel more like &lt;em&gt;my&lt;/em&gt; blog &amp;#8211; no sidebar, larger font, a better home page to name a few.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id='why_jekyll'&gt;Why Jekyll?&lt;/h2&gt;
+
+&lt;p&gt;A few weeks before I decided to switch off of Wordpress, I found out about static site-generator engines alternatives that would use available version control software such as git or svn. After looking around I hesitated to switch to any of these because they were mostly Ruby-based, and I was unfamliar with how they work. However, all other alternatives seem to be heading towards full-fledged &lt;abbr title='Content Management System'&gt;CMS&lt;/abbr&gt;&amp;#8217;s.&lt;/p&gt;
+
+&lt;p&gt;A quick note on static sites: they have virtually no security holes (well, in theory), because there is no server-side handling of data submission. I&amp;#8217;m using a &lt;abbr title='Virtual Private Server'&gt;VPS&lt;/abbr&gt; too, so I was fond of having less CPU usage on the server (due to not having to process, say, PHP scripts for Wordpress).&lt;/p&gt;
+
+&lt;p&gt;Some of the alternatives to Jekyll that I considered are &lt;a href='http://www.cloudhead.io/toto'&gt;Toto&lt;/a&gt;, &lt;a href='http://www.staceyapp.com/'&gt;StaceyApp&lt;/a&gt;, &lt;a href='http://chyrp.net/'&gt;Chyrp&lt;/a&gt;, &lt;a href='http://subtextproject.com/'&gt;Subtext&lt;/a&gt; and &lt;a href='http://typosphere.org/'&gt;Typo&lt;/a&gt;. I picked &lt;a href='http://wiki.github.com/mojombo/jekyll/'&gt;Jekyll&lt;/a&gt; for two main reasons:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;popularity &amp;#8211; looking at the &lt;a href='http://wiki.github.com/mojombo/jekyll/'&gt;project&amp;#8217;s github&lt;/a&gt; watches/forks&lt;/li&gt;
+
+&lt;li&gt;documentation and examples &amp;#8211; there is actually a &lt;a href='http://wiki.github.com/mojombo/jekyll/sites'&gt;Sites&lt;/a&gt; page, leading to other sites and their github hosted sources, immensely helpful when starting out&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id='migration_process'&gt;Migration process&lt;/h2&gt;
+
+&lt;p&gt;I followed these instructions:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href='http://wiki.github.com/mojombo/jekyll/install'&gt;Installation steps from the Jekyll documentation&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='http://blog.favrik.com/2009/03/02/installing-jekyll-on-ubuntu-8-10/'&gt;Installing Jekyll on Ubuntu&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&amp;#8230; and started by looking at &lt;a href='http://tom.preston-werner.com/'&gt;Tom Preston-Werner&amp;#8217;s blog&lt;/a&gt; and its &lt;a href='http://github.com/mojombo/mojombo.github.com'&gt;source on github&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id='migrating_posts'&gt;Migrating posts&lt;/h3&gt;
+
+&lt;p&gt;After I got the redesign to look good on Jekyll, the next step was migrating my Wordpress posts. Fortunately, &lt;a href='http://wiki.github.com/mojombo/jekyll/blog-migrationsl'&gt;there is documentation for that too&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Unfortunately, the automatic migration did not convert some of the markup very well, such as LaTex, images with captions, most lists and links. Yet I had less than 15 posts, so I just went through them and checked everything. Because I&amp;#8217;m using &lt;a href='http://www.latex-project.org/'&gt;LaTeX&lt;/a&gt; in some of my posts, I used &lt;a href='http://maruku.rubyforge.org/maruku.html'&gt;maruku&lt;/a&gt; (instead of &lt;a href='http://github.com/rtomayko/rdiscount'&gt;rdiscount&lt;/a&gt;) to parse them. I couldn&amp;#8217;t find LaTeX support for rdiscount, which is a faster parser.&lt;/p&gt;
+
+&lt;p&gt;I&amp;#8217;m also using lsi for related posts, and &lt;a href='http://pygments.org/'&gt;python-pygments&lt;/a&gt; for syntax highlighting. The latter is simply a wonderful tool, and I recommend it to anyone posting code on the web. Of course, all of these are documented in the Jekyll documentation, so it was easy to get it all working.&lt;/p&gt;
+
+&lt;p&gt;The code for this site is up on github as well, so you can &lt;a href='http://github.com/pcraciunoiu/embrangler/'&gt;check it out there&lt;/a&gt; to see how it works.&lt;/p&gt;
+
+&lt;h3 id='migrating_comments'&gt;Migrating comments&lt;/h3&gt;
+
+&lt;p&gt;This took me about 20 minutes :), following &lt;a href='http://disqus.com/comments/wordpress/'&gt;these instructions&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id='server_setup_and_more'&gt;Server setup and more&lt;/h3&gt;
+
+&lt;p&gt;I actually didn&amp;#8217;t want to install jekyll on my server, and preferred to do all the generating locally. My server only works with plain html this way. The one thing I did do, however, was use github&amp;#8217;s post-receive-hook service. I ended up having something &lt;a href='http://forum.webfaction.com/viewtopic.php?id=964'&gt;similar to this&lt;/a&gt;:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;github posts data to a php file on my server&lt;/li&gt;
+
+&lt;li&gt;this file verifies the posted data, logs the commit, and runs a C script.&lt;/li&gt;
+
+&lt;li&gt;the C script runs &lt;code&gt;git pull&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Here&amp;#8217;s the code for all of this:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;php script&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='php'&gt;&lt;span class='cp'&gt;&amp;lt;?php&lt;/span&gt;
+
+&lt;span class='k'&gt;if&lt;/span&gt; &lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='o'&gt;!&lt;/span&gt;&lt;span class='nv'&gt;$_POST&lt;/span&gt;&lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;payload&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;])&lt;/span&gt; &lt;span class='k'&gt;die&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;Nothing to do&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+
+&lt;span class='nb'&gt;define&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;HOOKLOG&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='s1'&gt;&amp;#39;../logs/hooks.log&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+&lt;span class='nv'&gt;$fh&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='nb'&gt;fopen&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nx'&gt;HOOKLOG&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='s1'&gt;&amp;#39;w&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt; &lt;span class='k'&gt;or&lt;/span&gt; &lt;span class='k'&gt;die&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s2'&gt;&amp;quot;Can&amp;#39;t open file&amp;quot;&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+&lt;span class='nv'&gt;$data&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='s1'&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt;
+
+&lt;span class='nv'&gt;$hook&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='nx'&gt;json_decode&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nv'&gt;$_POST&lt;/span&gt;&lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;payload&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;]);&lt;/span&gt;
+
+&lt;span class='k'&gt;if&lt;/span&gt; &lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nv'&gt;$hook&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;repository&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;owner&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;name&lt;/span&gt; &lt;span class='o'&gt;!=&lt;/span&gt; &lt;span class='s1'&gt;&amp;#39;pcraciunoiu&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+    &lt;span class='nb'&gt;header&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;HTTP/1.0 403 Forbidden&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+    &lt;span class='k'&gt;exit&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt;
+&lt;span class='p'&gt;}&lt;/span&gt;
+
+&lt;span class='nv'&gt;$cs&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='nv'&gt;$hook&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;commits&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt;
+
+&lt;span class='k'&gt;foreach&lt;/span&gt; &lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nv'&gt;$cs&lt;/span&gt; &lt;span class='k'&gt;as&lt;/span&gt; &lt;span class='nv'&gt;$c&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+    &lt;span class='nv'&gt;$data&lt;/span&gt; &lt;span class='o'&gt;.=&lt;/span&gt; &lt;span class='nv'&gt;$c&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;timestamp&lt;/span&gt; &lt;span class='o'&gt;.&lt;/span&gt; &lt;span class='s2'&gt;&amp;quot;&lt;/span&gt;&lt;span class='se'&gt;\n&lt;/span&gt;&lt;span class='s2'&gt;&amp;quot;&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt;
+    &lt;span class='nv'&gt;$data&lt;/span&gt; &lt;span class='o'&gt;.=&lt;/span&gt; &lt;span class='nv'&gt;$c&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;author&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;name&lt;/span&gt;
+        &lt;span class='o'&gt;.&lt;/span&gt; &lt;span class='s1'&gt;&amp;#39; (&amp;#39;&lt;/span&gt; &lt;span class='o'&gt;.&lt;/span&gt; &lt;span class='nv'&gt;$c&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;author&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;email&lt;/span&gt; &lt;span class='o'&gt;.&lt;/span&gt; &lt;span class='s1'&gt;&amp;#39;)&amp;#39;&lt;/span&gt;
+        &lt;span class='o'&gt;.&lt;/span&gt; &lt;span class='s1'&gt;&amp;#39; pushed to &amp;#39;&lt;/span&gt; &lt;span class='o'&gt;.&lt;/span&gt; &lt;span class='nv'&gt;$hook&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;repository&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;url&lt;/span&gt; &lt;span class='o'&gt;.&lt;/span&gt; &lt;span class='s2'&gt;&amp;quot;&lt;/span&gt;&lt;span class='se'&gt;\n&lt;/span&gt;&lt;span class='s2'&gt;&amp;quot;&lt;/span&gt;
+        &lt;span class='o'&gt;.&lt;/span&gt; &lt;span class='s1'&gt;&amp;#39;View commit at &amp;#39;&lt;/span&gt; &lt;span class='o'&gt;.&lt;/span&gt; &lt;span class='nv'&gt;$c&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;url&lt;/span&gt; &lt;span class='o'&gt;.&lt;/span&gt; &lt;span class='s2'&gt;&amp;quot;&lt;/span&gt;&lt;span class='se'&gt;\n&lt;/span&gt;&lt;span class='s2'&gt;&amp;quot;&lt;/span&gt;
+        &lt;span class='o'&gt;.&lt;/span&gt; &lt;span class='s2'&gt;&amp;quot;&lt;/span&gt;&lt;span class='se'&gt;\n\n&lt;/span&gt;&lt;span class='s2'&gt;Commit message was:&lt;/span&gt;&lt;span class='se'&gt;\n&lt;/span&gt;&lt;span class='s2'&gt;&amp;quot;&lt;/span&gt; &lt;span class='o'&gt;.&lt;/span&gt; &lt;span class='nv'&gt;$c&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;message&lt;/span&gt; &lt;span class='o'&gt;.&lt;/span&gt; &lt;span class='s2'&gt;&amp;quot;&lt;/span&gt;&lt;span class='se'&gt;\n\n&lt;/span&gt;&lt;span class='s2'&gt;&amp;quot;&lt;/span&gt;
+    &lt;span class='p'&gt;;&lt;/span&gt;
+&lt;span class='p'&gt;}&lt;/span&gt;
+
+&lt;span class='nb'&gt;fwrite&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nv'&gt;$fh&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='nv'&gt;$data&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+&lt;span class='nb'&gt;fclose&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nv'&gt;$fh&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+
+&lt;span class='c'&gt;// set this to your path&lt;/span&gt;
+&lt;span class='k'&gt;echo&lt;/span&gt; &lt;span class='nb'&gt;exec&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;/path/to/site/pull_script&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;ol&gt;
+&lt;li&gt;the c file&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='c'&gt;&lt;span class='cp'&gt;#include &amp;lt;stddef.h&amp;gt;&lt;/span&gt;
+&lt;span class='cp'&gt;#include &amp;lt;stdlib.h&amp;gt;&lt;/span&gt;
+&lt;span class='cp'&gt;#include &amp;lt;unistd.h&amp;gt;&lt;/span&gt;
+
+&lt;span class='kt'&gt;int&lt;/span&gt; &lt;span class='nf'&gt;main&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='kt'&gt;void&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+    &lt;span class='n'&gt;execl&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;/usr/bin/git&amp;quot;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='s'&gt;&amp;quot;git&amp;quot;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='s'&gt;&amp;quot;pull&amp;quot;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='s'&gt;&amp;quot;origin&amp;quot;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='s'&gt;&amp;quot;master&amp;quot;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='k'&gt;const&lt;/span&gt; &lt;span class='kt'&gt;char&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt; &lt;span class='nb'&gt;NULL&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+
+    &lt;span class='k'&gt;return&lt;/span&gt; &lt;span class='n'&gt;EXIT_FAILURE&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt;
+&lt;span class='p'&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Compile this with&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='bash'&gt;gcc pull_script.c -o pull_script
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;So now, every time I push to github, the server automatically updates. Really cool way of publishing!&lt;/p&gt;
+
+&lt;h2 id='conclusion'&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;I enjoy using git, and having a static site. My comments are offloaded to a separate server, and I write plain text files using the markdown syntax, automatically published when I &lt;code&gt;git push&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Goodbye Wordpress!&lt;/p&gt;</content>
+ </entry>
+ 
+ <entry>
    <title>Quoteden: Moving to Kohana 3</title>
    <link href="http://embrangler.com/2010/03/quoteden-moving-to-kohana-3"/>
    <updated>2010-03-12T00:00:00-08:00</updated>
    <id>http://embrangler.com/2010/03/quoteden-moving-to-kohana-3</id>
    <content type="html">&lt;p&gt;&lt;em&gt;This post is written in collaboration with Marius Craciunoiu, my brother, and designer of Quote Den and &lt;a href='http://craciunoiu.net'&gt;other&lt;/a&gt; &lt;a href='http://awesomemath.org'&gt;sites&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
 
-&lt;p&gt;Hooray! 2 weeks after it started, &lt;a href='http://quoteden.net'&gt;Quote Den&lt;/a&gt;&amp;#8217;s migration from &lt;a href='http://drupal.org'&gt;Drupal&lt;/a&gt; 6 to &lt;a href='http://kohanaphp.com/'&gt;Kohana&lt;/a&gt; 3 is complete. This post offers a summary of that process, and lists some of the design improvements and implementation accomplishments. Along the way, it links to some of the resources used.&lt;!--more--&gt;&lt;/p&gt;
+&lt;p&gt;Hooray! 2 weeks after it started, &lt;a href='http://quoteden.net'&gt;Quote Den&lt;/a&gt;&amp;#8217;s migration from &lt;a href='http://drupal.org'&gt;Drupal&lt;/a&gt; 6 to &lt;a href='http://kohanaphp.com/'&gt;Kohana&lt;/a&gt; 3 is complete. This post offers a summary of that process, and lists some of the design improvements and implementation accomplishments. Along the way, it links to some of the resources used.&lt;/p&gt;
 
 &lt;p&gt;Table of contents:&lt;/p&gt;
 
@@ -1196,114 +1347,6 @@ sudo ln -s ../sites-available/sumo
 &lt;p&gt;Given &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/b2765f795b1355ed41b6309439b7bd16.png' alt='$P_1 (x_1, y_1, z_1), P_2(x_2, y_2, z_2), \theta = 30$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /&gt;&lt;/span&gt;. Find: M to rotate &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/5b11e05f05dbbee9ab42e5ffa80feff6.png' alt='$\theta$' style='vertical-align: -0.0ex;height: 1.55555555555556ex;' /&gt;&lt;/span&gt; around &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/c52313fcded09ef68627704bb14ff937.png' alt='$P_1P_2$' style='vertical-align: -0.444444444444444ex;height: 2.0ex;' /&gt;&lt;/span&gt; &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/e31304df240fc2402a200aecb0cf39b4.png' alt='$M = T_{orig} R_x^{\alpha} R_y^{\beta} R_z^{\theta} R_y^{-\beta} R_x^{-\alpha} T_{-orig}$' style='vertical-align: -0.888888888888889ex;height: 2.66666666666667ex;' /&gt;&lt;/span&gt;&lt;/p&gt;
 
 &lt;p&gt;2D: (S - scale, T - translate, R - rotate, SH - shear) &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/e5993473982fecbc658467a19de10594.png' alt='$T_1 T_2 = T_2 T_1 YES$' style='vertical-align: -0.444444444444444ex;height: 2.0ex;' /&gt;&lt;/span&gt; &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/0f5fe45bf3b61ece6db1558569f7dc2e.png' alt='$S_1 S_2 = S_2 S_1 YES$' style='vertical-align: -0.444444444444444ex;height: 2.0ex;' /&gt;&lt;/span&gt; &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/eba532053c1784c5926888c11899df10.png' alt='$R_1 R_2 = R_2 R_1 NO$' style='vertical-align: -0.444444444444444ex;height: 2.0ex;' /&gt;&lt;/span&gt; &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/1a8134b5d25b713dd6de19944451ec57.png' alt='$SH_{x1} SH_{x2} = SH_{x2} SH_{x1} YES$' style='vertical-align: -0.444444444444444ex;height: 2.0ex;' /&gt;&lt;/span&gt;&lt;/p&gt;</content>
- </entry>
- 
- <entry>
-   <title>CS107 hw2</title>
-   <link href="http://embrangler.com/2009/10/cs107-hw2"/>
-   <updated>2009-10-11T00:00:00-07:00</updated>
-   <id>http://embrangler.com/2009/10/cs107-hw2</id>
-   <content type="html">&lt;p&gt;Homework 2&lt;/p&gt;
-
-&lt;p&gt;page 44. 1) Counting from 0 to 999,999 yields 1,000,000 numbers.&lt;/p&gt;
-
-&lt;p&gt;Those which contain the digit 5 occur every 5th number: 0, 5, 10&amp;#8230; Hence: &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/4582f1ae0d54e29324502330dba9c886.png' alt='$\frac{1,000,000}{5} = 200,000$' style='vertical-align: -0.777777777777778ex;height: 2.77777777777778ex;' /&gt;&lt;/span&gt; 6 digit numbers contain the digit 5.&lt;/p&gt;
-
-&lt;p&gt;3) Yes.&lt;/p&gt;
-
-&lt;p&gt;To decide this, we need to find the total number of possible initials. There are 26 letters in the English alphabet, hence, the number of possible initials (&lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/fba01e94f33c55af5e1ca9ef426e732b.png' alt='$n$' style='vertical-align: -0.0ex;height: 1.0ex;' /&gt;&lt;/span&gt;) is: &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/72180eed49a3bc13a146ccf9bb0b8acc.png' alt='$n = 26^3 = 17,576$' style='vertical-align: -0.444444444444444ex;height: 2.22222222222222ex;' /&gt;&lt;/span&gt;&lt;/p&gt;
-
-&lt;p&gt;Since there are only 17,576 possible sets of 3 initials, and 20,000 people live in the town, there must be at least two people with the same initials.&lt;/p&gt;
-
-&lt;p&gt;page 45.&lt;/p&gt;
-
-&lt;p&gt;18) The problem is asking for:&lt;/p&gt;
-
-&lt;p&gt;The count of different numbers of 4 digits, with no repeating digits. This is equal to:&lt;/p&gt;
-
-&lt;p&gt;&lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/48af06bbaea5ab536f77542aa1eb6d6d.png' alt='$_{10} P_{4} = \frac{10!}{6!}  =  5040$' style='vertical-align: -0.777777777777778ex;height: 2.66666666666667ex;' /&gt;&lt;/span&gt;. Of those:&lt;/p&gt;
-
-&lt;p&gt;a) which do &lt;strong&gt;not&lt;/strong&gt; start with a 0. This is equal to: &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/93f41799e3d54257d5c5b2aaf42b5fcb.png' alt='$_{10} P_{4} - _{10} P_{3}= 5040 - 720 = 4320$' style='vertical-align: -0.444444444444444ex;height: 2.0ex;' /&gt;&lt;/span&gt;&lt;/p&gt;
-
-&lt;p&gt;b) how many do not start with 01. This is equal to: &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/438c6ca64a6168e6da278ea0f7a74ab5.png' alt='$_{10} P_{4} - _{10} P_{2} = 5040 - 90 = 4950$' style='vertical-align: -0.444444444444444ex;height: 2.0ex;' /&gt;&lt;/span&gt;&lt;/p&gt;
-
-&lt;p&gt;page 52.&lt;/p&gt;
-
-&lt;p&gt;16) The probability that a boy is sitting on a given chair (does not matter which one) is equal to:&lt;/p&gt;
-
-&lt;p&gt;&lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/dc4f0a50f9a7fc314fcfc71ab94cfa17.png' alt='$\frac{boys}{chairs} = \frac{12}{20} = \frac{3}{5}$' style='vertical-align: -0.777777777777778ex;height: 2.77777777777778ex;' /&gt;&lt;/span&gt;&lt;/p&gt;
-
-&lt;p&gt;Where boys = number of boys, chairs = total number of chairs Note that this solution assumes the 20 individuals are all occupying chairs at the same time and thus the events of occupying a chair are mutually exclusive.&lt;/p&gt;
-
-&lt;p&gt;page 82.&lt;/p&gt;
-
-&lt;p&gt;2) We call event &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/4ab6c518f28e823de46bb7f7bc3d139a.png' alt='$E_1$' style='vertical-align: -0.444444444444444ex;height: 2.0ex;' /&gt;&lt;/span&gt; = soldier has antigen A, and event &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/ec04f6475178172fa5b878976f39ddfa.png' alt='$E_2$' style='vertical-align: -0.333333333333333ex;height: 1.88888888888889ex;' /&gt;&lt;/span&gt; = soldier has blood type A. Then: &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/4b2ffe0aa61ff90e6fa7f9a603638732.png' alt='$P(E_2 | E_1) =\frac{P(E_1 E_2)}{P(E_1)} = \frac{0.04}{0.04+0.41} = 0.0(8)$' style='vertical-align: -1.11111111111111ex;height: 3.33333333333333ex;' /&gt;&lt;/span&gt;&lt;/p&gt;
-
-&lt;p&gt;page 87.&lt;/p&gt;
-
-&lt;p&gt;1) We call event &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/4ab6c518f28e823de46bb7f7bc3d139a.png' alt='$E_1$' style='vertical-align: -0.444444444444444ex;height: 2.0ex;' /&gt;&lt;/span&gt; = Robert commits perjury, and event &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/ec04f6475178172fa5b878976f39ddfa.png' alt='$E_2$' style='vertical-align: -0.333333333333333ex;height: 1.88888888888889ex;' /&gt;&lt;/span&gt; = Susan has committed a crime. We want to calculate &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/04708a7565cf27f9699f4fb889fdc158.png' alt='$P(E_1 | E_2)$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /&gt;&lt;/span&gt;: &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/dcd8f0a21a03b775ed1f33815d06d13d.png' alt='$P(E_1 | E_2) = \frac{P(E_1 \cdot E_2}{P(E_2)} = \frac{0.25 \cdot 0.65}{0.65} = 0.25$' style='vertical-align: -1.11111111111111ex;height: 3.33333333333333ex;' /&gt;&lt;/span&gt;&lt;/p&gt;
-
-&lt;p&gt;4) 8 defective, 12 nondefective items are inspected without replacement. We call events &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/8ef0fecd4f942260b267159856e51a5d.png' alt='$A_i$' style='vertical-align: -0.333333333333333ex;height: 1.88888888888889ex;' /&gt;&lt;/span&gt; = the i-th item inspected is defective, and events &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/50d6b65c3c55e4032541e4e4e8320adc.png' alt='$B_i$' style='vertical-align: -0.333333333333333ex;height: 1.88888888888889ex;' /&gt;&lt;/span&gt; = the i-th item inspected is nondefective.&lt;/p&gt;
-
-&lt;p&gt;a) event &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/4ab6c518f28e823de46bb7f7bc3d139a.png' alt='$E_1$' style='vertical-align: -0.444444444444444ex;height: 2.0ex;' /&gt;&lt;/span&gt; = first four items inspected are defective. &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/c91acc33d6afce6e11b2235805224b9a.png' alt='$P(E_1) = P(A_1 A_2 A_3  A_4) = P(A_1) \cdot P(A_2|A_1) \cdot P(A_3|A_1 A_2) \cdot P(A_4 | A_1 A_2 A_3)$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /&gt;&lt;/span&gt;&lt;/p&gt;
-
-&lt;p&gt;To calculate the above probability, it would help us to calculate &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/dcbd807fd7a32545dc7f7a0be8fafb7f.png' alt='$P(A_1 A_2), P(A_1 A_2 A_3)$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /&gt;&lt;/span&gt;. We already know &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/df0d3583eabada22d7e3459eea1c9bc4.png' alt='$P(A_1)$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /&gt;&lt;/span&gt;, so we can use that to calculate the others. Hence: &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/9676fac07498872f452fe0b595a02569.png' alt='$P(A_1 A_2) = P(A_1) \cdot P(A_2|A_1) = \frac{8}{20} \cdot \frac{7}{19} \approx 0.147$' style='vertical-align: -0.888888888888889ex;height: 2.77777777777778ex;' /&gt;&lt;/span&gt; &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/f3c510c8cd7fcd00336f438c5baea8dd.png' alt='$P(A_1 A_2 A_3) = P(A_1) \cdot P(A_2 | A_1) \cdot P(A_3 | A_1 A_2) = \frac{8}{20} \cdot \frac{7}{19} \cdot \frac{6}{18} \approx 0.082$' style='vertical-align: -0.888888888888889ex;height: 2.77777777777778ex;' /&gt;&lt;/span&gt;&lt;/p&gt;
-
-&lt;p&gt;The reasoning behind the result of &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/9eefc519674042bf22497168d8623f3f.png' alt='$P(A_i | A_1 .. A_{i-1})$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /&gt;&lt;/span&gt; is this: &amp;#8220;What is the probability of selecting a(nother) defective item, &lt;strong&gt;given&lt;/strong&gt; that I have already selected &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/363e09da37bbbc290bd801c628b7a808.png' alt='$i-1$' style='vertical-align: -0.111111111111111ex;height: 1.66666666666667ex;' /&gt;&lt;/span&gt; such items. Because of this dependency, we know the events that have to occur before this one, and what the numbers for defective and nondefective items are. Therefore: &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/5b9953ee8363d65501f9302f36c1687a.png' alt='$P(A_1 A_2 A_3 A_4) = P(A_1) \cdot P(A_2 | A_1) \cdot P(A_3 | A_1 A_2) \cdot P(A_4 | A_1 A_2 A_3)= \frac{8}{20} \cdot \frac{7}{19} \cdot \frac{6}{18} \cdot \frac{5}{17} = \approx 0.0241$' style='vertical-align: -0.888888888888889ex;height: 5.44444444444444ex;' /&gt;&lt;/span&gt; Therefore, &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/d9cf513004e61bed346e6624495c1f85.png' alt='$P(E_1) \approx 0.0241$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /&gt;&lt;/span&gt;&lt;/p&gt;
-
-&lt;p&gt;b) Event &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/ec04f6475178172fa5b878976f39ddfa.png' alt='$E_2$' style='vertical-align: -0.333333333333333ex;height: 1.88888888888889ex;' /&gt;&lt;/span&gt; = from the first three items, at least two are defective. The possible results can be split into:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/31f654c8b4f4845b3d42f7145efb8614.png' alt='$E_{21}$' style='vertical-align: -0.444444444444444ex;height: 2.0ex;' /&gt;&lt;/span&gt; = items 1 and 2 are defective &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/9676fac07498872f452fe0b595a02569.png' alt='$P(A_1 A_2) = P(A_1) \cdot P(A_2|A_1) = \frac{8}{20} \cdot \frac{7}{19} \approx 0.147$' style='vertical-align: -0.888888888888889ex;height: 2.77777777777778ex;' /&gt;&lt;/span&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/660847e3c6eedd9dd9b9e2dcbe677ecc.png' alt='$E_{22}$' style='vertical-align: -0.333333333333333ex;height: 1.88888888888889ex;' /&gt;&lt;/span&gt; = items 1 and 3 are defective, and item 2 is not (or we would have first case) &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/371d3b38d9bdc04eb000460f912d1da9.png' alt='$P(A_1 B_2 A_3) = P(A_1) \cdot P(B_2|A_1) \cdot P(A_3 | A_1 B_2) = \frac{8}{20} \cdot \frac{12}{19} \cdot \frac{7}{18} \approx 0.0982$' style='vertical-align: -0.888888888888889ex;height: 2.77777777777778ex;' /&gt;&lt;/span&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/631473875bf467f528772de61fb258ad.png' alt='$E_{23}$' style='vertical-align: -0.333333333333333ex;height: 1.88888888888889ex;' /&gt;&lt;/span&gt; = items 2 and 3 are defective, and item 1 is not (or we would have first case) &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/e5f853ca5a8297a298c60742c646b7ec.png' alt='$P(B_1 A_2 A_3) = P(B_1) \cdot P(A_2|B_1) \cdot P(A_3|B_1 A_2) = \frac{12}{20} \cdot \frac{8}{19} \cdot \frac{7}{18} \approx 0.0982$' style='vertical-align: -0.888888888888889ex;height: 2.77777777777778ex;' /&gt;&lt;/span&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Therefore, &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/57b445169b084c96e779066846b25ab0.png' alt='$P(E_2) \approx 0.3435$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /&gt;&lt;/span&gt;&lt;/p&gt;
-
-&lt;p&gt;7) It does not matter. Some simple calculations for the case of 3 instead of 200 guests show that the probability of drawing the &amp;#8220;you lose&amp;#8221; paper is the same, no matter which order you choose.&lt;/p&gt;
-
-&lt;p&gt;For example, assume there are 3 guests, and 3 papers, one of which says &amp;#8220;you lose.&amp;#8221; The probability of drawing the &amp;#8220;you lose&amp;#8221; paper 1st, 2nd, or 3rd are:&lt;/p&gt;
-
-&lt;p&gt;&lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/5117b7adf0038a37458b4f62f45014aa.png' alt='$P(E_1) = \frac{1}{3}$' style='vertical-align: -0.777777777777778ex;height: 2.66666666666667ex;' /&gt;&lt;/span&gt; &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/5e437f8f09bc63dfbad395a1631312df.png' alt='$P(E_2) = \frac{2}{3} \cdot \frac{1}{2}$' style='vertical-align: -0.777777777777778ex;height: 2.66666666666667ex;' /&gt;&lt;/span&gt;, which is the probability of first guest drawing blank and me drawing &amp;#8220;you lose.&amp;#8221; &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/c513351d7834d26a1d0c3cb3907dc294.png' alt='$P(E_1) = \frac{2}{3} \cdot \frac{1}{2} \cdot 1$' style='vertical-align: -0.777777777777778ex;height: 2.66666666666667ex;' /&gt;&lt;/span&gt;, which is the probability of first two guests drawing blank and me drawing &amp;#8220;you lose.&amp;#8221; (since that is all that is left, we have a certainty)&lt;/p&gt;
-
-&lt;p&gt;For the case of 200, clearly, drawing 1st yields a probability of losing of &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/83133d19342e36bfddce4c0500861cde.png' alt='$\frac{1}{200}$' style='vertical-align: -0.777777777777778ex;height: 2.66666666666667ex;' /&gt;&lt;/span&gt;. Drawing 2nd: &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/6dfb6ff0724ede0fc5b18926b229bc4f.png' alt='$P(E_2) = \frac{199}{200} \cdot \frac{1}{199} = \frac{1}{200}$' style='vertical-align: -0.888888888888889ex;height: 2.77777777777778ex;' /&gt;&lt;/span&gt;. By the following formula, we can show that the probability is the same for drawing &amp;#8220;you lose&amp;#8221; regardless of which order we choose:&lt;/p&gt;
-
-&lt;p&gt;&lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/7a99aa7cd0c623e41f3199dc05457cdd.png' alt='$P(E_i) = (\prod_{j=1}^{i-1} \frac{200-j}{200-j+1}) \cdot \frac{1}{200-i+1}$' style='vertical-align: -1.11111111111111ex;height: 3.11111111111111ex;' /&gt;&lt;/span&gt;. Expanding this product reduces the formula to: &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/18bff106acead68f414106c5b600222a.png' alt='$P(E_i) = \frac{1}{200}$' style='vertical-align: -0.777777777777778ex;height: 2.66666666666667ex;' /&gt;&lt;/span&gt;&lt;/p&gt;
-
-&lt;p&gt;page 97.&lt;/p&gt;
-
-&lt;p&gt;8) Let &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/c2b7650c81b26c9de16256c132ee1a99.png' alt='$G_i$' style='vertical-align: -0.333333333333333ex;height: 1.88888888888889ex;' /&gt;&lt;/span&gt; be the probability of hitting the target with gun i (i goes from 1 to 6). The probability of hitting a target by selecting a gun at random is: &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/f5d7554699eb850e1495fd7b2787c400.png' alt='$P(E_1) = \sum_{i=1}^6 (\frac{1}{6} \cdot P(G_i)) = \frac{1}{6} \cdot (0.6 + 0.5 + 0.7 + 0.9 + 0.7 + 0.8) = 0.7$' style='vertical-align: -0.777777777777778ex;height: 2.66666666666667ex;' /&gt;&lt;/span&gt;&lt;/p&gt;
-
-&lt;p&gt;11) Yes, the chances of getting a gold coin are equal for all participants. Intuitively, performing this experiment enough times yields equal probability for any person to receive a gold coin. More theoretically, we have shown in excercise 7 from page 87 (see above), that the order of drawing does not matter. This excercise is the same, except instead of drawing from 200 papers out of which 1 is distinct, we draw from 5 coins out of which 3 are distinct. Hence, the probability of each participant to get a gold coin is equal to 3/5.&lt;/p&gt;
-
-&lt;p&gt;page 106.&lt;/p&gt;
-
-&lt;p&gt;3) We will look at the probability that the suspect is guilty, given the new evidence that the criminal is (likely) left handed.&lt;/p&gt;
-
-&lt;p&gt;&lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/5998a023b6a404a93b284e6782ea8518.png' alt='$P(G|L) = \frac{P(L|G) \cdot P(G)}{P(L|G) \cdot P(G) + P(L|I) \cdot P(I)}$' style='vertical-align: -1.11111111111111ex;height: 3.33333333333333ex;' /&gt;&lt;/span&gt;, where L = criminal is left handed, G = suspect is guilty, I = suspect is innocent. Therefore:&lt;/p&gt;
-
-&lt;p&gt;&lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/214f4e1e6d5d70c0c6e3dc8dc893ecc4.png' alt='$P(G|L) = \frac{0.23 \cdot 0.65}{0.23 \cdot 0.65 + 0.85 \cdot 0.35} = \frac{0.1495}{0.447} = 0.33$' style='vertical-align: -0.888888888888889ex;height: 2.77777777777778ex;' /&gt;&lt;/span&gt;&lt;/p&gt;
-
-&lt;p&gt;As we suspect, since only 23% of people are left-handed and a witness claims criminal is likely (85%) left handed, our suspect is less likely to be guilty.&lt;/p&gt;
-
-&lt;p&gt;7) We look at the probability that a person has the cancer, given a positive test result.&lt;/p&gt;
-
-&lt;p&gt;&lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/b3e6f4a804484409659b1afb6ace9862.png' alt='$P(C|T) = \frac{P(T|C) \cdot P(C)}{P(T|C) \cdot P(C) + P(T|H) \cdot P(H)}$' style='vertical-align: -1.11111111111111ex;height: 3.33333333333333ex;' /&gt;&lt;/span&gt;, where C = person has the cancer, T = test result is positive, H = the person is healthy (does not suffer from the cancer). Therefore:&lt;/p&gt;
-
-&lt;p&gt;&lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/5298e9820cae792347ebc2350ef3c991.png' alt='$P(C|T) = \frac{0.92 \cdot 0.0002}{0.92 \cdot 0.0002 + 0.002 \cdot 0.9998} = \frac{0.000184}{0.0021836} = 0.0843$' style='vertical-align: -0.888888888888889ex;height: 2.77777777777778ex;' /&gt;&lt;/span&gt;&lt;/p&gt;
-
-&lt;p&gt;9) We look at the probability that the collector buys a piece that she thinks is original, but she is mistaken; in other terms, the probability that the piece is not original, given that she thinks it is.&lt;/p&gt;
-
-&lt;p&gt;&lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/e3a2454db9d42aaa244d9c7a22b0e0e9.png' alt='$P(F|T) = \frac{P(T|F) \cdot P(F)}{P(T|F) \cdot P(F) + P(T|O) \cdot P(O)}$' style='vertical-align: -1.11111111111111ex;height: 3.33333333333333ex;' /&gt;&lt;/span&gt;, where O = the painting is an original, F = the painting is a fake, T = the collector thinks the painting is original&lt;/p&gt;
-
-&lt;p&gt;&lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/cc69dad23ef7d0655ada0bfc219f5fbd.png' alt='$P(F|T) = \frac{0.15 \cdot 0.25}{0.15 \cdot 0.25 + 0.85 \cdot 0.75} = \frac{0.0375}{0.675} = 0.0(5)$' style='vertical-align: -0.888888888888889ex;height: 2.77777777777778ex;' /&gt;&lt;/span&gt;&lt;/p&gt;
-
-&lt;p&gt;page 119.&lt;/p&gt;
-
-&lt;p&gt;8) No, Cardano was not correct. Since the event A had probability &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/80a8d999651916de94bad8acf4752223.png' alt='$P(A) = \frac{3}{4}$' style='vertical-align: -0.777777777777778ex;height: 2.66666666666667ex;' /&gt;&lt;/span&gt;, the occurence of that event in two &lt;em&gt;consecutive independent&lt;/em&gt; experiments was &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/f4ed5d43d6fa0866de0defcdc12bbf0a.png' alt='$P(A A) = P(A) \cdot P(A) = \frac{3}{4} \cdot \frac{3}{4} = \frac{9}{16}$' style='vertical-align: -0.888888888888889ex;height: 2.77777777777778ex;' /&gt;&lt;/span&gt;. So, the odds in favor were 9 to 7.&lt;/p&gt;</content>
  </entry>
  
  
