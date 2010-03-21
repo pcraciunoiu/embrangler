@@ -11,9 +11,9 @@ Hooray! 2 weeks after it started, [Quote Den](http://quoteden.net)'s migration f
 
 Table of contents:
 
-* [Why change?](#why-change)
-* [Redesign details](#redesign-details)
-* [Implementation process](#implementation-process)
+* [Why change?](#why_change)
+* [Redesign details](#redesign_details)
+* [Implementation process](#implementation_process)
 * [Conclusion](#conclusion)
 
 ## Why change?
@@ -38,10 +38,10 @@ In terms of design, the old site suffered quite a bit. Some of the pre-launch is
 
 The rest of this section summarizes some of the improvements in more detail.
 
-## Search engine
+### Search engine
 The older search was the default Drupal search, presumably using MySQL fulltext search. The new implementation uses Sphinx search, which does [stemming](http://en.wikipedia.org/wiki/Stemming), and searches for other inflections of the same word. For example, searching for "hopeless" includes results with "hopelessness", or searching for "loving" includes results with "love". The new search is also much faster, at least in part because it does not need to query the database. You can read more about Sphinx search [here](http://sphinxsearch.com/). It is worth noting that Drupal could also be [configured with Sphinx](http://drupal.org/project/sphinx).
 
-## Navigation
+### Navigation
 When we first designed the website, we wanted it to be as simple as possible. This meant stripping it down of all features except the basics: a page to list quotes and a search function. Later on, this became a problem because we added other features, such as the _Top Rated_ page and categories for each quote. We wanted to add a [Top Rated](http://quoteden.net/quote/top) link to the header, but there wasn't a good place for it. If it were placed next to the search bar, it seemed to be the label for the input box, but if it were placed too far away, it looked alienated.
 
 <div class="img-wrap"><div class="img">
@@ -56,7 +56,7 @@ This issue was solved with the introduction of the _tabbed navigation_ menu. The
     <div>Top Rated placement in new design</div>
 </div></div>
 
-## Categories
+### Categories
 Another feature introduced after the initial launch of the website was the addition of categories. In the old design, they were placed at the top of the quote, which caused the quote itself to receive less attention. To fix this, the new design shows the categories under the quote and reduces the font size.
 
 <div class="img-wrap"><div class="img">
@@ -71,7 +71,7 @@ When categories were first added, there wasn't a page to list them all. They off
     <div>The new categories page</div>
 </div></div>
 
-## Polishing the design
+### Polishing the design
 One of the issues with the old Quote Den was an inconsistent design. For example, the heading "Top Rated Quotes" did not match the general style of the website. To solve this, we removed page headings altogether. The active page is now shown by the navigation menu.
 
 <div class="img-wrap"><div class="img">
@@ -93,7 +93,7 @@ Part of perfecting the design was to [balance](http://webdesign.about.com/od/web
     <div>Balance in whitespace and larger stars (on the left)</div>
 </div></div>
 
-## Administrative Options
+### Administrative Options
 <div class="img-wrap"><div class="img">
     <img alt="Admin: quote creation form (left is new)" src="/images/quoteden/add-quotes.jpg" title="rating-compare">
     <div>Admin: quote creation form (left is new)</div>
@@ -130,8 +130,9 @@ Although probably none of you may see this anytime soon, one of the reasons we r
 <div class="caption">Quote creation form, improvements</div>
 </div></div>
 
-## Feedback
+### Feedback
 Of course no website would be complete without the almighty contact us link, so we added one on the bottom. We hope our viewers will contact us about anything related to the website, whether that is feedback on the site or suggestions on the quotes themselves.
+
 ## Implementation process
 We actually started with Kohana 2, unsure about how easy it will be to migrate. A major concern was how quickly we could get Quote Den up and running on the new platform. Following [tutorials](http://http//stackoverflow.com/questions/394175/searching-for-a-kohana-beginners-tutorial-for-php) (mostly, a [blog tutorial](http://http//learn.kohanaphp.com/2008/03/26/blog-tutorial-1/)), getting a simple quote+author page going was quick and painless, so we decided to go ahead and use Kohana.
 
@@ -183,7 +184,7 @@ After this, all that was left was the rating system. After some searching for go
 
 To top it off, we have also put in place a bunch of .htaccess RewriteRules for handling redirects from old Drupal URLs.
 
-## Result
+## Conclusion
 So that's it. The Quote Den Drupal->Kohana work summarized. The benefits: performance improvements of more than 50% (in page load time), more flexibility, consistency in the design, and Sphinx search.
 
 And if you're learning Kohana, and would like some help, shoot us a comment below.

@@ -1,0 +1,7 @@
+# Turn on Expires and mark images, css, js to expire in a week
+ExpiresActive On
+ExpiresDefault A0
+<FilesMatch "\.(jpg|jpeg|png|gif|js|css|ico)$">
+ ExpiresDefault A2592000
+ FileETag None
+</FilesMatch>

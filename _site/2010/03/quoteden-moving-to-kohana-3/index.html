@@ -36,11 +36,11 @@
 <p>Table of contents:</p>
 
 <ul>
-<li><a href='#why-change'>Why change?</a></li>
+<li><a href='#why_change'>Why change?</a></li>
 
-<li><a href='#redesign-details'>Redesign details</a></li>
+<li><a href='#redesign_details'>Redesign details</a></li>
 
-<li><a href='#implementation-process'>Implementation process</a></li>
+<li><a href='#implementation_process'>Implementation process</a></li>
 
 <li><a href='#conclusion'>Conclusion</a></li>
 </ul>
@@ -83,11 +83,11 @@
 
 <p>The rest of this section summarizes some of the improvements in more detail.</p>
 
-<h2 id='search_engine'>Search engine</h2>
+<h3 id='search_engine'>Search engine</h3>
 
 <p>The older search was the default Drupal search, presumably using MySQL fulltext search. The new implementation uses Sphinx search, which does <a href='http://en.wikipedia.org/wiki/Stemming'>stemming</a>, and searches for other inflections of the same word. For example, searching for &#8220;hopeless&#8221; includes results with &#8220;hopelessness&#8221;, or searching for &#8220;loving&#8221; includes results with &#8220;love&#8221;. The new search is also much faster, at least in part because it does not need to query the database. You can read more about Sphinx search <a href='http://sphinxsearch.com/'>here</a>. It is worth noting that Drupal could also be <a href='http://drupal.org/project/sphinx'>configured with Sphinx</a>.</p>
 
-<h2 id='navigation'>Navigation</h2>
+<h3 id='navigation'>Navigation</h3>
 
 <p>When we first designed the website, we wanted it to be as simple as possible. This meant stripping it down of all features except the basics: a page to list quotes and a search function. Later on, this became a problem because we added other features, such as the <em>Top Rated</em> page and categories for each quote. We wanted to add a <a href='http://quoteden.net/quote/top'>Top Rated</a> link to the header, but there wasn&#8217;t a good place for it. If it were placed next to the search bar, it seemed to be the label for the input box, but if it were placed too far away, it looked alienated.</p>
 <div class='img-wrap'><div class='img'>
@@ -99,7 +99,7 @@
     <img title='navigation' src='/images/quoteden/navigation.jpg' alt='Top Rated placement in new design' />
     <div>Top Rated placement in new design</div>
 </div></div>
-<h2 id='categories'>Categories</h2>
+<h3 id='categories'>Categories</h3>
 
 <p>Another feature introduced after the initial launch of the website was the addition of categories. In the old design, they were placed at the top of the quote, which caused the quote itself to receive less attention. To fix this, the new design shows the categories under the quote and reduces the font size.</p>
 <div class='img-wrap'><div class='img'>
@@ -111,7 +111,7 @@
     <img title='categories' src='/images/quoteden/categories.jpg' alt='The new categories page' />
     <div>The new categories page</div>
 </div></div>
-<h2 id='polishing_the_design'>Polishing the design</h2>
+<h3 id='polishing_the_design'>Polishing the design</h3>
 
 <p>One of the issues with the old Quote Den was an inconsistent design. For example, the heading &#8220;Top Rated Quotes&#8221; did not match the general style of the website. To solve this, we removed page headings altogether. The active page is now shown by the navigation menu.</p>
 <div class='img-wrap'><div class='img'>
@@ -128,7 +128,7 @@
     <img title='rating-compare' src='/images/quoteden/rating-compare.jpg' alt='Balance in whitespace and larger stars (on the left)' />
     <div>Balance in whitespace and larger stars (on the left)</div>
 </div></div>
-<h2 id='administrative_options'>Administrative Options</h2>
+<h3 id='administrative_options'>Administrative Options</h3>
 <div class='img-wrap'><div class='img'>
     <img title='rating-compare' src='/images/quoteden/add-quotes.jpg' alt='Admin: quote creation form (left is new)' />
     <div>Admin: quote creation form (left is new)</div>
@@ -162,7 +162,7 @@
 </table>
 <div class='caption'>Quote creation form, improvements</div>
 </div></div>
-<h2 id='feedback'>Feedback</h2>
+<h3 id='feedback'>Feedback</h3>
 
 <p>Of course no website would be complete without the almighty contact us link, so we added one on the bottom. We hope our viewers will contact us about anything related to the website, whether that is feedback on the site or suggestions on the quotes themselves.</p>
 
@@ -218,7 +218,7 @@
 
 <p>To top it off, we have also put in place a bunch of .htaccess RewriteRules for handling redirects from old Drupal URLs.</p>
 
-<h2 id='result'>Result</h2>
+<h2 id='conclusion'>Conclusion</h2>
 
 <p>So that&#8217;s it. The Quote Den Drupal-&gt;Kohana work summarized. The benefits: performance improvements of more than 50% (in page load time), more flexibility, consistency in the design, and Sphinx search.</p>
 
@@ -238,6 +238,31 @@
   </ul>
 </div>
 
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  (function() {
+   var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+   dsq.src = 'http://blogpaulcraciunoiu.disqus.com/embed.js';
+   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript=blogpaulcraciunoiu">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+<script type="text/javascript">
+//<![CDATA[
+(function() {
+    var links = document.getElementsByTagName('a');
+    var query = '?';
+    for(var i = 0; i < links.length; i++) {
+    if(links[i].href.indexOf('#disqus_thread') >= 0) {
+        query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
+    }
+    }
+    document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/blogpaulcraciunoiu/get_num_replies.js' + query + '"></' + 'script>');
+})();
+//]]>
+</script>
     </div>
 
     <div id="footer" role="contentinfo">
