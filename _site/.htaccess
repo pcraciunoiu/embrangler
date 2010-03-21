@@ -5,3 +5,6 @@ ExpiresDefault A0
  ExpiresDefault A2592000
  FileETag None
 </FilesMatch>
+
+AddOutputFilterByType DEFLATE text/html text/plain text/xml
+
