@@ -1,0 +1,1841 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+ 
+ <title>Disembrangling Programming - Paul Craciunoiu</title>
+ <link href="http://embrangler.com/atom.xml" rel="self"/>
+ <link href="http://embrangler.com/"/>
+ <updated>2010-03-21T12:41:45-07:00</updated>
+ <id>http://embrangler.com/</id>
+ <author>
+   <name>Paul Craciunoiu</name>
+   <email>paul@craciunoiu.net</email>
+ </author>
+
+ 
+ <entry>
+   <title>Quoteden: Moving to Kohana 3</title>
+   <link href="http://embrangler.com/2010/03/quoteden-moving-to-kohana-3"/>
+   <updated>2010-03-12T00:00:00-08:00</updated>
+   <id>http://embrangler.com/2010/03/quoteden-moving-to-kohana-3</id>
+   <content type="html">&lt;p&gt;&lt;em&gt;This post is written in collaboration with Marius Craciunoiu, my brother, and designer of Quote Den and &lt;a href='http://craciunoiu.net'&gt;other&lt;/a&gt; &lt;a href='http://awesomemath.org'&gt;sites&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Hooray! 2 weeks after it started, &lt;a href='http://quoteden.net'&gt;Quote Den&lt;/a&gt;&amp;#8217;s migration from &lt;a href='http://drupal.org'&gt;Drupal&lt;/a&gt; 6 to &lt;a href='http://kohanaphp.com/'&gt;Kohana&lt;/a&gt; 3 is complete. This post offers a summary of that process, and lists some of the design improvements and implementation accomplishments. Along the way, it links to some of the resources used.&lt;!--more--&gt;&lt;/p&gt;
+
+&lt;p&gt;Table of contents:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href='#why_change'&gt;Why change?&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='#redesign_details'&gt;Redesign details&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='#implementation_process'&gt;Implementation process&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='#conclusion'&gt;Conclusion&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id='why_change'&gt;Why change?&lt;/h2&gt;
+
+&lt;p&gt;First of all, why the change? The reason for the change is threefold.&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Redesign opportunity&lt;/strong&gt; - First of all, &lt;em&gt;Quote Den&lt;/em&gt; needed a redesign. Almost every part of the site was going to be affected. This was a great opportunity to move on to a better platform.&lt;/li&gt;
+
+&lt;li&gt;&lt;strong&gt;Ease of development&lt;/strong&gt; - The &lt;a href='http://en.wikipedia.org/wiki/Presentation-abstraction-control'&gt;(H)MVC&lt;/a&gt; model is a pleasure to work with, and once you get it, it&amp;#8217;s clear where your code goes, when you want to do something. While Drupal uses a similar model (module is similar to controller, template is similar to view), it is not exactly a &lt;a href='http://buytaert.net/drupal-learning-curve'&gt;breeze&lt;/a&gt; to develop in, and having worked with &lt;a href='http://craciunoiu.net/'&gt;several&lt;/a&gt;, &lt;a href='http://quality.mozilla.org/'&gt;drupal&lt;/a&gt; &lt;a href='http://spreadfirefox.com/'&gt;sites&lt;/a&gt;, must say Kohana is much nicer.&lt;/li&gt;
+
+&lt;li&gt;&lt;strong&gt;Flexibility&lt;/strong&gt; - Using custom built models in a framework allows for more flexibility and ultimately control over the application. Basically, you can make it do what you want without having to hack it.&lt;/li&gt;
+
+&lt;li&gt;&lt;strong&gt;Performance&lt;/strong&gt; - Kohana is a fairly simple framework. Compared to &lt;a href='http://framework.zend.com/'&gt;Zend&lt;/a&gt;, for example, it offers fewer features and is perfect for a simpler website such as &lt;a href='http://quoteden.net'&gt;Quote Den&lt;/a&gt;. We didn&amp;#8217;t need all of the features that Drupal offers either. Finally, Kohana works quite a bit faster than Drupal for Quote Den&amp;#8217;s purposes. As a comparison, the new site now loads in ~0.5s versus ~0.75s on my computer (over an average of 20 page loads). Here is a YSlow comparison of &lt;a href='http://embrangler.com/wp-content/uploads/2010/02/quoteden-stage.html'&gt;new&lt;/a&gt; versus &lt;a href='http://embrangler.com/wp-content/uploads/2010/02/quoteden.html'&gt;old&lt;/a&gt;. Content caching is not yet in place.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id='redesign_details'&gt;Redesign details&lt;/h2&gt;
+
+&lt;p&gt;In terms of design, the old site suffered quite a bit. Some of the pre-launch issues include:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;lacking a clear and consistent navigation&lt;/li&gt;
+
+&lt;li&gt;inconsistent design across the website&lt;/li&gt;
+
+&lt;li&gt;inconsistent spacing and centering of elements&lt;/li&gt;
+
+&lt;li&gt;search pages were not very useful&lt;/li&gt;
+
+&lt;li&gt;individual quote pages were almost empty (now they list related quotes)&lt;/li&gt;
+
+&lt;li&gt;there was no link to the landing page (besides the logo)&lt;/li&gt;
+
+&lt;li&gt;Drupal and the quotes module did not offer good administrative options&lt;/li&gt;
+
+&lt;li&gt;the site had no contact link&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The rest of this section summarizes some of the improvements in more detail.&lt;/p&gt;
+
+&lt;h3 id='search_engine'&gt;Search engine&lt;/h3&gt;
+
+&lt;p&gt;The older search was the default Drupal search, presumably using MySQL fulltext search. The new implementation uses Sphinx search, which does &lt;a href='http://en.wikipedia.org/wiki/Stemming'&gt;stemming&lt;/a&gt;, and searches for other inflections of the same word. For example, searching for &amp;#8220;hopeless&amp;#8221; includes results with &amp;#8220;hopelessness&amp;#8221;, or searching for &amp;#8220;loving&amp;#8221; includes results with &amp;#8220;love&amp;#8221;. The new search is also much faster, at least in part because it does not need to query the database. You can read more about Sphinx search &lt;a href='http://sphinxsearch.com/'&gt;here&lt;/a&gt;. It is worth noting that Drupal could also be &lt;a href='http://drupal.org/project/sphinx'&gt;configured with Sphinx&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id='navigation'&gt;Navigation&lt;/h3&gt;
+
+&lt;p&gt;When we first designed the website, we wanted it to be as simple as possible. This meant stripping it down of all features except the basics: a page to list quotes and a search function. Later on, this became a problem because we added other features, such as the &lt;em&gt;Top Rated&lt;/em&gt; page and categories for each quote. We wanted to add a &lt;a href='http://quoteden.net/quote/top'&gt;Top Rated&lt;/a&gt; link to the header, but there wasn&amp;#8217;t a good place for it. If it were placed next to the search bar, it seemed to be the label for the input box, but if it were placed too far away, it looked alienated.&lt;/p&gt;
+&lt;div class='img-wrap'&gt;&lt;div class='img'&gt;
+    &lt;img title='top-rated-link' src='/images/quoteden/top-rated-link.jpg' alt='Top Rated placement in previous design' /&gt;
+    &lt;div&gt;Top Rated placement in previous design&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;This issue was solved with the introduction of the &lt;em&gt;tabbed navigation&lt;/em&gt; menu. The &lt;em&gt;Top Rated&lt;/em&gt; tab is now located next to the &amp;#8220;Newest&amp;#8221; tab. The menu also solved another issue: the user can now see which page they are located on because the active tab changes color.&lt;/p&gt;
+&lt;div class='img-wrap'&gt;&lt;div class='img'&gt;
+    &lt;img title='navigation' src='/images/quoteden/navigation.jpg' alt='Top Rated placement in new design' /&gt;
+    &lt;div&gt;Top Rated placement in new design&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;h3 id='categories'&gt;Categories&lt;/h3&gt;
+
+&lt;p&gt;Another feature introduced after the initial launch of the website was the addition of categories. In the old design, they were placed at the top of the quote, which caused the quote itself to receive less attention. To fix this, the new design shows the categories under the quote and reduces the font size.&lt;/p&gt;
+&lt;div class='img-wrap'&gt;&lt;div class='img'&gt;
+    &lt;img title='categories-design' src='/images/quoteden/categories-design.jpg' alt='Categories -- before (right), after (left)' /&gt;
+    &lt;div&gt;Categories -- before (right), after (left)&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;When categories were first added, there wasn&amp;#8217;t a page to list them all. They offered the benefit of seeing quotes in the same category, and were also included in search. Now, we have a &lt;em&gt;Categories&lt;/em&gt; page.&lt;/p&gt;
+&lt;div class='img-wrap'&gt;&lt;div class='img'&gt;
+    &lt;img title='categories' src='/images/quoteden/categories.jpg' alt='The new categories page' /&gt;
+    &lt;div&gt;The new categories page&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;h3 id='polishing_the_design'&gt;Polishing the design&lt;/h3&gt;
+
+&lt;p&gt;One of the issues with the old Quote Den was an inconsistent design. For example, the heading &amp;#8220;Top Rated Quotes&amp;#8221; did not match the general style of the website. To solve this, we removed page headings altogether. The active page is now shown by the navigation menu.&lt;/p&gt;
+&lt;div class='img-wrap'&gt;&lt;div class='img'&gt;
+    &lt;img title='headings' src='/images/quoteden/headings.jpg' alt='Top Rated page is now consistent with new design (left)' /&gt;
+    &lt;div&gt;Top Rated page is now consistent with new design (left)&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;The &lt;em&gt;search&lt;/em&gt; page looked completely different than the rest of the website. Users could click anywhere on the quote to go to the individual quote, although there was no distinction made to indicate this. The quote ID and rating were missing from the results, which diminishes their value across the website and possibly discourages users from rating. If no one would see the rating while searching, then what&amp;#8217;s the point of rating? The search page is now styled just like the other pages. In terms of usability, we made it easier for users to find what they&amp;#8217;re looking for. If users see a quote they like in the search results, they can vote on it right away.&lt;/p&gt;
+&lt;div class='img-wrap'&gt;&lt;div class='img'&gt;
+    &lt;img title='search' src='/images/quoteden/search.jpg' alt='Search uses highlighting and is also consistent' /&gt;
+    &lt;div&gt;Search uses highlighting and is also consistent&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Part of perfecting the design was to &lt;a href='http://webdesign.about.com/od/webdesignbasics/p/aabalance.htm'&gt;balance&lt;/a&gt; all the elements on the page. The first and foremost stage in this process was to make sure all the elements are equally apart from their surrounding elements. For example, the ID and Rating were closer to the bottom of the quote than the top. Second, the stars were too small to balance the visual weight of the ID. To solve these problems, we enlarged the stars and centered them with the quote area.&lt;/p&gt;
+&lt;div class='img-wrap'&gt;&lt;div class='img'&gt;
+    &lt;img title='rating-compare' src='/images/quoteden/rating-compare.jpg' alt='Balance in whitespace and larger stars (on the left)' /&gt;
+    &lt;div&gt;Balance in whitespace and larger stars (on the left)&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;h3 id='administrative_options'&gt;Administrative Options&lt;/h3&gt;
+&lt;div class='img-wrap'&gt;&lt;div class='img'&gt;
+    &lt;img title='rating-compare' src='/images/quoteden/add-quotes.jpg' alt='Admin: quote creation form (left is new)' /&gt;
+    &lt;div&gt;Admin: quote creation form (left is new)&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Although probably none of you may see this anytime soon, one of the reasons we redesigned Quote Den was because it was a pain to add quotes. The add form was incredibly complex. To give you an idea of how BIG this thing was, you should know it had:&lt;/p&gt;
+&lt;div class='table-wrap'&gt;&lt;div class='table'&gt;
+&lt;table cellspacing='0' border='0'&gt;
+&lt;tr&gt;
+&lt;th style='width: 30%'&gt;Before&lt;/th&gt;
+&lt;th style='width: 40%'&gt;and&lt;/th&gt;
+&lt;th&gt;After&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;
+&lt;ul&gt;
+&lt;li&gt;9 input fields&lt;/li&gt;
+&lt;li&gt;2 drop down menus&lt;/li&gt;
+&lt;li&gt;6 radio buttons&lt;/li&gt;
+&lt;li&gt;5 check boxes&lt;/li&gt;
+&lt;li&gt;48 lines of text&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/td&gt;
+&lt;td class='center'&gt;vs&lt;/td&gt;
+&lt;td&gt;
+&lt;ul&gt;
+&lt;li&gt;3 input fields&lt;/li&gt;
+&lt;li&gt;4 lines of text&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;div class='caption'&gt;Quote creation form, improvements&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;h3 id='feedback'&gt;Feedback&lt;/h3&gt;
+
+&lt;p&gt;Of course no website would be complete without the almighty contact us link, so we added one on the bottom. We hope our viewers will contact us about anything related to the website, whether that is feedback on the site or suggestions on the quotes themselves.&lt;/p&gt;
+
+&lt;h2 id='implementation_process'&gt;Implementation process&lt;/h2&gt;
+
+&lt;p&gt;We actually started with Kohana 2, unsure about how easy it will be to migrate. A major concern was how quickly we could get Quote Den up and running on the new platform. Following &lt;a href='http://http//stackoverflow.com/questions/394175/searching-for-a-kohana-beginners-tutorial-for-php'&gt;tutorials&lt;/a&gt; (mostly, a &lt;a href='http://http//learn.kohanaphp.com/2008/03/26/blog-tutorial-1/'&gt;blog tutorial&lt;/a&gt;), getting a simple quote+author page going was quick and painless, so we decided to go ahead and use Kohana.&lt;/p&gt;
+
+&lt;p&gt;As soon as the quote and author models were finalized and tested to work, a quick attempt at a migration was necessary. This turned out to be quick and easy.&lt;/p&gt;
+
+&lt;p&gt;Next, we had templates. Using Kohana&amp;#8217;s &lt;a href='http://kerkness.ca/wiki/doku.php?id=template-site:extending_the_template_controller'&gt;Controller_Template&lt;/a&gt;, set up Controller_Quote. Then wrote a quotes template (under &lt;code&gt;views/quotes/quotes.php&lt;/code&gt;, extending &lt;code&gt;views/base/template.php&lt;/code&gt;).&lt;/p&gt;
+
+&lt;p&gt;Afterwards, we added &lt;a href='http://code.google.com/p/minify/'&gt;minify&lt;/a&gt;, categories, author pages. Since quotes use categories everywhere they are displayed, a good option was to overwrote the quote model constructor to always grab the related categories, sorted.&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='php'&gt;&lt;span class='cp'&gt;&amp;lt;?php&lt;/span&gt;
+&lt;span class='k'&gt;class&lt;/span&gt; &lt;span class='nc'&gt;Model_Quote&lt;/span&gt; &lt;span class='k'&gt;extends&lt;/span&gt; &lt;span class='nx'&gt;ORM&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+  &lt;span class='c'&gt;// ...&lt;/span&gt;
+  &lt;span class='k'&gt;public&lt;/span&gt; &lt;span class='k'&gt;function&lt;/span&gt; &lt;span class='nf'&gt;__construct&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nv'&gt;$id&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='k'&gt;NULL&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+    &lt;span class='k'&gt;parent&lt;/span&gt;&lt;span class='o'&gt;::&lt;/span&gt;&lt;span class='na'&gt;__construct&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nv'&gt;$id&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+    &lt;span class='nv'&gt;$this&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;_object&lt;/span&gt;&lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;categories_list&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;]&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='nv'&gt;$this&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;categories&lt;/span&gt;
+         &lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;order_by&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;name&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='s1'&gt;&amp;#39;asc&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt;
+         &lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;find_all&lt;/span&gt;&lt;span class='p'&gt;();&lt;/span&gt;
+  &lt;span class='p'&gt;}&lt;/span&gt;
+&lt;span class='p'&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Then pagination. There is a simple pagination module documented on the &lt;a href='http://kerkness.ca/wiki/doku.php?id=how_to_use_the_pagination_module'&gt;unofficial wiki&lt;/a&gt; which works beautifully.&lt;/p&gt;
+
+&lt;p&gt;On to search. We decided on using Sphinx, since Paul is already familiar with it from &lt;a href='http://support.mozilla.com/'&gt;SUMO&lt;/a&gt; and knew how to set it up. Sphinx has many advantages - it scales, it&amp;#8217;s fast, it&amp;#8217;s powerful and customizable. There is a bit of a learning curve to it, but you can mostly learn by examples. Paul started with &lt;a href='http://viewvc.svn.mozilla.org/vc/projects/sumo/trunk/scripts/sphinx/sphinx.conf'&gt;SUMO&amp;#8217;s sphinx.conf&lt;/a&gt; and drastically simplified it, then modified it to match my database structure. Finally, set up a crontab on my VPS to reindex and rotate every 24 hours.&lt;/p&gt;
+
+&lt;p&gt;The final crucial aspect was having a way to add and edit content. This required user authentication &amp;#8211; which, fortunately, comes with Kohana 3 and works well. We just use the default auth module and we haven&amp;#8217;t had any problems. Here&amp;#8217;s a code sample:&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='php'&gt;&lt;span class='cp'&gt;&amp;lt;?php&lt;/span&gt;
+&lt;span class='c'&gt;// application/classes/controller/user.php&lt;/span&gt;
+  &lt;span class='k'&gt;public&lt;/span&gt; &lt;span class='k'&gt;function&lt;/span&gt; &lt;span class='nf'&gt;action_login&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+    &lt;span class='c'&gt;// ...&lt;/span&gt;
+    &lt;span class='c'&gt;// if posted data&lt;/span&gt;
+    &lt;span class='k'&gt;if&lt;/span&gt; &lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nv'&gt;$_POST&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+    &lt;span class='nv'&gt;$user&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='nx'&gt;ORM&lt;/span&gt;&lt;span class='o'&gt;::&lt;/span&gt;&lt;span class='na'&gt;factory&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;user&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+
+    &lt;span class='c'&gt;// check auth&lt;/span&gt;
+    &lt;span class='k'&gt;if&lt;/span&gt; &lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nv'&gt;$user&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;login&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nv'&gt;$_POST&lt;/span&gt;&lt;span class='p'&gt;))&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+      &lt;span class='c'&gt;// redirect to my account&lt;/span&gt;
+    &lt;span class='p'&gt;}&lt;/span&gt; &lt;span class='k'&gt;else&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+      &lt;span class='nv'&gt;$view&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;errors&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='nv'&gt;$_POST&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;errors&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;login&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+      &lt;span class='nv'&gt;$this&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;template&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;title&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='s1'&gt;&amp;#39;Error logging in&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt;
+      &lt;span class='k'&gt;return&lt;/span&gt; &lt;span class='p'&gt;;&lt;/span&gt;
+    &lt;span class='p'&gt;}&lt;/span&gt;
+  &lt;span class='p'&gt;}&lt;/span&gt;
+&lt;span class='p'&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;After this, all that was left was the rating system. After some searching for good ways to do it using only CSS, we found a great one &lt;a href='http://www.komodomedia.com/blog/2007/01/css-rating-redux/' title='how to write a css rating system'&gt;here&lt;/a&gt;, and then went on to write a model/controller for it. Rating only works through javascript at the moment, but that will change once we implement a mobile-friendly version.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href='http://kerkness.ca/wiki/doku.php?id=working_with_atom_and_rss_feeds'&gt;Setting up an RSS feed&lt;/a&gt; took Paul literally 20 minutes, and then the final page left to write was the &lt;a href='http://quoteden.net/quote/top'&gt;Top Rated&lt;/a&gt; page.&lt;/p&gt;
+
+&lt;p&gt;To top it off, we have also put in place a bunch of .htaccess RewriteRules for handling redirects from old Drupal URLs.&lt;/p&gt;
+
+&lt;h2 id='conclusion'&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;So that&amp;#8217;s it. The Quote Den Drupal-&amp;gt;Kohana work summarized. The benefits: performance improvements of more than 50% (in page load time), more flexibility, consistency in the design, and Sphinx search.&lt;/p&gt;
+
+&lt;p&gt;And if you&amp;#8217;re learning Kohana, and would like some help, shoot us a comment below.&lt;/p&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>Upgrading Windows Vista or 7RC to Windows 7 on dual boot with Linux (Ubuntu)</title>
+   <link href="http://embrangler.com/2010/02/upgrading-windows-vista-or-7rc-to-windows-7-on-dual-boot-with-linux-ubuntu"/>
+   <updated>2010-02-27T00:00:00-08:00</updated>
+   <id>http://embrangler.com/2010/02/upgrading-windows-vista-or-7rc-to-windows-7-on-dual-boot-with-linux-ubuntu</id>
+   <content type="html">&lt;p&gt;As you may or may not know, the Windows 7 RC/beta/other releases expire at the latest on March 1st, 2 days from now. So I had to spend some time this weekend upgrading to a full Windows 7. Fortunately, my school offers Windows 7 Professional for free if you&amp;#8217;re an engineering student (so we &lt;em&gt;do&lt;/em&gt; get special treatment, aw!).&lt;/p&gt;
+
+&lt;p&gt;Anyway, if you&amp;#8217;re like me, you&amp;#8217;re dual booting Windows + Linux, and you have to reinstall Windows, you were probably using GRUB to boot into your &lt;abbr title='Operating System'&gt;OS&lt;/abbr&gt;. Well, as it turns out, reinstalling Windows wipes out GRUB from the boot record. Oh no! What to do?&lt;/p&gt;
+
+&lt;p&gt;Fortunately, the solution is simple. I searched for &amp;#8220;restore grub&amp;#8221; and found &lt;a href='http://ubuntuforums.org/showthread.php?t=1195275'&gt;this excellent guide&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;The summary:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Get a &lt;a href='http://ubuntu.com'&gt;Ubuntu&lt;/a&gt; Live CD and boot from it.&amp;lt;/li&amp;gt;&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Then run these in your terminal:&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='bash'&gt;    sudo -i
+ 
+ &lt;span class='c'&gt;# get a list of your partitions in /dev/sdX format&lt;/span&gt;
+ fdisk -l
+ 
+ &lt;span class='c'&gt;# if you can&amp;#39;t decide which one is your linux&lt;/span&gt;
+ &lt;span class='c'&gt;# partition (see the System column?)&lt;/span&gt;
+ df -Th &lt;span class='c'&gt;# lists partitions with size and % used&lt;/span&gt;
+ 
+ 
+ &lt;span class='c'&gt;# mount your Ubuntu partition, mine was sda4&lt;/span&gt;
+ mount /dev/sdXY /mnt &lt;span class='c'&gt;# &lt;/span&gt;
+ 
+ &lt;span class='c'&gt;# install grub on the partition, mine was sda&lt;/span&gt;
+ grub-install --root-directory&lt;span class='o'&gt;=&lt;/span&gt;/mnt /dev/sdX
+ 
+ &lt;span class='c'&gt;# be nice and unmount it, to avoid problems&lt;/span&gt;
+ umount /mnt
+ 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Reboot. &lt;strong&gt;Done!&lt;/strong&gt; Your old GRUB shows up now.&amp;lt;/li&amp;gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;So that&amp;#8217;s it. Hope this helps you avoid reinstalling Linux, which is really unnecessary :)&lt;/p&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>My SUMO local development environment</title>
+   <link href="http://embrangler.com/2010/01/my-sumo-local-development-environment"/>
+   <updated>2010-01-04T00:00:00-08:00</updated>
+   <id>http://embrangler.com/2010/01/my-sumo-local-development-environment</id>
+   <content type="html">&lt;h2 id='summary'&gt;Summary&lt;/h2&gt;
+
+&lt;p&gt;A while back, James wrote about &lt;a href='http://coffeeonthekeyboard.com/local-web-development-323/' title='James&amp;apos; local development environment'&gt;his development environment&lt;/a&gt;. I wanted to summarize my approach, and go into a bit more detail about the specific setup you would need to have SUMO work locally. For more information, see also &lt;a href='http://https://wiki.mozilla.org/Support:Sumodev#Get_Involved'&gt;this wiki page&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id='my_lde_ubuntu_linux'&gt;My LDE: Ubuntu Linux&lt;/h2&gt;
+
+&lt;p&gt;My &lt;abbr title='local development environment'&gt;LDE&lt;/abbr&gt; is slightly different: I dual boot Windows 7 and Kubuntu 9.10. As of now I&amp;#8217;m still a student, and I work on my own machine. There are several reasons I find dual booting a great solution:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Best performance&lt;/strong&gt; while developing. Although less and less of an issue, being in the native &lt;abbr title='Operating System'&gt;OS&lt;/abbr&gt; is always be faster than running a &lt;abbr title='Virtual Machine'&gt;VM&lt;/abbr&gt;.&lt;/li&gt;
+
+&lt;li&gt;A &lt;strong&gt;full powered OS&lt;/strong&gt; that I can use for other work. I do schoolwork and other contracting work, and sometimes Windows is not an option. Even a VM has its limitations when it comes to certain drivers (one example is audio &amp;#8211; which I needed for a &lt;a href='http://code.google.com/p/music-visualizer-cs160/' title='Music Visualizer for CMPS160'&gt;graphics project&lt;/a&gt;)&lt;/li&gt;
+
+&lt;li&gt;Keeps my &lt;strong&gt;work and pleasure separate&lt;/strong&gt; &amp;#8211; having dual boot is basically like having two machines. Typically, when I&amp;#8217;m in Linux, I do work, otherwise I&amp;#8217;m in Windows to do personal things.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The only downside is some additional wait time for rebooting if you need to switch to the other OS. Since I work on Linux only, I rarely need to switch while working. However, everything works fine for me on Linux &amp;#8211; sound, video, even webcam and VPN (will blog later about all of these).&lt;/p&gt;
+
+&lt;h2 id='lamp'&gt;LAMP&lt;/h2&gt;
+
+&lt;p&gt;For web development in general, you&amp;#8217;ll need to have the &lt;a href='http://en.wikipedia.org/wiki/LAMP_%28software_bundle%29'&gt;LAMP stack&lt;/a&gt; installed. Fortunately, Ubuntu provides an easy way to do this in one line. From a terminal, run:&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='bash'&gt;sudo tasksel
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Select &lt;em&gt;LAMP server&lt;/em&gt; from the list, and choose OK (TAB + ENTER). Follow the steps to choose a MySQL password and any other configuration there may be. Once that&amp;#8217;s done, you should be able to go to &lt;code&gt;http://localhost&lt;/code&gt; and see the &amp;#8220;It works!&amp;#8221; text. Here are some useful paths:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Web root: &lt;code&gt;/var/www/&lt;/code&gt;&lt;/li&gt;
+
+&lt;li&gt;Hosts file: &lt;code&gt;/etc/hosts&lt;/code&gt;&lt;/li&gt;
+
+&lt;li&gt;Apache sites: &lt;code&gt;/etc/apache2/sites-available/&lt;/code&gt; and &lt;code&gt;/etc/apache2/sites-enabled/&lt;/code&gt;&lt;/li&gt;
+
+&lt;li&gt;PHP ini: &lt;code&gt;/etc/php5/apache2/php.ini&lt;/code&gt;&lt;/li&gt;
+
+&lt;li&gt;MySQL ini: &lt;code&gt;/etc/php5/conf.d/mysql.ini&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id='sumo_setup'&gt;SUMO setup&lt;/h2&gt;
+
+&lt;p&gt;What you&amp;#8217;ll need:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;LAMP stack &amp;#8211; see &lt;a href='#lamp'&gt;above&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;A host (optional) &amp;#8211; see &lt;a href='#host'&gt;below&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;SSL &amp;#8211; see &lt;a href='http://www.tc.umn.edu/~brams006/selfsign_ubuntu.html'&gt;this guide&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;Sphinx &amp;#8211; see &lt;a href='https://wiki.mozilla.org/Support/Sphinx_Installation' title='installing Sphinx'&gt;this guide&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;Memcached &amp;#8211; I just install the package and that&amp;#8217;s enough: &lt;code&gt;sudo apt-get install memcached php5-memcache&lt;/code&gt;&lt;/li&gt;
+
+&lt;li&gt;Virtualbox (optional) &amp;#8211; for testing: &lt;code&gt;sudo apt-get install virtualbox&lt;/code&gt;&lt;/li&gt;
+
+&lt;li&gt;A copy of our database &amp;#8211; you may ask James, Laura or myself for this &amp;#8211; &lt;a href='#help'&gt;see how, below&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;SVN &amp;#8211; &lt;code&gt;sudo apt-get install subversion&lt;/code&gt;&lt;/li&gt;
+
+&lt;li&gt;Checking out and configuring the SUMO codebase &amp;#8211; &lt;a href='https://wiki.mozilla.org/Support/SUMO_install_process' title='checking out and configuring SUMO'&gt;see this guide&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;span id='host'&gt;To set up a SUMO host, I add the entry for it in `/etc/hosts`. Here is the top of my file:&lt;/span&gt;&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='bash'&gt;127.0.0.1   localhost
+127.0.1.2   sumo
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Then, add the site info to apache. Here&amp;#8217;s my complete conf file (with SSL), in &lt;code&gt;/etc/apache2/sites-available/sumo&lt;/code&gt;:&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='bash'&gt;&amp;lt;VirtualHost 127.0.1.2:80&amp;gt;
+    ServerAdmin webmaster@sumo
+    ServerName sumo
+    ServerAlias sumo
+    DocumentRoot /var/www/trunk/webroot
+    &amp;lt;Directory /var/www/trunk/webroot&amp;gt;
+        Options Indexes FollowSymLinks MultiViews
+        AllowOverride All
+        Order allow,deny
+        allow from all
+    &amp;lt;/Directory&amp;gt;
+&amp;lt;/VirtualHost&amp;gt;
+
+&amp;lt;IfModule mod_ssl.c&amp;gt;
+&amp;lt;VirtualHost _default_:443&amp;gt;
+
+    ServerAdmin webmaster@sumo
+    ServerName sumo
+    ServerAlias sumo
+    DocumentRoot /var/www/trunk/webroot
+    &amp;lt;Directory /var/www/trunk/webroot&amp;gt;
+        Options Indexes FollowSymLinks MultiViews
+        AllowOverride All
+        Order allow,deny
+        allow from all
+    &amp;lt;/Directory&amp;gt;
+    SSLEngine on
+    SSLCertificateFile /etc/apache2/ssl/apache.pem
+&amp;lt;/VirtualHost&amp;gt;
+&amp;lt;/IfModule&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;To enable the site, just do this:&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='bash'&gt;&lt;span class='nb'&gt;cd&lt;/span&gt; /etc/apache2/sites-enabled
+sudo ln -s ../sites-available/sumo
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Then, restart apache:&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='bash'&gt;sudo /etc/init.d/apache2 restart
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;h2 id='testing'&gt;Testing&lt;/h2&gt;
+
+&lt;p&gt;For testing, I also use a VM in VirtualBox, running WinXP with multiple IEs. I chose WinXP to save space &amp;#8211; only takes up 3GB. You should allow 4GB just in case you want to install more stuff. Using multiple IEs is not the best, as &lt;a href='http://www.quirksmode.org/css/condcom.html'&gt;quirksmode points out&lt;/a&gt;, so you may consider running a VM for each IE version you wish to test. However, I haven&amp;#8217;t experienced that many problems. On WinXP I&amp;#8217;ve also installed Firefox (of course), Chrome, and Opera. On Ubuntu I just use the defaults: Firefox and Konqueror (since I&amp;#8217;m running Kubuntu).&lt;/p&gt;
+
+&lt;h2 id='help'&gt;Help?&lt;/h2&gt;
+
+&lt;p&gt;I&amp;#8217;ve tried to cover everything, but of course there may be stuff I missed. If you need additional info, you may leave a comment. To obtain a copy of our database, you can find &lt;a href='https://wiki.mozilla.org/Support:Sumodev#Get_Involved'&gt;us on IRC or contact us by email&lt;/a&gt;.&lt;/p&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>My list of Firefox add-ons</title>
+   <link href="http://embrangler.com/2009/11/my-list-of-firefox-add-ons"/>
+   <updated>2009-11-15T00:00:00-08:00</updated>
+   <id>http://embrangler.com/2009/11/my-list-of-firefox-add-ons</id>
+   <content type="html">&lt;p&gt;&lt;strong&gt;UPDATE (27 Feb 2010)&lt;/strong&gt; &lt;a href='https://addons.mozilla.org/en-US/firefox/addon/67651'&gt;BarTab&lt;/a&gt; is an awesome extension.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href='https://addons.mozilla.org/en-US/firefox/addon/67651'&gt;BarTab&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://addons.mozilla.org/en-US/firefox/addon/6076'&gt;Better Gmail 2&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://addons.mozilla.org/en-US/firefox/addon/2064'&gt;Dummy Lipsum&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://addons.mozilla.org/en-US/firefox/addon/1843'&gt;Firebug&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://addons.mozilla.org/en-US/firefox/addon/1951'&gt;Fission&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://addons.mozilla.org/en-US/firefox/addon/173'&gt;Gmail Notifier&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://addons.mozilla.org/en-US/firefox/addon/4762'&gt;Hide Menubar&lt;/a&gt; - &lt;del datetime='2010-02-28T04:47:09+00:00'&gt;Now part of Firefox 3.6&lt;/del&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://addons.mozilla.org/en-US/firefox/addon/173'&gt;Jetpack&lt;/a&gt; (only Mozilla specific jetpacks yet)&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://addons.mozilla.org/en-US/firefox/addon/3829'&gt;Live HTTP headers&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://addons.mozilla.org/en-US/firefox/addon/10900'&gt;Personas&lt;/a&gt; - &lt;del datetime='2010-02-28T04:47:09+00:00'&gt;Now part of Firefox 3.6, but I keep the addon&lt;/del&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://addons.mozilla.org/en-US/firefox/addon/7661'&gt;Read It Later&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://addons.mozilla.org/en-US/firefox/addon/1956'&gt;Tabs Open Relative&lt;/a&gt; - &lt;del datetime='2010-02-28T04:47:09+00:00'&gt;Now part of Firefox 3.6&lt;/del&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://addons.mozilla.org/en-US/firefox/addon/10868'&gt;Weave&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://addons.mozilla.org/en-US/firefox/addon/60'&gt;Web Developer&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://addons.mozilla.org/en-US/firefox/addon/1264'&gt;Yahoo! Mail Notifier&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://addons.mozilla.org/en-US/firefox/addon/5369'&gt;YSlow&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Other potentially useful that I haven&amp;#8217;t installed:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href='http://platypus.mozdev.org/'&gt;Platypus&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='http://www.sitepoint.com/dustmeselectors/'&gt;Dust Me Selectors&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>Hacking Wordpress: check contact messages for spam using Wordpress' built-in Akismet spam for comments</title>
+   <link href="http://embrangler.com/2009/11/hacking-wordpress-check-contact-messages-for-spam-using-wordpress-built-in-akismet-spam-for-comments"/>
+   <updated>2009-11-14T00:00:00-08:00</updated>
+   <id>http://embrangler.com/2009/11/hacking-wordpress-check-contact-messages-for-spam-using-wordpress-built-in-akismet-spam-for-comments</id>
+   <content type="html">&lt;p&gt;This article explains how to easily create a contact form with spam filtering in Wordpress.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Duration:&lt;/strong&gt; 30 minutes&lt;br /&gt; &lt;strong&gt;Demo:&lt;/strong&gt; &lt;a href='http://awesomemath.org/'&gt;http://awesomemath.org/&lt;/a&gt; (see footer)&lt;br /&gt; &lt;strong&gt;Software:&lt;/strong&gt; Wordpress 2.8.6 (latest as of this writing)&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;Don&amp;#8217;t you wish there was a nice and easy Wordpress plugin to add a contact form anywhere on your site, with the benefit of spam filtering &lt;em&gt;without&lt;/em&gt; Captchas? I do. And that&amp;#8217;s what prompted me to do things this way.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Why not use Captchas?&lt;/em&gt; Hey, don&amp;#8217;t take my word for it: &lt;a href='http://www.seomoz.org/blog/captchas-affect-on-conversion-rates' title='Captcha effect on conversion rates'&gt;other people have spent time showing why&lt;/a&gt;. In short, Captchas are not user friendly, and, frankly, to me, they are frustrating. Every time I want to send a comment or submit some data to a website - bam, I have to spend that extra few to stare at some deformed text. I hate Captchas.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;So what instead?&lt;/em&gt; Well, you&amp;#8217;re in luck: Wordpress offers a free, well-integrated spam service called &lt;a href='http://akismet.com/' title='Akismet spam service'&gt;Akismet&lt;/a&gt;, which works really well, and is &lt;a href='http://codex.wordpress.org/Plugins/Akismet' title='Wordpress 2.0 or later comes with Akismet'&gt;integrated into Wordpress by default&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;This article shows you how to quickly integrate Akismet into a contact form, and it&amp;#8217;s all built from scratch.&lt;/p&gt;
+
+&lt;h2 id='step_1_the_frontend_html__php__jquery'&gt;Step 1: The frontend (HTML + PHP + jQuery)&lt;/h2&gt;
+
+&lt;p&gt;I needed my contact form to be on every page (in the footer), so I created a widget. I used the ExecPHP plugin to include PHP code in it. I also limit submission to 1 every so often, based on a cookie. I also use jQuery to submit this form with AJAX for a snappy sense of response ;)&lt;/p&gt;
+
+&lt;h3 id='step_1a_the_html_and_php'&gt;Step 1a: The HTML and PHP:&lt;/h3&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='html'&gt;&lt;span class='nt'&gt;&amp;lt;div&lt;/span&gt; &lt;span class='na'&gt;id=&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;contact_thanks&amp;quot;&lt;/span&gt; &lt;span class='err'&gt;&amp;lt;?&lt;/span&gt;&lt;span class='na'&gt;php&lt;/span&gt;
+  &lt;span class='na'&gt;if&lt;/span&gt; &lt;span class='err'&gt;(!$&lt;/span&gt;&lt;span class='na'&gt;_GET&lt;/span&gt;&lt;span class='err'&gt;[&amp;#39;&lt;/span&gt;&lt;span class='na'&gt;contacted&lt;/span&gt;&lt;span class='err'&gt;&amp;#39;]&lt;/span&gt; &lt;span class='err'&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class='err'&gt;!$&lt;/span&gt;&lt;span class='na'&gt;_COOKIE&lt;/span&gt;&lt;span class='err'&gt;[&amp;#39;&lt;/span&gt;&lt;span class='na'&gt;examplesite_contact&lt;/span&gt;&lt;span class='err'&gt;&amp;#39;])&lt;/span&gt;
+    &lt;span class='na'&gt;echo&lt;/span&gt; &lt;span class='err'&gt;&amp;#39;&lt;/span&gt;&lt;span class='na'&gt;style=&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;display:none;&amp;quot;&lt;/span&gt;&lt;span class='err'&gt;&amp;#39;;&lt;/span&gt;
+&lt;span class='err'&gt;?&lt;/span&gt;&lt;span class='nt'&gt;&amp;gt;&lt;/span&gt;&amp;gt;
+    Thank you for contacting example site!
+&lt;span class='nt'&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+&lt;span class='cp'&gt;&amp;lt;?php if (!$_GET[&amp;#39;contacted&amp;#39;] &amp;amp;&amp;amp; !$_COOKIE[&amp;#39;examplesite_contact&amp;#39;]) { ?&amp;gt;&lt;/span&gt;
+&lt;span class='nt'&gt;&amp;lt;form&lt;/span&gt; &lt;span class='na'&gt;id=&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;contact_form&amp;quot;&lt;/span&gt; &lt;span class='na'&gt;method=&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;post&amp;quot;&lt;/span&gt; &lt;span class='na'&gt;action=&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class='nt'&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class='nt'&gt;&amp;lt;div&lt;/span&gt; &lt;span class='na'&gt;id=&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;contact_msgbox&amp;quot;&lt;/span&gt; &lt;span class='na'&gt;style=&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;display:none;&amp;quot;&lt;/span&gt;&lt;span class='nt'&gt;&amp;gt;&lt;/span&gt;
+        Put contact information here.
+    &lt;span class='nt'&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+    &lt;span class='nt'&gt;&amp;lt;div&lt;/span&gt; &lt;span class='na'&gt;id=&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;contact_error&amp;quot;&lt;/span&gt; &lt;span class='na'&gt;style=&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;display: none&amp;quot;&lt;/span&gt;&lt;span class='nt'&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class='nt'&gt;&amp;lt;a&lt;/span&gt; &lt;span class='na'&gt;href=&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;#&amp;quot;&lt;/span&gt; &lt;span class='na'&gt;class=&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;contact_error_close&amp;quot;&lt;/span&gt; &lt;span class='err'&gt;&amp;quot;&lt;/span&gt;&lt;span class='na'&gt;Dismiss&lt;/span&gt; &lt;span class='na'&gt;message&lt;/span&gt;&lt;span class='err'&gt;&amp;quot;&lt;/span&gt;&lt;span class='nt'&gt;&amp;gt;&lt;/span&gt;x&lt;span class='nt'&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
+        We couldn&amp;#39;t submit your form for one or more of the following reasons:
+        &lt;span class='nt'&gt;&amp;lt;ul&amp;gt;&lt;/span&gt;
+            &lt;span class='nt'&gt;&amp;lt;li&amp;gt;&lt;/span&gt;All fields must be longer than 5 characters&lt;span class='nt'&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+            &lt;span class='nt'&gt;&amp;lt;li&amp;gt;&lt;/span&gt;You must provide a valid email&lt;span class='nt'&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+        &lt;span class='nt'&gt;&amp;lt;/ul&amp;gt;&lt;/span&gt;
+        Please resolve the above problems for the highlighted fields
+        and try again.
+    &lt;span class='nt'&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+    &lt;span class='nt'&gt;&amp;lt;div&lt;/span&gt; &lt;span class='na'&gt;id=&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;contact_info&amp;quot;&lt;/span&gt; &lt;span class='na'&gt;style=&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;display: none&amp;quot;&lt;/span&gt;&lt;span class='nt'&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class='nt'&gt;&amp;lt;a&lt;/span&gt; &lt;span class='na'&gt;href=&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;#&amp;quot;&lt;/span&gt; &lt;span class='na'&gt;class=&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;contact_error_close&amp;quot;&lt;/span&gt; &lt;span class='err'&gt;&amp;quot;&lt;/span&gt;&lt;span class='na'&gt;Dismiss&lt;/span&gt; &lt;span class='na'&gt;message&lt;/span&gt;&lt;span class='err'&gt;&amp;quot;&lt;/span&gt;&lt;span class='nt'&gt;&amp;gt;&lt;/span&gt;x&lt;span class='nt'&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
+        &lt;span class='nt'&gt;&amp;lt;p&amp;gt;&amp;lt;strong&amp;gt;&lt;/span&gt;E-mail:&lt;span class='nt'&gt;&amp;lt;/strong&amp;gt;&lt;/span&gt; &lt;span class='nt'&gt;&amp;lt;a&lt;/span&gt; &lt;span class='na'&gt;href=&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;#&amp;quot;&lt;/span&gt; &lt;span class='na'&gt;id=&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;contact_email_addr&amp;quot;&lt;/span&gt;&lt;span class='nt'&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class='nt'&gt;&amp;lt;img&lt;/span&gt; &lt;span class='na'&gt;src=&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;/photos/email.png&amp;quot;&lt;/span&gt; &lt;span class='na'&gt;alt=&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;email&amp;quot;&lt;/span&gt; &lt;span class='nt'&gt;/&amp;gt;&amp;lt;/a&amp;gt;&amp;lt;br/&amp;gt;&lt;/span&gt;
+    &lt;span class='nt'&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+    &lt;span class='nt'&gt;&amp;lt;label&lt;/span&gt; &lt;span class='na'&gt;id=&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;contact_message_label&amp;quot;&lt;/span&gt;&lt;span class='nt'&gt;&amp;gt;&lt;/span&gt;Message:
+        &lt;span class='nt'&gt;&amp;lt;br/&amp;gt;&lt;/span&gt;
+        &lt;span class='nt'&gt;&amp;lt;textarea&lt;/span&gt; &lt;span class='na'&gt;rows=&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;5&amp;quot;&lt;/span&gt; &lt;span class='na'&gt;cols =&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;25&amp;quot;&lt;/span&gt; &lt;span class='na'&gt;name=&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;contact_message&amp;quot;&lt;/span&gt;
+            &lt;span class='na'&gt;id=&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;contact_message&amp;quot;&lt;/span&gt; &lt;span class='na'&gt;tabindex=&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;3&amp;quot;&lt;/span&gt; &lt;span class='nt'&gt;&amp;gt;&amp;lt;/textarea&amp;gt;&lt;/span&gt;
+    &lt;span class='nt'&gt;&amp;lt;/label&amp;gt;&lt;/span&gt;
+    &lt;span class='nt'&gt;&amp;lt;label&amp;gt;&lt;/span&gt;Name:
+        &lt;span class='nt'&gt;&amp;lt;br/&amp;gt;&lt;/span&gt;
+        &lt;span class='nt'&gt;&amp;lt;input&lt;/span&gt; &lt;span class='na'&gt;type=&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;text&amp;quot;&lt;/span&gt; &lt;span class='na'&gt;name=&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;contact_name&amp;quot;&lt;/span&gt; &lt;span class='na'&gt;tabindex=&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;1&amp;quot;&lt;/span&gt;
+            &lt;span class='na'&gt;id=&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;contact_name&amp;quot;&lt;/span&gt; &lt;span class='nt'&gt;/&amp;gt;&lt;/span&gt;
+    &lt;span class='nt'&gt;&amp;lt;/label&amp;gt;&lt;/span&gt;
+    &lt;span class='nt'&gt;&amp;lt;br/&amp;gt;&lt;/span&gt;
+    &lt;span class='nt'&gt;&amp;lt;label&amp;gt;&lt;/span&gt;Email:
+        &lt;span class='nt'&gt;&amp;lt;br/&amp;gt;&lt;/span&gt;
+        &lt;span class='nt'&gt;&amp;lt;input&lt;/span&gt; &lt;span class='na'&gt;type=&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;text&amp;quot;&lt;/span&gt; &lt;span class='na'&gt;name=&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;contact_email&amp;quot;&lt;/span&gt; &lt;span class='na'&gt;tabindex=&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;2&amp;quot;&lt;/span&gt;
+           &lt;span class='na'&gt;id=&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;contact_email&amp;quot;&lt;/span&gt; &lt;span class='nt'&gt;/&amp;gt;&lt;/span&gt;
+    &lt;span class='nt'&gt;&amp;lt;/label&amp;gt;&lt;/span&gt;
+    &lt;span class='nt'&gt;&amp;lt;div&lt;/span&gt; &lt;span class='na'&gt;class=&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;btn-panel&amp;quot;&lt;/span&gt;&lt;span class='nt'&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class='nt'&gt;&amp;lt;a&lt;/span&gt; &lt;span class='na'&gt;class=&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;btn btn-brown&amp;quot;&lt;/span&gt; &lt;span class='na'&gt;href=&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;#&amp;quot;&lt;/span&gt; &lt;span class='na'&gt;id=&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;contact_form_info&amp;quot;&lt;/span&gt;&lt;span class='nt'&gt;&amp;gt;&lt;/span&gt;
+            Contact Info
+        &lt;span class='nt'&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
+        &lt;span class='nt'&gt;&amp;lt;input&lt;/span&gt; &lt;span class='na'&gt;type=&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;submit&amp;quot;&lt;/span&gt; &lt;span class='na'&gt;name=&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;contact&amp;quot;&lt;/span&gt; &lt;span class='na'&gt;value=&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;Submit&amp;quot;&lt;/span&gt;
+            &lt;span class='na'&gt;class=&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;btn btn-green&amp;quot;&lt;/span&gt; &lt;span class='nt'&gt;/&amp;gt;&lt;/span&gt;
+    &lt;span class='nt'&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;&lt;span class='c'&gt;&amp;lt;!-- btn-panel --&amp;gt;&lt;/span&gt;
+&lt;span class='nt'&gt;&amp;lt;/form&amp;gt;&lt;/span&gt;
+&lt;span class='cp'&gt;&amp;lt;?php } ?&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;That may look a bit complicated, but let&amp;#8217;s strip this down to understand what&amp;#8217;s going on. At first, we wish to display a thank you message if the form was submitted &amp;#8211; either recently (through a cookie), or right after submission (using the URL parameter &amp;#8220;contacted&amp;#8221;). So, we hide the thank you message in any other situation. If the form hasn&amp;#8217;t been submitted recently, we show it. This, too, breaks down into parts:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;I included a contact information box, too, but you may find that unnecessary. See the &lt;a href='http://awesomemath.org'&gt;demo&lt;/a&gt; to get the picture.&lt;/li&gt;
+
+&lt;li&gt;I also include an error message box, to help validate the submitted contact information.&lt;/li&gt;
+
+&lt;li&gt;Finally, the inputs themselves, &lt;em&gt;Name&lt;/em&gt;, &lt;em&gt;Email&lt;/em&gt; and &lt;em&gt;Message&lt;/em&gt;, each using tabindex attributes to ensure that the user fills them out in this order. Since, in my layout, the &lt;code&gt;&amp;lt;textarea&amp;gt;&lt;/code&gt; comes before the two &lt;code&gt;&amp;lt;input&amp;gt;&lt;/code&gt;, I need to use tabindex. I&amp;#8217;m using this layout because I intend to float the &lt;code&gt;&amp;lt;textarea&amp;gt;&lt;/code&gt; to the right. Then, the submit button and contact info button are grouped together in &lt;code&gt;&amp;amp;div class=&amp;quot;btn-panel&amp;quot;&amp;gt;&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id='step_1b_the_jquery'&gt;Step 1b: The jQuery:&lt;/h3&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='javascript'&gt;&lt;span class='kd'&gt;var&lt;/span&gt; &lt;span class='nx'&gt;MIN_FIELDLENGTH&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='mi'&gt;5&lt;/span&gt;&lt;span class='o'&gt;;&lt;/span&gt;
+&lt;span class='kd'&gt;var&lt;/span&gt; &lt;span class='nx'&gt;EMAIL_PREFIX&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='s1'&gt;&amp;#39;me&amp;#39;&lt;/span&gt;&lt;span class='o'&gt;;&lt;/span&gt;
+&lt;span class='kd'&gt;var&lt;/span&gt; &lt;span class='nx'&gt;EMAIL_END&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='s1'&gt;&amp;#39;examplesite.com&amp;#39;&lt;/span&gt;&lt;span class='o'&gt;;&lt;/span&gt;
+&lt;span class='nx'&gt;jQuery&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nb'&gt;document&lt;/span&gt;&lt;span class='p'&gt;).&lt;/span&gt;&lt;span class='nx'&gt;ready&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='kd'&gt;function&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nx'&gt;$&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+    &lt;span class='kd'&gt;function&lt;/span&gt; &lt;span class='nx'&gt;is_valid_email_address&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nx'&gt;email_address&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+        &lt;span class='kd'&gt;var&lt;/span&gt; &lt;span class='nx'&gt;pattern&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='k'&gt;new&lt;/span&gt; &lt;span class='nb'&gt;RegExp&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='sr'&gt;/^((&amp;quot;[\w-\s]+&amp;quot;)|([\w-]+(?:\.[\w-]+)*)|(&amp;quot;[\w-\s]+&amp;quot;)([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+        &lt;span class='k'&gt;return&lt;/span&gt; &lt;span class='nx'&gt;pattern&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;test&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nx'&gt;email_address&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+    &lt;span class='p'&gt;}&lt;/span&gt;
+    &lt;span class='kd'&gt;function&lt;/span&gt; &lt;span class='nx'&gt;validate_submission&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nx'&gt;field&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+        &lt;span class='k'&gt;if&lt;/span&gt; &lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nx'&gt;field&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+            &lt;span class='kd'&gt;var&lt;/span&gt; &lt;span class='nx'&gt;fields&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='nx'&gt;field&lt;/span&gt;&lt;span class='p'&gt;];&lt;/span&gt;
+        &lt;span class='p'&gt;}&lt;/span&gt;
+        &lt;span class='k'&gt;else&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+            &lt;span class='kd'&gt;var&lt;/span&gt; &lt;span class='nx'&gt;fields&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;name&amp;#39;&lt;/span&gt;&lt;span class='o'&gt;,&lt;/span&gt; &lt;span class='s1'&gt;&amp;#39;email&amp;#39;&lt;/span&gt;&lt;span class='o'&gt;,&lt;/span&gt; &lt;span class='s1'&gt;&amp;#39;message&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;];&lt;/span&gt;
+        &lt;span class='p'&gt;}&lt;/span&gt;
+        &lt;span class='kd'&gt;var&lt;/span&gt; &lt;span class='nx'&gt;returnval&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='kc'&gt;true&lt;/span&gt;&lt;span class='o'&gt;;&lt;/span&gt;
+        &lt;span class='kd'&gt;var&lt;/span&gt; &lt;span class='nx'&gt;text&lt;/span&gt;&lt;span class='o'&gt;;&lt;/span&gt;
+        &lt;span class='k'&gt;for&lt;/span&gt; &lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='kd'&gt;var&lt;/span&gt; &lt;span class='nx'&gt;i&lt;/span&gt; &lt;span class='k'&gt;in&lt;/span&gt; &lt;span class='nx'&gt;fields&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+            &lt;span class='nx'&gt;text&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='nx'&gt;$&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;#contact_&amp;#39;&lt;/span&gt;&lt;span class='o'&gt;+&lt;/span&gt;&lt;span class='nx'&gt;fields&lt;/span&gt;&lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='nx'&gt;i&lt;/span&gt;&lt;span class='p'&gt;]).&lt;/span&gt;&lt;span class='nx'&gt;val&lt;/span&gt;&lt;span class='p'&gt;();&lt;/span&gt;
+            &lt;span class='nx'&gt;minlen&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='nx'&gt;MIN_FIELDLENGTH&lt;/span&gt;&lt;span class='o'&gt;;&lt;/span&gt;
+            &lt;span class='k'&gt;if&lt;/span&gt; &lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nx'&gt;fields&lt;/span&gt;&lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='nx'&gt;i&lt;/span&gt;&lt;span class='p'&gt;]&lt;/span&gt; &lt;span class='o'&gt;==&lt;/span&gt; &lt;span class='s1'&gt;&amp;#39;message&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt; &lt;span class='nx'&gt;minlen&lt;/span&gt; &lt;span class='o'&gt;*=&lt;/span&gt; &lt;span class='mi'&gt;10&lt;/span&gt;&lt;span class='o'&gt;;&lt;/span&gt;
+            &lt;span class='k'&gt;if&lt;/span&gt; &lt;span class='p'&gt;((&lt;/span&gt;&lt;span class='nx'&gt;text&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;length&lt;/span&gt; &lt;span class='o'&gt;&amp;lt;&lt;/span&gt; &lt;span class='nx'&gt;minlen&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt;
+                &lt;span class='o'&gt;||&lt;/span&gt; &lt;span class='p'&gt;((&lt;/span&gt;&lt;span class='nx'&gt;fields&lt;/span&gt;&lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='nx'&gt;i&lt;/span&gt;&lt;span class='p'&gt;]&lt;/span&gt; &lt;span class='o'&gt;==&lt;/span&gt; &lt;span class='s1'&gt;&amp;#39;email&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt;
+                &lt;span class='o'&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class='o'&gt;!&lt;/span&gt;&lt;span class='nx'&gt;is_valid_email_address&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nx'&gt;$&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;#contact_&amp;#39;&lt;/span&gt;&lt;span class='o'&gt;+&lt;/span&gt;&lt;span class='nx'&gt;fields&lt;/span&gt;&lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='nx'&gt;i&lt;/span&gt;&lt;span class='p'&gt;]).&lt;/span&gt;&lt;span class='nx'&gt;val&lt;/span&gt;&lt;span class='p'&gt;())))&lt;/span&gt;
+            &lt;span class='p'&gt;{&lt;/span&gt;
+                &lt;span class='nx'&gt;$&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;#contact_&amp;#39;&lt;/span&gt;&lt;span class='o'&gt;+&lt;/span&gt;&lt;span class='nx'&gt;fields&lt;/span&gt;&lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='nx'&gt;i&lt;/span&gt;&lt;span class='p'&gt;]).&lt;/span&gt;&lt;span class='nx'&gt;attr&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;class&amp;#39;&lt;/span&gt;&lt;span class='o'&gt;,&lt;/span&gt; &lt;span class='s1'&gt;&amp;#39;chighlight&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+                &lt;span class='nx'&gt;returnval&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='kc'&gt;false&lt;/span&gt;&lt;span class='o'&gt;;&lt;/span&gt;
+            &lt;span class='p'&gt;}&lt;/span&gt;
+            &lt;span class='k'&gt;else&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+                &lt;span class='nx'&gt;$&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;#contact_&amp;#39;&lt;/span&gt;&lt;span class='o'&gt;+&lt;/span&gt;&lt;span class='nx'&gt;fields&lt;/span&gt;&lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='nx'&gt;i&lt;/span&gt;&lt;span class='p'&gt;]).&lt;/span&gt;&lt;span class='nx'&gt;attr&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;class&amp;#39;&lt;/span&gt;&lt;span class='o'&gt;,&lt;/span&gt; &lt;span class='s1'&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+            &lt;span class='p'&gt;}&lt;/span&gt;
+        &lt;span class='p'&gt;};&lt;/span&gt;
+        &lt;span class='k'&gt;return&lt;/span&gt; &lt;span class='nx'&gt;returnval&lt;/span&gt;&lt;span class='o'&gt;;&lt;/span&gt;
+    &lt;span class='p'&gt;}&lt;/span&gt;
+    &lt;span class='nx'&gt;$&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;#contact_name&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;).&lt;/span&gt;&lt;span class='nx'&gt;keypress&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='kd'&gt;function&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+        &lt;span class='nx'&gt;validate_submission&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;name&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+    &lt;span class='p'&gt;});&lt;/span&gt;
+    &lt;span class='nx'&gt;$&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;#contact_email&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;).&lt;/span&gt;&lt;span class='nx'&gt;keypress&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='kd'&gt;function&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+        &lt;span class='nx'&gt;validate_submission&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;email&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+    &lt;span class='p'&gt;});&lt;/span&gt;
+    &lt;span class='nx'&gt;$&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;#contact_message&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;).&lt;/span&gt;&lt;span class='nx'&gt;keypress&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='kd'&gt;function&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+        &lt;span class='nx'&gt;validate_submission&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;message&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+    &lt;span class='p'&gt;});&lt;/span&gt;
+
+    &lt;span class='nx'&gt;$&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;#contact_form&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;).&lt;/span&gt;&lt;span class='nx'&gt;submit&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='kd'&gt;function&lt;/span&gt; &lt;span class='p'&gt;()&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+        &lt;span class='k'&gt;if&lt;/span&gt; &lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nx'&gt;validate_submission&lt;/span&gt;&lt;span class='p'&gt;())&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+            &lt;span class='kd'&gt;var&lt;/span&gt; &lt;span class='nx'&gt;formInput&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='nx'&gt;$&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='k'&gt;this&lt;/span&gt;&lt;span class='p'&gt;).&lt;/span&gt;&lt;span class='nx'&gt;serialize&lt;/span&gt;&lt;span class='p'&gt;();&lt;/span&gt;
+            &lt;span class='nx'&gt;$&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;post&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;/contact_form.php&amp;#39;&lt;/span&gt;&lt;span class='o'&gt;,&lt;/span&gt; &lt;span class='nx'&gt;formInput&lt;/span&gt;&lt;span class='o'&gt;,&lt;/span&gt; &lt;span class='kd'&gt;function&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nx'&gt;data&lt;/span&gt;&lt;span class='p'&gt;){&lt;/span&gt;
+                &lt;span class='nx'&gt;$&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;#contact_form&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;).&lt;/span&gt;&lt;span class='nx'&gt;hide&lt;/span&gt;&lt;span class='p'&gt;();&lt;/span&gt;
+                &lt;span class='nx'&gt;$&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;#contact_thanks&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;).&lt;/span&gt;&lt;span class='nx'&gt;show&lt;/span&gt;&lt;span class='p'&gt;();&lt;/span&gt;
+            &lt;span class='p'&gt;});&lt;/span&gt;
+        &lt;span class='p'&gt;}&lt;/span&gt;
+        &lt;span class='k'&gt;else&lt;/span&gt; &lt;span class='k'&gt;if&lt;/span&gt; &lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nx'&gt;showing_message&lt;/span&gt; &lt;span class='o'&gt;!=&lt;/span&gt; &lt;span class='mi'&gt;1&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+            &lt;span class='nx'&gt;showing_message&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='mi'&gt;1&lt;/span&gt;&lt;span class='o'&gt;;&lt;/span&gt;
+            &lt;span class='nx'&gt;$&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;#contact_msgbox&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;).&lt;/span&gt;&lt;span class='nx'&gt;html&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nx'&gt;$&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;#contact_error&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;).&lt;/span&gt;&lt;span class='nx'&gt;html&lt;/span&gt;&lt;span class='p'&gt;());&lt;/span&gt;
+            &lt;span class='nx'&gt;$&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;#contact_msgbox&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;).&lt;/span&gt;&lt;span class='nx'&gt;addClass&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;error&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt;
+                                &lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;removeClass&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;message&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;).&lt;/span&gt;&lt;span class='nx'&gt;show&lt;/span&gt;&lt;span class='p'&gt;();&lt;/span&gt;
+            &lt;span class='k'&gt;if&lt;/span&gt; &lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nx'&gt;msg_timeout&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt; &lt;span class='nx'&gt;clearTimeout&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nx'&gt;msg_timeout&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+            &lt;span class='nx'&gt;msg_timeout&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='nx'&gt;setTimeout&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='kd'&gt;function&lt;/span&gt;&lt;span class='p'&gt;(){&lt;/span&gt; &lt;span class='nx'&gt;close_msgbox&lt;/span&gt;&lt;span class='p'&gt;();&lt;/span&gt; &lt;span class='p'&gt;}&lt;/span&gt;&lt;span class='o'&gt;,&lt;/span&gt; &lt;span class='mi'&gt;10000&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+        &lt;span class='p'&gt;}&lt;/span&gt;
+        &lt;span class='k'&gt;return&lt;/span&gt; &lt;span class='kc'&gt;false&lt;/span&gt;&lt;span class='o'&gt;;&lt;/span&gt;
+    &lt;span class='p'&gt;});&lt;/span&gt;
+
+    &lt;span class='nx'&gt;$&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;#contact_form_info&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;).&lt;/span&gt;&lt;span class='nx'&gt;click&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='kd'&gt;function&lt;/span&gt; &lt;span class='p'&gt;()&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+        &lt;span class='k'&gt;if&lt;/span&gt; &lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nx'&gt;showing_message&lt;/span&gt; &lt;span class='o'&gt;==&lt;/span&gt; &lt;span class='mi'&gt;2&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+            &lt;span class='nx'&gt;close_msgbox&lt;/span&gt;&lt;span class='p'&gt;();&lt;/span&gt;
+            &lt;span class='k'&gt;return&lt;/span&gt; &lt;span class='kc'&gt;false&lt;/span&gt;&lt;span class='o'&gt;;&lt;/span&gt;
+        &lt;span class='p'&gt;}&lt;/span&gt;
+        &lt;span class='nx'&gt;$&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;#contact_msgbox&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;).&lt;/span&gt;&lt;span class='nx'&gt;html&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nx'&gt;$&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;#contact_info&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;).&lt;/span&gt;&lt;span class='nx'&gt;html&lt;/span&gt;&lt;span class='p'&gt;());&lt;/span&gt;
+        &lt;span class='nx'&gt;$&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;#contact_msgbox&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;).&lt;/span&gt;&lt;span class='nx'&gt;removeClass&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;error&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt;
+                            &lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;addClass&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;message&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;).&lt;/span&gt;&lt;span class='nx'&gt;show&lt;/span&gt;&lt;span class='p'&gt;();&lt;/span&gt;
+        &lt;span class='nx'&gt;showing_message&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='mi'&gt;2&lt;/span&gt;&lt;span class='o'&gt;;&lt;/span&gt;
+        &lt;span class='k'&gt;if&lt;/span&gt; &lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nx'&gt;msg_timeout&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt; &lt;span class='nx'&gt;clearTimeout&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nx'&gt;msg_timeout&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+        &lt;span class='nx'&gt;msg_timeout&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='nx'&gt;setTimeout&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='kd'&gt;function&lt;/span&gt;&lt;span class='p'&gt;(){&lt;/span&gt; &lt;span class='nx'&gt;close_msgbox&lt;/span&gt;&lt;span class='p'&gt;();&lt;/span&gt; &lt;span class='p'&gt;}&lt;/span&gt;&lt;span class='o'&gt;,&lt;/span&gt; &lt;span class='mi'&gt;10000&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+        &lt;span class='k'&gt;return&lt;/span&gt; &lt;span class='kc'&gt;false&lt;/span&gt;&lt;span class='o'&gt;;&lt;/span&gt;
+    &lt;span class='p'&gt;});&lt;/span&gt;
+
+    &lt;span class='kd'&gt;function&lt;/span&gt; &lt;span class='nx'&gt;close_msgbox&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+        &lt;span class='nx'&gt;$&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;#contact_msgbox&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;).&lt;/span&gt;&lt;span class='nx'&gt;hide&lt;/span&gt;&lt;span class='p'&gt;();&lt;/span&gt;
+        &lt;span class='nx'&gt;showing_message&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='mi'&gt;0&lt;/span&gt;&lt;span class='o'&gt;;&lt;/span&gt;
+        &lt;span class='k'&gt;return&lt;/span&gt; &lt;span class='kc'&gt;false&lt;/span&gt;&lt;span class='o'&gt;;&lt;/span&gt;
+    &lt;span class='p'&gt;}&lt;/span&gt;
+
+   &lt;span class='kd'&gt;function&lt;/span&gt; &lt;span class='nx'&gt;email_link&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+        &lt;span class='nb'&gt;window&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;location&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='s2'&gt;&amp;quot;mailto:&amp;quot;&lt;/span&gt; &lt;span class='o'&gt;+&lt;/span&gt; &lt;span class='nx'&gt;EMAIL_PREFIX&lt;/span&gt; &lt;span class='o'&gt;+&lt;/span&gt; &lt;span class='s2'&gt;&amp;quot;@&amp;quot;&lt;/span&gt; &lt;span class='o'&gt;+&lt;/span&gt; &lt;span class='nx'&gt;EMAIL_END&lt;/span&gt;&lt;span class='o'&gt;;&lt;/span&gt;
+        &lt;span class='k'&gt;return&lt;/span&gt; &lt;span class='kc'&gt;false&lt;/span&gt;&lt;span class='o'&gt;;&lt;/span&gt;
+    &lt;span class='p'&gt;}&lt;/span&gt;
+    &lt;span class='nx'&gt;$&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;#contact_msgbox a:first-child&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;).&lt;/span&gt;&lt;span class='nx'&gt;live&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;click&amp;#39;&lt;/span&gt;&lt;span class='o'&gt;,&lt;/span&gt; &lt;span class='nx'&gt;close_msgbox&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+    &lt;span class='nx'&gt;$&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;#contact_email_addr&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;).&lt;/span&gt;&lt;span class='nx'&gt;live&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;click&amp;#39;&lt;/span&gt;&lt;span class='o'&gt;,&lt;/span&gt; &lt;span class='kd'&gt;function&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+      &lt;span class='k'&gt;return&lt;/span&gt; &lt;span class='nx'&gt;email_link&lt;/span&gt;&lt;span class='p'&gt;();&lt;/span&gt;
+    &lt;span class='p'&gt;});&lt;/span&gt;
+&lt;span class='p'&gt;});&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Okay. First we have a constant for the minimum length of each field. In the validation function, &lt;code&gt;validate_submission()&lt;/code&gt;, fields get checked against this length. There&amp;#8217;s a special case for the &lt;code&gt;&amp;lt;textarea&amp;gt;&lt;/code&gt;, which has a minimum length of the constant value * 10 (times ten). Then two constants making up the email address for clicking on the image &amp;#8211; this is nice, it keeps the functionality of the &lt;code&gt;mailto:&lt;/code&gt; link, but protects it from spam. I doubt bots are smart enough to do string concatenation for every site they visit :)&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;is_valid_email_address()&lt;/code&gt; validates an email using a regex. There&amp;#8217;s tons of these on the web. I wanted mine to be not too long, but long enough :)&lt;/li&gt;
+
+&lt;li&gt;&lt;code&gt;validate_submission()&lt;/code&gt; either valides a certain field, or validates the entire form (latter if no parameters are passed&lt;/li&gt;
+
+&lt;li&gt;The next three are jQuery events for &lt;code&gt;onkeypress&lt;/code&gt; in the form fields. They just call the validation function for each field. To make this even better (but a bit more CPU intensive), you may consider additional events on &lt;code&gt;blur&lt;/code&gt; or &lt;code&gt;change&lt;/code&gt;.&lt;/li&gt;
+
+&lt;li&gt;Next up, the submit function. This validates the entire form and submits data through ajax, using &lt;a href='http://docs.jquery.com/Ajax/jQuery.post'&gt;jQuery&amp;#8217;s built-in $.post call&lt;/a&gt;. Ideally, you should expect some kind of data response after posting, and show a thank you message based on that (or error otherwise) to ensure best functionality for the user, but I didn&amp;#8217;t bother.&lt;/li&gt;
+
+&lt;li&gt;Finally, we have the close button functionality, with a timeout. At the end, we add events for email and bindings for the close button. You can read about all of these in &lt;a href='http://docs.jquery.com/Main_Page'&gt;jQuery&amp;#8217;s wonderful documentation&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id='step_2_the_backend_php'&gt;Step 2: The backend (PHP)&lt;/h2&gt;
+
+&lt;p&gt;This is fairly short :)&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='php'&gt;&lt;span class='cp'&gt;&amp;lt;?php&lt;/span&gt;
+&lt;span class='nb'&gt;define&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;DEFAULT_POST_ID&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='nx'&gt;post_id_here&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+&lt;span class='c'&gt;/* Contact form handling here */&lt;/span&gt;
+&lt;span class='k'&gt;if&lt;/span&gt; &lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nv'&gt;$_POST&lt;/span&gt;&lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;contact&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;])&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+    &lt;span class='k'&gt;require_once&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt; &lt;span class='s1'&gt;&amp;#39;/wp-load.php&amp;#39;&lt;/span&gt; &lt;span class='p'&gt;);&lt;/span&gt;
+    &lt;span class='nv'&gt;$contact_invalid&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='k'&gt;array&lt;/span&gt;&lt;span class='p'&gt;();&lt;/span&gt;
+    &lt;span class='nv'&gt;$contact_data&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='k'&gt;array&lt;/span&gt;&lt;span class='p'&gt;();&lt;/span&gt;
+    &lt;span class='nv'&gt;$contact_data&lt;/span&gt;&lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;name&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;]&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='nx'&gt;filter_var&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nv'&gt;$_POST&lt;/span&gt;&lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;contact_name&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;],&lt;/span&gt;
+        &lt;span class='nx'&gt;FILTER_SANITIZE_STRING&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+    &lt;span class='nv'&gt;$contact_data&lt;/span&gt;&lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;message&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;]&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='nx'&gt;filter_var&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nv'&gt;$_POST&lt;/span&gt;&lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;contact_message&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;],&lt;/span&gt;
+        &lt;span class='nx'&gt;FILTER_SANITIZE_STRING&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+    &lt;span class='nv'&gt;$contact_data&lt;/span&gt;&lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;email&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;]&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='nx'&gt;filter_var&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nv'&gt;$_POST&lt;/span&gt;&lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;contact_email&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;],&lt;/span&gt;
+        &lt;span class='nx'&gt;FILTER_VALIDATE_EMAIL&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+    &lt;span class='k'&gt;foreach&lt;/span&gt; &lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nv'&gt;$contact_data&lt;/span&gt; &lt;span class='k'&gt;as&lt;/span&gt; &lt;span class='nv'&gt;$contact_key&lt;/span&gt; &lt;span class='o'&gt;=&amp;gt;&lt;/span&gt; &lt;span class='nv'&gt;$contact_field&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+        &lt;span class='k'&gt;if&lt;/span&gt; &lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='o'&gt;!&lt;/span&gt;&lt;span class='nv'&gt;$contact_field&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+            &lt;span class='nv'&gt;$contact_invalid&lt;/span&gt;&lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='nv'&gt;$contact_key&lt;/span&gt;&lt;span class='p'&gt;]&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='k'&gt;true&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt;
+        &lt;span class='p'&gt;}&lt;/span&gt;
+    &lt;span class='p'&gt;}&lt;/span&gt;
+
+    &lt;span class='k'&gt;if&lt;/span&gt; &lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='o'&gt;!&lt;/span&gt;&lt;span class='nv'&gt;$contact_invalid&lt;/span&gt; &lt;span class='o'&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class='o'&gt;!&lt;/span&gt;&lt;span class='nv'&gt;$_COOKIE&lt;/span&gt;&lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;awesomemath_contact&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;])&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+        &lt;span class='nv'&gt;$comment_post_ID&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='nx'&gt;DEFAULT_POST_ID&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt;
+        &lt;span class='nv'&gt;$comment_author&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='nv'&gt;$contact_data&lt;/span&gt;&lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;name&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;];&lt;/span&gt;
+        &lt;span class='nv'&gt;$comment_author_email&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='nv'&gt;$contact_data&lt;/span&gt;&lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;email&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;];&lt;/span&gt;
+        &lt;span class='nv'&gt;$comment_author_url&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='s1'&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt;
+        &lt;span class='nv'&gt;$comment_content&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='nv'&gt;$contact_data&lt;/span&gt;&lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;message&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;];&lt;/span&gt;
+        &lt;span class='nv'&gt;$comment_type&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='s1'&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt;
+        &lt;span class='nv'&gt;$comment_parent&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='m'&gt;0&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt;
+        &lt;span class='nv'&gt;$user_ID&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='m'&gt;0&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt;
+
+        &lt;span class='nv'&gt;$commentdata&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='nb'&gt;compact&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;comment_post_ID&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='s1'&gt;&amp;#39;comment_author&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt;
+            &lt;span class='s1'&gt;&amp;#39;comment_author_email&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='s1'&gt;&amp;#39;comment_author_url&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='s1'&gt;&amp;#39;comment_content&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt;
+            &lt;span class='s1'&gt;&amp;#39;comment_type&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='s1'&gt;&amp;#39;comment_parent&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='s1'&gt;&amp;#39;user_ID&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+        &lt;span class='nv'&gt;$comment_id&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='nx'&gt;wp_new_comment&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt; &lt;span class='nv'&gt;$commentdata&lt;/span&gt; &lt;span class='p'&gt;);&lt;/span&gt;
+        &lt;span class='nv'&gt;$comment_approved&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='nv'&gt;$wpdb&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;get_results&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;
+           &lt;span class='s2'&gt;&amp;quot;SELECT (comment_approved = &amp;#39;spam&amp;#39;)&lt;/span&gt;
+&lt;span class='s2'&gt;                AS spam&lt;/span&gt;
+&lt;span class='s2'&gt;            FROM wp_comments&lt;/span&gt;
+&lt;span class='s2'&gt;            WHERE comment_ID = &amp;#39;&lt;/span&gt;&lt;span class='si'&gt;{&lt;/span&gt;&lt;span class='nv'&gt;$comment_id&lt;/span&gt;&lt;span class='si'&gt;}&lt;/span&gt;&lt;span class='s2'&gt; LIMIT 1;&amp;#39;&amp;quot;&lt;/span&gt;
+        &lt;span class='p'&gt;);&lt;/span&gt;
+        &lt;span class='c'&gt;// allow contact again after one hour&lt;/span&gt;
+        &lt;span class='nb'&gt;setcookie&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;awesomemath_contact&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='m'&gt;1&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='nb'&gt;time&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt; &lt;span class='o'&gt;+&lt;/span&gt; &lt;span class='m'&gt;3600&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='s1'&gt;&amp;#39;/&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+        &lt;span class='k'&gt;if&lt;/span&gt; &lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nv'&gt;$comment_id&lt;/span&gt; &lt;span class='o'&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class='o'&gt;!&lt;/span&gt;&lt;span class='nv'&gt;$comment_approved&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;spam&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+            &lt;span class='c'&gt;// not spam!&lt;/span&gt;
+            &lt;span class='nv'&gt;$contact_headers&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; 
+            &lt;span class='s2'&gt;&amp;quot;From: &lt;/span&gt;&lt;span class='si'&gt;{&lt;/span&gt;&lt;span class='nv'&gt;$contact_data&lt;/span&gt;&lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;name&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;]&lt;/span&gt;&lt;span class='si'&gt;}&lt;/span&gt;&lt;span class='s2'&gt; &amp;lt;&lt;/span&gt;&lt;span class='si'&gt;{&lt;/span&gt;&lt;span class='nv'&gt;$contact_data&lt;/span&gt;&lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;email&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;]&lt;/span&gt;&lt;span class='si'&gt;}&lt;/span&gt;&lt;span class='s2'&gt;&amp;gt;&lt;/span&gt;&lt;span class='se'&gt;\r\n&lt;/span&gt;&lt;span class='s2'&gt;\\&amp;quot;&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt;
+            &lt;span class='nx'&gt;wp_mail&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nx'&gt;get_option&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;admin_email&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;),&lt;/span&gt;
+                &lt;span class='s1'&gt;&amp;#39;Examplesite Contact Form Message&amp;#39;&lt;/span&gt;
+                &lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='nv'&gt;$contact_data&lt;/span&gt;&lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;message&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;],&lt;/span&gt; &lt;span class='nv'&gt;$contact_headers&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+            &lt;span class='nv'&gt;$contact_headers&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt;
+                &lt;span class='s2'&gt;&amp;quot;From: Examplesite &amp;lt;me@examplesite.com&amp;gt;&lt;/span&gt;&lt;span class='se'&gt;\r\n&lt;/span&gt;&lt;span class='s2'&gt;\\&amp;quot;&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt;
+            &lt;span class='nx'&gt;wp_mail&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s2'&gt;&amp;quot;&lt;/span&gt;&lt;span class='si'&gt;{&lt;/span&gt;&lt;span class='nv'&gt;$contact_data&lt;/span&gt;&lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;name&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;]&lt;/span&gt;&lt;span class='si'&gt;}&lt;/span&gt;&lt;span class='s2'&gt; &amp;lt;&lt;/span&gt;&lt;span class='si'&gt;{&lt;/span&gt;&lt;span class='nv'&gt;$contact_data&lt;/span&gt;&lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;email&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;]&lt;/span&gt;&lt;span class='si'&gt;}&lt;/span&gt;&lt;span class='s2'&gt;&amp;gt;&amp;quot;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt;
+                &lt;span class='s1'&gt;&amp;#39;Thank you for contacting Examplesite!&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt;
+                &lt;span class='s1'&gt;&amp;#39;Thank you for contacting us. We will get back to you shortly.&lt;/span&gt;
+
+&lt;span class='s1'&gt;Below is a copy of your message.&lt;/span&gt;
+&lt;span class='s1'&gt;If for any reason we do not get back to you soon, simply reply to this email.&lt;/span&gt;
+
+&lt;span class='s1'&gt;------------------------------&lt;/span&gt;
+
+&lt;span class='s1'&gt;&amp;#39;&lt;/span&gt; &lt;span class='o'&gt;.&lt;/span&gt; &lt;span class='nv'&gt;$contact_data&lt;/span&gt;&lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;message&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;],&lt;/span&gt; &lt;span class='nv'&gt;$contact_headers&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+            &lt;span class='c'&gt;// redirect to prevent resubmission&lt;/span&gt;
+            &lt;span class='nb'&gt;header&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s2'&gt;&amp;quot;Location: &lt;/span&gt;&lt;span class='si'&gt;{&lt;/span&gt;&lt;span class='nv'&gt;$_SERVER&lt;/span&gt;&lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;HTTP_REFERER&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;]&lt;/span&gt;&lt;span class='si'&gt;}&lt;/span&gt;&lt;span class='s2'&gt;?contacted=1&amp;quot;&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+            &lt;span class='k'&gt;die&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt;
+        &lt;span class='p'&gt;}&lt;/span&gt;
+    &lt;span class='p'&gt;}&lt;/span&gt;
+&lt;span class='p'&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;See? That wasn&amp;#8217;t so bad. Let me summarize the above. First, we validate data once again by using a simple php filter. See &lt;a href='http://net.tutsplus.com/tutorials/php/getting-clean-with-php/'&gt;this easy tutorial&lt;/a&gt; for the basics of php filters.&lt;/p&gt;
+
+&lt;p&gt;Then, we use Wordpress&amp;#8217; built-in comment system to post contact messages as comments. We then check to see if the comments were potentially marked as spam. If they weren&amp;#8217;t, we send an email to the site admin (it can be any email, really), with the contact message. Make sure to set DEFAULT_POST_ID to a post against which you can file these &amp;#8220;comments&amp;#8221;.&lt;/p&gt;
+
+&lt;p&gt;I should add that this contact_form.php file is also included in my theme to support no-JS submission. But, really, nowadays, unless you&amp;#8217;re on your phone, 99.9% of users have Javascript enabled in their web browsers.&lt;/p&gt;
+
+&lt;p&gt;If I had time, I would turn this into a plugin with options and such. Wishlist:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;A separate panel for administering contact form messages, similar to the built-in WP comments.&lt;/li&gt;
+
+&lt;li&gt;A built-in easy-to-customize widget&lt;/li&gt;
+
+&lt;li&gt;Custom fields&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;All-in-all, this was a quick and easy way to safely implement a contact form on a site without the hassle of using multiple plugins, having Captchas, or the inflexibility of requiring a subject line for the contact message (yet another reason I chose to implement my own contact form from scratch).&lt;/p&gt;
+
+&lt;p&gt;Hope you found this article useful. Feedback welcome!&lt;/p&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>EDUC60 - nov 2 - lecture notes</title>
+   <link href="http://embrangler.com/2009/11/educ60-nov-2-lecture-notes"/>
+   <updated>2009-11-03T00:00:00-08:00</updated>
+   <id>http://embrangler.com/2009/11/educ60-nov-2-lecture-notes</id>
+   <content type="html">&lt;p&gt;Ideas about teaching:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Pedagogical content knowledge&lt;/li&gt;
+
+&lt;li&gt;Culturally responsive teaching&lt;/li&gt;
+
+&lt;li&gt;Teacher as facilitator&lt;/li&gt;
+
+&lt;li&gt;Teacher learning&lt;/li&gt;
+
+&lt;li&gt;Teacher learning communities&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Community of practices&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Common ways of doing things, common structure of teaching&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Quick review&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Behaviorism and teaching&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;a response to a stimulus is enforced&lt;/li&gt;
+
+&lt;li&gt;vs teaching - positive and negative reinforcement techniques&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Constructivism&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;teacher is guide or facilitator&lt;/li&gt;
+
+&lt;li&gt;work that ZPD!&lt;/li&gt;
+
+&lt;li&gt;research what students know&lt;/li&gt;
+
+&lt;li&gt;hands-on problem solving&lt;/li&gt;
+
+&lt;li&gt;open-ended questions&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Community of practice&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;shared language and practices&lt;/li&gt;
+
+&lt;li&gt;establish, promote and understand student communities&lt;/li&gt;
+
+&lt;li&gt;provide scaffolding/mentoring&lt;/li&gt;
+
+&lt;li&gt;scaffolding = diagnosing of ZPD; hinting, leading question based on what student already knows&lt;/li&gt;
+
+&lt;li&gt;the best assessment occurs in the practice&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Pedagogical knowledge&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;of subject matter&lt;/li&gt;
+
+&lt;li&gt;of students&amp;#8217; understanding&lt;/li&gt;
+
+&lt;li&gt;of curricula&lt;/li&gt;
+
+&lt;li&gt;of general pedagogy&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Content knowledge&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;of subjects&lt;/li&gt;
+
+&lt;li&gt;of relationships among subjects&lt;/li&gt;
+
+&lt;li&gt;of methods of acquiring and applying knowledge&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Culturally responsive teaching&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;who are my students? where do they live? what are typical parental occupations? what &amp;#8220;funds of knowledge&amp;#8221; are family members able to share&lt;/li&gt;
+
+&lt;li&gt;funds of knowledge = intersting important ideas that individual haves which are not parts of school&lt;/li&gt;
+
+&lt;li&gt;build outside knowledge into curriculum, goes back to knowing how people learn&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Teacher as facilitator vs didactic&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;having students contribute from their own experiences&lt;/li&gt;
+
+&lt;li&gt;involves some kind of egalitarian effort&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&amp;#8220;Teaching for understanding&amp;#8221; paper, by Perkins&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Make learning a long-term, thinking-centered process&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Provide rich ongoing assesment&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Support learning with powerful representations&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Pay heed to developmental factors&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Induct students into the discipline&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;e.g. think like historians&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Teach for transfer&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;e.g. use information in more than one setting&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;strong&gt;We all need to be reflective, lifelong learners.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Teacher learning communities&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Mutual Support&lt;/li&gt;
+
+&lt;li&gt;Shared Focus&lt;/li&gt;
+
+&lt;li&gt;Individual Investigations of Topics of Interest&lt;/li&gt;
+
+&lt;li&gt;Discussion of Selected Reading&lt;/li&gt;
+
+&lt;li&gt;Conference Presentations and writing for Publication&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Oakes critical against &amp;#8220;let&amp;#8217;s fix teaching&amp;#8221; mentality. She is arguing about offering opportunity and making social justice a reality rather than &amp;#8220;fixing&amp;#8221; and &amp;#8220;improving.&amp;#8221;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;encourage students to ask&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;whose interest is being served?&lt;/li&gt;
+
+&lt;li&gt;whose interest is being ignored?&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;think about this whenever you are asked to do something (e.g. in class)&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Essay prompt:&lt;/p&gt;
+
+&lt;p&gt;&amp;#8220;Provide arguments to make a case either for or against large lecture format teaching (a forced dichotomy).&lt;/p&gt;
+
+&lt;p&gt;Use learning theory and reading on teaching and learning environment design to support your arguments - be specific. Indicated why the selected theory is useful, i.e. don&amp;#8217;t just list it.&lt;/p&gt;
+
+&lt;p&gt;You do not need to cite every coinceivable theory or article/chapter. Please be selective but pointed. I want to see that you have digested the material and can use it in a new situation (transfer).&amp;#8221;&lt;/p&gt;
+
+&lt;p&gt;Address the implications beyond yourself and UCSC. Use 3-5 sources.&lt;/p&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>CS107 hw3</title>
+   <link href="http://embrangler.com/2009/10/cs107-hw3"/>
+   <updated>2009-10-31T00:00:00-07:00</updated>
+   <id>http://embrangler.com/2009/10/cs107-hw3</id>
+   <content type="html">&lt;p&gt;Homework 3&lt;/p&gt;
+
+&lt;p&gt;page 119.&lt;/p&gt;
+
+&lt;p&gt;3) Let &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/68f5a61e3dc29ee400c658a9a39421c9.png' alt='$A_i =$' style='vertical-align: -0.333333333333333ex;height: 1.88888888888889ex;' /&gt;&lt;/span&gt;the probability that pilot flies mission i safely. Then the probability that a pilot flies n consecutive missions safely is &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/f00a3e614d33df5dcc8602b83e4d39a5.png' alt='$P(A_1 \cdot .. A_n) = (\frac{49}{50})^n$' style='vertical-align: -0.777777777777778ex;height: 2.66666666666667ex;' /&gt;&lt;/span&gt;, since &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/a61609bcd4efff93cdbc1a9766637b16.png' alt='$A_i, .. A_j$' style='vertical-align: -0.666666666666667ex;height: 2.22222222222222ex;' /&gt;&lt;/span&gt; are independent events. Hence, Jim is right that the probability of a pilot flying 49 consecutive missions safely is about 0.3716017. However, he is wrong about the odds of the pilot performing the 50th mission successfully. Since the probability is independent of other missions, this pilot&amp;#8217;s probability to perform the 50th mission successively is still &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/2876d5e7a702d6844ae5340c24c85b36.png' alt='$\frac{49}{50}$' style='vertical-align: -0.777777777777778ex;height: 2.66666666666667ex;' /&gt;&lt;/span&gt;. This is because &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/c2d78eb9ec269c5e533cea0c6ffff1eb.png' alt='$P(A_{50} | A_{49} \cdot .. A_{1}) = P(A_{50})$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /&gt;&lt;/span&gt; (from independence). Consequently, Mia is also wrong about the pilot needing to return after 49 successful consecutive missions. The probability of success for the pilot&amp;#8217;s 50th mission is simply the same, &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/2876d5e7a702d6844ae5340c24c85b36.png' alt='$\frac{49}{50}$' style='vertical-align: -0.777777777777778ex;height: 2.66666666666667ex;' /&gt;&lt;/span&gt;. So, both Mia and Jim are wrong.&lt;/p&gt;
+
+&lt;p&gt;7) a) Let &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/b4e614da321255b600b3d28727a55e4e.png' alt='$P(L) = 0.725$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /&gt;&lt;/span&gt;, where L = event that a 35-year-old US citizen lives to age 65. The events of John (A) and Jim (B) living to age 65 are independent, and hence &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/326864b25c435f565a24f8b2a08cf681.png' alt='$P(AB) = 0.725^2 = 0.525625$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /&gt;&lt;/span&gt; b) &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/064ec3a51c7044bce9260ee37ac5d9bf.png' alt='$P(\bar{A}\bar{B}) = 0.275^2 = 0.075625$' style='vertical-align: -0.555555555555556ex;height: 2.44444444444444ex;' /&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;page 137.&lt;/p&gt;
+
+&lt;p&gt;16) Let E = Lorna guesses correctly, R = had is red, B = hat is blue. Then let: &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/5becb1ed7a9404d14a3cf0b783f907f9.png' alt='$g_1 =$' style='vertical-align: -0.444444444444444ex;height: 1.44444444444444ex;' /&gt;&lt;/span&gt; correct guess, hat is red &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/e7dfc6131568dd6a04424fac2c3a5159.png' alt='$g_2 =$' style='vertical-align: -0.444444444444444ex;height: 1.44444444444444ex;' /&gt;&lt;/span&gt; correct guess, hat is blue &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/55fd7c2e592cdae075a446958acf6a04.png' alt='$g_3 =$' style='vertical-align: -0.444444444444444ex;height: 1.44444444444444ex;' /&gt;&lt;/span&gt; incorrect guess, hat is red &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/cd1dba788bdc66d9aa556ed822577515.png' alt='$g_4 =$' style='vertical-align: -0.444444444444444ex;height: 1.44444444444444ex;' /&gt;&lt;/span&gt; incorrect guess, hat is red Therefore: &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/f716a01818ed05404ee12ccf1689cc64.png' alt='$P(g_1) = \alpha \cdot \frac{1}{2} = \frac{\alpha}{2}$' style='vertical-align: -0.777777777777778ex;height: 2.66666666666667ex;' /&gt;&lt;/span&gt; &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/d34b347bb3e74b0e4cf81738289063c5.png' alt='$P(g_2) = (1 - \alpha) \cdot \frac{1}{2} = \frac{1 - \alpha}{2}$' style='vertical-align: -0.777777777777778ex;height: 2.66666666666667ex;' /&gt;&lt;/span&gt; &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/a9e478bc87d7c9d4a1b7def1dfe929f5.png' alt='$P(g_3) = \alpha \cdot \frac{1}{2} = \frac{\alpha}{2}$' style='vertical-align: -0.777777777777778ex;height: 2.66666666666667ex;' /&gt;&lt;/span&gt; &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/ae5604f337d3e6842abb411e128d643f.png' alt='$P(g_4) = (1 - \alpha) \cdot \frac{1}{2} = \frac{1 - \alpha}{2}$' style='vertical-align: -0.777777777777778ex;height: 2.66666666666667ex;' /&gt;&lt;/span&gt; And chance of success: &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/39c645f0e86cdf0dcab10dee335e692e.png' alt='$P(success) = P(g_1) + P(g_2) = \frac{1}{2}$' style='vertical-align: -0.777777777777778ex;height: 2.66666666666667ex;' /&gt;&lt;/span&gt; It follows that there is no strategy to maximize Lorna&amp;#8217;s chance of success, since the chance of success is independent of &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/1cee10dbde9c6610660a1cdfa4038b16.png' alt='$\alpha$' style='vertical-align: -0.0ex;height: 1.0ex;' /&gt;&lt;/span&gt;.&lt;/p&gt;
+
+&lt;p&gt;17) Let events E = child is in the east wing, W = child is in the west wing, OE = officer in east finds the child, OW = officer in west finds the child, F = child is found, FE = child is found in east wing, FW = child is found in west wing. We are given: &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/c2f892951d9574028f7504c4d69088cd.png' alt='$P(OE|E) = 0.4, P(OW|W) = 0.4, P(E) = 0.75, P(W) = 0.25$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /&gt;&lt;/span&gt;. For the west wing, the probability of finding the child with two officers searching (if the child is there): &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/169952af32411388719ac91d259f47e6.png' alt='$P(FW|W) = P(OW1 \cup OW2 | W) = P(OW1 | W) + P(OW2 | W) - P(OW1|W \cdot OW2|W) = 0.4 + 0.4 - 0.16 = 0.64$' style='vertical-align: -0.555555555555556ex;height: 5.0ex;' /&gt;&lt;/span&gt; For the east wing, the same probability but with three officers searching: &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/c311de18037dd1ec19890e0fc567e0fb.png' alt='$P(FE|E) = P(OE1 \cup OE2 \cup OE3 | E) = 0.64 + 0.4 - 0.256 = 0.784$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /&gt;&lt;/span&gt; But: &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/853b0fb0000f9c9f111d5bd3d91b4fb6.png' alt='$P(FW|W) = \frac{P(FW \cdot W)}{P(W)}$' style='vertical-align: -1.11111111111111ex;height: 3.33333333333333ex;' /&gt;&lt;/span&gt; =&amp;gt; &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/7de661810959627ea49040a19be1e370.png' alt='$P(FW) = 0.25 \cdot 0.64 = 0.16$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /&gt;&lt;/span&gt; similarly, &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/e1a61bd0b5b5168a4e406d2ecb8d4561.png' alt='$P(FE) = 0.75 \cdot 0.784 = 0.588$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /&gt;&lt;/span&gt; Finally: &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/991999a1fccf647e393205ce784254e2.png' alt='$P(F) = P(FE \cup FW) = 0.748$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;19) Let events S = professor smith passes Kevin, SF = professor smith fails Kevin, B and R similar to S, BF and RF similar to SF, K = Kevin is prepared, U = kevin is unprepared a) &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/abc44c11dfa8ab3f8805fb899a15eaad.png' alt='$P(R | BF \cdot SF) = ?$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /&gt;&lt;/span&gt; To calculate this, we need to take into account whether Kevin is prepared or not: &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/f1c12791c1d93fc675fc9fc05da62936.png' alt='$P(R | BF \cdot SF) = P(R | BF \cdot SF \cdot K) \cdot P(K | SF \cdot BF) + P(R | BF \cdot SF \cdot U) \cdot P(U | SF \cdot BF)$' style='vertical-align: -0.555555555555556ex;height: 5.0ex;' /&gt;&lt;/span&gt;. We can calculate &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/914628e1bd8224812b2f3ce877434eb8.png' alt='$P(K | SF \cdot BF)$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /&gt;&lt;/span&gt; using Bayes&amp;#8217; theorem. &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/d57d12bf5397e0ba27753d585bbe9fcf.png' alt='$P(K | SF \cdot BF) = \frac{P(SF \cdot BF | K) \cdot P(K)}{P(SF \cdot BF | K) \cdot P(K) + P(SF \cdot BF | U) \cdot P(U)}$' style='vertical-align: -1.11111111111111ex;height: 3.33333333333333ex;' /&gt;&lt;/span&gt;, and, similarly: &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/24e3efd58860b43fe043b2512b20dbf6.png' alt='$P(U | SF \cdot BF) = \frac{P(SF \cdot BF | U) \cdot P(U)}{P(SF \cdot BF | K) \cdot P(K) + P(SF \cdot BF | U) \cdot P(U)}$' style='vertical-align: -1.11111111111111ex;height: 3.33333333333333ex;' /&gt;&lt;/span&gt;. Since examiners fail or pass independently from each other, but depending on whether the student is prepared or not: &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/6f9a6290dc256b4276790a5a3201c711.png' alt='$P(SF \cdot BF | K) = P(SF | K) \cdot P(BF | K) = 0.15^2 = 0.0225$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /&gt;&lt;/span&gt;, and &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/76cabc5151dc003779a111faea406e7d.png' alt='$P(SF \cdot BF | U) = P(SF | U) \cdot P(BF | U) = 0.8^2 = 0.64$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /&gt;&lt;/span&gt;. Hence: &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/954882cf6da10e6699d7906bbd083a47.png' alt='$P(K | SF \cdot BF) = \frac{0.0225 \cdot 0.85}{0.0225 \cdot 0.85 + 0.64 \cdot 0.15} = \frac{0.019125}{0.115125} = 0.16612$' style='vertical-align: -0.888888888888889ex;height: 2.77777777777778ex;' /&gt;&lt;/span&gt; &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/749f54ff106be616acbd70df11dd256b.png' alt='$P(U | SF \cdot BF) = \frac{0.64 \cdot 0.15}{0.0225 \cdot 0.85 + 0.64 \cdot 0.15} = \frac{0.096}{0.115125} = 0.83388$' style='vertical-align: -0.888888888888889ex;height: 2.77777777777778ex;' /&gt;&lt;/span&gt; To calculate &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/28920b40bf8746c425c88769aa601d46.png' alt='$P(R | BF \cdot SF \cdot K)$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /&gt;&lt;/span&gt;, we use the fact that R, B and S are conditionally independent with respect to K, hence: &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/576ad0c765269a5a5ac1f23ba1b7e70c.png' alt='$P(R | BF \cdot SF \cdot K) = P(R | K) = 0.85$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /&gt;&lt;/span&gt; and, similarly &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/233deea3c99009fcb60f3a2a1ba5309e.png' alt='$P(R | BF \cdot SF \cdot U) = P(R | U) = 0.15$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /&gt;&lt;/span&gt;. Therefore: &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/0476189d378b89bb1c428f78027b269e.png' alt='$P(R | BF \cdot SF) = 0.85 \cdot 0.16612 + 0.20 \cdot 0.83388 = 0.141202 + 0.166776 = 0.307978 \approx 0.308$' style='vertical-align: -0.0ex;height: 4.44444444444444ex;' /&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;b) In answer to the second question, of course, S, B and R are not independent. Otherwise the probability would have been a simple: &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/25f41058decddf38b4dab642fd0e1e08.png' alt='$P(R | BF \cdot SF) = 0.85 \cdot 0.85 + 0.20 \cdot 0.15 = 0.7225 + 0.03 = 0.7525$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;c) Yes. S, B and R are conditionally independent, depending on whether Kevin is or is not prepared.&lt;/p&gt;
+
+&lt;p&gt;page 150.&lt;/p&gt;
+
+&lt;p&gt;1) Possible values are: 5, 4, 3, 2, 1, 0. Probabilities:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;6 cases for difference = 0: (1, 1), (2, 2), &amp;#8230; (6, 6) ==&amp;gt; &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/b31104446559a20a806cd2b8481bc879.png' alt='$\frac{1}{6} = 0.1(6)$' style='vertical-align: -0.777777777777778ex;height: 2.66666666666667ex;' /&gt;&lt;/span&gt;&lt;/li&gt;
+
+&lt;li&gt;10 cases for difference = 1: (1, 2), (2, 1), &amp;#8230; (5, 6), (6, 5) ==&amp;gt; &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/8a0cd1aa253c33721b3f806f6cfc20b1.png' alt='$\frac{5}{18} = 0.2(7)$' style='vertical-align: -0.888888888888889ex;height: 2.77777777777778ex;' /&gt;&lt;/span&gt;&lt;/li&gt;
+
+&lt;li&gt;8 cases for difference = 2: (1, 3), (3, 1), &amp;#8230; (4, 6), (6, 4) ==&amp;gt; &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/b09c0f7932c9f7d215ad4048fb10ca93.png' alt='$\frac{2}{9} = 0.(2)$' style='vertical-align: -0.777777777777778ex;height: 2.66666666666667ex;' /&gt;&lt;/span&gt;&lt;/li&gt;
+
+&lt;li&gt;6 cases for difference = 3: (1, 4), (4, 1), (2, 5), (5, 2), (3, 6), (6, 3) ==&amp;gt; &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/b31104446559a20a806cd2b8481bc879.png' alt='$\frac{1}{6} = 0.1(6)$' style='vertical-align: -0.777777777777778ex;height: 2.66666666666667ex;' /&gt;&lt;/span&gt;&lt;/li&gt;
+
+&lt;li&gt;4 cases for difference = 4: (1, 5), (5, 1), (2, 6), (6, 2) ==&amp;gt; &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/3a322adcfd754e36ab6113f43625a6af.png' alt='$\frac{1}{9} = 0.(1)$' style='vertical-align: -0.777777777777778ex;height: 2.66666666666667ex;' /&gt;&lt;/span&gt;&lt;/li&gt;
+
+&lt;li&gt;2 cases for difference = 5: (1, 6), (6, 1) ==&amp;gt; &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/679a667648f035094bba6a43187d2470.png' alt='$\frac{1}{18} = 0.0(5)$' style='vertical-align: -0.888888888888889ex;height: 2.77777777777778ex;' /&gt;&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;2) Possible values are: &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/ad60805192efb11083669c28e1b1d1c6.png' alt='$-6 (2 red),$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /&gt;&lt;/span&gt;-2 (1 red, 1 blue), &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/45a970dbea1e06b3df411296208fab93.png' alt='$-1 (1 red, 1 white),$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /&gt;&lt;/span&gt;2 (2 blue), &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/44349d0ee4e34d1849433c92b541a6b4.png' alt='$3 (1 blue, 1 white),$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /&gt;&lt;/span&gt;4 (2 white). Sample space contains a total of 9 events. Probabilities:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;1 case for -6 ==&amp;gt; &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/3a322adcfd754e36ab6113f43625a6af.png' alt='$\frac{1}{9} = 0.(1)$' style='vertical-align: -0.777777777777778ex;height: 2.66666666666667ex;' /&gt;&lt;/span&gt;&lt;/li&gt;
+
+&lt;li&gt;2 cases for -2 ==&amp;gt; &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/b09c0f7932c9f7d215ad4048fb10ca93.png' alt='$\frac{2}{9} = 0.(2)$' style='vertical-align: -0.777777777777778ex;height: 2.66666666666667ex;' /&gt;&lt;/span&gt;&lt;/li&gt;
+
+&lt;li&gt;2 cases for -1 ==&amp;gt; &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/b09c0f7932c9f7d215ad4048fb10ca93.png' alt='$\frac{2}{9} = 0.(2)$' style='vertical-align: -0.777777777777778ex;height: 2.66666666666667ex;' /&gt;&lt;/span&gt;&lt;/li&gt;
+
+&lt;li&gt;1 case for 2 ==&amp;gt; &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/3a322adcfd754e36ab6113f43625a6af.png' alt='$\frac{1}{9} = 0.(1)$' style='vertical-align: -0.777777777777778ex;height: 2.66666666666667ex;' /&gt;&lt;/span&gt;&lt;/li&gt;
+
+&lt;li&gt;2 cases for 3 ==&amp;gt; &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/b09c0f7932c9f7d215ad4048fb10ca93.png' alt='$\frac{2}{9} = 0.(2)$' style='vertical-align: -0.777777777777778ex;height: 2.66666666666667ex;' /&gt;&lt;/span&gt;&lt;/li&gt;
+
+&lt;li&gt;1 case for 4 ==&amp;gt; &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/3a322adcfd754e36ab6113f43625a6af.png' alt='$\frac{1}{9} = 0.(1)$' style='vertical-align: -0.777777777777778ex;height: 2.66666666666667ex;' /&gt;&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;4) Volume is greater than 1.424 means that the side is greater than &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/aa5464f99a076c588e44f9d1bb8a37fc.png' alt='$l = \sqrt[3]{1.424} \approx 1.125$' style='vertical-align: -0.444444444444444ex;height: 2.33333333333333ex;' /&gt;&lt;/span&gt; The probability is, then: &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/a5d4f7bd13e83c646e4151f16b0b4cd8.png' alt='$\frac{1.25 - \sqrt[3]{1.424}}{0.25} \approx 0.4998 \approx 0.5$' style='vertical-align: -0.777777777777778ex;height: 3.22222222222222ex;' /&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;page 173.&lt;/p&gt;
+
+&lt;p&gt;2) The expected payment for parking illegally is: &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/31fbfe5df9bc3c9f1d91a63844a14782.png' alt='$E[X] = 0.4 \cdot 0 + 0.6 \cdot 25 = 15 &amp;gt; 7$' style='vertical-align: -0.555555555555556ex;height: 2.22222222222222ex;' /&gt;&lt;/span&gt;. Therefore the commuter should park at a lot.&lt;/p&gt;
+
+&lt;p&gt;3) The expected winning amount for a single ticket: &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/bbebbe64cae735f511856fbdf1e5219e.png' alt='$E[X] = \frac{4000}{2,000,000} \cdot 30 + \frac{500}{2,000,000} \cdot 800 + \frac{1}{2,000,000} \cdot 1,200,000 + \frac{1,995,499}{2,000,000} \cdot 0 = 0.06 + 0.2 + 0.6 = 0.86$' style='vertical-align: -0.222222222222222ex;height: 4.88888888888889ex;' /&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;page 182.&lt;/p&gt;
+
+&lt;p&gt;3) We calculate variance using the formula: &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/3dfa59cff6d3102c698bbb525c2c07b7.png' alt='$Var(X) = E(X^2) - [E(X)]^2$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /&gt;&lt;/span&gt; So &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/b10bea45a30c11c7001aafdb5db4e1ef.png' alt='$E(X) = (-3) \cdot \frac{7}{28} + (-2) \cdot \frac{6}{28} + (-1) \cdot \frac{5}{28} + 0 \cdot \frac{4}{28} + 1 \cdot \frac{3}{28} + 2 \cdot \frac{2}{28} + 3 \cdot \frac{1}{28} = \frac{1}{28} \cdot (-21-12-5+3+4+3) = -1$' style='vertical-align: -0.777777777777778ex;height: 5.33333333333333ex;' /&gt;&lt;/span&gt;, and &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/1d626196c1dae69572efb4727dd734a5.png' alt='$E(X^2) = (-3)^2 \cdot \frac{7}{28} + (-2)^2 \cdot \frac{6}{28} + (-1)^2 \cdot \frac{5}{28} + 0 \cdot \frac{4}{28} + 1^2 \cdot \frac{3}{28} + 2^2 \cdot \frac{2}{28} + 3^2 \cdot \frac{1}{28} = \frac{1}{28} \cdot (63+24+5+3+8+9) = \frac{112}{28} = 4$' style='vertical-align: -0.777777777777778ex;height: 5.33333333333333ex;' /&gt;&lt;/span&gt;. Therefore: &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/8dee65a3d3de2051d544096aca1c4b22.png' alt='$Var(X) = E(X^2) - [E(X)]^2 = 4 - 1^2 = 3$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;4) We calculate variance using the formula: &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/3dfa59cff6d3102c698bbb525c2c07b7.png' alt='$Var(X) = E(X^2) - [E(X)]^2$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /&gt;&lt;/span&gt; So &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/ff8f48bb80f68fdc02ba917140adc2bf.png' alt='$E(X) = \int_{-3}^{\infty} \! F(x) \, dx = \int_{-3}^{0} \! \frac{3}{8} \, dx + \int_{0}^{6} \! \frac{3}{4} \, dx + \int_{6}^{\infty} \! 1 \, dx$' style='vertical-align: -0.777777777777778ex;height: 2.77777777777778ex;' /&gt;&lt;/span&gt; As we can see, E(X) does not exist for this distribution, since F(x) is not continuous and &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/a11a478f0d72e3310b6783abf78718ae.png' alt='$\int_{6}^{\infty} \! 1 \, dx$' style='vertical-align: -0.555555555555556ex;height: 2.22222222222222ex;' /&gt;&lt;/span&gt; is not finite.&lt;/p&gt;
+
+&lt;p&gt;page 238.&lt;/p&gt;
+
+&lt;p&gt;1) a) To determine c, we use the property &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/1aba8532a2845aa69b65039f955a116e.png' alt='$\int_{-\infty}^{\infty} \! f(x) \, dx = 1$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /&gt;&lt;/span&gt;: &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/a052ac8128e7b39d43a91c9deb3d5ae3.png' alt='$\int_{-\infty}^{\infty} \! f(x) \, dx = \int_{0}^{\infty} \! ce^{-3x} \, dx = c \cdot \int_{0}^{\infty} \! e^{-3x} \, dx = c \cdot (-\frac{1}{3}) \cdot (-1) =&amp;gt; c = 3$' style='vertical-align: -0.777777777777778ex;height: 2.66666666666667ex;' /&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;b) &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/30a9f358d850a27629deda8da3d29841.png' alt='$P(X \le 0.5) = f(0.5) = 3 \cdot e^{-1.5} = 0.78$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;3) a) To determine c, we use the property &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/1aba8532a2845aa69b65039f955a116e.png' alt='$\int_{-\infty}^{\infty} \! f(x) \, dx = 1$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /&gt;&lt;/span&gt;: &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/ebbd2f3ff1e75b9d2c33b573b675a3ab.png' alt='$\int_{-\infty}^{\infty} \! f(x) \, dx = \int_{1}^{2} \! c(x-1)(2-x) \, dx = c \cdot \int_{1}^{2} \! (-x^2 + 3x - 2) \, dx = c \cdot \frac{1}{6} =&amp;gt; c = 6$' style='vertical-align: -0.777777777777778ex;height: 2.77777777777778ex;' /&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;b) Obviously, it takes 0 for the student to finish if x &amp;lt; 1. It takes &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/a4aee14067b1fa87b4a736d1a9b77f04.png' alt='$\int_{1}^{2} \! 6 \cdot (-x^2 + 3x - 2) = -2x^3 + 9x^2 - 12x + 5, if 1 \le x &amp;lt; 2$' style='vertical-align: -0.666666666666667ex;height: 2.66666666666667ex;' /&gt;&lt;/span&gt; and 1, if &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/6b00b562f7ea81ade7bc85438bd9f85d.png' alt='$x \ge 2$' style='vertical-align: -0.333333333333333ex;height: 1.88888888888889ex;' /&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;c) &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/b48af2ec9db68c5d6f2333af8a2be849.png' alt='$P(1.25) = -2 \cdot 1.25^3 + 9 \cdot 1.25^2 - 12 \cdot 1.25 + 5 = 0.15625$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /&gt;&lt;/span&gt;, probability to finish in 75 minutes. To finish between 1 + 1/2 and 2 hours, we take: &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/2c1354e743e047cc040b4937c9b31b4b.png' alt='$P(1.5 \le X \le 2) = F(2) - F(1.5) = 1 - (-2 \cdot 1.5^3 + 9 \cdot 1.5^2 - 12 \cdot 1.5 + 5) = 0.5$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /&gt;&lt;/span&gt;&lt;/p&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>ED60 - How people learn, Ch1</title>
+   <link href="http://embrangler.com/2009/10/ed60-how-people-learn-ch1"/>
+   <updated>2009-10-21T00:00:00-07:00</updated>
+   <id>http://embrangler.com/2009/10/ed60-how-people-learn-ch1</id>
+   <content type="html">&lt;p&gt;Three major theories of learning:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Behaviorism&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;learning based on behavior&lt;/li&gt;
+
+&lt;li&gt;came as response to old psychology based on &amp;#8220;consciousness&amp;#8221;&lt;/li&gt;
+
+&lt;li&gt;conditioning response based on stimuli&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Constructivism&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;new knowledge constructed on top of pre-existing knowledge&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;More currently:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;New focus is on understanding&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;This leads to focus on processes of knowing. Human = goal-oriented agent who actively seeks information.&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Active learning: people take control of their own learning&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Comparison between teachers A, B, and C, with each having different goals&lt;/li&gt;
+
+&lt;li&gt;Teacher C helps the students &lt;em&gt;want&lt;/em&gt; to learn about the material before the class starts, and therefore during class merely supervises their course of learning to ensure students keep sight of their purposes.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Key findings of scientific analysis:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Students come to the classroom with preconceptions about how the world works. If their initial understanding is not engaged, they may fail to grasp the new concepts and information that are taught, or they may learn them for purposes of a test but revert to their preconceptions outside the classroom.&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;To develop competence in an area of inquiry, students must:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;have a deep foundation of factual knowledge&lt;/li&gt;
+
+&lt;li&gt;understand facts and ideas in the context of a conceptual framework&lt;/li&gt;
+
+&lt;li&gt;organize knowledge in ways that faciitate retrieval and application&lt;/li&gt;
+
+&lt;li&gt;This fact emphasizes the importance of having expertise and connecting multiple bits of knowledge to understand larger concepts. Experts are also able to filter out irrelevant information from their knowledge, when working on a specific issue.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;A &amp;#8220;metacognitive&amp;#8221; approach to instruction can help students learn to take control of their own learning by defining learning goals and monitoring their progress in achieving them.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Consequences for teachers:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Teachers must draw out and work with the preexisting understandings that their students bring with them.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;The model of a child as an empty vessel is wrong. Teacher must inquire into students&amp;#8217; thinking&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Roles for assessment must expanded beyond traditional testing. Formative assesment helps students observe their thinking, and provides feedback that can guide modification of the course.&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Beginning teachers must be provided with opportunities to learn&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;To recognize predictable preconceptions of students&lt;/li&gt;
+
+&lt;li&gt;To draw out preconceptions that are not predictable&lt;/li&gt;
+
+&lt;li&gt;To work with preconceptions so that children build on them, challenge them, and, when appropriate, replace them&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Teachers must teach some subject matter in depth, providing many examples in which the same concept is at work and providing a firm foundation of factual knowledge&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Superficial coverage of many areas must be replaced by in-depth coverage of fewer topics&lt;/li&gt;
+
+&lt;li&gt;Coordination across coursework and school years to aid transition from informal to formal ideas&lt;/li&gt;
+
+&lt;li&gt;Teacher must be aware of development of students thinking about the concepts (developing teaching expertise)&lt;/li&gt;
+
+&lt;li&gt;Of course, teacher must know the subject and connect major concepts (discipline expertise)&lt;/li&gt;
+
+&lt;li&gt;Tests must be for deep understanding rather than surface knowledge. Need new assessment tools. Need to minimize trade-off between assessing depth and assessing ovjectively.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;The teaching of metacognitive skills should be integrated into the curriculum rather of subject areas.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Designing classroom environments:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Schools and classrooms must be learner centered&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Cultural differences can affect ability to learn&lt;/li&gt;
+
+&lt;li&gt;Students&amp;#8217; theories of what it means to be intelligent can affect their performance. Students who think intelligence is fixed are more likely to give up, whereas those who think it&amp;#8217;s flexible are more likely to admit mistakes and keep going (more comfortable with risk)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;To provide a knowledge-centered classroom environment, attention must be given to what is taught (information, subject matter), why it is taught (understanding), and what competence or mastery looks like&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;need to aid deeper understanding&lt;/li&gt;
+
+&lt;li&gt;tests often evaluate memorizing&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Formative assessments&amp;#8211;ongoing assessments designed to make students&amp;#8217; thinking visible to both teachers and students&amp;#8211;are essential. They permit the teacher to grasp the students&amp;#8217; preconceptions, understand where the students are in the &amp;#8220;developmental corridor&amp;#8221; from informal to formal thinking, and design instruction accordingly. In the assessment-centered classroom environment, formative assesments help both teachers and students monitor progress.&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Learning is influenced in fundamental ways by the context in which it takes place. A community-centered approach requires the development of norms for the classroom and school, as well as connections to the outside world that support core learning values * Teachers must encourage a community of learners, it&amp;#8217;s okay to make mistakes, engender sense of excitement&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Students spend only 13% of their time in schools. Focus learning on what they do outside school too, provide ways, etc.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Mistakes in professional development programs for teachers:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Are not learner centered&lt;/li&gt;
+
+&lt;li&gt;Are not knowledge centered&lt;/li&gt;
+
+&lt;li&gt;Are not assessment centered&lt;/li&gt;
+
+&lt;li&gt;Are not community centered&lt;/li&gt;
+&lt;/ul&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>Computer graphics - lecture notes - 10/14/09</title>
+   <link href="http://embrangler.com/2009/10/computer-graphics-lecture-notes-101409"/>
+   <updated>2009-10-14T00:00:00-07:00</updated>
+   <id>http://embrangler.com/2009/10/computer-graphics-lecture-notes-101409</id>
+   <content type="html">&lt;p&gt;Reflection:&lt;/p&gt;
+
+&lt;p&gt;&lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/b1196153d73660ab5c9f8bc63383c8dc.png' alt='$Rf_{xy} =$' style='vertical-align: -0.666666666666667ex;height: 2.22222222222222ex;' /&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;div class='maruku-equation'&gt;&lt;img class='maruku-png' src='/images/latex/c7735fbe2fb66b01b48dda3316d6306b.png' alt='$1xxx$' style='height: 1.66666666666667ex;' /&gt;&lt;span class='maruku-eq-tex'&gt;&lt;code style='display: none'&gt;1xxx&lt;/code&gt;&lt;/span&gt;&lt;/div&gt;&lt;div class='maruku-equation'&gt;&lt;img class='maruku-png' src='/images/latex/5361bd852d6480ca83d728ad30f07349.png' alt='$x1xx$' style='height: 1.66666666666667ex;' /&gt;&lt;span class='maruku-eq-tex'&gt;&lt;code style='display: none'&gt;x1xx&lt;/code&gt;&lt;/span&gt;&lt;/div&gt;&lt;div class='maruku-equation'&gt;&lt;img class='maruku-png' src='/images/latex/387fba8edf948667c15fa1718128d47c.png' alt='$xx-1x$' style='height: 1.66666666666667ex;' /&gt;&lt;span class='maruku-eq-tex'&gt;&lt;code style='display: none'&gt;xx-1x&lt;/code&gt;&lt;/span&gt;&lt;/div&gt;&lt;div class='maruku-equation'&gt;&lt;img class='maruku-png' src='/images/latex/4d596082dc9b2101beb29ea163a48e50.png' alt='$xxx1$' style='height: 1.66666666666667ex;' /&gt;&lt;span class='maruku-eq-tex'&gt;&lt;code style='display: none'&gt;xxx1&lt;/code&gt;&lt;/span&gt;&lt;/div&gt;
+&lt;p&gt;For yz, -1 is at 1,1. For xz, -1 is at 2, 2 &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/282749c17ba448bdd73b1e91245385e0.png' alt='$Rf_{z=5} = T(0, 0, -5) Rf_{xy}(0, 0, 5)$' style='vertical-align: -0.666666666666667ex;height: 2.44444444444444ex;' /&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;3D Shear &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/c29e14cd7a4c8b169a919ccd0573369b.png' alt='$SH_{xy} =$' style='vertical-align: -0.666666666666667ex;height: 2.22222222222222ex;' /&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;div class='maruku-equation'&gt;&lt;img class='maruku-png' src='/images/latex/c7735fbe2fb66b01b48dda3316d6306b.png' alt='$1xxx$' style='height: 1.66666666666667ex;' /&gt;&lt;span class='maruku-eq-tex'&gt;&lt;code style='display: none'&gt;1xxx&lt;/code&gt;&lt;/span&gt;&lt;/div&gt;&lt;div class='maruku-equation'&gt;&lt;img class='maruku-png' src='/images/latex/5361bd852d6480ca83d728ad30f07349.png' alt='$x1xx$' style='height: 1.66666666666667ex;' /&gt;&lt;span class='maruku-eq-tex'&gt;&lt;code style='display: none'&gt;x1xx&lt;/code&gt;&lt;/span&gt;&lt;/div&gt;&lt;div class='maruku-equation'&gt;&lt;img class='maruku-png' src='/images/latex/da5086ee5076f8a4489fcd8da793b259.png' alt='$sh_x sh_y xx$' style='height: 2.22222222222222ex;' /&gt;&lt;span class='maruku-eq-tex'&gt;&lt;code style='display: none'&gt;sh_x sh_y xx&lt;/code&gt;&lt;/span&gt;&lt;/div&gt;&lt;div class='maruku-equation'&gt;&lt;img class='maruku-png' src='/images/latex/4d596082dc9b2101beb29ea163a48e50.png' alt='$xxx1$' style='height: 1.66666666666667ex;' /&gt;&lt;span class='maruku-eq-tex'&gt;&lt;code style='display: none'&gt;xxx1&lt;/code&gt;&lt;/span&gt;&lt;/div&gt;
+&lt;p&gt;&lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/5bc2064a7bae2fd4f6140fa395a478cc.png' alt='$SH_{xz} =$' style='vertical-align: -0.333333333333333ex;height: 1.88888888888889ex;' /&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;div class='maruku-equation'&gt;&lt;img class='maruku-png' src='/images/latex/c7735fbe2fb66b01b48dda3316d6306b.png' alt='$1xxx$' style='height: 1.66666666666667ex;' /&gt;&lt;span class='maruku-eq-tex'&gt;&lt;code style='display: none'&gt;1xxx&lt;/code&gt;&lt;/span&gt;&lt;/div&gt;&lt;div class='maruku-equation'&gt;&lt;img class='maruku-png' src='/images/latex/5b36d9862b7f438240f07b12fbd95410.png' alt='$sh_x 1 sh_z x$' style='height: 1.88888888888889ex;' /&gt;&lt;span class='maruku-eq-tex'&gt;&lt;code style='display: none'&gt;sh_x 1 sh_z x&lt;/code&gt;&lt;/span&gt;&lt;/div&gt;&lt;div class='maruku-equation'&gt;&lt;img class='maruku-png' src='/images/latex/81570e6fd5966308c06219cd1425e9ac.png' alt='$xx1x$' style='height: 1.66666666666667ex;' /&gt;&lt;span class='maruku-eq-tex'&gt;&lt;code style='display: none'&gt;xx1x&lt;/code&gt;&lt;/span&gt;&lt;/div&gt;&lt;div class='maruku-equation'&gt;&lt;img class='maruku-png' src='/images/latex/4d596082dc9b2101beb29ea163a48e50.png' alt='$xxx1$' style='height: 1.66666666666667ex;' /&gt;&lt;span class='maruku-eq-tex'&gt;&lt;code style='display: none'&gt;xxx1&lt;/code&gt;&lt;/span&gt;&lt;/div&gt;
+&lt;p&gt;&lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/410abfb2dd2ae1bcf39149f0c57ede52.png' alt='$SH_{yz} =$' style='vertical-align: -0.666666666666667ex;height: 2.22222222222222ex;' /&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;div class='maruku-equation'&gt;&lt;img class='maruku-png' src='/images/latex/890a6962ae592ad784f08ace27d85e29.png' alt='$1 sh_y sh_z 0$' style='height: 2.22222222222222ex;' /&gt;&lt;span class='maruku-eq-tex'&gt;&lt;code style='display: none'&gt;1 sh_y sh_z 0&lt;/code&gt;&lt;/span&gt;&lt;/div&gt;&lt;div class='maruku-equation'&gt;&lt;img class='maruku-png' src='/images/latex/5361bd852d6480ca83d728ad30f07349.png' alt='$x1xx$' style='height: 1.66666666666667ex;' /&gt;&lt;span class='maruku-eq-tex'&gt;&lt;code style='display: none'&gt;x1xx&lt;/code&gt;&lt;/span&gt;&lt;/div&gt;&lt;div class='maruku-equation'&gt;&lt;img class='maruku-png' src='/images/latex/81570e6fd5966308c06219cd1425e9ac.png' alt='$xx1x$' style='height: 1.66666666666667ex;' /&gt;&lt;span class='maruku-eq-tex'&gt;&lt;code style='display: none'&gt;xx1x&lt;/code&gt;&lt;/span&gt;&lt;/div&gt;&lt;div class='maruku-equation'&gt;&lt;img class='maruku-png' src='/images/latex/4d596082dc9b2101beb29ea163a48e50.png' alt='$xxx1$' style='height: 1.66666666666667ex;' /&gt;&lt;span class='maruku-eq-tex'&gt;&lt;code style='display: none'&gt;xxx1&lt;/code&gt;&lt;/span&gt;&lt;/div&gt;
+&lt;p&gt;Rotate a line around its akis by &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/a0bc656087ff7de7e3c4e2a07470130c.png' alt='$\beta$' style='vertical-align: -0.444444444444444ex;height: 2.0ex;' /&gt;&lt;/span&gt; degrees: &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/957ba8014d5e5c7b8dbb20c9701cd2c6.png' alt='$M = R_x^{90 - \theta} R_z^\beta R_x^{-90+\theta}$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;Given &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/b2765f795b1355ed41b6309439b7bd16.png' alt='$P_1 (x_1, y_1, z_1), P_2(x_2, y_2, z_2), \theta = 30$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /&gt;&lt;/span&gt;. Find: M to rotate &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/5b11e05f05dbbee9ab42e5ffa80feff6.png' alt='$\theta$' style='vertical-align: -0.0ex;height: 1.55555555555556ex;' /&gt;&lt;/span&gt; around &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/c52313fcded09ef68627704bb14ff937.png' alt='$P_1P_2$' style='vertical-align: -0.444444444444444ex;height: 2.0ex;' /&gt;&lt;/span&gt; &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/e31304df240fc2402a200aecb0cf39b4.png' alt='$M = T_{orig} R_x^{\alpha} R_y^{\beta} R_z^{\theta} R_y^{-\beta} R_x^{-\alpha} T_{-orig}$' style='vertical-align: -0.888888888888889ex;height: 2.66666666666667ex;' /&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;2D: (S - scale, T - translate, R - rotate, SH - shear) &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/e5993473982fecbc658467a19de10594.png' alt='$T_1 T_2 = T_2 T_1 YES$' style='vertical-align: -0.444444444444444ex;height: 2.0ex;' /&gt;&lt;/span&gt; &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/0f5fe45bf3b61ece6db1558569f7dc2e.png' alt='$S_1 S_2 = S_2 S_1 YES$' style='vertical-align: -0.444444444444444ex;height: 2.0ex;' /&gt;&lt;/span&gt; &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/eba532053c1784c5926888c11899df10.png' alt='$R_1 R_2 = R_2 R_1 NO$' style='vertical-align: -0.444444444444444ex;height: 2.0ex;' /&gt;&lt;/span&gt; &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/1a8134b5d25b713dd6de19944451ec57.png' alt='$SH_{x1} SH_{x2} = SH_{x2} SH_{x1} YES$' style='vertical-align: -0.444444444444444ex;height: 2.0ex;' /&gt;&lt;/span&gt;&lt;/p&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>CS107 hw2</title>
+   <link href="http://embrangler.com/2009/10/cs107-hw2"/>
+   <updated>2009-10-11T00:00:00-07:00</updated>
+   <id>http://embrangler.com/2009/10/cs107-hw2</id>
+   <content type="html">&lt;p&gt;Homework 2&lt;/p&gt;
+
+&lt;p&gt;page 44. 1) Counting from 0 to 999,999 yields 1,000,000 numbers.&lt;/p&gt;
+
+&lt;p&gt;Those which contain the digit 5 occur every 5th number: 0, 5, 10&amp;#8230; Hence: &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/4582f1ae0d54e29324502330dba9c886.png' alt='$\frac{1,000,000}{5} = 200,000$' style='vertical-align: -0.777777777777778ex;height: 2.77777777777778ex;' /&gt;&lt;/span&gt; 6 digit numbers contain the digit 5.&lt;/p&gt;
+
+&lt;p&gt;3) Yes.&lt;/p&gt;
+
+&lt;p&gt;To decide this, we need to find the total number of possible initials. There are 26 letters in the English alphabet, hence, the number of possible initials (&lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/fba01e94f33c55af5e1ca9ef426e732b.png' alt='$n$' style='vertical-align: -0.0ex;height: 1.0ex;' /&gt;&lt;/span&gt;) is: &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/72180eed49a3bc13a146ccf9bb0b8acc.png' alt='$n = 26^3 = 17,576$' style='vertical-align: -0.444444444444444ex;height: 2.22222222222222ex;' /&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;Since there are only 17,576 possible sets of 3 initials, and 20,000 people live in the town, there must be at least two people with the same initials.&lt;/p&gt;
+
+&lt;p&gt;page 45.&lt;/p&gt;
+
+&lt;p&gt;18) The problem is asking for:&lt;/p&gt;
+
+&lt;p&gt;The count of different numbers of 4 digits, with no repeating digits. This is equal to:&lt;/p&gt;
+
+&lt;p&gt;&lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/48af06bbaea5ab536f77542aa1eb6d6d.png' alt='$_{10} P_{4} = \frac{10!}{6!}  =  5040$' style='vertical-align: -0.777777777777778ex;height: 2.66666666666667ex;' /&gt;&lt;/span&gt;. Of those:&lt;/p&gt;
+
+&lt;p&gt;a) which do &lt;strong&gt;not&lt;/strong&gt; start with a 0. This is equal to: &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/93f41799e3d54257d5c5b2aaf42b5fcb.png' alt='$_{10} P_{4} - _{10} P_{3}= 5040 - 720 = 4320$' style='vertical-align: -0.444444444444444ex;height: 2.0ex;' /&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;b) how many do not start with 01. This is equal to: &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/438c6ca64a6168e6da278ea0f7a74ab5.png' alt='$_{10} P_{4} - _{10} P_{2} = 5040 - 90 = 4950$' style='vertical-align: -0.444444444444444ex;height: 2.0ex;' /&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;page 52.&lt;/p&gt;
+
+&lt;p&gt;16) The probability that a boy is sitting on a given chair (does not matter which one) is equal to:&lt;/p&gt;
+
+&lt;p&gt;&lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/dc4f0a50f9a7fc314fcfc71ab94cfa17.png' alt='$\frac{boys}{chairs} = \frac{12}{20} = \frac{3}{5}$' style='vertical-align: -0.777777777777778ex;height: 2.77777777777778ex;' /&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;Where boys = number of boys, chairs = total number of chairs Note that this solution assumes the 20 individuals are all occupying chairs at the same time and thus the events of occupying a chair are mutually exclusive.&lt;/p&gt;
+
+&lt;p&gt;page 82.&lt;/p&gt;
+
+&lt;p&gt;2) We call event &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/4ab6c518f28e823de46bb7f7bc3d139a.png' alt='$E_1$' style='vertical-align: -0.444444444444444ex;height: 2.0ex;' /&gt;&lt;/span&gt; = soldier has antigen A, and event &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/ec04f6475178172fa5b878976f39ddfa.png' alt='$E_2$' style='vertical-align: -0.333333333333333ex;height: 1.88888888888889ex;' /&gt;&lt;/span&gt; = soldier has blood type A. Then: &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/4b2ffe0aa61ff90e6fa7f9a603638732.png' alt='$P(E_2 | E_1) =\frac{P(E_1 E_2)}{P(E_1)} = \frac{0.04}{0.04+0.41} = 0.0(8)$' style='vertical-align: -1.11111111111111ex;height: 3.33333333333333ex;' /&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;page 87.&lt;/p&gt;
+
+&lt;p&gt;1) We call event &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/4ab6c518f28e823de46bb7f7bc3d139a.png' alt='$E_1$' style='vertical-align: -0.444444444444444ex;height: 2.0ex;' /&gt;&lt;/span&gt; = Robert commits perjury, and event &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/ec04f6475178172fa5b878976f39ddfa.png' alt='$E_2$' style='vertical-align: -0.333333333333333ex;height: 1.88888888888889ex;' /&gt;&lt;/span&gt; = Susan has committed a crime. We want to calculate &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/04708a7565cf27f9699f4fb889fdc158.png' alt='$P(E_1 | E_2)$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /&gt;&lt;/span&gt;: &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/dcd8f0a21a03b775ed1f33815d06d13d.png' alt='$P(E_1 | E_2) = \frac{P(E_1 \cdot E_2}{P(E_2)} = \frac{0.25 \cdot 0.65}{0.65} = 0.25$' style='vertical-align: -1.11111111111111ex;height: 3.33333333333333ex;' /&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;4) 8 defective, 12 nondefective items are inspected without replacement. We call events &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/8ef0fecd4f942260b267159856e51a5d.png' alt='$A_i$' style='vertical-align: -0.333333333333333ex;height: 1.88888888888889ex;' /&gt;&lt;/span&gt; = the i-th item inspected is defective, and events &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/50d6b65c3c55e4032541e4e4e8320adc.png' alt='$B_i$' style='vertical-align: -0.333333333333333ex;height: 1.88888888888889ex;' /&gt;&lt;/span&gt; = the i-th item inspected is nondefective.&lt;/p&gt;
+
+&lt;p&gt;a) event &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/4ab6c518f28e823de46bb7f7bc3d139a.png' alt='$E_1$' style='vertical-align: -0.444444444444444ex;height: 2.0ex;' /&gt;&lt;/span&gt; = first four items inspected are defective. &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/c91acc33d6afce6e11b2235805224b9a.png' alt='$P(E_1) = P(A_1 A_2 A_3  A_4) = P(A_1) \cdot P(A_2|A_1) \cdot P(A_3|A_1 A_2) \cdot P(A_4 | A_1 A_2 A_3)$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;To calculate the above probability, it would help us to calculate &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/dcbd807fd7a32545dc7f7a0be8fafb7f.png' alt='$P(A_1 A_2), P(A_1 A_2 A_3)$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /&gt;&lt;/span&gt;. We already know &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/df0d3583eabada22d7e3459eea1c9bc4.png' alt='$P(A_1)$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /&gt;&lt;/span&gt;, so we can use that to calculate the others. Hence: &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/9676fac07498872f452fe0b595a02569.png' alt='$P(A_1 A_2) = P(A_1) \cdot P(A_2|A_1) = \frac{8}{20} \cdot \frac{7}{19} \approx 0.147$' style='vertical-align: -0.888888888888889ex;height: 2.77777777777778ex;' /&gt;&lt;/span&gt; &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/f3c510c8cd7fcd00336f438c5baea8dd.png' alt='$P(A_1 A_2 A_3) = P(A_1) \cdot P(A_2 | A_1) \cdot P(A_3 | A_1 A_2) = \frac{8}{20} \cdot \frac{7}{19} \cdot \frac{6}{18} \approx 0.082$' style='vertical-align: -0.888888888888889ex;height: 2.77777777777778ex;' /&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;The reasoning behind the result of &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/9eefc519674042bf22497168d8623f3f.png' alt='$P(A_i | A_1 .. A_{i-1})$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /&gt;&lt;/span&gt; is this: &amp;#8220;What is the probability of selecting a(nother) defective item, &lt;strong&gt;given&lt;/strong&gt; that I have already selected &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/363e09da37bbbc290bd801c628b7a808.png' alt='$i-1$' style='vertical-align: -0.111111111111111ex;height: 1.66666666666667ex;' /&gt;&lt;/span&gt; such items. Because of this dependency, we know the events that have to occur before this one, and what the numbers for defective and nondefective items are. Therefore: &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/5b9953ee8363d65501f9302f36c1687a.png' alt='$P(A_1 A_2 A_3 A_4) = P(A_1) \cdot P(A_2 | A_1) \cdot P(A_3 | A_1 A_2) \cdot P(A_4 | A_1 A_2 A_3)= \frac{8}{20} \cdot \frac{7}{19} \cdot \frac{6}{18} \cdot \frac{5}{17} = \approx 0.0241$' style='vertical-align: -0.888888888888889ex;height: 5.44444444444444ex;' /&gt;&lt;/span&gt; Therefore, &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/d9cf513004e61bed346e6624495c1f85.png' alt='$P(E_1) \approx 0.0241$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;b) Event &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/ec04f6475178172fa5b878976f39ddfa.png' alt='$E_2$' style='vertical-align: -0.333333333333333ex;height: 1.88888888888889ex;' /&gt;&lt;/span&gt; = from the first three items, at least two are defective. The possible results can be split into:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/31f654c8b4f4845b3d42f7145efb8614.png' alt='$E_{21}$' style='vertical-align: -0.444444444444444ex;height: 2.0ex;' /&gt;&lt;/span&gt; = items 1 and 2 are defective &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/9676fac07498872f452fe0b595a02569.png' alt='$P(A_1 A_2) = P(A_1) \cdot P(A_2|A_1) = \frac{8}{20} \cdot \frac{7}{19} \approx 0.147$' style='vertical-align: -0.888888888888889ex;height: 2.77777777777778ex;' /&gt;&lt;/span&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/660847e3c6eedd9dd9b9e2dcbe677ecc.png' alt='$E_{22}$' style='vertical-align: -0.333333333333333ex;height: 1.88888888888889ex;' /&gt;&lt;/span&gt; = items 1 and 3 are defective, and item 2 is not (or we would have first case) &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/371d3b38d9bdc04eb000460f912d1da9.png' alt='$P(A_1 B_2 A_3) = P(A_1) \cdot P(B_2|A_1) \cdot P(A_3 | A_1 B_2) = \frac{8}{20} \cdot \frac{12}{19} \cdot \frac{7}{18} \approx 0.0982$' style='vertical-align: -0.888888888888889ex;height: 2.77777777777778ex;' /&gt;&lt;/span&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/631473875bf467f528772de61fb258ad.png' alt='$E_{23}$' style='vertical-align: -0.333333333333333ex;height: 1.88888888888889ex;' /&gt;&lt;/span&gt; = items 2 and 3 are defective, and item 1 is not (or we would have first case) &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/e5f853ca5a8297a298c60742c646b7ec.png' alt='$P(B_1 A_2 A_3) = P(B_1) \cdot P(A_2|B_1) \cdot P(A_3|B_1 A_2) = \frac{12}{20} \cdot \frac{8}{19} \cdot \frac{7}{18} \approx 0.0982$' style='vertical-align: -0.888888888888889ex;height: 2.77777777777778ex;' /&gt;&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Therefore, &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/57b445169b084c96e779066846b25ab0.png' alt='$P(E_2) \approx 0.3435$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;7) It does not matter. Some simple calculations for the case of 3 instead of 200 guests show that the probability of drawing the &amp;#8220;you lose&amp;#8221; paper is the same, no matter which order you choose.&lt;/p&gt;
+
+&lt;p&gt;For example, assume there are 3 guests, and 3 papers, one of which says &amp;#8220;you lose.&amp;#8221; The probability of drawing the &amp;#8220;you lose&amp;#8221; paper 1st, 2nd, or 3rd are:&lt;/p&gt;
+
+&lt;p&gt;&lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/5117b7adf0038a37458b4f62f45014aa.png' alt='$P(E_1) = \frac{1}{3}$' style='vertical-align: -0.777777777777778ex;height: 2.66666666666667ex;' /&gt;&lt;/span&gt; &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/5e437f8f09bc63dfbad395a1631312df.png' alt='$P(E_2) = \frac{2}{3} \cdot \frac{1}{2}$' style='vertical-align: -0.777777777777778ex;height: 2.66666666666667ex;' /&gt;&lt;/span&gt;, which is the probability of first guest drawing blank and me drawing &amp;#8220;you lose.&amp;#8221; &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/c513351d7834d26a1d0c3cb3907dc294.png' alt='$P(E_1) = \frac{2}{3} \cdot \frac{1}{2} \cdot 1$' style='vertical-align: -0.777777777777778ex;height: 2.66666666666667ex;' /&gt;&lt;/span&gt;, which is the probability of first two guests drawing blank and me drawing &amp;#8220;you lose.&amp;#8221; (since that is all that is left, we have a certainty)&lt;/p&gt;
+
+&lt;p&gt;For the case of 200, clearly, drawing 1st yields a probability of losing of &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/83133d19342e36bfddce4c0500861cde.png' alt='$\frac{1}{200}$' style='vertical-align: -0.777777777777778ex;height: 2.66666666666667ex;' /&gt;&lt;/span&gt;. Drawing 2nd: &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/6dfb6ff0724ede0fc5b18926b229bc4f.png' alt='$P(E_2) = \frac{199}{200} \cdot \frac{1}{199} = \frac{1}{200}$' style='vertical-align: -0.888888888888889ex;height: 2.77777777777778ex;' /&gt;&lt;/span&gt;. By the following formula, we can show that the probability is the same for drawing &amp;#8220;you lose&amp;#8221; regardless of which order we choose:&lt;/p&gt;
+
+&lt;p&gt;&lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/7a99aa7cd0c623e41f3199dc05457cdd.png' alt='$P(E_i) = (\prod_{j=1}^{i-1} \frac{200-j}{200-j+1}) \cdot \frac{1}{200-i+1}$' style='vertical-align: -1.11111111111111ex;height: 3.11111111111111ex;' /&gt;&lt;/span&gt;. Expanding this product reduces the formula to: &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/18bff106acead68f414106c5b600222a.png' alt='$P(E_i) = \frac{1}{200}$' style='vertical-align: -0.777777777777778ex;height: 2.66666666666667ex;' /&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;page 97.&lt;/p&gt;
+
+&lt;p&gt;8) Let &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/c2b7650c81b26c9de16256c132ee1a99.png' alt='$G_i$' style='vertical-align: -0.333333333333333ex;height: 1.88888888888889ex;' /&gt;&lt;/span&gt; be the probability of hitting the target with gun i (i goes from 1 to 6). The probability of hitting a target by selecting a gun at random is: &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/f5d7554699eb850e1495fd7b2787c400.png' alt='$P(E_1) = \sum_{i=1}^6 (\frac{1}{6} \cdot P(G_i)) = \frac{1}{6} \cdot (0.6 + 0.5 + 0.7 + 0.9 + 0.7 + 0.8) = 0.7$' style='vertical-align: -0.777777777777778ex;height: 2.66666666666667ex;' /&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;11) Yes, the chances of getting a gold coin are equal for all participants. Intuitively, performing this experiment enough times yields equal probability for any person to receive a gold coin. More theoretically, we have shown in excercise 7 from page 87 (see above), that the order of drawing does not matter. This excercise is the same, except instead of drawing from 200 papers out of which 1 is distinct, we draw from 5 coins out of which 3 are distinct. Hence, the probability of each participant to get a gold coin is equal to 3/5.&lt;/p&gt;
+
+&lt;p&gt;page 106.&lt;/p&gt;
+
+&lt;p&gt;3) We will look at the probability that the suspect is guilty, given the new evidence that the criminal is (likely) left handed.&lt;/p&gt;
+
+&lt;p&gt;&lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/5998a023b6a404a93b284e6782ea8518.png' alt='$P(G|L) = \frac{P(L|G) \cdot P(G)}{P(L|G) \cdot P(G) + P(L|I) \cdot P(I)}$' style='vertical-align: -1.11111111111111ex;height: 3.33333333333333ex;' /&gt;&lt;/span&gt;, where L = criminal is left handed, G = suspect is guilty, I = suspect is innocent. Therefore:&lt;/p&gt;
+
+&lt;p&gt;&lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/214f4e1e6d5d70c0c6e3dc8dc893ecc4.png' alt='$P(G|L) = \frac{0.23 \cdot 0.65}{0.23 \cdot 0.65 + 0.85 \cdot 0.35} = \frac{0.1495}{0.447} = 0.33$' style='vertical-align: -0.888888888888889ex;height: 2.77777777777778ex;' /&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;As we suspect, since only 23% of people are left-handed and a witness claims criminal is likely (85%) left handed, our suspect is less likely to be guilty.&lt;/p&gt;
+
+&lt;p&gt;7) We look at the probability that a person has the cancer, given a positive test result.&lt;/p&gt;
+
+&lt;p&gt;&lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/b3e6f4a804484409659b1afb6ace9862.png' alt='$P(C|T) = \frac{P(T|C) \cdot P(C)}{P(T|C) \cdot P(C) + P(T|H) \cdot P(H)}$' style='vertical-align: -1.11111111111111ex;height: 3.33333333333333ex;' /&gt;&lt;/span&gt;, where C = person has the cancer, T = test result is positive, H = the person is healthy (does not suffer from the cancer). Therefore:&lt;/p&gt;
+
+&lt;p&gt;&lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/5298e9820cae792347ebc2350ef3c991.png' alt='$P(C|T) = \frac{0.92 \cdot 0.0002}{0.92 \cdot 0.0002 + 0.002 \cdot 0.9998} = \frac{0.000184}{0.0021836} = 0.0843$' style='vertical-align: -0.888888888888889ex;height: 2.77777777777778ex;' /&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;9) We look at the probability that the collector buys a piece that she thinks is original, but she is mistaken; in other terms, the probability that the piece is not original, given that she thinks it is.&lt;/p&gt;
+
+&lt;p&gt;&lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/e3a2454db9d42aaa244d9c7a22b0e0e9.png' alt='$P(F|T) = \frac{P(T|F) \cdot P(F)}{P(T|F) \cdot P(F) + P(T|O) \cdot P(O)}$' style='vertical-align: -1.11111111111111ex;height: 3.33333333333333ex;' /&gt;&lt;/span&gt;, where O = the painting is an original, F = the painting is a fake, T = the collector thinks the painting is original&lt;/p&gt;
+
+&lt;p&gt;&lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/cc69dad23ef7d0655ada0bfc219f5fbd.png' alt='$P(F|T) = \frac{0.15 \cdot 0.25}{0.15 \cdot 0.25 + 0.85 \cdot 0.75} = \frac{0.0375}{0.675} = 0.0(5)$' style='vertical-align: -0.888888888888889ex;height: 2.77777777777778ex;' /&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;page 119.&lt;/p&gt;
+
+&lt;p&gt;8) No, Cardano was not correct. Since the event A had probability &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/80a8d999651916de94bad8acf4752223.png' alt='$P(A) = \frac{3}{4}$' style='vertical-align: -0.777777777777778ex;height: 2.66666666666667ex;' /&gt;&lt;/span&gt;, the occurence of that event in two &lt;em&gt;consecutive independent&lt;/em&gt; experiments was &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/f4ed5d43d6fa0866de0defcdc12bbf0a.png' alt='$P(A A) = P(A) \cdot P(A) = \frac{3}{4} \cdot \frac{3}{4} = \frac{9}{16}$' style='vertical-align: -0.888888888888889ex;height: 2.77777777777778ex;' /&gt;&lt;/span&gt;. So, the odds in favor were 9 to 7.&lt;/p&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>ED60 - David Labaree - Public goods, private goods, the American struggle over educational goals</title>
+   <link href="http://embrangler.com/2009/10/ed60-labaree"/>
+   <updated>2009-10-05T00:00:00-07:00</updated>
+   <id>http://embrangler.com/2009/10/ed60-labaree</id>
+   <content type="html">&lt;p&gt;As part of my education 60 class, we have to read a paper by David Labaree, on schools: seen as a private vs public goal.&lt;/p&gt;
+
+&lt;p&gt;Summary:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Three alternative goals for american education:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;democratic equality&lt;/strong&gt;: for citizens, everyone needs to know as much as possible, education needs to be accessible to everyone in order to create a true democracy, so anyone can contribute (public good)&lt;/li&gt;
+
+&lt;li&gt;&lt;strong&gt;social efficiency&lt;/strong&gt;: for workers, everyone benefits from more skilled workers, make education more practical by offering more practical study matters and some degree of stratification (private training for public benefit)&lt;/li&gt;
+
+&lt;li&gt;&lt;strong&gt;social mobility&lt;/strong&gt;: for individuals, the benefit largely goes to the individual consumer, who gains a salary increase or mainains his/her position on the social scale; this provides further stratification and differentiation between institutions (even with similar programs), as well as within institutions (from remedial to gifted)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Democratic equality&lt;/strong&gt; - Summary:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Most political purpose of American education&lt;/li&gt;
+
+&lt;li&gt;Three distinct operational forms:&lt;/li&gt;
+
+&lt;li&gt;Citizenship training &amp;#8211; prevent selfishness, instill dedication to public, &amp;#8220;it&amp;#8217;s hard to make Republicans,&amp;#8221; need to training&lt;/li&gt;
+
+&lt;li&gt;Equal treatment &amp;#8211; Horace Mann, fear of class conflict, sense of shared membership and community, egalitarian to sex, race, ethnicity&lt;/li&gt;
+
+&lt;li&gt;Equal access &amp;#8211; everyone should have an equal opportunity, provide enough schools, higher education becomes the norm&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Social efficiency&lt;/strong&gt; - Summary:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Practical constraints, vocationalism: make the school curriculum more responsive to job needs&lt;/li&gt;
+
+&lt;li&gt;Ruled by the simple reality that students eventually leave schools and join the workforce&lt;/li&gt;
+
+&lt;li&gt;Result was the creation of vocational programs, particularly at high school and community college levels&lt;/li&gt;
+
+&lt;li&gt;General education seen as impractical: &amp;#8220;For a long time all boys were trained to be President&amp;#8230; Now we are training them to get jobs.&amp;#8221; (Robert and Helen Lynd)&lt;/li&gt;
+
+&lt;li&gt;Compelling logic: benefits public (anyone) to spend on education. It is in the interest of the taxpayer (sound investment)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Social mobility&lt;/strong&gt; - Summary:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Individual benefit, status attainment. Private good.&lt;/li&gt;
+
+&lt;li&gt;Asks &amp;#8220;what can a school do for me, the individual consumer?&amp;#8221;&lt;/li&gt;
+
+&lt;li&gt;Education understood as a way to get ahead or stay in sync.&lt;/li&gt;
+
+&lt;li&gt;Grading, hierarchy, more selective at higher levels to ensure distinction&lt;/li&gt;
+
+&lt;li&gt;Qualitative differences between institutions&lt;/li&gt;
+
+&lt;li&gt;Qualitative differences within institutions&lt;/li&gt;
+
+&lt;li&gt;Contrasts with previous two, education is seen as an &lt;em&gt;exchange&lt;/em&gt; value rather than a &lt;em&gt;use&lt;/em&gt; value&lt;/li&gt;
+
+&lt;li&gt;&amp;#8220;Students quickly come to the conclusion that what matters most is not the knowledge they learn in school but the credentials they acquire there&amp;#8221; (Labaree)&lt;/li&gt;
+
+&lt;li&gt;Education becomes more &lt;em&gt;meritocratic&lt;/em&gt;, leads to competition and wariness =&amp;#62; fairness&lt;/li&gt;
+
+&lt;li&gt;Meritocracy much more visible in higher levels&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Historical patterns of goal ascendancy&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;19th century was dominated by democratic equality&lt;/li&gt;
+
+&lt;li&gt;increasing number of students led to need for distinction, potential for getting ahead =&amp;#62; social mobility and efficiency&lt;/li&gt;
+
+&lt;li&gt;1960s - 1970s - democratic equality again, for racial and sex discrimination&lt;/li&gt;
+
+&lt;li&gt;1980s - 1990s - shifted back to social efficiency + mobility, for educational standards and usefulness of education&lt;/li&gt;
+
+&lt;li&gt;More and more, education goals emphasize winning over learning, opportunity over efficiency&lt;/li&gt;
+
+&lt;li&gt;Resulted from decentralized control (little federal and state ruling), which led to market/local education, consumer choice, competition, stratified curriculum, local autonomy for schools&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Social mobility vs social efficiency&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;(agree with democratic equality) Social mobility supports greater access to schooling for people to have an equal chance of getting ahead&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;(agree with democratic equality) Social mobility allocates rewards based on individual achievement, not race, gender, ethnicity, class, etc&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Ideology of the three programs:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;democratic equality: politically democratic, socially egalitarian&lt;/li&gt;
+
+&lt;li&gt;social mobility: politically liberal, socially meritocratic&lt;/li&gt;
+
+&lt;li&gt;common ground between the above two, socially + politically is considered a progressive view&lt;/li&gt;
+
+&lt;li&gt;social efficiency: politically conservative, socially reproductive (reinforce existing structure)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Successes from coalition between social mobility and democratic equality:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;variety of choices&lt;/li&gt;
+
+&lt;li&gt;less discrimination&lt;/li&gt;
+
+&lt;li&gt;accepting returning students&lt;/li&gt;
+
+&lt;li&gt;hiring because of credentials rather than characteristics&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Primary opposition comes from social efficiency&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;need for positions in job market is not met&lt;/li&gt;
+
+&lt;li&gt;rising costs for poor families&lt;/li&gt;
+
+&lt;li&gt;more worry about getting a job than getting ahead&lt;/li&gt;
+
+&lt;li&gt;as taxpayers, contributing to education for &lt;em&gt;other people&amp;#8217;s children&lt;/em&gt;&lt;/li&gt;
+
+&lt;li&gt;produce workforce to provide measurable economic benefits to society as a whole&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Dispute over tracking, guidance and vocationalism&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Result is a bold mixture of purposes in American education, anyone has a possibility to get to the top (_contest mobility_, acc. to Turner), but with low probability&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Contrasts:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;greater access (mobility) vs reducing costs (effective)&lt;/li&gt;
+
+&lt;li&gt;concentrate resources on highest levels (mobility) vs high quality on all levels (effective)&lt;/li&gt;
+
+&lt;li&gt;undercuts learning by promoting minimum level to attain credentials (mobility) vs need to upgrade skills of the workforce (effective)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Similarities:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;schools need to adapt to the structure of inequality&lt;/li&gt;
+
+&lt;li&gt;subordinate schools to needs of market&lt;/li&gt;
+
+&lt;li&gt;lead to highly stratified structure of education&lt;/li&gt;
+
+&lt;li&gt;providing high access to highest end, most desirable jobs is counterproductive and also not giving an edge to a select few&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Social mobility can only be promoted to the extent that it reduce the chance for the lower end to get to the top (opposite of democratic equality)&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Social mobility vs democratic equality&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;both for equal access&lt;/li&gt;
+
+&lt;li&gt;mobility against equal treatment and civic virtue&lt;/li&gt;
+
+&lt;li&gt;equal &lt;em&gt;treatment&lt;/em&gt;opposite of equal &lt;em&gt;educational treatment&lt;/em&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;em&gt;civic virtue&lt;/em&gt; is about politics as opposed to the market. social mobility is for market value (progressive individualism, capitalist ideology), not political value&lt;/li&gt;
+
+&lt;li&gt;progressive individualism = individual pursuing competitive success in the market&lt;/li&gt;
+
+&lt;li&gt;purpose of democratic equality: republicans&lt;/li&gt;
+
+&lt;li&gt;purpose of social efficiency: workers&lt;/li&gt;
+
+&lt;li&gt;purpose of social mobility: winners&lt;/li&gt;
+
+&lt;li&gt;social mobility caused school to have value not for its intrinsic usefulness (things you learn), but for its exchangeability&lt;/li&gt;
+
+&lt;li&gt;citizenship training has become, as a result, much less present&lt;/li&gt;
+
+&lt;li&gt;good citizenship has morphed into behaving in accordance with school rules&lt;/li&gt;
+
+&lt;li&gt;social mobility encourages &lt;em&gt;surrogate learning&lt;/em&gt; - &lt;strong&gt;&lt;em&gt;as long as credits are gained, what occurs in classrooms is allowed to pass for education&lt;/em&gt;&lt;/strong&gt;&lt;/li&gt;
+
+&lt;li&gt;exchange value is assumed (mistakenly) to reflect use value&lt;/li&gt;
+
+&lt;li&gt;schooling for mobility is like farming for the market &amp;#8211; maximize the exchange value&lt;/li&gt;
+
+&lt;li&gt;Labaree suggests that the reason students are less successful from the perspective of academic achievement is because the purpose of schooling is, at its core, anti-educational &amp;#8211;&amp;#62; students are well schooled but poorly educated, master of forms but not of content. The classic question &amp;#8220;Will this be on the test?&amp;#8221; illustrates this.&lt;/li&gt;
+
+&lt;li&gt;&amp;#8220;levels of educational attainment keep rising, while levels of social mobility remain the same&amp;#8221; (pg 70)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Conclusion&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Contradiction:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;these three goals created a contradiction that is contradictory and frequently counterproductive&lt;/li&gt;
+
+&lt;li&gt;we &lt;em&gt;distinguish&lt;/em&gt; students by merit and grades, but undermine this through &lt;em&gt;homogenizing&lt;/em&gt; practices such as grade inflation, social promotion&lt;/li&gt;
+
+&lt;li&gt;we bring all students under the same roof, but make sure everyone has a different experience there&lt;/li&gt;
+
+&lt;li&gt;we offer everyone access to higher education, while assuming social benefits are sharply stratified&lt;/li&gt;
+
+&lt;li&gt;we focus on preparing students for work, but devote our efforts to providing a thoroughly general education&lt;/li&gt;
+
+&lt;li&gt;education is deficient at carrying out any of its goals effectively &amp;#8211; we continue to ask ends that are mutually exclusive&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Credentialism&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;translating educational attainment into social attainment&lt;/li&gt;
+
+&lt;li&gt;since the interests are either job competency or general knowledge (from gen ed), credentials are expected to be irrelevant&lt;/li&gt;
+
+&lt;li&gt;the reality, however, is the opposite &amp;#8211; Boudon&amp;#8217;s model predicts this&lt;/li&gt;
+
+&lt;li&gt;elevates schooling into an instrument for achieving the American dream&lt;/li&gt;
+
+&lt;li&gt;credentials market is where aspirations raised by education meet the cold reality of socioeconomic limits&lt;/li&gt;
+
+&lt;li&gt;educational opportunities grow faster than job opportunities&lt;/li&gt;
+
+&lt;li&gt;the ability of a diploma to buy a good job declines&lt;/li&gt;
+
+&lt;li&gt;credentialism undermines learning, promotes spending time and money for little economic benefit&lt;/li&gt;
+
+&lt;li&gt;carries out in a manner that is individually rational and collectively irrational&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Possibility&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;biggest problem in society nowadays is not that these three major ideals exist and are in conflict, but the thread of social mobility overshadowing the other two =&amp;#62; education as private good&lt;/li&gt;
+
+&lt;li&gt;need to draw on core goal of education &amp;#8211; to provide everyone with the capacities required for full political participation and working abilities&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;And that&amp;#8217;s the summary of a 45 page article!&lt;/p&gt;
+
+&lt;p&gt;I look forward to writing an essay based on this, in 2 weeks time.&lt;/p&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>Computer graphics - lecture notes - 10/05/09</title>
+   <link href="http://embrangler.com/2009/10/computer-graphics-lecture-notes-100509"/>
+   <updated>2009-10-05T00:00:00-07:00</updated>
+   <id>http://embrangler.com/2009/10/computer-graphics-lecture-notes-100509</id>
+   <content type="html">&lt;p&gt;Filling in recursive calls &lt;pre style='text-align: center;'&gt;x
+x x
+x  ox
+x x
+x&lt;/pre&gt; Starting from &amp;#8216;o&amp;#8217; go R(ight), T(op), L(eft), B(ottom). As you can see, diagonal fill would &amp;#8220;leak&amp;#8221; outside.&lt;/p&gt;
+
+&lt;p&gt;Scanline Polygon Fill&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Filling one polygon at a time, scan horizontally.&lt;/li&gt;
+
+&lt;li&gt;Reliable only for convex polygons.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Idea: Find intersection of polygon edges with scanline; pair off intesections, fill in each span. Data structure: edge info: &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/2f18deabcd19b5a7c907a3b3fe05c79d.png' alt='$y_{min}$' style='vertical-align: -0.444444444444444ex;height: 1.44444444444444ex;' /&gt;&lt;/span&gt;, &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/388638bd1a5cdd40725d6f358536478a.png' alt='$x_{cur}$' style='vertical-align: -0.333333333333333ex;height: 1.33333333333333ex;' /&gt;&lt;/span&gt;, &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/7773732c0a6e26efc7fa7998bd91051d.png' alt='$y_{max}$' style='vertical-align: -0.444444444444444ex;height: 1.44444444444444ex;' /&gt;&lt;/span&gt;, &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/ba813cfdd49e142061b0d6347ebee912.png' alt='$slope$' style='vertical-align: -0.444444444444444ex;height: 2.0ex;' /&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;Algorithm:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;maintain edges in sorted edge table (ET) by &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/2f18deabcd19b5a7c907a3b3fe05c79d.png' alt='$y_{min}$' style='vertical-align: -0.444444444444444ex;height: 1.44444444444444ex;' /&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;maintain active edge table (AET) of edges in current scanline. init AET = null&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;while AET != null OR ET != null&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;put relevant edges from ET =&amp;#62; AET&lt;/li&gt;
+
+&lt;li&gt;find intersections with current scanline y and sort by x&lt;/li&gt;
+
+&lt;li&gt;fill in spans&lt;/li&gt;
+
+&lt;li&gt;y+t&lt;/li&gt;
+
+&lt;li&gt;remove edges whose &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/ef54afc81f7c28e5ef589841ae19dad6.png' alt='$y_{max} &amp;lt; y$' style='vertical-align: -0.444444444444444ex;height: 1.77777777777778ex;' /&gt;&lt;/span&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;em&gt;Obs:&lt;/em&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Scanline, origin is top-left.&lt;/li&gt;
+
+&lt;li&gt;As we go through loop, &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/388638bd1a5cdd40725d6f358536478a.png' alt='$x_{cur}$' style='vertical-align: -0.333333333333333ex;height: 1.33333333333333ex;' /&gt;&lt;/span&gt; will be the current intersection of edge with scanline.&lt;/li&gt;
+
+&lt;li&gt;Scanline intercept for next line: &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/6ea2c15dfdf8cdfa25180a40ffcaeb8c.png' alt='$x_{i+1} = x_i + \frac{1}{m}$' style='vertical-align: -0.777777777777778ex;height: 2.66666666666667ex;' /&gt;&lt;/span&gt;, &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/06c0b83c36c9e0b2a77177b1bca2c945.png' alt='$\delta y = 1$' style='vertical-align: -0.444444444444444ex;height: 2.0ex;' /&gt;&lt;/span&gt;&lt;/li&gt;
+
+&lt;li&gt;Vertical lines: &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/7307fe64bee502de35aee359990de9e5.png' alt='$m = \infty$' style='vertical-align: -0.111111111111111ex;height: 1.11111111111111ex;' /&gt;&lt;/span&gt;, &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/088a4dbf935947783862bd7a6c26bc69.png' alt='$x_{i+1} = x_i$' style='vertical-align: -0.444444444444444ex;height: 1.44444444444444ex;' /&gt;&lt;/span&gt;&lt;/li&gt;
+
+&lt;li&gt;Horizontal: &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/e5a86a216f8ea89bb29173074879d812.png' alt='$m = 0$' style='vertical-align: -0.0ex;height: 1.55555555555556ex;' /&gt;&lt;/span&gt;&lt;/li&gt;
+
+&lt;li&gt;Start shaped polygon (self-crossing) will not be filled in. Count number of spans, cannot distinguish between &lt;em&gt;in, out, in&lt;/em&gt; and &lt;em&gt;in, in, in&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;World coordinates vs Device coordinates vs Object coordinates&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;World coordinates (WC)&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;also specify world size, &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/b27fe24dcdaeaf45c47c9e9918397c51.png' alt='$x_w, y_w$' style='vertical-align: -0.444444444444444ex;height: 1.44444444444444ex;' /&gt;&lt;/span&gt;&lt;/li&gt;
+
+&lt;li&gt;measurements flexible&lt;/li&gt;
+
+&lt;li&gt;able to &amp;#8220;zoom in&amp;#8221; through a &amp;#8220;window&amp;#8221; (part of the world that&amp;#8217;s visible) =&amp;#62; mapped to screen (DC)&lt;/li&gt;
+
+&lt;li&gt;in 3D, this &amp;#8220;window&amp;#8221; is described as a ViewVolume (more technically)&lt;/li&gt;
+
+&lt;li&gt;viewport &amp;#8211; part of &lt;strong&gt;screen&lt;/strong&gt;where graphics window that shows content (as opposed to part of &lt;strong&gt;world&lt;/strong&gt;)&lt;/li&gt;
+
+&lt;li&gt;similar to the cameras, in 3D a viewport specifies where camera is&lt;/li&gt;
+
+&lt;li&gt;glOrtho (L, R, B, T, N, F) &amp;#8211; in 3D&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Object coordinates (OC)&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/37b698bb6004a7ac84d9b9d76fbfd2fe.png' alt='$x_o, y_o$' style='vertical-align: -0.444444444444444ex;height: 1.44444444444444ex;' /&gt;&lt;/span&gt;&lt;/li&gt;
+
+&lt;li&gt;Size relative to object&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Device coordinates (DC)&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;measurements are usually number of pixels&lt;/li&gt;
+
+&lt;li&gt;need to be able to normalize units in terms of pixels, so turns device coordinates to a 0,1 scale (for x, y) =&amp;#62; normalized device coordinates (NDC)&lt;/li&gt;
+
+&lt;li&gt;glutInitWindowSize(W, H)&lt;/li&gt;
+
+&lt;li&gt;glutInitWindowPosition(x, y)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Next time:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;linear interpolation&lt;/li&gt;
+
+&lt;li&gt;line clipping&lt;/li&gt;
+
+&lt;li&gt;volume clipping&lt;/li&gt;
+
+&lt;li&gt;transformations&lt;/li&gt;
+&lt;/ul&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>Installing OpenGL + GLUT on Kubuntu 9.04</title>
+   <link href="http://embrangler.com/2009/09/installing-opengl-glut-kubuntu-904"/>
+   <updated>2009-09-02T00:00:00-07:00</updated>
+   <id>http://embrangler.com/2009/09/installing-opengl-glut-kubuntu-904</id>
+   <content type="html">&lt;p&gt;I&amp;#8217;m taking a Computer Graphics class, and during the first week we need to install OpenGL and write a first, very simple program. I looked around for tutorials and couldn&amp;#8217;t find any simple ones, so I&amp;#8217;ve compiled one below.&lt;/p&gt;
+
+&lt;p&gt;This tutorial should help you install OpenGL + Glut on Debian-based Linux distributions.&lt;/p&gt;
+
+&lt;p&gt;My OS: Kubuntu 9.04 i386 (32 bit)&lt;/p&gt;
+
+&lt;p&gt;Installing GLUT:&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='bash'&gt;sudo apt-get install freeglut3 glut-doc
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;In my case, I had to install an nvidia driver as well:&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='bash'&gt;sudo apt-get install nvidia-glx-180-dev
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;For some of you, this might not be the case, and the mesa-common package would work:&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='bash'&gt;sudo apt-get install mesa-common-dev
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Then (and here&amp;#8217;s the part that got me worried), you can try testing a simple example, but I got this error:&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='bash'&gt;OpenGL GLX extension not supported by display &lt;span class='s1'&gt;&amp;#39;:0.0&amp;#39;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;To fix this, it was much simpler than I thought &amp;#8211; I just needed to reboot. (If you don&amp;#8217;t want to, for some reason, restarting X should work just fine.) If this problem doesn&amp;#8217;t go away, I found a couple of resources in my search before rebooting, &lt;a href='http://ubuntuforums.org/showthread.php?t=380175'&gt;here&lt;/a&gt; and &lt;a href='http://www.linuxquestions.org/questions/linux-newbie-8/opengl-glx-extension-not-supported-by-display-0.0-107369/'&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;After setting this up, I looked up tutorials, and decided to use this simple example: (found &lt;a href='http://ubuntuforums.org/showthread.php?t=375425'&gt;here&lt;/a&gt;)&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='cpp'&gt;&lt;span class='cp'&gt;#include &amp;amp;lt;GL/glut.h&amp;amp;gt;&lt;/span&gt;
+
+&lt;span class='cp'&gt;#define window_width  640&lt;/span&gt;
+&lt;span class='cp'&gt;#define window_height 480&lt;/span&gt;
+
+&lt;span class='c'&gt;// Main loop&lt;/span&gt;
+&lt;span class='kt'&gt;void&lt;/span&gt; &lt;span class='n'&gt;main_loop_function&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt;
+&lt;span class='p'&gt;{&lt;/span&gt;
+   &lt;span class='c'&gt;// Z angle&lt;/span&gt;
+   &lt;span class='k'&gt;static&lt;/span&gt; &lt;span class='kt'&gt;float&lt;/span&gt; &lt;span class='n'&gt;angle&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt;
+   &lt;span class='c'&gt;// Clear color (screen)&lt;/span&gt;
+   &lt;span class='c'&gt;// And depth (used internally to block obstructed objects)&lt;/span&gt;
+   &lt;span class='n'&gt;glClear&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='n'&gt;GL_COLOR_BUFFER_BIT&lt;/span&gt; &lt;span class='o'&gt;|&lt;/span&gt; &lt;span class='n'&gt;GL_DEPTH_BUFFER_BIT&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+   &lt;span class='c'&gt;// Load identity matrix&lt;/span&gt;
+   &lt;span class='n'&gt;glLoadIdentity&lt;/span&gt;&lt;span class='p'&gt;();&lt;/span&gt;
+   &lt;span class='c'&gt;// Multiply in translation matrix&lt;/span&gt;
+   &lt;span class='n'&gt;glTranslatef&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='mi'&gt;0&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt;&lt;span class='mi'&gt;0&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='o'&gt;-&lt;/span&gt;&lt;span class='mi'&gt;10&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+   &lt;span class='c'&gt;// Multiply in rotation matrix&lt;/span&gt;
+   &lt;span class='n'&gt;glRotatef&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='n'&gt;angle&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='mi'&gt;0&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='mi'&gt;0&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='mi'&gt;1&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+   &lt;span class='c'&gt;// Render colored quad&lt;/span&gt;
+   &lt;span class='n'&gt;glBegin&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='n'&gt;GL_QUADS&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+   &lt;span class='n'&gt;glColor3ub&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='mi'&gt;255&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='mo'&gt;000&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='mo'&gt;000&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt; &lt;span class='n'&gt;glVertex2f&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='o'&gt;-&lt;/span&gt;&lt;span class='mi'&gt;1&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt;  &lt;span class='mi'&gt;1&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+   &lt;span class='n'&gt;glColor3ub&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='mo'&gt;000&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='mi'&gt;255&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='mo'&gt;000&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt; &lt;span class='n'&gt;glVertex2f&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt; &lt;span class='mi'&gt;1&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt;  &lt;span class='mi'&gt;1&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+   &lt;span class='n'&gt;glColor3ub&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='mo'&gt;000&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='mo'&gt;000&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='mi'&gt;255&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt; &lt;span class='n'&gt;glVertex2f&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt; &lt;span class='mi'&gt;1&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='o'&gt;-&lt;/span&gt;&lt;span class='mi'&gt;1&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+   &lt;span class='n'&gt;glColor3ub&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='mi'&gt;255&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='mi'&gt;255&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='mo'&gt;000&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt; &lt;span class='n'&gt;glVertex2f&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='o'&gt;-&lt;/span&gt;&lt;span class='mi'&gt;1&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='o'&gt;-&lt;/span&gt;&lt;span class='mi'&gt;1&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+   &lt;span class='n'&gt;glEnd&lt;/span&gt;&lt;span class='p'&gt;();&lt;/span&gt;
+   &lt;span class='c'&gt;// Swap buffers (color buffers, makes previous render visible)&lt;/span&gt;
+    &lt;span class='n'&gt;glutSwapBuffers&lt;/span&gt;&lt;span class='p'&gt;();&lt;/span&gt;
+   &lt;span class='c'&gt;// Increase angle to rotate&lt;/span&gt;
+   &lt;span class='n'&gt;angle&lt;/span&gt;&lt;span class='o'&gt;+=&lt;/span&gt;&lt;span class='mf'&gt;0.25&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt;
+&lt;span class='p'&gt;}&lt;/span&gt;
+
+&lt;span class='c'&gt;// Initialze OpenGL perspective matrix&lt;/span&gt;
+&lt;span class='kt'&gt;void&lt;/span&gt; &lt;span class='n'&gt;GL_Setup&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='kt'&gt;int&lt;/span&gt; &lt;span class='n'&gt;width&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='kt'&gt;int&lt;/span&gt; &lt;span class='n'&gt;height&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt;
+&lt;span class='p'&gt;{&lt;/span&gt;
+
+    &lt;span class='n'&gt;glViewport&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt; &lt;span class='mi'&gt;0&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='mi'&gt;0&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='n'&gt;width&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='n'&gt;height&lt;/span&gt; &lt;span class='p'&gt;);&lt;/span&gt;
+    &lt;span class='n'&gt;glMatrixMode&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt; &lt;span class='n'&gt;GL_PROJECTION&lt;/span&gt; &lt;span class='p'&gt;);&lt;/span&gt;
+    &lt;span class='n'&gt;glEnable&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt; &lt;span class='n'&gt;GL_DEPTH_TEST&lt;/span&gt; &lt;span class='p'&gt;);&lt;/span&gt;
+    &lt;span class='n'&gt;gluPerspective&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt; &lt;span class='mi'&gt;45&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='kt'&gt;float&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt;&lt;span class='n'&gt;width&lt;/span&gt;&lt;span class='o'&gt;/&lt;/span&gt;&lt;span class='n'&gt;height&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='mf'&gt;.1&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='mi'&gt;100&lt;/span&gt; &lt;span class='p'&gt;);&lt;/span&gt;
+    &lt;span class='n'&gt;glMatrixMode&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt; &lt;span class='n'&gt;GL_MODELVIEW&lt;/span&gt; &lt;span class='p'&gt;);&lt;/span&gt;
+&lt;span class='p'&gt;}&lt;/span&gt;
+
+&lt;span class='c'&gt;// Initialize GLUT and start main loop&lt;/span&gt;
+&lt;span class='kt'&gt;int&lt;/span&gt; &lt;span class='n'&gt;main&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='kt'&gt;int&lt;/span&gt; &lt;span class='n'&gt;argc&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='kt'&gt;char&lt;/span&gt;&lt;span class='o'&gt;**&lt;/span&gt; &lt;span class='n'&gt;argv&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+    &lt;span class='n'&gt;glutInit&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='o'&gt;&amp;amp;&lt;/span&gt;&lt;span class='n'&gt;argc&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='n'&gt;argv&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+
+    &lt;span class='n'&gt;glutInitWindowSize&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='n'&gt;window_width&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='n'&gt;window_height&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+
+    &lt;span class='n'&gt;glutInitDisplayMode&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='n'&gt;GLUT_RGB&lt;/span&gt; &lt;span class='o'&gt;|&lt;/span&gt; &lt;span class='n'&gt;GLUT_DOUBLE&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+
+    &lt;span class='n'&gt;glutCreateWindow&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;GLUT Example!!!&amp;quot;&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+
+    &lt;span class='n'&gt;glutIdleFunc&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='n'&gt;main_loop_function&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+
+    &lt;span class='n'&gt;GL_Setup&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='n'&gt;window_width&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='n'&gt;window_height&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+   &lt;span class='n'&gt;glutMainLoop&lt;/span&gt;&lt;span class='p'&gt;();&lt;/span&gt;
+&lt;span class='p'&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Thanks! I&amp;#8217;m eager to update this tutorial with more information, so if you&amp;#8217;re having problems, let me know!&lt;/p&gt;
+
+&lt;h2 id='additional_resources'&gt;Additional resources:&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href='http://www.opengl.org/documentation/specs/glut/spec3/spec3.html'&gt;GLUT documentation&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='http://www.spacesimulator.net/tutorials.html'&gt;Tutorials on spacesimulator&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='http://www.gamedev.net/reference/list.asp?categoryid=31'&gt;GameDev Forum&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='http://www.glprogramming.com/red/index.html'&gt;OpenGL Programming guide&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='http://lazyfoo.net/SDL_tutorials/lesson36/index.php'&gt;Using SDL with OpenGL&lt;/a&gt; (part of &lt;a href='http://lazyfoo.net/SDL_tutorials/index.php'&gt;Beginning Game Programming&lt;/a&gt;)&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='http://www.videotutorialsrock.com/'&gt;OpenGL Video Tutorials&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content>
+ </entry>
+ 
+ 
+</feed>
