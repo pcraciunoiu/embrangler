@@ -99,7 +99,7 @@ fclose($fh);
 echo exec('/path/to/site/pull_script');
 {% endhighlight %}
 2. the c file
-{% highlight c %}
+{% highlight cpp %}
 #include <stddef.h>
 #include <stdlib.h>
 #include <unistd.h>

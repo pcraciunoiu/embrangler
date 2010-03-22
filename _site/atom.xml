@@ -4,7 +4,7 @@
  <title>Disembrangling Programming - Paul Craciunoiu</title>
  <link href="http://embrangler.com/atom.xml" rel="self"/>
  <link href="http://embrangler.com/"/>
- <updated>2010-03-21T15:23:28-07:00</updated>
+ <updated>2010-03-22T13:30:26-07:00</updated>
  <id>http://embrangler.com/</id>
  <author>
    <name>Paul Craciunoiu</name>
@@ -139,11 +139,11 @@
 &lt;ol&gt;
 &lt;li&gt;the c file&lt;/li&gt;
 &lt;/ol&gt;
-&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='c'&gt;&lt;span class='cp'&gt;#include &amp;lt;stddef.h&amp;gt;&lt;/span&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='cpp'&gt;&lt;span class='cp'&gt;#include &amp;lt;stddef.h&amp;gt;&lt;/span&gt;
 &lt;span class='cp'&gt;#include &amp;lt;stdlib.h&amp;gt;&lt;/span&gt;
 &lt;span class='cp'&gt;#include &amp;lt;unistd.h&amp;gt;&lt;/span&gt;
 
-&lt;span class='kt'&gt;int&lt;/span&gt; &lt;span class='nf'&gt;main&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='kt'&gt;void&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+&lt;span class='kt'&gt;int&lt;/span&gt; &lt;span class='n'&gt;main&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='kt'&gt;void&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
     &lt;span class='n'&gt;execl&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;/usr/bin/git&amp;quot;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='s'&gt;&amp;quot;git&amp;quot;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='s'&gt;&amp;quot;pull&amp;quot;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='s'&gt;&amp;quot;origin&amp;quot;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='s'&gt;&amp;quot;master&amp;quot;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='k'&gt;const&lt;/span&gt; &lt;span class='kt'&gt;char&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt; &lt;span class='nb'&gt;NULL&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
 
     &lt;span class='k'&gt;return&lt;/span&gt; &lt;span class='n'&gt;EXIT_FAILURE&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt;

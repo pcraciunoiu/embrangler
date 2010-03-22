@@ -151,11 +151,11 @@
 <ol>
 <li>the c file</li>
 </ol>
-<div class='highlight'><pre><code class='c'><span class='cp'>#include &lt;stddef.h&gt;</span>
+<div class='highlight'><pre><code class='cpp'><span class='cp'>#include &lt;stddef.h&gt;</span>
 <span class='cp'>#include &lt;stdlib.h&gt;</span>
 <span class='cp'>#include &lt;unistd.h&gt;</span>
 
-<span class='kt'>int</span> <span class='nf'>main</span><span class='p'>(</span><span class='kt'>void</span><span class='p'>)</span> <span class='p'>{</span>
+<span class='kt'>int</span> <span class='n'>main</span><span class='p'>(</span><span class='kt'>void</span><span class='p'>)</span> <span class='p'>{</span>
     <span class='n'>execl</span><span class='p'>(</span><span class='s'>&quot;/usr/bin/git&quot;</span><span class='p'>,</span> <span class='s'>&quot;git&quot;</span><span class='p'>,</span> <span class='s'>&quot;pull&quot;</span><span class='p'>,</span> <span class='s'>&quot;origin&quot;</span><span class='p'>,</span> <span class='s'>&quot;master&quot;</span><span class='p'>,</span> <span class='p'>(</span><span class='k'>const</span> <span class='kt'>char</span> <span class='o'>*</span><span class='p'>)</span> <span class='nb'>NULL</span><span class='p'>);</span>
 
     <span class='k'>return</span> <span class='n'>EXIT_FAILURE</span><span class='p'>;</span>

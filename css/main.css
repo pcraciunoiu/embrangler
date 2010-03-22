@@ -313,6 +313,7 @@ code {
 pre code {
     font-size: 100%;
     border: none;
+    padding: 0;
 }
 
 /* terminal */
