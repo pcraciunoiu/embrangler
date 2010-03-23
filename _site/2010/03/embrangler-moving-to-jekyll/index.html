@@ -114,9 +114,32 @@
 <ol>
 <li>php script</li>
 </ol>
+
+<p><strong>Update:</strong> <a href='http://coffeeonthekeyboard.com/'>James</a> pointed out that my security measures weren&#8217;t good enough, so I updated the script. If you don&#8217;t care much for security, you may prefer automated publishing. See my <a href='#second-script'>second script</a>, below.</p>
 <div class='highlight'><pre><code class='php'><span class='cp'>&lt;?php</span>
 
-<span class='k'>if</span> <span class='p'>(</span><span class='o'>!</span><span class='nv'>$_POST</span><span class='p'>[</span><span class='s1'>&#39;payload&#39;</span><span class='p'>])</span> <span class='k'>die</span><span class='p'>(</span><span class='s1'>&#39;Nothing to do&#39;</span><span class='p'>);</span>
+<span class='nv'>$check</span> <span class='o'>=</span> <span class='nx'>auth</span><span class='p'>();</span>
+<span class='k'>if</span> <span class='p'>(</span><span class='o'>!</span><span class='nv'>$check</span><span class='p'>)</span> <span class='k'>die</span><span class='p'>;</span>
+
+<span class='k'>echo</span> <span class='s1'>&#39;&lt;pre&gt;&#39;</span><span class='p'>;</span>
+<span class='k'>echo</span> <span class='nb'>exec</span><span class='p'>(</span><span class='s1'>&#39;/path/to/site/pull_script&#39;</span><span class='p'>);</span>
+<span class='k'>echo</span> <span class='s1'>&#39;&lt;/pre&gt;&#39;</span><span class='p'>;</span>
+
+<span class='k'>function</span> <span class='nf'>auth</span><span class='p'>()</span> <span class='p'>{</span>
+    <span class='c'>// do some parameter checking here</span>
+    <span class='c'>// and return true when matches</span>
+<span class='p'>}</span>
+</code></pre>
+</div>
+<p>To make things even more awesome, I bookmarked this URL using <a href='http://lifehacker.com/196779/hack-attack-firefox-and-the-art-of-keyword-bookmarking'>Firefox&#8217;s keywords</a>, so I only need to type one character to publish ;)</p>
+<span id='second-script' />
+<p>Here is my second script, which does automatic publishing.</p>
+<div class='highlight'><pre><code class='php'><span class='cp'>&lt;?php</span>
+
+<span class='k'>if</span> <span class='p'>(</span><span class='o'>!</span><span class='nv'>$_POST</span><span class='p'>[</span><span class='s1'>&#39;payload&#39;</span><span class='p'>])</span> <span class='p'>{</span>
+    <span class='nb'>header</span><span class='p'>(</span><span class='s1'>&#39;HTTP/1.0 403 Forbidden&#39;</span><span class='p'>);</span>
+    <span class='k'>exit</span><span class='p'>;</span>
+<span class='p'>}</span>
 
 <span class='nb'>define</span><span class='p'>(</span><span class='s1'>&#39;HOOKLOG&#39;</span><span class='p'>,</span> <span class='s1'>&#39;../logs/hooks.log&#39;</span><span class='p'>);</span>
 <span class='nv'>$fh</span> <span class='o'>=</span> <span class='nb'>fopen</span><span class='p'>(</span><span class='nx'>HOOKLOG</span><span class='p'>,</span> <span class='s1'>&#39;w&#39;</span><span class='p'>)</span> <span class='k'>or</span> <span class='k'>die</span><span class='p'>(</span><span class='s2'>&quot;Can&#39;t open file&quot;</span><span class='p'>);</span>
@@ -145,9 +168,17 @@
 <span class='nb'>fclose</span><span class='p'>(</span><span class='nv'>$fh</span><span class='p'>);</span>
 
 <span class='c'>// set this to your path</span>
-<span class='k'>echo</span> <span class='nb'>exec</span><span class='p'>(</span><span class='s1'>&#39;/path/to/site/pull_script&#39;</span><span class='p'>);</span>
+<span class='nb'>exec</span><span class='p'>(</span><span class='s1'>&#39;/path/to/site/pull_script&#39;</span><span class='p'>);</span>
 </code></pre>
 </div>
+<p>There are two important security measures in the first script:</p>
+
+<ul>
+<li>it not write to a file, so if it gets hit by someone trying to find the secret codes, my server&#8217;s disk doesn&#8217;t perform intensive <abbr title='input-output'>IO</abbr></li>
+
+<li>it does not hint in any way at parameter names, number of parameters that must be submitted, or whether they should be submitted through GET or POST &#8211; if you don&#8217;t get the right values, you don&#8217;t see anything</li>
+</ul>
+
 <ol>
 <li>the c file</li>
 </ol>
@@ -156,7 +187,8 @@
 <span class='cp'>#include &lt;unistd.h&gt;</span>
 
 <span class='kt'>int</span> <span class='n'>main</span><span class='p'>(</span><span class='kt'>void</span><span class='p'>)</span> <span class='p'>{</span>
-    <span class='n'>execl</span><span class='p'>(</span><span class='s'>&quot;/usr/bin/git&quot;</span><span class='p'>,</span> <span class='s'>&quot;git&quot;</span><span class='p'>,</span> <span class='s'>&quot;pull&quot;</span><span class='p'>,</span> <span class='s'>&quot;origin&quot;</span><span class='p'>,</span> <span class='s'>&quot;master&quot;</span><span class='p'>,</span> <span class='p'>(</span><span class='k'>const</span> <span class='kt'>char</span> <span class='o'>*</span><span class='p'>)</span> <span class='nb'>NULL</span><span class='p'>);</span>
+    <span class='n'>execl</span><span class='p'>(</span><span class='s'>&quot;/usr/bin/git&quot;</span><span class='p'>,</span> <span class='s'>&quot;git&quot;</span><span class='p'>,</span> <span class='s'>&quot;pull&quot;</span><span class='p'>,</span> <span class='s'>&quot;origin&quot;</span><span class='p'>,</span> <span class='s'>&quot;master&quot;</span><span class='p'>,</span>
+        <span class='p'>(</span><span class='k'>const</span> <span class='kt'>char</span> <span class='o'>*</span><span class='p'>)</span> <span class='nb'>NULL</span><span class='p'>);</span>
 
     <span class='k'>return</span> <span class='n'>EXIT_FAILURE</span><span class='p'>;</span>
 <span class='p'>}</span>
@@ -170,7 +202,7 @@
 
 <h2 id='conclusion'>Conclusion</h2>
 
-<p>I enjoy using git, and having a static site. My comments are offloaded to a separate server, and I write plain text files using the markdown syntax, automatically published when I <code>git push</code>.</p>
+<p>I enjoy using git, and having a static site. My comments are offloaded to a separate server, and I write plain text files using the markdown syntax. My blog gets published when I visit a bookmarked URL.</p>
 
 <p>Goodbye Wordpress!</p>
 </div>

@@ -64,10 +64,35 @@ I actually didn't want to install jekyll on my server, and preferred to do all t
 Here's the code for all of this:
 
 1. php script
+
+__Update:__ [James](http://coffeeonthekeyboard.com/) pointed out that my security measures weren't good enough, so I updated the script. If you don't care much for security, you may prefer automated publishing. See my [second script](#second-script), below.
+
 {% highlight php %}
 <?php
 
-if (!$_POST['payload']) die('Nothing to do');
+$check = auth();
+if (!$check) die;
+
+echo '<pre>';
+echo exec('/path/to/site/pull_script');
+echo '</pre>';
+
+function auth() {
+    // do some parameter checking here
+    // and return true when matches
+}
+{% endhighlight %}
+To make things even more awesome, I bookmarked this URL using [Firefox's keywords](http://lifehacker.com/196779/hack-attack-firefox-and-the-art-of-keyword-bookmarking), so I only need to type one character to publish ;)
+
+<span id="second-script"></span>
+Here is my second script, which does automatic publishing.
+{% highlight php %}
+<?php
+
+if (!$_POST['payload']) {
+    header('HTTP/1.0 403 Forbidden');
+    exit;
+}
 
 define('HOOKLOG', '../logs/hooks.log');
 $fh = fopen(HOOKLOG, 'w') or die("Can't open file");
@@ -96,8 +121,14 @@ fwrite($fh, $data);
 fclose($fh);
 
 // set this to your path
-echo exec('/path/to/site/pull_script');
+exec('/path/to/site/pull_script');
 {% endhighlight %}
+There are two important security measures in the first script:
+
+* it not write to a file, so if it gets hit by someone trying to find the secret codes, my server's disk doesn't perform intensive <abbr title="input-output">IO</abbr>
+* it does not hint in any way at parameter names, number of parameters that must be submitted, or whether they should be submitted through GET or POST -- if you don't get the right values, you don't see anything
+
+
 2. the c file
 {% highlight cpp %}
 #include <stddef.h>
@@ -105,7 +136,8 @@ echo exec('/path/to/site/pull_script');
 #include <unistd.h>
 
 int main(void) {
-    execl("/usr/bin/git", "git", "pull", "origin", "master", (const char *) NULL);
+    execl("/usr/bin/git", "git", "pull", "origin", "master",
+        (const char *) NULL);
 
     return EXIT_FAILURE;
 }
@@ -119,6 +151,6 @@ gcc pull_script.c -o pull_script
 So now, every time I push to github, the server automatically updates. Really cool way of publishing!
 
 ## Conclusion
-I enjoy using git, and having a static site. My comments are offloaded to a separate server, and I write plain text files using the markdown syntax, automatically published when I `git push`.
+I enjoy using git, and having a static site. My comments are offloaded to a separate server, and I write plain text files using the markdown syntax. My blog gets published when I visit a bookmarked URL.
 
 Goodbye Wordpress!

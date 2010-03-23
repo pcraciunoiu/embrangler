@@ -4,7 +4,7 @@
  <title>Disembrangling Programming - Paul Craciunoiu</title>
  <link href="http://embrangler.com/atom.xml" rel="self"/>
  <link href="http://embrangler.com/"/>
- <updated>2010-03-22T13:30:26-07:00</updated>
+ <updated>2010-03-22T20:58:05-07:00</updated>
  <id>http://embrangler.com/</id>
  <author>
    <name>Paul Craciunoiu</name>
@@ -102,9 +102,32 @@
 &lt;ol&gt;
 &lt;li&gt;php script&lt;/li&gt;
 &lt;/ol&gt;
+
+&lt;p&gt;&lt;strong&gt;Update:&lt;/strong&gt; &lt;a href='http://coffeeonthekeyboard.com/'&gt;James&lt;/a&gt; pointed out that my security measures weren&amp;#8217;t good enough, so I updated the script. If you don&amp;#8217;t care much for security, you may prefer automated publishing. See my &lt;a href='#second-script'&gt;second script&lt;/a&gt;, below.&lt;/p&gt;
 &lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='php'&gt;&lt;span class='cp'&gt;&amp;lt;?php&lt;/span&gt;
 
-&lt;span class='k'&gt;if&lt;/span&gt; &lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='o'&gt;!&lt;/span&gt;&lt;span class='nv'&gt;$_POST&lt;/span&gt;&lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;payload&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;])&lt;/span&gt; &lt;span class='k'&gt;die&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;Nothing to do&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+&lt;span class='nv'&gt;$check&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='nx'&gt;auth&lt;/span&gt;&lt;span class='p'&gt;();&lt;/span&gt;
+&lt;span class='k'&gt;if&lt;/span&gt; &lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='o'&gt;!&lt;/span&gt;&lt;span class='nv'&gt;$check&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt; &lt;span class='k'&gt;die&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt;
+
+&lt;span class='k'&gt;echo&lt;/span&gt; &lt;span class='s1'&gt;&amp;#39;&amp;lt;pre&amp;gt;&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt;
+&lt;span class='k'&gt;echo&lt;/span&gt; &lt;span class='nb'&gt;exec&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;/path/to/site/pull_script&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+&lt;span class='k'&gt;echo&lt;/span&gt; &lt;span class='s1'&gt;&amp;#39;&amp;lt;/pre&amp;gt;&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt;
+
+&lt;span class='k'&gt;function&lt;/span&gt; &lt;span class='nf'&gt;auth&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+    &lt;span class='c'&gt;// do some parameter checking here&lt;/span&gt;
+    &lt;span class='c'&gt;// and return true when matches&lt;/span&gt;
+&lt;span class='p'&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;To make things even more awesome, I bookmarked this URL using &lt;a href='http://lifehacker.com/196779/hack-attack-firefox-and-the-art-of-keyword-bookmarking'&gt;Firefox&amp;#8217;s keywords&lt;/a&gt;, so I only need to type one character to publish ;)&lt;/p&gt;
+&lt;span id='second-script' /&gt;
+&lt;p&gt;Here is my second script, which does automatic publishing.&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='php'&gt;&lt;span class='cp'&gt;&amp;lt;?php&lt;/span&gt;
+
+&lt;span class='k'&gt;if&lt;/span&gt; &lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='o'&gt;!&lt;/span&gt;&lt;span class='nv'&gt;$_POST&lt;/span&gt;&lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;payload&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;])&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+    &lt;span class='nb'&gt;header&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;HTTP/1.0 403 Forbidden&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+    &lt;span class='k'&gt;exit&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt;
+&lt;span class='p'&gt;}&lt;/span&gt;
 
 &lt;span class='nb'&gt;define&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;HOOKLOG&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='s1'&gt;&amp;#39;../logs/hooks.log&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
 &lt;span class='nv'&gt;$fh&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='nb'&gt;fopen&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nx'&gt;HOOKLOG&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='s1'&gt;&amp;#39;w&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt; &lt;span class='k'&gt;or&lt;/span&gt; &lt;span class='k'&gt;die&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s2'&gt;&amp;quot;Can&amp;#39;t open file&amp;quot;&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
@@ -133,9 +156,17 @@
 &lt;span class='nb'&gt;fclose&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nv'&gt;$fh&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
 
 &lt;span class='c'&gt;// set this to your path&lt;/span&gt;
-&lt;span class='k'&gt;echo&lt;/span&gt; &lt;span class='nb'&gt;exec&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;/path/to/site/pull_script&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+&lt;span class='nb'&gt;exec&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;/path/to/site/pull_script&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
+&lt;p&gt;There are two important security measures in the first script:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;it not write to a file, so if it gets hit by someone trying to find the secret codes, my server&amp;#8217;s disk doesn&amp;#8217;t perform intensive &lt;abbr title='input-output'&gt;IO&lt;/abbr&gt;&lt;/li&gt;
+
+&lt;li&gt;it does not hint in any way at parameter names, number of parameters that must be submitted, or whether they should be submitted through GET or POST &amp;#8211; if you don&amp;#8217;t get the right values, you don&amp;#8217;t see anything&lt;/li&gt;
+&lt;/ul&gt;
+
 &lt;ol&gt;
 &lt;li&gt;the c file&lt;/li&gt;
 &lt;/ol&gt;
@@ -144,7 +175,8 @@
 &lt;span class='cp'&gt;#include &amp;lt;unistd.h&amp;gt;&lt;/span&gt;
 
 &lt;span class='kt'&gt;int&lt;/span&gt; &lt;span class='n'&gt;main&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='kt'&gt;void&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
-    &lt;span class='n'&gt;execl&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;/usr/bin/git&amp;quot;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='s'&gt;&amp;quot;git&amp;quot;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='s'&gt;&amp;quot;pull&amp;quot;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='s'&gt;&amp;quot;origin&amp;quot;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='s'&gt;&amp;quot;master&amp;quot;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='k'&gt;const&lt;/span&gt; &lt;span class='kt'&gt;char&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt; &lt;span class='nb'&gt;NULL&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+    &lt;span class='n'&gt;execl&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;/usr/bin/git&amp;quot;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='s'&gt;&amp;quot;git&amp;quot;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='s'&gt;&amp;quot;pull&amp;quot;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='s'&gt;&amp;quot;origin&amp;quot;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='s'&gt;&amp;quot;master&amp;quot;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt;
+        &lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='k'&gt;const&lt;/span&gt; &lt;span class='kt'&gt;char&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt; &lt;span class='nb'&gt;NULL&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
 
     &lt;span class='k'&gt;return&lt;/span&gt; &lt;span class='n'&gt;EXIT_FAILURE&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt;
 &lt;span class='p'&gt;}&lt;/span&gt;
@@ -158,7 +190,7 @@
 
 &lt;h2 id='conclusion'&gt;Conclusion&lt;/h2&gt;
 
-&lt;p&gt;I enjoy using git, and having a static site. My comments are offloaded to a separate server, and I write plain text files using the markdown syntax, automatically published when I &lt;code&gt;git push&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;I enjoy using git, and having a static site. My comments are offloaded to a separate server, and I write plain text files using the markdown syntax. My blog gets published when I visit a bookmarked URL.&lt;/p&gt;
 
 &lt;p&gt;Goodbye Wordpress!&lt;/p&gt;</content>
  </entry>
