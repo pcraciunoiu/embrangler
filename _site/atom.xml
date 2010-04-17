@@ -4,7 +4,7 @@
  <title>Disembrangling Programming - Paul Craciunoiu</title>
  <link href="http://embrangler.com/atom.xml" rel="self"/>
  <link href="http://embrangler.com/"/>
- <updated>2010-04-11T19:28:14-07:00</updated>
+ <updated>2010-04-17T02:42:01-07:00</updated>
  <id>http://embrangler.com/</id>
  <author>
    <name>Paul Craciunoiu</name>
@@ -13,7 +13,77 @@
 
  
  <entry>
-   <title>Weekly update</title>
+   <title>April 12-16 status</title>
+   <link href="http://embrangler.com/2010/04/weekly-update-apr-12-16"/>
+   <updated>2010-04-16T00:00:00-07:00</updated>
+   <id>http://embrangler.com/2010/04/weekly-update-apr-12-16</id>
+   <content type="html">&lt;h2 id='last_week_april_1216'&gt;Last week (April 12-16)&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;kitsune&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;r? &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=558228'&gt;cool vim indenting in templates&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;r? &lt;a href='http://github.com/jsocol/kitsune/commits/bug-550515'&gt;minify bug 550515&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;finish &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=554210'&gt;converting our current database from latin1 to utf8&lt;/a&gt; after lots of painful dealing with data&lt;/li&gt;
+
+&lt;li&gt;fix &lt;a href='http://github.com/pcraciunoiu/kitsune/commits/bug-555249'&gt;advanced search form logic&lt;/a&gt;, deals with default values, validation, cleanup. fixes &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=559086'&gt;a few&lt;/a&gt; &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=559249'&gt;other&lt;/a&gt; &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=559117'&gt;bugs&lt;/a&gt; in the process&lt;/li&gt;
+
+&lt;li&gt;fix &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=555251'&gt;json results and add lots of tests&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;fix &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=558941'&gt;search results sorting&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;IT bugs to &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=559645'&gt;truncate a table&lt;/a&gt;, &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=559717'&gt;sync stage db with prod&lt;/a&gt; and &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=559997'&gt;convert the database to UTF8&lt;/a&gt; according to &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=554210'&gt;this bug&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;tiki&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=553131'&gt;session fixes&lt;/a&gt; required for kitsune integration &lt;a href='https://bug553131.bugzilla.mozilla.org/attachment.cgi?id=439362'&gt;filed&lt;/a&gt; and &lt;a href='https://bug553131.bugzilla.mozilla.org/attachment.cgi?id=438241'&gt;reviewed&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;fix and review some security vulnerabilities on mobile&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id='this_week_april_1923'&gt;This week (April 19-23)&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;kitsune&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;finish &lt;a href='https://bugzilla.mozilla.org/buglist.cgi?quicksearch=OPEN+product%3Asupport+milestone%3A2.0'&gt;the remaining kitsune bugs&lt;/a&gt; with the rest of the SUMOdev team&lt;/li&gt;
+
+&lt;li&gt;finish &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=559997'&gt;UTF conversion of the database&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;prepare for kitsune push, potential QA bugs&lt;/li&gt;
+
+&lt;li&gt;begin work on discussion forums &amp;#8211; milestone 2.1&lt;/li&gt;
+
+&lt;li&gt;install mod_wsgi and run tiki in parallel with kitsune locally&lt;/li&gt;
+
+&lt;li&gt;discuss/learn more about Test Driven Development&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;tiki&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;finish &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=558105'&gt;adding WebTrends to SUMO for tracking&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>April 5-9 status</title>
    <link href="http://embrangler.com/2010/04/weekly-update-apr-5-9"/>
    <updated>2010-04-11T00:00:00-07:00</updated>
    <id>http://embrangler.com/2010/04/weekly-update-apr-5-9</id>
@@ -1253,182 +1323,6 @@ sudo ln -s ../sites-available/sumo
 &lt;p&gt;b) Obviously, it takes 0 for the student to finish if x &amp;lt; 1. It takes &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/a4aee14067b1fa87b4a736d1a9b77f04.png' alt='$\int_{1}^{2} \! 6 \cdot (-x^2 + 3x - 2) = -2x^3 + 9x^2 - 12x + 5, if 1 \le x &amp;lt; 2$' style='vertical-align: -0.666666666666667ex;height: 2.66666666666667ex;' /&gt;&lt;/span&gt; and 1, if &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/6b00b562f7ea81ade7bc85438bd9f85d.png' alt='$x \ge 2$' style='vertical-align: -0.333333333333333ex;height: 1.88888888888889ex;' /&gt;&lt;/span&gt;&lt;/p&gt;
 
 &lt;p&gt;c) &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/b48af2ec9db68c5d6f2333af8a2be849.png' alt='$P(1.25) = -2 \cdot 1.25^3 + 9 \cdot 1.25^2 - 12 \cdot 1.25 + 5 = 0.15625$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /&gt;&lt;/span&gt;, probability to finish in 75 minutes. To finish between 1 + 1/2 and 2 hours, we take: &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/2c1354e743e047cc040b4937c9b31b4b.png' alt='$P(1.5 \le X \le 2) = F(2) - F(1.5) = 1 - (-2 \cdot 1.5^3 + 9 \cdot 1.5^2 - 12 \cdot 1.5 + 5) = 0.5$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /&gt;&lt;/span&gt;&lt;/p&gt;</content>
- </entry>
- 
- <entry>
-   <title>ED60 - How people learn, Ch1</title>
-   <link href="http://embrangler.com/2009/10/ed60-how-people-learn-ch1"/>
-   <updated>2009-10-21T00:00:00-07:00</updated>
-   <id>http://embrangler.com/2009/10/ed60-how-people-learn-ch1</id>
-   <content type="html">&lt;p&gt;Three major theories of learning:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;Behaviorism&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;learning based on behavior&lt;/li&gt;
-
-&lt;li&gt;came as response to old psychology based on &amp;#8220;consciousness&amp;#8221;&lt;/li&gt;
-
-&lt;li&gt;conditioning response based on stimuli&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-
-&lt;li&gt;
-&lt;p&gt;Constructivism&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;new knowledge constructed on top of pre-existing knowledge&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;More currently:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;New focus is on understanding&lt;/p&gt;
-&lt;/li&gt;
-
-&lt;li&gt;
-&lt;p&gt;This leads to focus on processes of knowing. Human = goal-oriented agent who actively seeks information.&lt;/p&gt;
-&lt;/li&gt;
-
-&lt;li&gt;
-&lt;p&gt;Active learning: people take control of their own learning&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Comparison between teachers A, B, and C, with each having different goals&lt;/li&gt;
-
-&lt;li&gt;Teacher C helps the students &lt;em&gt;want&lt;/em&gt; to learn about the material before the class starts, and therefore during class merely supervises their course of learning to ensure students keep sight of their purposes.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Key findings of scientific analysis:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;Students come to the classroom with preconceptions about how the world works. If their initial understanding is not engaged, they may fail to grasp the new concepts and information that are taught, or they may learn them for purposes of a test but revert to their preconceptions outside the classroom.&lt;/p&gt;
-&lt;/li&gt;
-
-&lt;li&gt;
-&lt;p&gt;To develop competence in an area of inquiry, students must:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;have a deep foundation of factual knowledge&lt;/li&gt;
-
-&lt;li&gt;understand facts and ideas in the context of a conceptual framework&lt;/li&gt;
-
-&lt;li&gt;organize knowledge in ways that faciitate retrieval and application&lt;/li&gt;
-
-&lt;li&gt;This fact emphasizes the importance of having expertise and connecting multiple bits of knowledge to understand larger concepts. Experts are also able to filter out irrelevant information from their knowledge, when working on a specific issue.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-
-&lt;li&gt;
-&lt;p&gt;A &amp;#8220;metacognitive&amp;#8221; approach to instruction can help students learn to take control of their own learning by defining learning goals and monitoring their progress in achieving them.&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Consequences for teachers:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;Teachers must draw out and work with the preexisting understandings that their students bring with them.&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;The model of a child as an empty vessel is wrong. Teacher must inquire into students&amp;#8217; thinking&lt;/p&gt;
-&lt;/li&gt;
-
-&lt;li&gt;
-&lt;p&gt;Roles for assessment must expanded beyond traditional testing. Formative assesment helps students observe their thinking, and provides feedback that can guide modification of the course.&lt;/p&gt;
-&lt;/li&gt;
-
-&lt;li&gt;
-&lt;p&gt;Beginning teachers must be provided with opportunities to learn&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;To recognize predictable preconceptions of students&lt;/li&gt;
-
-&lt;li&gt;To draw out preconceptions that are not predictable&lt;/li&gt;
-
-&lt;li&gt;To work with preconceptions so that children build on them, challenge them, and, when appropriate, replace them&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-
-&lt;li&gt;
-&lt;p&gt;Teachers must teach some subject matter in depth, providing many examples in which the same concept is at work and providing a firm foundation of factual knowledge&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Superficial coverage of many areas must be replaced by in-depth coverage of fewer topics&lt;/li&gt;
-
-&lt;li&gt;Coordination across coursework and school years to aid transition from informal to formal ideas&lt;/li&gt;
-
-&lt;li&gt;Teacher must be aware of development of students thinking about the concepts (developing teaching expertise)&lt;/li&gt;
-
-&lt;li&gt;Of course, teacher must know the subject and connect major concepts (discipline expertise)&lt;/li&gt;
-
-&lt;li&gt;Tests must be for deep understanding rather than surface knowledge. Need new assessment tools. Need to minimize trade-off between assessing depth and assessing ovjectively.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-
-&lt;li&gt;
-&lt;p&gt;The teaching of metacognitive skills should be integrated into the curriculum rather of subject areas.&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Designing classroom environments:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;Schools and classrooms must be learner centered&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Cultural differences can affect ability to learn&lt;/li&gt;
-
-&lt;li&gt;Students&amp;#8217; theories of what it means to be intelligent can affect their performance. Students who think intelligence is fixed are more likely to give up, whereas those who think it&amp;#8217;s flexible are more likely to admit mistakes and keep going (more comfortable with risk)&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-
-&lt;li&gt;
-&lt;p&gt;To provide a knowledge-centered classroom environment, attention must be given to what is taught (information, subject matter), why it is taught (understanding), and what competence or mastery looks like&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;need to aid deeper understanding&lt;/li&gt;
-
-&lt;li&gt;tests often evaluate memorizing&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-
-&lt;li&gt;
-&lt;p&gt;Formative assessments&amp;#8211;ongoing assessments designed to make students&amp;#8217; thinking visible to both teachers and students&amp;#8211;are essential. They permit the teacher to grasp the students&amp;#8217; preconceptions, understand where the students are in the &amp;#8220;developmental corridor&amp;#8221; from informal to formal thinking, and design instruction accordingly. In the assessment-centered classroom environment, formative assesments help both teachers and students monitor progress.&lt;/p&gt;
-&lt;/li&gt;
-
-&lt;li&gt;
-&lt;p&gt;Learning is influenced in fundamental ways by the context in which it takes place. A community-centered approach requires the development of norms for the classroom and school, as well as connections to the outside world that support core learning values * Teachers must encourage a community of learners, it&amp;#8217;s okay to make mistakes, engender sense of excitement&lt;/p&gt;
-&lt;/li&gt;
-
-&lt;li&gt;
-&lt;p&gt;Students spend only 13% of their time in schools. Focus learning on what they do outside school too, provide ways, etc.&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Mistakes in professional development programs for teachers:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Are not learner centered&lt;/li&gt;
-
-&lt;li&gt;Are not knowledge centered&lt;/li&gt;
-
-&lt;li&gt;Are not assessment centered&lt;/li&gt;
-
-&lt;li&gt;Are not community centered&lt;/li&gt;
-&lt;/ul&gt;</content>
  </entry>
  
  

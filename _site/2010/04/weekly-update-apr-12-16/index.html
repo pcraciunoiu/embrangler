@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <title>April 5-9 status</title>
+    <title>April 12-16 status</title>
     <meta name="author" content="Paul Craciunoiu" />
     <link href="http://feeds.feedburner.com/embrangler" rel="alternate" title="Paul Craciunoiu" type="application/atom+xml" />
     <link type="image/x-icon" href="/favicon.ico" rel="shortcut icon">
@@ -27,26 +27,28 @@
     </div>
     <div id="content" role="main">    
     <div id="post">
-<h1>April 5-9 status</h1>
+<h1>April 12-16 status</h1>
 
-<h2 id='last_week_april_59'>Last week (April 5-9)</h2>
+<h2 id='last_week_april_1216'>Last week (April 12-16)</h2>
 
 <ul>
 <li>
 <p>kitsune</p>
 
 <ul>
-<li>r? <a href='https://bugzilla.mozilla.org/show_bug.cgi?id=554740'>exclude staging articles from search</a>, which also includes <a href='http://github.com/jsocol/kitsune/commit/ef50d5fcd64f65f89ff688874f3fa920f69ff216'>sphinx tests</a>, reviewed again later after <a href='http://github.com/jsocol/kitsune/commit/c2a1356e084a68de17f20376ad051c918ecfd172'>a fix to not require FORCE_DB</a></li>
+<li>r? <a href='https://bugzilla.mozilla.org/show_bug.cgi?id=558228'>cool vim indenting in templates</a></li>
 
-<li>r? <a href='http://github.com/jsocol/kitsune/commit/dbdb116aecda1332c932e278786dba2719c71d09'>l10n -&gt; tower rename</a></li>
+<li>r? <a href='http://github.com/jsocol/kitsune/commits/bug-550515'>minify bug 550515</a></li>
 
-<li>r? <a href='https://bugzilla.mozilla.org/show_bug.cgi?id=556810'>add JINJA_CONFIG() for string extraction and caching</a></li>
+<li>finish <a href='https://bugzilla.mozilla.org/show_bug.cgi?id=554210'>converting our current database from latin1 to utf8</a> after lots of painful dealing with data</li>
 
-<li>quick look at <a href='http://github.com/jsocol/kitsune/commit/f159b8f25ea78c38cc7e60fae6004ccb5e1273c6'>minify in kitsune</a>, TODO next week</li>
+<li>fix <a href='http://github.com/pcraciunoiu/kitsune/commits/bug-555249'>advanced search form logic</a>, deals with default values, validation, cleanup. fixes <a href='https://bugzilla.mozilla.org/show_bug.cgi?id=559086'>a few</a> <a href='https://bugzilla.mozilla.org/show_bug.cgi?id=559249'>other</a> <a href='https://bugzilla.mozilla.org/show_bug.cgi?id=559117'>bugs</a> in the process</li>
 
-<li>fixed <a href='https://bugzilla.mozilla.org/show_bug.cgi?id=556418'>duplicate page param in paginator URL</a></li>
+<li>fix <a href='https://bugzilla.mozilla.org/show_bug.cgi?id=555251'>json results and add lots of tests</a></li>
 
-<li>spent most of the week <a href='https://bugzilla.mozilla.org/show_bug.cgi?id=554210'>converting our current database from latin1 to utf8</a></li>
+<li>fix <a href='https://bugzilla.mozilla.org/show_bug.cgi?id=558941'>search results sorting</a></li>
+
+<li>IT bugs to <a href='https://bugzilla.mozilla.org/show_bug.cgi?id=559645'>truncate a table</a>, <a href='https://bugzilla.mozilla.org/show_bug.cgi?id=559717'>sync stage db with prod</a> and <a href='https://bugzilla.mozilla.org/show_bug.cgi?id=559997'>convert the database to UTF8</a> according to <a href='https://bugzilla.mozilla.org/show_bug.cgi?id=554210'>this bug</a></li>
 </ul>
 </li>
 
@@ -54,31 +56,31 @@
 <p>tiki</p>
 
 <ul>
-<li>started work on <a href='https://bugzilla.mozilla.org/show_bug.cgi?id=558105'>adding WebTrends to SUMO for tracking</a></li>
+<li><a href='https://bugzilla.mozilla.org/show_bug.cgi?id=553131'>session fixes</a> required for kitsune integration <a href='https://bug553131.bugzilla.mozilla.org/attachment.cgi?id=439362'>filed</a> and <a href='https://bug553131.bugzilla.mozilla.org/attachment.cgi?id=438241'>reviewed</a></li>
 
-<li><a href='https://bugzilla.mozilla.org/show_bug.cgi?id=555003'>push desktop 1.5.3 on Tuesday</a> &#8212; <a href='https://bugzilla.mozilla.org/buglist.cgi?quicksearch=ALL+product%3Asupport+milestone%3A1.5.3'>see bugs</a></li>
+<li>fix and review some security vulnerabilities on mobile</li>
 </ul>
 </li>
 </ul>
 
-<h2 id='this_week_april_1216'>This week (April 12-16)</h2>
+<h2 id='this_week_april_1923'>This week (April 19-23)</h2>
 
 <ul>
 <li>
 <p>kitsune</p>
 
 <ul>
-<li>r? <a href='http://github.com/jsocol/kitsune/commits/bug-550515'>minify bug 550515</a></li>
+<li>finish <a href='https://bugzilla.mozilla.org/buglist.cgi?quicksearch=OPEN+product%3Asupport+milestone%3A2.0'>the remaining kitsune bugs</a> with the rest of the SUMOdev team</li>
 
-<li>r? <a href='https://bugzilla.mozilla.org/show_bug.cgi?id=553131'>tiki patch for django sessions</a></li>
+<li>finish <a href='https://bugzilla.mozilla.org/show_bug.cgi?id=559997'>UTF conversion of the database</a></li>
 
-<li>r? <a href='https://bugzilla.mozilla.org/show_bug.cgi?id=558228'>cool vim indenting in templates</a></li>
+<li>prepare for kitsune push, potential QA bugs</li>
 
-<li><strong>finish up <a href='https://bugzilla.mozilla.org/show_bug.cgi?id=554210'>character encoding conversion</a></strong></li>
+<li>begin work on discussion forums &#8211; milestone 2.1</li>
 
-<li>finish up <a href='http://github.com/pcraciunoiu/kitsune/commits/bug-555249'>when to trigger advanced search</a></li>
+<li>install mod_wsgi and run tiki in parallel with kitsune locally</li>
 
-<li>finish getting sessions into kitsune, i.e. fix any issues spotted by davedash/jbalogh/jsocol on <a href='http://github.com/pcraciunoiu/kitsune/tree/bug-553131'>bug 553131</a></li>
+<li>discuss/learn more about Test Driven Development</li>
 </ul>
 </li>
 
@@ -90,23 +92,17 @@
 </ul>
 </li>
 </ul>
-
-<h3 id='stretch_goals'>Stretch goals</h3>
-
-<ul>
-<li><a href='https://bugzilla.mozilla.org/show_bug.cgi?id=553734'>search summaries are Jinja-friendly</a></li>
-</ul>
 </div>
 
 <div id="related">
   <h2>Related Posts</h2>
   <ul>
     
-      <li><a href="/2010/04/weekly-update-apr-12-16">April 12-16 status</a> &mdash; 16 Apr 2010</li>
+      <li><a href="/2010/04/weekly-update-apr-5-9">April 5-9 status</a> &mdash; 11 Apr 2010</li>
     
       <li><a href="/2010/03/quoteden-moving-to-kohana-3">Quoteden: Moving to Kohana 3</a> &mdash; 12 Mar 2010</li>
     
-      <li><a href="/2010/03/embrangler-moving-to-jekyll">Embrangler: Moving to Jekyll</a> &mdash; 21 Mar 2010</li>
+      <li><a href="/2010/01/my-sumo-local-development-environment">My SUMO local development environment</a> &mdash; 04 Jan 2010</li>
     
   </ul>
 </div>
