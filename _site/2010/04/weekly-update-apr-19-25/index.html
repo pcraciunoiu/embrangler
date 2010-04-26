@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <title>April 5-9 status</title>
+    <title>April 19-25 status</title>
     <meta name="author" content="Paul Craciunoiu" />
     <link href="http://feeds.feedburner.com/embrangler" rel="alternate" title="Paul Craciunoiu" type="application/atom+xml" />
     <link type="image/x-icon" href="/favicon.ico" rel="shortcut icon">
@@ -27,26 +27,46 @@
     </div>
     <div id="content" role="main">    
     <div id="post">
-<h1>April 5-9 status</h1>
+<h1>April 19-25 status</h1>
 
-<h2 id='last_week_april_59'>Last week (April 5-9)</h2>
+<h2 id='last_week_april_1925'>Last week (April 19-25)</h2>
 
 <ul>
 <li>
 <p>kitsune</p>
 
 <ul>
-<li>r? <a href='https://bugzilla.mozilla.org/show_bug.cgi?id=554740'>exclude staging articles from search</a>, which also includes <a href='http://github.com/jsocol/kitsune/commit/ef50d5fcd64f65f89ff688874f3fa920f69ff216'>sphinx tests</a>, reviewed again later after <a href='http://github.com/jsocol/kitsune/commit/c2a1356e084a68de17f20376ad051c918ecfd172'>a fix to not require FORCE_DB</a></li>
+<li>r?d <a href='http://github.com/jsocol/kitsune/commit/03b9b540b96968dda4bffacb0f6abdee351e9b12'>adding sumo-dev to receive useful stack traces from kitsune</a></li>
 
-<li>r? <a href='http://github.com/jsocol/kitsune/commit/dbdb116aecda1332c932e278786dba2719c71d09'>l10n -&gt; tower rename</a></li>
+<li>r?d <a href='http://github.com/jsocol/kitsune/commit/a5ceb6974a03a8f0487c58a56baf9ed88c1a3701'>improved maintenance of locales</a>, go James!</li>
 
-<li>r? <a href='https://bugzilla.mozilla.org/show_bug.cgi?id=556810'>add JINJA_CONFIG() for string extraction and caching</a></li>
+<li>r?d <a href='http://github.com/jsocol/kitsune/commit/79847afa23ee9a3ff3200949824463e6d50e9bf2'>kitsune documentation</a></li>
 
-<li>quick look at <a href='http://github.com/jsocol/kitsune/commit/f159b8f25ea78c38cc7e60fae6004ccb5e1273c6'>minify in kitsune</a>, TODO next week</li>
+<li>r?d <a href='http://github.com/jsocol/kitsune/commit/97fe787bae6592360e7603dc6440b4db729126de'>better handling of timeouts for excerpts</a> and <a href='http://github.com/jsocol/kitsune/commit/29d2134f6d0d5ca22e0bbdcf6832c21aea9ee00a'>merged</a></li>
 
-<li>fixed <a href='https://bugzilla.mozilla.org/show_bug.cgi?id=556418'>duplicate page param in paginator URL</a></li>
+<li>r?d <a href='http://github.com/jsocol/kitsune/commit/32be0335fd22876379e9716e0df88ffc953fc151'>unicode improvements, adding sumo.utils.urlencode</a> and <a href='http://github.com/jsocol/kitsune/commit/633d0166c9bf65fc35886ad05c038f5f74058448'>merged</a></li>
 
-<li>spent most of the week <a href='https://bugzilla.mozilla.org/show_bug.cgi?id=554210'>converting our current database from latin1 to utf8</a></li>
+<li>r?d <a href='http://github.com/jsocol/kitsune/commit/23f586b285d3c63b842dd643623ce2491f1a3b87'>fixing an IE6/7 bug</a></li>
+
+<li>r?d <a href='http://github.com/jsocol/kitsune/commit/e9aa5d2f87e163917ad339c0d6c06fc0b58625c2'>case insensitive Accept-Language for Opera, Chrome, Safari</a></li>
+
+<li>r?d <a href='http://github.com/jsocol/kitsune/commit/4464b2033a4c5ce079034dabdafed808e0bcfc51'>adding a search plugin</a></li>
+
+<li><a href='http://github.com/jsocol/kitsune/commit/633d0166c9bf65fc35886ad05c038f5f74058448'>fix pagination on IE6</a></li>
+
+<li><a href='http://github.com/jsocol/kitsune/commit/b2563c4dffcf2515d23f7f861600fc01cb0578da'>adding two new supported locales</a></li>
+
+<li>finished <a href='https://bugzilla.mozilla.org/show_bug.cgi?id=555251'>lots of tests for search filters and JSON for all</a></li>
+
+<li>finished <a href='https://bugzilla.mozilla.org/buglist.cgi?quicksearch=ALL+product%3Asupport+milestone%3A2.0'>the remaining 2.0 bugs</a> with the rest of the SUMOdev team</li>
+
+<li>installed mod_wsgi locally with help of <a href='http://github.com/jsocol/kitsune/blob/development/docs/wsgi.rst'>James&#8217; docs</a></li>
+
+<li>assisted with IT bugs to <a href='https://bugzilla.mozilla.org/show_bug.cgi?id=559997'>convert the database to UTF8</a> according to <a href='https://bugzilla.mozilla.org/show_bug.cgi?id=554210'>this bug</a></li>
+
+<li><a href='https://bugzilla.mozilla.org/show_bug.cgi?id=559109'>debugging server issues for kitsune stage</a></li>
+
+<li>begin work on milestone 2.1</li>
 </ul>
 </li>
 
@@ -54,31 +74,33 @@
 <p>tiki</p>
 
 <ul>
-<li>started work on <a href='https://bugzilla.mozilla.org/show_bug.cgi?id=558105'>adding WebTrends to SUMO for tracking</a></li>
+<li>r?d <a href='https://bugzilla.mozilla.org/show_bug.cgi?id=556672'>using kitsune for search</a> on <a href='http://support-stage-new.mozilla.com/'>stage-new</a></li>
 
-<li><a href='https://bugzilla.mozilla.org/show_bug.cgi?id=555003'>push desktop 1.5.3 on Tuesday</a> &#8212; <a href='https://bugzilla.mozilla.org/buglist.cgi?quicksearch=ALL+product%3Asupport+milestone%3A1.5.3'>see bugs</a></li>
+<li>filed patch for <a href='https://bugzilla.mozilla.org/show_bug.cgi?id=558105'>adding WebTrends to SUMO for tracking</a></li>
+
+<li>revert <a href='https://bugzilla.mozilla.org/show_bug.cgi?id=558828'>a notifications bug for articles</a></li>
+
+<li><a href='https://bugzilla.mozilla.org/show_bug.cgi?id=519927'>add .htaccess rewrites for Fx3.7 help topic: keyboard shortcuts</a></li>
+
+<li><a href='https://bugzilla.mozilla.org/show_bug.cgi?id=554781'>debugging screencast bug on mobile</a></li>
 </ul>
 </li>
 </ul>
 
-<h2 id='this_week_april_1216'>This week (April 12-16)</h2>
+<h2 id='this_week_april_2630'>This week (April 26-30)</h2>
 
 <ul>
+<li>
+<p>WebDev onsite! Excited to hang out with the team.</p>
+</li>
+
 <li>
 <p>kitsune</p>
 
 <ul>
-<li>r? <a href='http://github.com/jsocol/kitsune/commits/bug-550515'>minify bug 550515</a></li>
+<li>work on <a href='https://bugzilla.mozilla.org/buglist.cgi?type1-0-0=substring&amp;query_format=advanced&amp;field0-0-0=product&amp;value1-0-0=2.1&amp;type0-0-0=substring&amp;value0-0-0=support&amp;field1-0-0=target_milestone&amp;target_milestone=2.1&amp;product=support.mozilla.com'>forums and other 2.1 stuff</a></li>
 
-<li>r? <a href='https://bugzilla.mozilla.org/show_bug.cgi?id=553131'>tiki patch for django sessions</a></li>
-
-<li>r? <a href='https://bugzilla.mozilla.org/show_bug.cgi?id=558228'>cool vim indenting in templates</a></li>
-
-<li><strong>finish up <a href='https://bugzilla.mozilla.org/show_bug.cgi?id=554210'>character encoding conversion</a></strong></li>
-
-<li>finish up <a href='http://github.com/pcraciunoiu/kitsune/commits/bug-555249'>when to trigger advanced search</a></li>
-
-<li>finish getting sessions into kitsune, i.e. fix any issues spotted by davedash/jbalogh/jsocol on <a href='http://github.com/pcraciunoiu/kitsune/tree/bug-553131'>bug 553131</a></li>
+<li>prepare for kitsune push, potential QA bugs</li>
 </ul>
 </li>
 
@@ -86,15 +108,11 @@
 <p>tiki</p>
 
 <ul>
-<li>finish <a href='https://bugzilla.mozilla.org/show_bug.cgi?id=558105'>adding WebTrends to SUMO for tracking</a></li>
+<li>prepare for 1.5.4 push, potential QA bugs</li>
+
+<li>figure out <a href='https://bugzilla.mozilla.org/show_bug.cgi?id=554781'>screencast bug</a></li>
 </ul>
 </li>
-</ul>
-
-<h3 id='stretch_goals'>Stretch goals</h3>
-
-<ul>
-<li><a href='https://bugzilla.mozilla.org/show_bug.cgi?id=553734'>search summaries are Jinja-friendly</a></li>
 </ul>
 </div>
 
@@ -102,9 +120,9 @@
   <h2>Related Posts</h2>
   <ul>
     
-      <li><a href="/2010/04/weekly-update-apr-19-25">April 19-25 status</a> &mdash; 25 Apr 2010</li>
-    
       <li><a href="/2010/04/weekly-update-apr-12-16">April 12-16 status</a> &mdash; 16 Apr 2010</li>
+    
+      <li><a href="/2010/04/weekly-update-apr-5-9">April 5-9 status</a> &mdash; 11 Apr 2010</li>
     
       <li><a href="/2010/03/quoteden-moving-to-kohana-3">Quoteden: Moving to Kohana 3</a> &mdash; 12 Mar 2010</li>
     

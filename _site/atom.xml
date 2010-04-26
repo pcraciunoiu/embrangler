@@ -4,13 +4,105 @@
  <title>Disembrangling Programming - Paul Craciunoiu</title>
  <link href="http://embrangler.com/atom.xml" rel="self"/>
  <link href="http://embrangler.com/"/>
- <updated>2010-04-17T02:42:01-07:00</updated>
+ <updated>2010-04-25T21:39:55-07:00</updated>
  <id>http://embrangler.com/</id>
  <author>
    <name>Paul Craciunoiu</name>
    <email>paul@craciunoiu.net</email>
  </author>
 
+ 
+ <entry>
+   <title>April 19-25 status</title>
+   <link href="http://embrangler.com/2010/04/weekly-update-apr-19-25"/>
+   <updated>2010-04-25T00:00:00-07:00</updated>
+   <id>http://embrangler.com/2010/04/weekly-update-apr-19-25</id>
+   <content type="html">&lt;h2 id='last_week_april_1925'&gt;Last week (April 19-25)&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;kitsune&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;r?d &lt;a href='http://github.com/jsocol/kitsune/commit/03b9b540b96968dda4bffacb0f6abdee351e9b12'&gt;adding sumo-dev to receive useful stack traces from kitsune&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;r?d &lt;a href='http://github.com/jsocol/kitsune/commit/a5ceb6974a03a8f0487c58a56baf9ed88c1a3701'&gt;improved maintenance of locales&lt;/a&gt;, go James!&lt;/li&gt;
+
+&lt;li&gt;r?d &lt;a href='http://github.com/jsocol/kitsune/commit/79847afa23ee9a3ff3200949824463e6d50e9bf2'&gt;kitsune documentation&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;r?d &lt;a href='http://github.com/jsocol/kitsune/commit/97fe787bae6592360e7603dc6440b4db729126de'&gt;better handling of timeouts for excerpts&lt;/a&gt; and &lt;a href='http://github.com/jsocol/kitsune/commit/29d2134f6d0d5ca22e0bbdcf6832c21aea9ee00a'&gt;merged&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;r?d &lt;a href='http://github.com/jsocol/kitsune/commit/32be0335fd22876379e9716e0df88ffc953fc151'&gt;unicode improvements, adding sumo.utils.urlencode&lt;/a&gt; and &lt;a href='http://github.com/jsocol/kitsune/commit/633d0166c9bf65fc35886ad05c038f5f74058448'&gt;merged&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;r?d &lt;a href='http://github.com/jsocol/kitsune/commit/23f586b285d3c63b842dd643623ce2491f1a3b87'&gt;fixing an IE6/7 bug&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;r?d &lt;a href='http://github.com/jsocol/kitsune/commit/e9aa5d2f87e163917ad339c0d6c06fc0b58625c2'&gt;case insensitive Accept-Language for Opera, Chrome, Safari&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;r?d &lt;a href='http://github.com/jsocol/kitsune/commit/4464b2033a4c5ce079034dabdafed808e0bcfc51'&gt;adding a search plugin&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='http://github.com/jsocol/kitsune/commit/633d0166c9bf65fc35886ad05c038f5f74058448'&gt;fix pagination on IE6&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='http://github.com/jsocol/kitsune/commit/b2563c4dffcf2515d23f7f861600fc01cb0578da'&gt;adding two new supported locales&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;finished &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=555251'&gt;lots of tests for search filters and JSON for all&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;finished &lt;a href='https://bugzilla.mozilla.org/buglist.cgi?quicksearch=ALL+product%3Asupport+milestone%3A2.0'&gt;the remaining 2.0 bugs&lt;/a&gt; with the rest of the SUMOdev team&lt;/li&gt;
+
+&lt;li&gt;installed mod_wsgi locally with help of &lt;a href='http://github.com/jsocol/kitsune/blob/development/docs/wsgi.rst'&gt;James&amp;#8217; docs&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;assisted with IT bugs to &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=559997'&gt;convert the database to UTF8&lt;/a&gt; according to &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=554210'&gt;this bug&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=559109'&gt;debugging server issues for kitsune stage&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;begin work on milestone 2.1&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;tiki&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;r?d &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=556672'&gt;using kitsune for search&lt;/a&gt; on &lt;a href='http://support-stage-new.mozilla.com/'&gt;stage-new&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;filed patch for &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=558105'&gt;adding WebTrends to SUMO for tracking&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;revert &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=558828'&gt;a notifications bug for articles&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=519927'&gt;add .htaccess rewrites for Fx3.7 help topic: keyboard shortcuts&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=554781'&gt;debugging screencast bug on mobile&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id='this_week_april_2630'&gt;This week (April 26-30)&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;WebDev onsite! Excited to hang out with the team.&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;kitsune&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;work on &lt;a href='https://bugzilla.mozilla.org/buglist.cgi?type1-0-0=substring&amp;amp;query_format=advanced&amp;amp;field0-0-0=product&amp;amp;value1-0-0=2.1&amp;amp;type0-0-0=substring&amp;amp;value0-0-0=support&amp;amp;field1-0-0=target_milestone&amp;amp;target_milestone=2.1&amp;amp;product=support.mozilla.com'&gt;forums and other 2.1 stuff&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;prepare for kitsune push, potential QA bugs&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;tiki&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;prepare for 1.5.4 push, potential QA bugs&lt;/li&gt;
+
+&lt;li&gt;figure out &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=554781'&gt;screencast bug&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</content>
+ </entry>
  
  <entry>
    <title>April 12-16 status</title>
@@ -1237,92 +1329,6 @@ sudo ln -s ../sites-available/sumo
 &lt;p&gt;You do not need to cite every coinceivable theory or article/chapter. Please be selective but pointed. I want to see that you have digested the material and can use it in a new situation (transfer).&amp;#8221;&lt;/p&gt;
 
 &lt;p&gt;Address the implications beyond yourself and UCSC. Use 3-5 sources.&lt;/p&gt;</content>
- </entry>
- 
- <entry>
-   <title>CS107 hw3</title>
-   <link href="http://embrangler.com/2009/10/cs107-hw3"/>
-   <updated>2009-10-31T00:00:00-07:00</updated>
-   <id>http://embrangler.com/2009/10/cs107-hw3</id>
-   <content type="html">&lt;p&gt;Homework 3&lt;/p&gt;
-
-&lt;p&gt;page 119.&lt;/p&gt;
-
-&lt;p&gt;3) Let &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/68f5a61e3dc29ee400c658a9a39421c9.png' alt='$A_i =$' style='vertical-align: -0.333333333333333ex;height: 1.88888888888889ex;' /&gt;&lt;/span&gt;the probability that pilot flies mission i safely. Then the probability that a pilot flies n consecutive missions safely is &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/f00a3e614d33df5dcc8602b83e4d39a5.png' alt='$P(A_1 \cdot .. A_n) = (\frac{49}{50})^n$' style='vertical-align: -0.777777777777778ex;height: 2.66666666666667ex;' /&gt;&lt;/span&gt;, since &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/a61609bcd4efff93cdbc1a9766637b16.png' alt='$A_i, .. A_j$' style='vertical-align: -0.666666666666667ex;height: 2.22222222222222ex;' /&gt;&lt;/span&gt; are independent events. Hence, Jim is right that the probability of a pilot flying 49 consecutive missions safely is about 0.3716017. However, he is wrong about the odds of the pilot performing the 50th mission successfully. Since the probability is independent of other missions, this pilot&amp;#8217;s probability to perform the 50th mission successively is still &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/2876d5e7a702d6844ae5340c24c85b36.png' alt='$\frac{49}{50}$' style='vertical-align: -0.777777777777778ex;height: 2.66666666666667ex;' /&gt;&lt;/span&gt;. This is because &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/c2d78eb9ec269c5e533cea0c6ffff1eb.png' alt='$P(A_{50} | A_{49} \cdot .. A_{1}) = P(A_{50})$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /&gt;&lt;/span&gt; (from independence). Consequently, Mia is also wrong about the pilot needing to return after 49 successful consecutive missions. The probability of success for the pilot&amp;#8217;s 50th mission is simply the same, &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/2876d5e7a702d6844ae5340c24c85b36.png' alt='$\frac{49}{50}$' style='vertical-align: -0.777777777777778ex;height: 2.66666666666667ex;' /&gt;&lt;/span&gt;. So, both Mia and Jim are wrong.&lt;/p&gt;
-
-&lt;p&gt;7) a) Let &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/b4e614da321255b600b3d28727a55e4e.png' alt='$P(L) = 0.725$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /&gt;&lt;/span&gt;, where L = event that a 35-year-old US citizen lives to age 65. The events of John (A) and Jim (B) living to age 65 are independent, and hence &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/326864b25c435f565a24f8b2a08cf681.png' alt='$P(AB) = 0.725^2 = 0.525625$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /&gt;&lt;/span&gt; b) &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/064ec3a51c7044bce9260ee37ac5d9bf.png' alt='$P(\bar{A}\bar{B}) = 0.275^2 = 0.075625$' style='vertical-align: -0.555555555555556ex;height: 2.44444444444444ex;' /&gt;&lt;/span&gt;&lt;/p&gt;
-
-&lt;p&gt;page 137.&lt;/p&gt;
-
-&lt;p&gt;16) Let E = Lorna guesses correctly, R = had is red, B = hat is blue. Then let: &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/5becb1ed7a9404d14a3cf0b783f907f9.png' alt='$g_1 =$' style='vertical-align: -0.444444444444444ex;height: 1.44444444444444ex;' /&gt;&lt;/span&gt; correct guess, hat is red &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/e7dfc6131568dd6a04424fac2c3a5159.png' alt='$g_2 =$' style='vertical-align: -0.444444444444444ex;height: 1.44444444444444ex;' /&gt;&lt;/span&gt; correct guess, hat is blue &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/55fd7c2e592cdae075a446958acf6a04.png' alt='$g_3 =$' style='vertical-align: -0.444444444444444ex;height: 1.44444444444444ex;' /&gt;&lt;/span&gt; incorrect guess, hat is red &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/cd1dba788bdc66d9aa556ed822577515.png' alt='$g_4 =$' style='vertical-align: -0.444444444444444ex;height: 1.44444444444444ex;' /&gt;&lt;/span&gt; incorrect guess, hat is red Therefore: &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/f716a01818ed05404ee12ccf1689cc64.png' alt='$P(g_1) = \alpha \cdot \frac{1}{2} = \frac{\alpha}{2}$' style='vertical-align: -0.777777777777778ex;height: 2.66666666666667ex;' /&gt;&lt;/span&gt; &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/d34b347bb3e74b0e4cf81738289063c5.png' alt='$P(g_2) = (1 - \alpha) \cdot \frac{1}{2} = \frac{1 - \alpha}{2}$' style='vertical-align: -0.777777777777778ex;height: 2.66666666666667ex;' /&gt;&lt;/span&gt; &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/a9e478bc87d7c9d4a1b7def1dfe929f5.png' alt='$P(g_3) = \alpha \cdot \frac{1}{2} = \frac{\alpha}{2}$' style='vertical-align: -0.777777777777778ex;height: 2.66666666666667ex;' /&gt;&lt;/span&gt; &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/ae5604f337d3e6842abb411e128d643f.png' alt='$P(g_4) = (1 - \alpha) \cdot \frac{1}{2} = \frac{1 - \alpha}{2}$' style='vertical-align: -0.777777777777778ex;height: 2.66666666666667ex;' /&gt;&lt;/span&gt; And chance of success: &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/39c645f0e86cdf0dcab10dee335e692e.png' alt='$P(success) = P(g_1) + P(g_2) = \frac{1}{2}$' style='vertical-align: -0.777777777777778ex;height: 2.66666666666667ex;' /&gt;&lt;/span&gt; It follows that there is no strategy to maximize Lorna&amp;#8217;s chance of success, since the chance of success is independent of &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/1cee10dbde9c6610660a1cdfa4038b16.png' alt='$\alpha$' style='vertical-align: -0.0ex;height: 1.0ex;' /&gt;&lt;/span&gt;.&lt;/p&gt;
-
-&lt;p&gt;17) Let events E = child is in the east wing, W = child is in the west wing, OE = officer in east finds the child, OW = officer in west finds the child, F = child is found, FE = child is found in east wing, FW = child is found in west wing. We are given: &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/c2f892951d9574028f7504c4d69088cd.png' alt='$P(OE|E) = 0.4, P(OW|W) = 0.4, P(E) = 0.75, P(W) = 0.25$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /&gt;&lt;/span&gt;. For the west wing, the probability of finding the child with two officers searching (if the child is there): &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/169952af32411388719ac91d259f47e6.png' alt='$P(FW|W) = P(OW1 \cup OW2 | W) = P(OW1 | W) + P(OW2 | W) - P(OW1|W \cdot OW2|W) = 0.4 + 0.4 - 0.16 = 0.64$' style='vertical-align: -0.555555555555556ex;height: 5.0ex;' /&gt;&lt;/span&gt; For the east wing, the same probability but with three officers searching: &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/c311de18037dd1ec19890e0fc567e0fb.png' alt='$P(FE|E) = P(OE1 \cup OE2 \cup OE3 | E) = 0.64 + 0.4 - 0.256 = 0.784$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /&gt;&lt;/span&gt; But: &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/853b0fb0000f9c9f111d5bd3d91b4fb6.png' alt='$P(FW|W) = \frac{P(FW \cdot W)}{P(W)}$' style='vertical-align: -1.11111111111111ex;height: 3.33333333333333ex;' /&gt;&lt;/span&gt; =&amp;gt; &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/7de661810959627ea49040a19be1e370.png' alt='$P(FW) = 0.25 \cdot 0.64 = 0.16$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /&gt;&lt;/span&gt; similarly, &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/e1a61bd0b5b5168a4e406d2ecb8d4561.png' alt='$P(FE) = 0.75 \cdot 0.784 = 0.588$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /&gt;&lt;/span&gt; Finally: &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/991999a1fccf647e393205ce784254e2.png' alt='$P(F) = P(FE \cup FW) = 0.748$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /&gt;&lt;/span&gt;&lt;/p&gt;
-
-&lt;p&gt;19) Let events S = professor smith passes Kevin, SF = professor smith fails Kevin, B and R similar to S, BF and RF similar to SF, K = Kevin is prepared, U = kevin is unprepared a) &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/abc44c11dfa8ab3f8805fb899a15eaad.png' alt='$P(R | BF \cdot SF) = ?$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /&gt;&lt;/span&gt; To calculate this, we need to take into account whether Kevin is prepared or not: &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/f1c12791c1d93fc675fc9fc05da62936.png' alt='$P(R | BF \cdot SF) = P(R | BF \cdot SF \cdot K) \cdot P(K | SF \cdot BF) + P(R | BF \cdot SF \cdot U) \cdot P(U | SF \cdot BF)$' style='vertical-align: -0.555555555555556ex;height: 5.0ex;' /&gt;&lt;/span&gt;. We can calculate &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/914628e1bd8224812b2f3ce877434eb8.png' alt='$P(K | SF \cdot BF)$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /&gt;&lt;/span&gt; using Bayes&amp;#8217; theorem. &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/d57d12bf5397e0ba27753d585bbe9fcf.png' alt='$P(K | SF \cdot BF) = \frac{P(SF \cdot BF | K) \cdot P(K)}{P(SF \cdot BF | K) \cdot P(K) + P(SF \cdot BF | U) \cdot P(U)}$' style='vertical-align: -1.11111111111111ex;height: 3.33333333333333ex;' /&gt;&lt;/span&gt;, and, similarly: &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/24e3efd58860b43fe043b2512b20dbf6.png' alt='$P(U | SF \cdot BF) = \frac{P(SF \cdot BF | U) \cdot P(U)}{P(SF \cdot BF | K) \cdot P(K) + P(SF \cdot BF | U) \cdot P(U)}$' style='vertical-align: -1.11111111111111ex;height: 3.33333333333333ex;' /&gt;&lt;/span&gt;. Since examiners fail or pass independently from each other, but depending on whether the student is prepared or not: &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/6f9a6290dc256b4276790a5a3201c711.png' alt='$P(SF \cdot BF | K) = P(SF | K) \cdot P(BF | K) = 0.15^2 = 0.0225$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /&gt;&lt;/span&gt;, and &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/76cabc5151dc003779a111faea406e7d.png' alt='$P(SF \cdot BF | U) = P(SF | U) \cdot P(BF | U) = 0.8^2 = 0.64$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /&gt;&lt;/span&gt;. Hence: &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/954882cf6da10e6699d7906bbd083a47.png' alt='$P(K | SF \cdot BF) = \frac{0.0225 \cdot 0.85}{0.0225 \cdot 0.85 + 0.64 \cdot 0.15} = \frac{0.019125}{0.115125} = 0.16612$' style='vertical-align: -0.888888888888889ex;height: 2.77777777777778ex;' /&gt;&lt;/span&gt; &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/749f54ff106be616acbd70df11dd256b.png' alt='$P(U | SF \cdot BF) = \frac{0.64 \cdot 0.15}{0.0225 \cdot 0.85 + 0.64 \cdot 0.15} = \frac{0.096}{0.115125} = 0.83388$' style='vertical-align: -0.888888888888889ex;height: 2.77777777777778ex;' /&gt;&lt;/span&gt; To calculate &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/28920b40bf8746c425c88769aa601d46.png' alt='$P(R | BF \cdot SF \cdot K)$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /&gt;&lt;/span&gt;, we use the fact that R, B and S are conditionally independent with respect to K, hence: &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/576ad0c765269a5a5ac1f23ba1b7e70c.png' alt='$P(R | BF \cdot SF \cdot K) = P(R | K) = 0.85$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /&gt;&lt;/span&gt; and, similarly &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/233deea3c99009fcb60f3a2a1ba5309e.png' alt='$P(R | BF \cdot SF \cdot U) = P(R | U) = 0.15$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /&gt;&lt;/span&gt;. Therefore: &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/0476189d378b89bb1c428f78027b269e.png' alt='$P(R | BF \cdot SF) = 0.85 \cdot 0.16612 + 0.20 \cdot 0.83388 = 0.141202 + 0.166776 = 0.307978 \approx 0.308$' style='vertical-align: -0.0ex;height: 4.44444444444444ex;' /&gt;&lt;/span&gt;&lt;/p&gt;
-
-&lt;p&gt;b) In answer to the second question, of course, S, B and R are not independent. Otherwise the probability would have been a simple: &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/25f41058decddf38b4dab642fd0e1e08.png' alt='$P(R | BF \cdot SF) = 0.85 \cdot 0.85 + 0.20 \cdot 0.15 = 0.7225 + 0.03 = 0.7525$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /&gt;&lt;/span&gt;&lt;/p&gt;
-
-&lt;p&gt;c) Yes. S, B and R are conditionally independent, depending on whether Kevin is or is not prepared.&lt;/p&gt;
-
-&lt;p&gt;page 150.&lt;/p&gt;
-
-&lt;p&gt;1) Possible values are: 5, 4, 3, 2, 1, 0. Probabilities:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;6 cases for difference = 0: (1, 1), (2, 2), &amp;#8230; (6, 6) ==&amp;gt; &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/b31104446559a20a806cd2b8481bc879.png' alt='$\frac{1}{6} = 0.1(6)$' style='vertical-align: -0.777777777777778ex;height: 2.66666666666667ex;' /&gt;&lt;/span&gt;&lt;/li&gt;
-
-&lt;li&gt;10 cases for difference = 1: (1, 2), (2, 1), &amp;#8230; (5, 6), (6, 5) ==&amp;gt; &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/8a0cd1aa253c33721b3f806f6cfc20b1.png' alt='$\frac{5}{18} = 0.2(7)$' style='vertical-align: -0.888888888888889ex;height: 2.77777777777778ex;' /&gt;&lt;/span&gt;&lt;/li&gt;
-
-&lt;li&gt;8 cases for difference = 2: (1, 3), (3, 1), &amp;#8230; (4, 6), (6, 4) ==&amp;gt; &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/b09c0f7932c9f7d215ad4048fb10ca93.png' alt='$\frac{2}{9} = 0.(2)$' style='vertical-align: -0.777777777777778ex;height: 2.66666666666667ex;' /&gt;&lt;/span&gt;&lt;/li&gt;
-
-&lt;li&gt;6 cases for difference = 3: (1, 4), (4, 1), (2, 5), (5, 2), (3, 6), (6, 3) ==&amp;gt; &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/b31104446559a20a806cd2b8481bc879.png' alt='$\frac{1}{6} = 0.1(6)$' style='vertical-align: -0.777777777777778ex;height: 2.66666666666667ex;' /&gt;&lt;/span&gt;&lt;/li&gt;
-
-&lt;li&gt;4 cases for difference = 4: (1, 5), (5, 1), (2, 6), (6, 2) ==&amp;gt; &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/3a322adcfd754e36ab6113f43625a6af.png' alt='$\frac{1}{9} = 0.(1)$' style='vertical-align: -0.777777777777778ex;height: 2.66666666666667ex;' /&gt;&lt;/span&gt;&lt;/li&gt;
-
-&lt;li&gt;2 cases for difference = 5: (1, 6), (6, 1) ==&amp;gt; &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/679a667648f035094bba6a43187d2470.png' alt='$\frac{1}{18} = 0.0(5)$' style='vertical-align: -0.888888888888889ex;height: 2.77777777777778ex;' /&gt;&lt;/span&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;2) Possible values are: &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/ad60805192efb11083669c28e1b1d1c6.png' alt='$-6 (2 red),$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /&gt;&lt;/span&gt;-2 (1 red, 1 blue), &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/45a970dbea1e06b3df411296208fab93.png' alt='$-1 (1 red, 1 white),$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /&gt;&lt;/span&gt;2 (2 blue), &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/44349d0ee4e34d1849433c92b541a6b4.png' alt='$3 (1 blue, 1 white),$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /&gt;&lt;/span&gt;4 (2 white). Sample space contains a total of 9 events. Probabilities:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;1 case for -6 ==&amp;gt; &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/3a322adcfd754e36ab6113f43625a6af.png' alt='$\frac{1}{9} = 0.(1)$' style='vertical-align: -0.777777777777778ex;height: 2.66666666666667ex;' /&gt;&lt;/span&gt;&lt;/li&gt;
-
-&lt;li&gt;2 cases for -2 ==&amp;gt; &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/b09c0f7932c9f7d215ad4048fb10ca93.png' alt='$\frac{2}{9} = 0.(2)$' style='vertical-align: -0.777777777777778ex;height: 2.66666666666667ex;' /&gt;&lt;/span&gt;&lt;/li&gt;
-
-&lt;li&gt;2 cases for -1 ==&amp;gt; &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/b09c0f7932c9f7d215ad4048fb10ca93.png' alt='$\frac{2}{9} = 0.(2)$' style='vertical-align: -0.777777777777778ex;height: 2.66666666666667ex;' /&gt;&lt;/span&gt;&lt;/li&gt;
-
-&lt;li&gt;1 case for 2 ==&amp;gt; &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/3a322adcfd754e36ab6113f43625a6af.png' alt='$\frac{1}{9} = 0.(1)$' style='vertical-align: -0.777777777777778ex;height: 2.66666666666667ex;' /&gt;&lt;/span&gt;&lt;/li&gt;
-
-&lt;li&gt;2 cases for 3 ==&amp;gt; &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/b09c0f7932c9f7d215ad4048fb10ca93.png' alt='$\frac{2}{9} = 0.(2)$' style='vertical-align: -0.777777777777778ex;height: 2.66666666666667ex;' /&gt;&lt;/span&gt;&lt;/li&gt;
-
-&lt;li&gt;1 case for 4 ==&amp;gt; &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/3a322adcfd754e36ab6113f43625a6af.png' alt='$\frac{1}{9} = 0.(1)$' style='vertical-align: -0.777777777777778ex;height: 2.66666666666667ex;' /&gt;&lt;/span&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;4) Volume is greater than 1.424 means that the side is greater than &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/aa5464f99a076c588e44f9d1bb8a37fc.png' alt='$l = \sqrt[3]{1.424} \approx 1.125$' style='vertical-align: -0.444444444444444ex;height: 2.33333333333333ex;' /&gt;&lt;/span&gt; The probability is, then: &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/a5d4f7bd13e83c646e4151f16b0b4cd8.png' alt='$\frac{1.25 - \sqrt[3]{1.424}}{0.25} \approx 0.4998 \approx 0.5$' style='vertical-align: -0.777777777777778ex;height: 3.22222222222222ex;' /&gt;&lt;/span&gt;&lt;/p&gt;
-
-&lt;p&gt;page 173.&lt;/p&gt;
-
-&lt;p&gt;2) The expected payment for parking illegally is: &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/31fbfe5df9bc3c9f1d91a63844a14782.png' alt='$E[X] = 0.4 \cdot 0 + 0.6 \cdot 25 = 15 &amp;gt; 7$' style='vertical-align: -0.555555555555556ex;height: 2.22222222222222ex;' /&gt;&lt;/span&gt;. Therefore the commuter should park at a lot.&lt;/p&gt;
-
-&lt;p&gt;3) The expected winning amount for a single ticket: &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/bbebbe64cae735f511856fbdf1e5219e.png' alt='$E[X] = \frac{4000}{2,000,000} \cdot 30 + \frac{500}{2,000,000} \cdot 800 + \frac{1}{2,000,000} \cdot 1,200,000 + \frac{1,995,499}{2,000,000} \cdot 0 = 0.06 + 0.2 + 0.6 = 0.86$' style='vertical-align: -0.222222222222222ex;height: 4.88888888888889ex;' /&gt;&lt;/span&gt;&lt;/p&gt;
-
-&lt;p&gt;page 182.&lt;/p&gt;
-
-&lt;p&gt;3) We calculate variance using the formula: &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/3dfa59cff6d3102c698bbb525c2c07b7.png' alt='$Var(X) = E(X^2) - [E(X)]^2$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /&gt;&lt;/span&gt; So &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/b10bea45a30c11c7001aafdb5db4e1ef.png' alt='$E(X) = (-3) \cdot \frac{7}{28} + (-2) \cdot \frac{6}{28} + (-1) \cdot \frac{5}{28} + 0 \cdot \frac{4}{28} + 1 \cdot \frac{3}{28} + 2 \cdot \frac{2}{28} + 3 \cdot \frac{1}{28} = \frac{1}{28} \cdot (-21-12-5+3+4+3) = -1$' style='vertical-align: -0.777777777777778ex;height: 5.33333333333333ex;' /&gt;&lt;/span&gt;, and &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/1d626196c1dae69572efb4727dd734a5.png' alt='$E(X^2) = (-3)^2 \cdot \frac{7}{28} + (-2)^2 \cdot \frac{6}{28} + (-1)^2 \cdot \frac{5}{28} + 0 \cdot \frac{4}{28} + 1^2 \cdot \frac{3}{28} + 2^2 \cdot \frac{2}{28} + 3^2 \cdot \frac{1}{28} = \frac{1}{28} \cdot (63+24+5+3+8+9) = \frac{112}{28} = 4$' style='vertical-align: -0.777777777777778ex;height: 5.33333333333333ex;' /&gt;&lt;/span&gt;. Therefore: &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/8dee65a3d3de2051d544096aca1c4b22.png' alt='$Var(X) = E(X^2) - [E(X)]^2 = 4 - 1^2 = 3$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /&gt;&lt;/span&gt;&lt;/p&gt;
-
-&lt;p&gt;4) We calculate variance using the formula: &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/3dfa59cff6d3102c698bbb525c2c07b7.png' alt='$Var(X) = E(X^2) - [E(X)]^2$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /&gt;&lt;/span&gt; So &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/ff8f48bb80f68fdc02ba917140adc2bf.png' alt='$E(X) = \int_{-3}^{\infty} \! F(x) \, dx = \int_{-3}^{0} \! \frac{3}{8} \, dx + \int_{0}^{6} \! \frac{3}{4} \, dx + \int_{6}^{\infty} \! 1 \, dx$' style='vertical-align: -0.777777777777778ex;height: 2.77777777777778ex;' /&gt;&lt;/span&gt; As we can see, E(X) does not exist for this distribution, since F(x) is not continuous and &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/a11a478f0d72e3310b6783abf78718ae.png' alt='$\int_{6}^{\infty} \! 1 \, dx$' style='vertical-align: -0.555555555555556ex;height: 2.22222222222222ex;' /&gt;&lt;/span&gt; is not finite.&lt;/p&gt;
-
-&lt;p&gt;page 238.&lt;/p&gt;
-
-&lt;p&gt;1) a) To determine c, we use the property &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/1aba8532a2845aa69b65039f955a116e.png' alt='$\int_{-\infty}^{\infty} \! f(x) \, dx = 1$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /&gt;&lt;/span&gt;: &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/a052ac8128e7b39d43a91c9deb3d5ae3.png' alt='$\int_{-\infty}^{\infty} \! f(x) \, dx = \int_{0}^{\infty} \! ce^{-3x} \, dx = c \cdot \int_{0}^{\infty} \! e^{-3x} \, dx = c \cdot (-\frac{1}{3}) \cdot (-1) =&amp;gt; c = 3$' style='vertical-align: -0.777777777777778ex;height: 2.66666666666667ex;' /&gt;&lt;/span&gt;&lt;/p&gt;
-
-&lt;p&gt;b) &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/30a9f358d850a27629deda8da3d29841.png' alt='$P(X \le 0.5) = f(0.5) = 3 \cdot e^{-1.5} = 0.78$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /&gt;&lt;/span&gt;&lt;/p&gt;
-
-&lt;p&gt;3) a) To determine c, we use the property &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/1aba8532a2845aa69b65039f955a116e.png' alt='$\int_{-\infty}^{\infty} \! f(x) \, dx = 1$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /&gt;&lt;/span&gt;: &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/ebbd2f3ff1e75b9d2c33b573b675a3ab.png' alt='$\int_{-\infty}^{\infty} \! f(x) \, dx = \int_{1}^{2} \! c(x-1)(2-x) \, dx = c \cdot \int_{1}^{2} \! (-x^2 + 3x - 2) \, dx = c \cdot \frac{1}{6} =&amp;gt; c = 6$' style='vertical-align: -0.777777777777778ex;height: 2.77777777777778ex;' /&gt;&lt;/span&gt;&lt;/p&gt;
-
-&lt;p&gt;b) Obviously, it takes 0 for the student to finish if x &amp;lt; 1. It takes &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/a4aee14067b1fa87b4a736d1a9b77f04.png' alt='$\int_{1}^{2} \! 6 \cdot (-x^2 + 3x - 2) = -2x^3 + 9x^2 - 12x + 5, if 1 \le x &amp;lt; 2$' style='vertical-align: -0.666666666666667ex;height: 2.66666666666667ex;' /&gt;&lt;/span&gt; and 1, if &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/6b00b562f7ea81ade7bc85438bd9f85d.png' alt='$x \ge 2$' style='vertical-align: -0.333333333333333ex;height: 1.88888888888889ex;' /&gt;&lt;/span&gt;&lt;/p&gt;
-
-&lt;p&gt;c) &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/b48af2ec9db68c5d6f2333af8a2be849.png' alt='$P(1.25) = -2 \cdot 1.25^3 + 9 \cdot 1.25^2 - 12 \cdot 1.25 + 5 = 0.15625$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /&gt;&lt;/span&gt;, probability to finish in 75 minutes. To finish between 1 + 1/2 and 2 hours, we take: &lt;span class='maruku-inline'&gt;&lt;img class='maruku-png' src='/images/latex/2c1354e743e047cc040b4937c9b31b4b.png' alt='$P(1.5 \le X \le 2) = F(2) - F(1.5) = 1 - (-2 \cdot 1.5^3 + 9 \cdot 1.5^2 - 12 \cdot 1.5 + 5) = 0.5$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /&gt;&lt;/span&gt;&lt;/p&gt;</content>
  </entry>
  
  
