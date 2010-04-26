@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Introduction to testing in Kohana 3</title>
+    <meta name="author" content="Paul Craciunoiu" />
+    <link href="http://feeds.feedburner.com/embrangler" rel="alternate" title="Paul Craciunoiu" type="application/atom+xml" />
+    <link type="image/x-icon" href="/favicon.ico" rel="shortcut icon">
+
+    <!-- syntax highlighting CSS -->
+    <link rel="stylesheet" href="/css/syntax.css" type="text/css" />
+
+    <!-- Homepage CSS -->
+    <link rel="stylesheet" href="/css/main.css" type="text/css" media="screen, projection" />
+</head>
+<body>
+
+<div class="site">
+
+    <div id="header" role="banner">
+        <h1 class="title">
+            <a href="/">Disembrangling Programming</a>
+        </h1>
+        <h2 class="subtitle">
+            <a href="/about" title="About Paul Craciunoiu">The simple life of a web developer &mdash; by Paul Craciunoiu<span> (About)</span></a>
+        </h2>
+    </div>
+    <div id="content" role="main">    
+    <div id="post">
+<h1>Introduction to testing in Kohana 3</h1>
+
+<p>Table of contents:</p>
+
+<ul>
+<li><a href='#introduction'>Introduction to introduction</a></li>
+
+<li><a href='#resources'>Resources</a></li>
+
+<li><a href='#setup'>Setup</a></li>
+
+<li><a href='#running_tests'>Running tests</a></li>
+
+<li><a href='#writing_tests'>Writing tests</a></li>
+
+<li><a href='#test_suites'>Test suites</a></li>
+
+<li><a href='#up_next'>Up next</a></li>
+</ul>
+
+<h2 id='introduction'>Introduction</h2>
+
+<p>I&#8217;m working on a project largely written in Kohana and JavaScript + jQuery. (Under construction at <a href='http://fastask.net'>fastask.net</a>.) It&#8217;s getting complicated enough to be worth having tests for it. While I&#8217;m at it, I&#8217;ll blog about the process, for several reasons:</p>
+
+<ol>
+<li>There aren&#8217;t that many resources on Kohana 3 and testing out there, I&#8217;ve found.</li>
+
+<li>Testing is hugely important for complex projects.</li>
+
+<li>Testing JavaScript is new to me (and fairly uncommon practice on the web, still).</li>
+
+<li>I plan to make this project publicly available fairly soon and it&#8217;s an opportunity to share information about it with my readers :)</li>
+</ol>
+
+<p>Along the way I will write about:</p>
+
+<ol>
+<li>
+<p>Writing tests in Kohana 3, the basics (this post)</p>
+</li>
+
+<li>
+<p>Writing JavaScript + jQuery tests</p>
+
+<ul>
+<li>so far I&#8217;m set on using <a href='http://code.google.com/p/js-test-driver/'>JS Test Driver</a> with <a href='http://docs.jquery.com/QUnit'>QUnit</a> or <a href='http://developer.yahoo.com/yui/3/test/'>YUI Test</a></li>
+</ul>
+</li>
+
+<li>
+<p>In-depth testing: using fixtures and mock objects, understanding code coverage, and more</p>
+</li>
+</ol>
+
+<h2 id='resources'>Resources</h2>
+
+<p>Testing on Kohana 3 is easy. It&#8217;s so easy, in fact, that I&#8217;ve written tests covering almost 1000 lines of code over one weekend.</p>
+
+<p>Here are the necessary resources to get you going:</p>
+
+<ul>
+<li><a href='http://github.com/kohana/unittest'>The Kohana 3 unittest module</a>, awesomely written by the Kohana team (thanks guys!)</li>
+
+<li><a href='http://www.phpunit.de/'>PHPUnit</a></li>
+
+<li><a href='http://www.phpunit.de/manual/3.4/en/'>PHPUnit&#8217;s brilliant documentation</a></li>
+
+<li><a href='http://github.com/kohana/unittest/tree/master/guide/'>unittest&#8217;s documentation</a>, I mostly used it for <a href='http://github.com/kohana/unittest/blob/master/guide/unittest.testing.md'>grouping tests</a></li>
+</ul>
+
+<h2 id='setup'>Setup</h2>
+
+<ol>
+<li>
+<p>Install PHPUnit. <a href='http://www.phpunit.de/manual/current/en/installation.html'>See their documentation</a>.</p>
+
+<ul>
+<li>I&#8217;m using Ubuntu and the package manager offers a relatively recent version. But, I wanted the latest. Installing it from source was so quick that I can&#8217;t remember if I had any problems with it :)</li>
+</ul>
+</li>
+
+<li>
+<p>Git a copy the unittest module: <code>git submodule add git://github.com/kohana/unittest.git modules/unittest</code></p>
+
+<ul>
+<li>Follow their <a href='http://github.com/kohana/unittest#readme'>installation instructions</a></li>
+
+<li>I wanted code coverage reports. At the time of writing, these require the archive module, but they really don&#8217;t have to. So I forked their unittest repo and rolled my own. <a href='http://github.com/pcraciunoiu/unittest'>My unittest repository</a> doesn&#8217;t require the archive module. I&#8217;ll write about code coverage in a later post.</li>
+</ul>
+</li>
+</ol>
+
+<p><em>You&#8217;re all set!</em></p>
+
+<h2 id='running_tests'>Running tests</h2>
+
+<p>I&#8217;m using the UI provided by the <strong>unittest</strong> module. That means I&#8217;ve added a route to it in my <strong>bootstrap.php</strong> file, and I&#8217;m accessing it at <code>http://mysite/phpunit</code>. From there, I pick the group of tests that I wish to run, and examine the results. Yep, it&#8217;s that easy.</p>
+
+<p>Here&#8217;s how it looks: <img src='/images/phpunit/fastask-running-tests.png' alt='Running PHPUnit tests in Kohana 3' /></p>
+
+<h2 id='writing_tests'>Writing tests</h2>
+
+<p>Start by reading <a href='http://www.phpunit.de/manual/3.4/en/writing-tests-for-phpunit.html'>the PHPUnit documentation</a>. It&#8217;s full of great examples. My project is fairly complex, and so I&#8217;m using <strong>TestSuites</strong>, <strong>TestCases</strong>, and <strong>fixtures</strong>. I will write about the latter in subsequent posts.</p>
+
+<p>Here is a simple example of a <strong>TestCase</strong>:</p>
+<div class='highlight'><pre><code class='php'><span class='cp'>&lt;?php</span> <span class='c'>// application/tests/test_example.php</span>
+
+<span class='sd'>/**</span>
+<span class='sd'> * Logged out, 403 forbidden everywhere.</span>
+<span class='sd'> * @group anonymous</span>
+<span class='sd'> * @group invalid</span>
+<span class='sd'> */</span>
+<span class='k'>class</span> <span class='nc'>AnonymousTest</span> <span class='k'>extends</span> <span class='nx'>PHPUnit_Framework_TestCase</span> <span class='p'>{</span>
+    <span class='k'>protected</span> <span class='k'>function</span> <span class='nf'>setUp</span><span class='p'>()</span> <span class='p'>{</span>
+        <span class='nx'>Kohana</span><span class='o'>::</span><span class='na'>config</span><span class='p'>(</span><span class='s1'>&#39;database&#39;</span><span class='p'>)</span><span class='o'>-&gt;</span><span class='na'>default</span> <span class='o'>=</span> <span class='nx'>Kohana</span><span class='o'>::</span><span class='na'>config</span><span class='p'>(</span><span class='s1'>&#39;database&#39;</span><span class='p'>)</span>
+                                                <span class='o'>-&gt;</span><span class='na'>unit_testing</span><span class='p'>;</span>
+    <span class='p'>}</span>
+
+    <span class='k'>function</span> <span class='nf'>testFastask</span><span class='p'>()</span> <span class='p'>{</span>
+        <span class='nv'>$fastask</span> <span class='o'>=</span> <span class='k'>new</span> <span class='nx'>Controller_Fastask</span><span class='p'>(</span><span class='k'>new</span> <span class='nx'>Request</span><span class='p'>(</span><span class='s1'>&#39;in/t&#39;</span><span class='p'>));</span>
+        <span class='nv'>$fastask</span><span class='o'>-&gt;</span><span class='na'>action_t</span><span class='p'>();</span>
+        <span class='nv'>$response</span> <span class='o'>=</span> <span class='nv'>$fastask</span><span class='o'>-&gt;</span><span class='na'>request</span><span class='p'>;</span>
+        <span class='nv'>$this</span><span class='o'>-&gt;</span><span class='na'>assertSame</span><span class='p'>(</span><span class='nv'>$response</span><span class='o'>-&gt;</span><span class='na'>headers</span><span class='p'>[</span><span class='s1'>&#39;Content-Type&#39;</span><span class='p'>],</span>
+                          <span class='s1'>&#39;application/json&#39;</span> <span class='p'>);</span>
+        <span class='nv'>$this</span><span class='o'>-&gt;</span><span class='na'>assertSame</span><span class='p'>(</span><span class='nv'>$response</span><span class='o'>-&gt;</span><span class='na'>status</span><span class='p'>,</span> <span class='m'>403</span><span class='p'>);</span>
+    <span class='p'>}</span>
+
+    <span class='c'>// ... more tests here ...</span>
+<span class='p'>}</span>
+</code></pre>
+</div>
+<p>So what&#8217;s happening here?</p>
+
+<ul>
+<li>Use <code>@group</code> to pile tests together. I&#8217;m using the UI at <code>http://mysite/phpunit</code> to pick which to run at any time.</li>
+
+<li>The <em>anonymous</em> group is handy to run all tests for actions performed by anonymous users.</li>
+
+<li>You can use multiple groups, as many as you want.</li>
+
+<li>I&#8217;m using an MySQL database to test in this example. This is a quick way to set the database Kohana uses when running tests:</li>
+</ul>
+<div class='highlight'><pre><code class='php'><span class='x'>Kohana::config(&#39;database&#39;)-&gt;default = Kohana::config(&#39;database&#39;)</span>
+<span class='x'>                                        -&gt;unit_testing;</span>
+</code></pre>
+</div>
+<ul>
+<li>Set up a test database in MySQL and configure access to it in <code>application/config/database.php</code></li>
+
+<li>I have multiple tests, hence the <code>setUp()</code> method. If you only have one test, don&#8217;t use this.</li>
+</ul>
+
+<h2 id='test_suites'>Test suites</h2>
+
+<p>Again, <a href='http://www.phpunit.de/manual/3.4/en/api.html#api.testsuite'>the PHPUnit documentation</a> is golden.</p>
+
+<p>Test suites come in handy when multiple tests can use the same setup. You can also <a href='http://www.phpunit.de/manual/3.4/en/fixtures.html#fixtures.sharing-fixture'>share fixtures between tests</a> this way. My main reason for using test suites was actually the gain in speed. This next example shows why.</p>
+<div class='highlight'><pre><code class='php'><span class='cp'>&lt;?php</span> <span class='c'>// application/tests/testsuite_fastask_search.php</span>
+
+<span class='sd'>/**</span>
+<span class='sd'> * This suite tests search functionality in the main controller.</span>
+<span class='sd'> * @group authenticated</span>
+<span class='sd'> * @group fastask</span>
+<span class='sd'> * @group fastask.search</span>
+<span class='sd'> */</span>
+<span class='k'>class</span> <span class='nc'>FastaskSearchTestSuite</span> <span class='k'>extends</span> <span class='nx'>PHPUnit_Framework_TestSuite</span> <span class='p'>{</span>
+    <span class='k'>public</span> <span class='k'>static</span> <span class='k'>function</span> <span class='nf'>suite</span><span class='p'>()</span> <span class='p'>{</span>
+        <span class='k'>require_once</span><span class='p'>(</span><span class='s1'>&#39;/path/to/kohana/application/testcases/&#39;</span> <span class='o'>.</span>
+            <span class='s1'>&#39;test_fastask_search.php&#39;</span><span class='p'>);</span>
+        <span class='k'>return</span> <span class='k'>new</span> <span class='nx'>FastaskSearchTestSuite</span><span class='p'>(</span><span class='s1'>&#39;FastaskSearchTest&#39;</span><span class='p'>);</span>
+    <span class='p'>}</span>
+
+    <span class='k'>protected</span> <span class='k'>function</span> <span class='nf'>setUp</span><span class='p'>()</span> <span class='p'>{</span>
+        <span class='c'>// Set database connection and log in the user.</span>
+        <span class='nx'>Kohana</span><span class='o'>::</span><span class='na'>config</span><span class='p'>(</span><span class='s1'>&#39;database&#39;</span><span class='p'>)</span><span class='o'>-&gt;</span><span class='na'>default</span> <span class='o'>=</span> <span class='nx'>Kohana</span><span class='o'>::</span><span class='na'>config</span><span class='p'>(</span><span class='s1'>&#39;database&#39;</span><span class='p'>)</span>
+                                                <span class='o'>-&gt;</span><span class='na'>unit_testing</span><span class='p'>;</span>
+        <span class='nx'>Auth</span><span class='o'>::</span><span class='na'>instance</span><span class='p'>()</span><span class='o'>-&gt;</span><span class='na'>login</span><span class='p'>(</span><span class='nx'>TEST_USERNAME</span><span class='p'>,</span> <span class='nx'>TEST_PASSWORD</span><span class='p'>);</span>
+
+        <span class='c'>// Index data and start up the search daemon</span>
+        <span class='nb'>exec</span><span class='p'>(</span><span class='s1'>&#39;indexer --all --config &#39;</span> <span class='o'>.</span> <span class='nx'>SPHINX_CONF</span><span class='p'>);</span>
+        <span class='nb'>exec</span><span class='p'>(</span><span class='s1'>&#39;searchd --config &#39;</span> <span class='o'>.</span> <span class='nx'>SPHINX_CONF</span><span class='p'>);</span>
+    <span class='p'>}</span>
+
+    <span class='k'>protected</span> <span class='k'>function</span> <span class='nf'>tearDown</span><span class='p'>()</span> <span class='p'>{</span>
+        <span class='c'>// Reset logins and log out the user</span>
+        <span class='nv'>$test_user</span> <span class='o'>=</span> <span class='nx'>Auth</span><span class='o'>::</span><span class='na'>instance</span><span class='p'>()</span><span class='o'>-&gt;</span><span class='na'>get_user</span><span class='p'>();</span>
+        <span class='nv'>$test_user</span><span class='o'>-&gt;</span><span class='na'>logins</span> <span class='o'>=</span> <span class='m'>1</span><span class='p'>;</span>
+        <span class='nv'>$test_user</span><span class='o'>-&gt;</span><span class='na'>save</span><span class='p'>();</span>
+        <span class='nx'>Auth</span><span class='o'>::</span><span class='na'>instance</span><span class='p'>()</span><span class='o'>-&gt;</span><span class='na'>logout</span><span class='p'>();</span>
+
+        <span class='c'>// Stop the search daemon</span>
+        <span class='nb'>exec</span><span class='p'>(</span><span class='s1'>&#39;killall searchd&#39;</span><span class='p'>);</span>
+    <span class='p'>}</span>
+<span class='p'>}</span>
+</code></pre>
+</div>
+<p>Explanation:</p>
+
+<ul>
+<li><code>TEST_USERNAME</code> and <code>TEST_PASSWORD</code> are used for multiple test suites, so I defined them in <code>application/config/phpunit.php</code></li>
+
+<li>I&#8217;m using the Sphinx search engine here to search through data. So I need to tell Sphinx to index my test data and start up the search daemon.</li>
+
+<li>Obviously, doing this for every search test is gonna slow things down <em>a lot</em>.</li>
+
+<li>I&#8217;m doing all these tests for authenticated users, so logging in and out for every test is also a waste.</li>
+</ul>
+
+<p>Next, some test cases.</p>
+<div class='highlight'><pre><code class='php'><span class='cp'>&lt;?php</span> <span class='c'>// application/testcases/test_fastask_search.php</span>
+
+<span class='sd'>/**</span>
+<span class='sd'> * @group loggedin</span>
+<span class='sd'> * @group fastask</span>
+<span class='sd'> * @group fastask.search</span>
+<span class='sd'> */</span>
+<span class='k'>class</span> <span class='nc'>FastaskSearchTest</span> <span class='k'>extends</span> <span class='nx'>PHPUnit_Framework_TestCase</span> <span class='p'>{</span>
+    <span class='sd'>/**</span>
+<span class='sd'>     * Sets the data for search.</span>
+<span class='sd'>     */</span>
+    <span class='k'>function</span> <span class='nf'>providerSearch</span><span class='p'>()</span> <span class='p'>{</span>
+        <span class='c'>/* format for each test:</span>
+<span class='c'>            array(</span>
+<span class='c'>                search term</span>
+<span class='c'>                status code to expect</span>
+<span class='c'>        */</span>
+        <span class='k'>return</span> <span class='k'>array</span><span class='p'>(</span>
+            <span class='k'>array</span><span class='p'>(</span><span class='s1'>&#39;s&#39;</span> <span class='o'>=&gt;</span> <span class='s1'>&#39;asdfgh&#39;</span><span class='p'>,</span> <span class='m'>404</span><span class='p'>),</span>
+            <span class='k'>array</span><span class='p'>(</span><span class='s1'>&#39;s&#39;</span> <span class='o'>=&gt;</span> <span class='s1'>&#39;&#39;</span><span class='p'>,</span> <span class='m'>404</span><span class='p'>),</span>
+            <span class='k'>array</span><span class='p'>(</span><span class='s1'>&#39;s&#39;</span> <span class='o'>=&gt;</span> <span class='s1'>&#39;nulla&#39;</span><span class='p'>,</span> <span class='m'>200</span><span class='p'>),</span>  <span class='c'>// One of those lorem-ipsum results</span>
+        <span class='p'>);</span>
+    <span class='p'>}</span>
+
+    <span class='sd'>/**</span>
+<span class='sd'>     * Test search.</span>
+<span class='sd'>     * @dataProvider providerSearch</span>
+<span class='sd'>     */</span>
+    <span class='k'>function</span> <span class='nf'>testSearch</span><span class='p'>(</span><span class='nv'>$search</span><span class='p'>,</span> <span class='nv'>$status</span><span class='p'>)</span> <span class='p'>{</span>
+        <span class='nv'>$_GET</span> <span class='o'>=</span> <span class='k'>array</span><span class='p'>(</span>
+            <span class='s1'>&#39;ep&#39;</span> <span class='o'>=&gt;</span> <span class='m'>1</span><span class='p'>,</span>
+            <span class='s1'>&#39;s&#39;</span>  <span class='o'>=&gt;</span> <span class='nv'>$search</span><span class='p'>,</span>
+        <span class='p'>);</span>
+        <span class='nv'>$fastask</span> <span class='o'>=</span> <span class='k'>new</span> <span class='nx'>Controller_Fastask</span><span class='p'>(</span><span class='k'>new</span> <span class='nx'>Request</span><span class='p'>(</span><span class='s1'>&#39;in/t&#39;</span><span class='p'>));</span>
+        <span class='nv'>$fastask</span><span class='o'>-&gt;</span><span class='na'>before</span><span class='p'>();</span>
+        <span class='nv'>$fastask</span><span class='o'>-&gt;</span><span class='na'>action_t</span><span class='p'>();</span>
+        <span class='nv'>$response</span> <span class='o'>=</span> <span class='nv'>$fastask</span><span class='o'>-&gt;</span><span class='na'>request</span><span class='p'>;</span>
+
+        <span class='nv'>$this</span><span class='o'>-&gt;</span><span class='na'>assertSame</span><span class='p'>(</span><span class='nv'>$response</span><span class='o'>-&gt;</span><span class='na'>headers</span><span class='p'>[</span><span class='s1'>&#39;Content-Type&#39;</span><span class='p'>],</span>
+                          <span class='s1'>&#39;application/json&#39;</span> <span class='p'>);</span>
+        <span class='nv'>$this</span><span class='o'>-&gt;</span><span class='na'>assertSame</span><span class='p'>(</span><span class='nv'>$response</span><span class='o'>-&gt;</span><span class='na'>status</span><span class='p'>,</span> <span class='nv'>$status</span><span class='p'>);</span>
+
+        <span class='nv'>$json</span> <span class='o'>=</span> <span class='nx'>json_decode</span><span class='p'>(</span><span class='nv'>$response</span><span class='o'>-&gt;</span><span class='na'>response</span><span class='p'>);</span>
+        <span class='nv'>$count</span> <span class='o'>=</span> <span class='nb'>count</span><span class='p'>(</span><span class='nv'>$json</span><span class='o'>-&gt;</span><span class='na'>tasks</span><span class='p'>);</span>
+        <span class='k'>if</span> <span class='p'>(</span><span class='nv'>$count</span> <span class='o'>&gt;</span> <span class='m'>0</span><span class='p'>)</span> <span class='p'>{</span>
+            <span class='k'>foreach</span> <span class='p'>(</span><span class='nv'>$json</span><span class='o'>-&gt;</span><span class='na'>tasks</span> <span class='k'>as</span> <span class='nv'>$task</span><span class='p'>)</span> <span class='p'>{</span>
+                <span class='nv'>$follower_ids</span> <span class='o'>=</span> <span class='k'>array</span><span class='p'>();</span>
+                <span class='k'>foreach</span><span class='p'>(</span><span class='nv'>$task</span><span class='o'>-&gt;</span><span class='na'>followers</span> <span class='k'>as</span> <span class='nv'>$follower</span><span class='p'>)</span> <span class='p'>{</span>
+                    <span class='nv'>$follower_ids</span><span class='p'>[]</span> <span class='o'>=</span> <span class='nv'>$follower</span><span class='o'>-&gt;</span><span class='na'>id</span><span class='p'>;</span>
+                <span class='p'>}</span>
+                <span class='nv'>$follower_ids</span><span class='p'>[]</span> <span class='o'>=</span> <span class='nv'>$task</span><span class='o'>-&gt;</span><span class='na'>user_id</span><span class='p'>;</span>
+
+                <span class='nv'>$this</span><span class='o'>-&gt;</span><span class='na'>assertContains</span><span class='p'>(</span><span class='nx'>TEST_USER_ID</span><span class='p'>,</span> <span class='nv'>$follower_ids</span><span class='p'>);</span>
+            <span class='p'>}</span>
+        <span class='p'>}</span>
+    <span class='p'>}</span>
+<span class='p'>}</span>
+</code></pre>
+</div>
+<p>The test case looks basically the same as it would if it were stand alone, but it has no <code>setUp()</code> or <code>tearDown()</code>. I was too lazy to write a separate test for having results, so I check the <code>$count</code> for testing the actual data.</p>
+
+<h2 id='up_next'>Up next</h2>
+
+<p>Stay tuned for Kohana tests using <a href='http://www.phpunit.de/manual/3.4/en/fixtures.html'>fixtures</a>, getting and using <a href='http://www.phpunit.de/manual/3.4/en/code-coverage-analysis.html'>code coverage</a> reports, and <a href='http://www.phpunit.de/manual/3.4/en/test-doubles.html#test-doubles.mock-objects'>mock objects</a>. Also, JavaScript tests!</p>
+</div>
+
+<div id="related">
+  <h2>Related Posts</h2>
+  <ul>
+    
+      <li><a href="/2010/03/quoteden-moving-to-kohana-3">Quoteden: Moving to Kohana 3</a> &mdash; 12 Mar 2010</li>
+    
+      <li><a href="/2010/03/embrangler-moving-to-jekyll">Embrangler: Moving to Jekyll</a> &mdash; 21 Mar 2010</li>
+    
+      <li><a href="/2009/11/hacking-wordpress-check-contact-messages-for-spam-using-wordpress-built-in-akismet-spam-for-comments">Hacking Wordpress: check contact messages for spam using Wordpress' built-in Akismet spam for comments</a> &mdash; 14 Nov 2009</li>
+    
+  </ul>
+</div>
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  (function() {
+   var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+   dsq.src = 'http://blogpaulcraciunoiu.disqus.com/embed.js';
+   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript=blogpaulcraciunoiu">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+<script type="text/javascript">
+//<![CDATA[
+(function() {
+    var links = document.getElementsByTagName('a');
+    var query = '?';
+    for(var i = 0; i < links.length; i++) {
+    if(links[i].href.indexOf('#disqus_thread') >= 0) {
+        query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
+    }
+    }
+    document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/blogpaulcraciunoiu/get_num_replies.js' + query + '"></' + 'script>');
+})();
+//]]>
+</script>
+    </div>
+
+    <div id="footer" role="contentinfo">
+        <div class="about">
+        <p>I work as a web developer for <a href="http://mozilla.com">Mozilla</a>, with main focus on <a href="http://www.djangoproject.com/">Django</a>, Python, and PHP. Occasionally, I write tutorials or post other information I find interesting.</p>
+        <p>I enjoy doing freelance work for other websites, mostly non-profits. If you're interested in my services, contact me through one of the links below.</p>
+        </p>
+        </div>
+        <div class="contact">
+            <a href="http://twitter.com/embrangler/">Follow me</a> -- 
+            <a href="http://craciunoiu.net/contact/paul">Email me</a> -- 
+            <a href="http://github.com/pcraciunoiu/">My GitHub</a>
+        </div>
+        <div class="quote">
+        <p>
+            Success is a journey, not a destination. The doing is often more important than the outcome. &mdash; <a href="http://quoteden.net/author/id/337">Arthur Robert Ashe, Jr</a>
+        </p>
+        <p>&copy; Paul Craciunoiu. Some rights reserved. Brought to you by <a href="http://wiki.github.com/mojombo/jekyll/">Jekyll</a></p>
+        </div>
+    </div>
+</div><!-- site -->
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-15382775-1");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+<!-- /Google Analytics -->
+</body>
+</html>
