@@ -125,14 +125,17 @@ Test suites come in handy when multiple tests can use the same setup. You can al
  * @group fastask
  * @group fastask.search
  */
-class FastaskSearchTestSuite extends PHPUnit_Framework_TestSuite {
-    public static function suite() {
-        require_once('/path/to/kohana/application/testcases/' .
-            'test_fastask_search.php');
+class FastaskSearchTestSuite extends PHPUnit_Framework_TestSuite
+{
+    public static function suite()
+    {
+        include_once '/path/to/kohana/application/testcases/' .
+            'test_fastask_search.php';
         return new FastaskSearchTestSuite('FastaskSearchTest');
     }
 
-    protected function setUp() {
+    protected function setUp()
+    {
         // Set database connection and log in the user.
         Kohana::config('database')->default = Kohana::config('database')
                                                 ->unit_testing;
@@ -143,9 +146,10 @@ class FastaskSearchTestSuite extends PHPUnit_Framework_TestSuite {
         exec('searchd --config ' . SPHINX_CONF);
     }
 
-    protected function tearDown() {
+    protected function tearDown()
+    {
         // Reset logins and log out the user
-        $test_user = Auth::instance()->get_user();
+        $test_user         = Auth::instance()->get_user();
         $test_user->logins = 1;
         $test_user->save();
         Auth::instance()->logout();
@@ -173,11 +177,13 @@ Next, some test cases.
  * @group fastask
  * @group fastask.search
  */
-class FastaskSearchTest extends PHPUnit_Framework_TestCase {
+class FastaskSearchTest extends PHPUnit_Framework_TestCase
+{
     /**
      * Sets the data for search.
      */
-    function providerSearch() {
+    function providerSearch()
+    {
         /* format for each test:
             array(
                 search term
@@ -194,7 +200,8 @@ class FastaskSearchTest extends PHPUnit_Framework_TestCase {
      * Test search.
      * @dataProvider providerSearch
      */
-    function testSearch($search, $status) {
+    function testSearch($search, $status)
+    {
         $_GET = array(
             'ep' => 1,
             's'  => $search,

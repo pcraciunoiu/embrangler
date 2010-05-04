@@ -192,14 +192,17 @@
 <span class='sd'> * @group fastask</span>
 <span class='sd'> * @group fastask.search</span>
 <span class='sd'> */</span>
-<span class='k'>class</span> <span class='nc'>FastaskSearchTestSuite</span> <span class='k'>extends</span> <span class='nx'>PHPUnit_Framework_TestSuite</span> <span class='p'>{</span>
-    <span class='k'>public</span> <span class='k'>static</span> <span class='k'>function</span> <span class='nf'>suite</span><span class='p'>()</span> <span class='p'>{</span>
-        <span class='k'>require_once</span><span class='p'>(</span><span class='s1'>&#39;/path/to/kohana/application/testcases/&#39;</span> <span class='o'>.</span>
-            <span class='s1'>&#39;test_fastask_search.php&#39;</span><span class='p'>);</span>
+<span class='k'>class</span> <span class='nc'>FastaskSearchTestSuite</span> <span class='k'>extends</span> <span class='nx'>PHPUnit_Framework_TestSuite</span>
+<span class='p'>{</span>
+    <span class='k'>public</span> <span class='k'>static</span> <span class='k'>function</span> <span class='nf'>suite</span><span class='p'>()</span>
+    <span class='p'>{</span>
+        <span class='k'>include_once</span> <span class='s1'>&#39;/path/to/kohana/application/testcases/&#39;</span> <span class='o'>.</span>
+            <span class='s1'>&#39;test_fastask_search.php&#39;</span><span class='p'>;</span>
         <span class='k'>return</span> <span class='k'>new</span> <span class='nx'>FastaskSearchTestSuite</span><span class='p'>(</span><span class='s1'>&#39;FastaskSearchTest&#39;</span><span class='p'>);</span>
     <span class='p'>}</span>
 
-    <span class='k'>protected</span> <span class='k'>function</span> <span class='nf'>setUp</span><span class='p'>()</span> <span class='p'>{</span>
+    <span class='k'>protected</span> <span class='k'>function</span> <span class='nf'>setUp</span><span class='p'>()</span>
+    <span class='p'>{</span>
         <span class='c'>// Set database connection and log in the user.</span>
         <span class='nx'>Kohana</span><span class='o'>::</span><span class='na'>config</span><span class='p'>(</span><span class='s1'>&#39;database&#39;</span><span class='p'>)</span><span class='o'>-&gt;</span><span class='na'>default</span> <span class='o'>=</span> <span class='nx'>Kohana</span><span class='o'>::</span><span class='na'>config</span><span class='p'>(</span><span class='s1'>&#39;database&#39;</span><span class='p'>)</span>
                                                 <span class='o'>-&gt;</span><span class='na'>unit_testing</span><span class='p'>;</span>
@@ -210,9 +213,10 @@
         <span class='nb'>exec</span><span class='p'>(</span><span class='s1'>&#39;searchd --config &#39;</span> <span class='o'>.</span> <span class='nx'>SPHINX_CONF</span><span class='p'>);</span>
     <span class='p'>}</span>
 
-    <span class='k'>protected</span> <span class='k'>function</span> <span class='nf'>tearDown</span><span class='p'>()</span> <span class='p'>{</span>
+    <span class='k'>protected</span> <span class='k'>function</span> <span class='nf'>tearDown</span><span class='p'>()</span>
+    <span class='p'>{</span>
         <span class='c'>// Reset logins and log out the user</span>
-        <span class='nv'>$test_user</span> <span class='o'>=</span> <span class='nx'>Auth</span><span class='o'>::</span><span class='na'>instance</span><span class='p'>()</span><span class='o'>-&gt;</span><span class='na'>get_user</span><span class='p'>();</span>
+        <span class='nv'>$test_user</span>         <span class='o'>=</span> <span class='nx'>Auth</span><span class='o'>::</span><span class='na'>instance</span><span class='p'>()</span><span class='o'>-&gt;</span><span class='na'>get_user</span><span class='p'>();</span>
         <span class='nv'>$test_user</span><span class='o'>-&gt;</span><span class='na'>logins</span> <span class='o'>=</span> <span class='m'>1</span><span class='p'>;</span>
         <span class='nv'>$test_user</span><span class='o'>-&gt;</span><span class='na'>save</span><span class='p'>();</span>
         <span class='nx'>Auth</span><span class='o'>::</span><span class='na'>instance</span><span class='p'>()</span><span class='o'>-&gt;</span><span class='na'>logout</span><span class='p'>();</span>
@@ -243,11 +247,13 @@
 <span class='sd'> * @group fastask</span>
 <span class='sd'> * @group fastask.search</span>
 <span class='sd'> */</span>
-<span class='k'>class</span> <span class='nc'>FastaskSearchTest</span> <span class='k'>extends</span> <span class='nx'>PHPUnit_Framework_TestCase</span> <span class='p'>{</span>
+<span class='k'>class</span> <span class='nc'>FastaskSearchTest</span> <span class='k'>extends</span> <span class='nx'>PHPUnit_Framework_TestCase</span>
+<span class='p'>{</span>
     <span class='sd'>/**</span>
 <span class='sd'>     * Sets the data for search.</span>
 <span class='sd'>     */</span>
-    <span class='k'>function</span> <span class='nf'>providerSearch</span><span class='p'>()</span> <span class='p'>{</span>
+    <span class='k'>function</span> <span class='nf'>providerSearch</span><span class='p'>()</span>
+    <span class='p'>{</span>
         <span class='c'>/* format for each test:</span>
 <span class='c'>            array(</span>
 <span class='c'>                search term</span>
@@ -264,7 +270,8 @@
 <span class='sd'>     * Test search.</span>
 <span class='sd'>     * @dataProvider providerSearch</span>
 <span class='sd'>     */</span>
-    <span class='k'>function</span> <span class='nf'>testSearch</span><span class='p'>(</span><span class='nv'>$search</span><span class='p'>,</span> <span class='nv'>$status</span><span class='p'>)</span> <span class='p'>{</span>
+    <span class='k'>function</span> <span class='nf'>testSearch</span><span class='p'>(</span><span class='nv'>$search</span><span class='p'>,</span> <span class='nv'>$status</span><span class='p'>)</span>
+    <span class='p'>{</span>
         <span class='nv'>$_GET</span> <span class='o'>=</span> <span class='k'>array</span><span class='p'>(</span>
             <span class='s1'>&#39;ep&#39;</span> <span class='o'>=&gt;</span> <span class='m'>1</span><span class='p'>,</span>
             <span class='s1'>&#39;s&#39;</span>  <span class='o'>=&gt;</span> <span class='nv'>$search</span><span class='p'>,</span>
