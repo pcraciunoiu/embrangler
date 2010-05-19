@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <title>April 5-9 status</title>
+    <title>May 3-14 status</title>
     <meta name="author" content="Paul Craciunoiu" />
     <link href="http://feeds.feedburner.com/embrangler" rel="alternate" title="Paul Craciunoiu" type="application/atom+xml" />
     <link type="image/x-icon" href="/favicon.ico" rel="shortcut icon">
@@ -27,74 +27,74 @@
     </div>
     <div id="content" role="main">    
     <div id="post">
-<h1>April 5-9 status</h1>
+<h1>May 3-14 status</h1>
 
-<h2 id='last_week_april_59'>Last week (April 5-9)</h2>
+<h2 id='two_weeks_ago_may_37'>Two weeks ago (May 3-7)</h2>
 
 <ul>
 <li>
-<p>kitsune</p>
+<p>pushed 2.0/1.5.4 with rest of SUMOdev</p>
 
 <ul>
-<li>r? <a href='https://bugzilla.mozilla.org/show_bug.cgi?id=554740'>exclude staging articles from search</a>, which also includes <a href='http://github.com/jsocol/kitsune/commit/ef50d5fcd64f65f89ff688874f3fa920f69ff216'>sphinx tests</a>, reviewed again later after <a href='http://github.com/jsocol/kitsune/commit/c2a1356e084a68de17f20376ad051c918ecfd172'>a fix to not require FORCE_DB</a></li>
+<li>first time had problems with nfs mounts</li>
 
-<li>r? <a href='http://github.com/jsocol/kitsune/commit/dbdb116aecda1332c932e278786dba2719c71d09'>l10n -&gt; tower rename</a></li>
-
-<li>r? <a href='https://bugzilla.mozilla.org/show_bug.cgi?id=556810'>add JINJA_CONFIG() for string extraction and caching</a></li>
-
-<li>quick look at <a href='http://github.com/jsocol/kitsune/commit/f159b8f25ea78c38cc7e60fae6004ccb5e1273c6'>minify in kitsune</a>, TODO next week</li>
-
-<li>fixed <a href='https://bugzilla.mozilla.org/show_bug.cgi?id=556418'>duplicate page param in paginator URL</a></li>
-
-<li>spent most of the week <a href='https://bugzilla.mozilla.org/show_bug.cgi?id=554210'>converting our current database from latin1 to utf8</a></li>
+<li>second time was a success, yay!</li>
 </ul>
 </li>
 
 <li>
-<p>tiki</p>
-
-<ul>
-<li>started work on <a href='https://bugzilla.mozilla.org/show_bug.cgi?id=558105'>adding WebTrends to SUMO for tracking</a></li>
-
-<li><a href='https://bugzilla.mozilla.org/show_bug.cgi?id=555003'>push desktop 1.5.3 on Tuesday</a> &#8212; <a href='https://bugzilla.mozilla.org/buglist.cgi?quicksearch=ALL+product%3Asupport+milestone%3A1.5.3'>see bugs</a></li>
-</ul>
-</li>
-</ul>
-
-<h2 id='this_week_april_1216'>This week (April 12-16)</h2>
-
-<ul>
-<li>
-<p>kitsune</p>
-
-<ul>
-<li>r? <a href='http://github.com/jsocol/kitsune/commits/bug-550515'>minify bug 550515</a></li>
-
-<li>r? <a href='https://bugzilla.mozilla.org/show_bug.cgi?id=553131'>tiki patch for django sessions</a></li>
-
-<li>r? <a href='https://bugzilla.mozilla.org/show_bug.cgi?id=558228'>cool vim indenting in templates</a></li>
-
-<li><strong>finish up <a href='https://bugzilla.mozilla.org/show_bug.cgi?id=554210'>character encoding conversion</a></strong></li>
-
-<li>finish up <a href='http://github.com/pcraciunoiu/kitsune/commits/bug-555249'>when to trigger advanced search</a></li>
-
-<li>finish getting sessions into kitsune, i.e. fix any issues spotted by davedash/jbalogh/jsocol on <a href='http://github.com/pcraciunoiu/kitsune/tree/bug-553131'>bug 553131</a></li>
-</ul>
+<p>r?d <a href='https://bugzilla.mozilla.org/show_bug.cgi?id=561537'>nicer 404/500 handlers</a></p>
 </li>
 
 <li>
-<p>tiki</p>
+<p>r?d <a href='http://github.com/jsocol/kitsune/commit/dbfc4488fc8df9d1f7a07fe3c6d1ecbc17752441'>new wsgi script</a></p>
+</li>
 
-<ul>
-<li>finish <a href='https://bugzilla.mozilla.org/show_bug.cgi?id=558105'>adding WebTrends to SUMO for tracking</a></li>
-</ul>
+<li>
+<p>r?d <a href='https://bugzilla.mozilla.org/show_bug.cgi?id=563995'>rewrite for discussion forums</a>, which also cleaned up some of the search rewrites from previous push</p>
+</li>
+
+<li>
+<p>r?d <a href='https://bugzilla.mozilla.org/show_bug.cgi?id=563593'>posting should update # of replies</a></p>
+</li>
+
+<li>
+<p><a href='https://bugzilla.mozilla.org/show_bug.cgi?id=563111'>threads list view</a></p>
 </li>
 </ul>
 
-<h3 id='stretch_goals'>Stretch goals</h3>
+<h2 id='last_week_may_1014'>Last week (May 10-14)</h2>
 
 <ul>
-<li><a href='https://bugzilla.mozilla.org/show_bug.cgi?id=553734'>search summaries are Jinja-friendly</a></li>
+<li>r?d preliminary work on <a href='https://bugzilla.mozilla.org/show_bug.cgi?id=565362'>atom feeds</a></li>
+
+<li><a href='https://bugzilla.mozilla.org/show_bug.cgi?id=563586'>forums list view</a></li>
+
+<li><a href='https://bugzilla.mozilla.org/show_bug.cgi?id=561524'>wiki markup in discussion forums</a></li>
+
+<li>filed some <a href='https://bugzilla.mozilla.org/show_bug.cgi?id=565801'>new</a> <a href='https://bugzilla.mozilla.org/show_bug.cgi?id=565481'>bugs</a></li>
+
+<li>added some <a href='https://bugzilla.mozilla.org/show_bug.cgi?id=565320'>omitted indexes</a> to tiki</li>
+
+<li><a href='https://bugzilla.mozilla.org/show_bug.cgi?id=565701'>re-sync db</a>, to test the SQL fix from above, also had IT <a href='https://bugzilla.mozilla.org/show_bug.cgi?id=565810'>run schematic</a> and set up test forum</li>
+
+<li><a href='https://bugzilla.mozilla.org/show_bug.cgi?id=558499'>remove omniture tags from tiki</a></li>
+
+<li><a href='https://bugzilla.mozilla.org/show_bug.cgi?id=564385'>fix crc32 not working with unicode</a></li>
+
+<li>discussion with <a href='http://spindrop.us/'>Dave Dash</a> about <a href='http://github.com/davedash/zamboni/blob/master/docs/topics/acl.rst'>ACL</a> on <a href='https://addons.mozilla.org/en-US/firefox/'>AMO</a></li>
+</ul>
+
+<h2 id='this_week_may_1721'>This week (May 17-21)</h2>
+
+<ul>
+<li><a href='https://bugzilla.mozilla.org/show_bug.cgi?id=561523'>implement ACL</a> after serious research</li>
+
+<li><a href='https://bugzilla.mozilla.org/show_bug.cgi?id=564101'>activate admin in forums app</a></li>
+
+<li>help out new team members</li>
+
+<li>fix up <a href='https://bugzilla.mozilla.org/show_bug.cgi?id=565801'>some</a> <a href='https://bugzilla.mozilla.org/show_bug.cgi?id=566102'>of the</a> wiki parser bugs</li>
 </ul>
 </div>
 
@@ -104,9 +104,9 @@
     
       <li><a href="/2010/04/weekly-update-apr-19-25">April 19-25 status</a> &mdash; 25 Apr 2010</li>
     
-      <li><a href="/2010/04/weekly-update-apr-12-16">April 12-16 status</a> &mdash; 16 Apr 2010</li>
-    
       <li><a href="/2010/03/quoteden-moving-to-kohana-3">Quoteden: Moving to Kohana 3</a> &mdash; 12 Mar 2010</li>
+    
+      <li><a href="/2010/03/embrangler-moving-to-jekyll">Embrangler: Moving to Jekyll</a> &mdash; 21 Mar 2010</li>
     
   </ul>
 </div>

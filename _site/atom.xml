@@ -4,13 +4,87 @@
  <title>Disembrangling Programming - Paul Craciunoiu</title>
  <link href="http://embrangler.com/atom.xml" rel="self"/>
  <link href="http://embrangler.com/"/>
- <updated>2010-05-03T22:45:38-07:00</updated>
+ <updated>2010-05-19T01:48:05-07:00</updated>
  <id>http://embrangler.com/</id>
  <author>
    <name>Paul Craciunoiu</name>
    <email>paul@craciunoiu.net</email>
  </author>
 
+ 
+ <entry>
+   <title>May 3-14 status</title>
+   <link href="http://embrangler.com/2010/05/weekly-update-may-10-14"/>
+   <updated>2010-05-19T00:00:00-07:00</updated>
+   <id>http://embrangler.com/2010/05/weekly-update-may-10-14</id>
+   <content type="html">&lt;h2 id='two_weeks_ago_may_37'&gt;Two weeks ago (May 3-7)&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;pushed 2.0/1.5.4 with rest of SUMOdev&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;first time had problems with nfs mounts&lt;/li&gt;
+
+&lt;li&gt;second time was a success, yay!&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;r?d &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=561537'&gt;nicer 404/500 handlers&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;r?d &lt;a href='http://github.com/jsocol/kitsune/commit/dbfc4488fc8df9d1f7a07fe3c6d1ecbc17752441'&gt;new wsgi script&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;r?d &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=563995'&gt;rewrite for discussion forums&lt;/a&gt;, which also cleaned up some of the search rewrites from previous push&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;r?d &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=563593'&gt;posting should update # of replies&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=563111'&gt;threads list view&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id='last_week_may_1014'&gt;Last week (May 10-14)&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;r?d preliminary work on &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=565362'&gt;atom feeds&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=563586'&gt;forums list view&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=561524'&gt;wiki markup in discussion forums&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;filed some &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=565801'&gt;new&lt;/a&gt; &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=565481'&gt;bugs&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;added some &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=565320'&gt;omitted indexes&lt;/a&gt; to tiki&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=565701'&gt;re-sync db&lt;/a&gt;, to test the SQL fix from above, also had IT &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=565810'&gt;run schematic&lt;/a&gt; and set up test forum&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=558499'&gt;remove omniture tags from tiki&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=564385'&gt;fix crc32 not working with unicode&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;discussion with &lt;a href='http://spindrop.us/'&gt;Dave Dash&lt;/a&gt; about &lt;a href='http://github.com/davedash/zamboni/blob/master/docs/topics/acl.rst'&gt;ACL&lt;/a&gt; on &lt;a href='https://addons.mozilla.org/en-US/firefox/'&gt;AMO&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id='this_week_may_1721'&gt;This week (May 17-21)&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=561523'&gt;implement ACL&lt;/a&gt; after serious research&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=564101'&gt;activate admin in forums app&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;help out new team members&lt;/li&gt;
+
+&lt;li&gt;fix up &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=565801'&gt;some&lt;/a&gt; &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=566102'&gt;of the&lt;/a&gt; wiki parser bugs&lt;/li&gt;
+&lt;/ul&gt;</content>
+ </entry>
  
  <entry>
    <title>April 26-30 status</title>
@@ -1172,56 +1246,6 @@ sudo ln -s ../sites-available/sumo
 &lt;h2 id='help'&gt;Help?&lt;/h2&gt;
 
 &lt;p&gt;I&amp;#8217;ve tried to cover everything, but of course there may be stuff I missed. If you need additional info, you may leave a comment. To obtain a copy of our database, you can find &lt;a href='https://wiki.mozilla.org/Support:Sumodev#Get_Involved'&gt;us on IRC or contact us by email&lt;/a&gt;.&lt;/p&gt;</content>
- </entry>
- 
- <entry>
-   <title>My list of Firefox add-ons</title>
-   <link href="http://embrangler.com/2009/11/my-list-of-firefox-add-ons"/>
-   <updated>2009-11-15T00:00:00-08:00</updated>
-   <id>http://embrangler.com/2009/11/my-list-of-firefox-add-ons</id>
-   <content type="html">&lt;p&gt;&lt;strong&gt;UPDATE (27 Feb 2010)&lt;/strong&gt; &lt;a href='https://addons.mozilla.org/en-US/firefox/addon/67651'&gt;BarTab&lt;/a&gt; is an awesome extension.&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href='https://addons.mozilla.org/en-US/firefox/addon/67651'&gt;BarTab&lt;/a&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;a href='https://addons.mozilla.org/en-US/firefox/addon/6076'&gt;Better Gmail 2&lt;/a&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;a href='https://addons.mozilla.org/en-US/firefox/addon/2064'&gt;Dummy Lipsum&lt;/a&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;a href='https://addons.mozilla.org/en-US/firefox/addon/1843'&gt;Firebug&lt;/a&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;a href='https://addons.mozilla.org/en-US/firefox/addon/1951'&gt;Fission&lt;/a&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;a href='https://addons.mozilla.org/en-US/firefox/addon/173'&gt;Gmail Notifier&lt;/a&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;a href='https://addons.mozilla.org/en-US/firefox/addon/4762'&gt;Hide Menubar&lt;/a&gt; - &lt;del datetime='2010-02-28T04:47:09+00:00'&gt;Now part of Firefox 3.6&lt;/del&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;a href='https://addons.mozilla.org/en-US/firefox/addon/173'&gt;Jetpack&lt;/a&gt; (only Mozilla specific jetpacks yet)&lt;/li&gt;
-
-&lt;li&gt;&lt;a href='https://addons.mozilla.org/en-US/firefox/addon/3829'&gt;Live HTTP headers&lt;/a&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;a href='https://addons.mozilla.org/en-US/firefox/addon/10900'&gt;Personas&lt;/a&gt; - &lt;del datetime='2010-02-28T04:47:09+00:00'&gt;Now part of Firefox 3.6, but I keep the addon&lt;/del&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;a href='https://addons.mozilla.org/en-US/firefox/addon/7661'&gt;Read It Later&lt;/a&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;a href='https://addons.mozilla.org/en-US/firefox/addon/1956'&gt;Tabs Open Relative&lt;/a&gt; - &lt;del datetime='2010-02-28T04:47:09+00:00'&gt;Now part of Firefox 3.6&lt;/del&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;a href='https://addons.mozilla.org/en-US/firefox/addon/10868'&gt;Weave&lt;/a&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;a href='https://addons.mozilla.org/en-US/firefox/addon/60'&gt;Web Developer&lt;/a&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;a href='https://addons.mozilla.org/en-US/firefox/addon/1264'&gt;Yahoo! Mail Notifier&lt;/a&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;a href='https://addons.mozilla.org/en-US/firefox/addon/5369'&gt;YSlow&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Other potentially useful that I haven&amp;#8217;t installed:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href='http://platypus.mozdev.org/'&gt;Platypus&lt;/a&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;a href='http://www.sitepoint.com/dustmeselectors/'&gt;Dust Me Selectors&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content>
  </entry>
  
  
