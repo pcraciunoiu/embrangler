@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Access control in Django, and django-authority</title>
+    <meta name="author" content="Paul Craciunoiu" />
+    <link href="http://feeds.feedburner.com/embrangler" rel="alternate" title="Paul Craciunoiu" type="application/atom+xml" />
+    <link type="image/x-icon" href="/favicon.ico" rel="shortcut icon">
+
+    <!-- syntax highlighting CSS -->
+    <link rel="stylesheet" href="/css/syntax.css" type="text/css" />
+
+    <!-- Homepage CSS -->
+    <link rel="stylesheet" href="/css/main.css" type="text/css" media="screen, projection" />
+</head>
+<body>
+
+<div class="site">
+
+    <div id="header" role="banner">
+        <h1 class="title">
+            <a href="/">Disembrangling Programming</a>
+        </h1>
+        <h2 class="subtitle">
+            <a href="/about" title="About Paul Craciunoiu">The simple life of a web developer &mdash; by Paul Craciunoiu<span> (About)</span></a>
+        </h2>
+    </div>
+    <div id="content" role="main">    
+    <div id="post">
+<h1>Access control in Django, and django-authority</h1>
+
+<p>The past week I&#8217;ve been working with Django and permissions. I&#8217;ll talk here about the available options and go into details about the one <a href='https://wiki.mozilla.org/Support/Kitsune'>Kitsune</a> is using.</p>
+
+<p>Here are the options I looked at:</p>
+
+<ul>
+<li><a href='#djangos_default_permissions'>Django&#8217;s default permissions</a></li>
+
+<li><a href='#amos_access_app'>AMO&#8217;s access app</a></li>
+
+<li><a href='#djangoauthority'>django-authority</a></li>
+</ul>
+
+<h2 id='djangos_default_permissions'>Django&#8217;s default permissions</h2>
+
+<p><em>Read more about this in <a href='http://docs.djangoproject.com/en/dev/topics/auth/'>Django&#8217;s documentation</a>.</em></p>
+
+<p>Django provides a convenient and easy to use permissions system. The documentation covers it all, so I&#8217;m just going to summarize the pros and cons:</p>
+
+<p><strong>Pros:</strong></p>
+
+<ul>
+<li>Comes with Django (=&gt; robust, well-written and stable)</li>
+
+<li>Permission functions attached to the user object</li>
+
+<li>Per-group permissions and per-user permissions</li>
+
+<li>Model-level (a.k.a. per content_type) permissions (can add custom model-level permissions as well)</li>
+
+<li>Work with Jinja templates, simply use <code>user.has_perm(&#39;perm_name&#39;)</code></li>
+</ul>
+
+<p><strong>Cons:</strong></p>
+
+<ul>
+<li>No per-object permissions</li>
+</ul>
+
+<h2 id='amos_access_app'>AMO&#8217;s access app</h2>
+
+<p><a href='http://github.com/davedash/zamboni/blob/master/docs/topics/acl.rst'>AMO&#8217;s access app</a> adds some flexibility on assigning permissions with wildcards and also stores the user&#8217;s groups in <code>request.groups</code>.</p>
+
+<p><strong>Pros:</strong></p>
+
+<ul>
+<li>Flexible way to assign all permissions in a certain group</li>
+
+<li>Does not store permissions in the models <code>Meta</code> class</li>
+</ul>
+
+<p><strong>Cons:</strong></p>
+
+<ul>
+<li>Replaces django&#8217;s permission system (either use one or the other)</li>
+
+<li>No per-object permissions</li>
+</ul>
+
+<p>To use this, you can do something like this in your views:</p>
+<div class='highlight'><pre><code class='python'><span class='kn'>from</span> <span class='nn'>access</span> <span class='kn'>import</span> <span class='n'>acl</span>
+
+<span class='c'># ...</span>
+
+<span class='k'>def</span> <span class='nf'>some_view_action</span><span class='p'>():</span>
+    <span class='n'>acl</span><span class='o'>.</span><span class='n'>action_allowed</span><span class='p'>(</span><span class='n'>request</span><span class='p'>,</span> <span class='s'>&#39;Group&#39;</span><span class='p'>,</span> <span class='s'>&#39;PermissionName&#39;</span><span class='p'>)</span>
+</code></pre>
+</div>
+<h2 id='djangoauthority'>django-authority</h2>
+
+<p><a href='http://packages.python.org/django-authority/'>django-authority</a> was the most promising of the three. It adds per-object permissions and wraps Django&#8217;s default permissions system without forcing an either-or choice. It also has a decent documentation, and although still in draft at the time of this writing, it was enough for me to figure out how to use.</p>
+
+<p><strong>Pros:</strong></p>
+
+<ul>
+<li>Per-object permissions</li>
+
+<li>Wraps Django&#8217;s default permissions system, so you can use both</li>
+
+<li>Custom permissions</li>
+
+<li>Add permissions to <code>appname/permissions.py</code>, so they are completely separate from the models (unlike Django&#8217;s permissions)</li>
+</ul>
+
+<p><strong>Cons:</strong></p>
+
+<ul>
+<li>Needs a bit of work to hook in with <a href='http://jinja.pocoo.org/2/documentation'>Jinja</a> templates</li>
+
+<li>Admin functionality not yet complete - the admin form <a href='http://packages.python.org/django-authority/handling_admin.html'>generated by the <code>edit_permissions</code></a> <a href='http://docs.djangoproject.com/en/dev/ref/contrib/admin/actions/'>admin action</a> does not work at the time of this writing. The alternative is not too bad however, you can manually add to the Permission model using that model&#8217;s admin.</li>
+</ul>
+
+<h3 id='djangoauthority_on_kitsune'>django-authority on Kitsune</h3>
+
+<p>We are currently focused on rewriting SUMO&#8217;s discussion forums. For Kitsune, we have multiple forums and we wanted the ability to have different forum moderators per forum. We&#8217;re also using Jinja. django-authority comes with default Django template support, so if you&#8217;re using that, you don&#8217;t need to write your own template functions/filters.</p>
+
+<p>For Jinja support, just add this to some app&#8217;s helpers.py</p>
+<div class='highlight'><pre><code class='python'><span class='kn'>import</span> <span class='nn'>jinja2</span>
+<span class='kn'>from</span> <span class='nn'>jingo</span> <span class='kn'>import</span> <span class='n'>register</span>
+<span class='kn'>import</span> <span class='nn'>authority</span>
+
+<span class='c'># ...</span>
+
+<span class='nd'>@register</span><span class='o'>.</span><span class='n'>function</span>
+<span class='nd'>@jinja2</span><span class='o'>.</span><span class='n'>contextfunction</span>
+<span class='k'>def</span> <span class='nf'>has_perm</span><span class='p'>(</span><span class='n'>context</span><span class='p'>,</span> <span class='n'>perm</span><span class='p'>,</span> <span class='n'>obj</span><span class='p'>):</span>
+    <span class='sd'>&quot;&quot;&quot;</span>
+<span class='sd'>    Check if the user has a permission on a specific object.</span>
+
+<span class='sd'>    Returns boolean.</span>
+<span class='sd'>    &quot;&quot;&quot;</span>
+    <span class='n'>check</span> <span class='o'>=</span> <span class='n'>authority</span><span class='o'>.</span><span class='n'>get_check</span><span class='p'>(</span><span class='n'>context</span><span class='p'>[</span><span class='s'>&#39;request&#39;</span><span class='p'>]</span><span class='o'>.</span><span class='n'>user</span><span class='p'>,</span> <span class='n'>perm</span><span class='p'>)</span>
+    <span class='k'>return</span> <span class='n'>check</span><span class='p'>(</span><span class='n'>obj</span><span class='p'>)</span>
+</code></pre>
+</div>
+<p>Then, in your templates, you can just use:</p>
+<div class='highlight'><pre><code class='jinja'><span class='x'>[% if has_perm(&#39;perm_cls.codename_model&#39;, object) %]</span>
+<span class='x'>  </span><span class='c'>{# grats, you&#39;ve got the perms! #}</span><span class='x' />
+<span class='x'>[% endif %]</span>
+</code></pre>
+</div>
+<p>(Couldn&#8217;t figure out how to escape braces in jekyll, so you&#8217;ll need to replace the square brackets above.)</p>
+
+<p>See <a href='http://packages.python.org/django-authority/create_per_object_permission.html'>this link</a> for more information on the <code>perm_cls</code> and <code>codename</code> variables.</p>
+
+<p>If you&#8217;re interested, here&#8217;s the <a href='http://github.com/pcraciunoiu/kitsune/commit/f2f256b5e70ef3c89cda95dde29823ae48e057bb'>Kitsune code</a>.</p>
+
+<p>Hope that helps others who may decide to go this route. Questions and suggestions for improvement are always welcome, of course.</p>
+</div>
+
+<div id="related">
+  <h2>Related Posts</h2>
+  <ul>
+    
+      <li><a href="/2010/03/quoteden-moving-to-kohana-3">Quoteden: Moving to Kohana 3</a> &mdash; 12 Mar 2010</li>
+    
+      <li><a href="/2009/11/hacking-wordpress-check-contact-messages-for-spam-using-wordpress-built-in-akismet-spam-for-comments">Hacking Wordpress: check contact messages for spam using Wordpress' built-in Akismet spam for comments</a> &mdash; 14 Nov 2009</li>
+    
+      <li><a href="/2010/03/embrangler-moving-to-jekyll">Embrangler: Moving to Jekyll</a> &mdash; 21 Mar 2010</li>
+    
+  </ul>
+</div>
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  (function() {
+   var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+   dsq.src = 'http://blogpaulcraciunoiu.disqus.com/embed.js';
+   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript=blogpaulcraciunoiu">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+<script type="text/javascript">
+//<![CDATA[
+(function() {
+    var links = document.getElementsByTagName('a');
+    var query = '?';
+    for(var i = 0; i < links.length; i++) {
+    if(links[i].href.indexOf('#disqus_thread') >= 0) {
+        query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
+    }
+    }
+    document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/blogpaulcraciunoiu/get_num_replies.js' + query + '"></' + 'script>');
+})();
+//]]>
+</script>
+    </div>
+
+    <div id="footer" role="contentinfo">
+        <div class="about">
+        <p>I work as a web developer for <a href="http://mozilla.com">Mozilla</a>, with main focus on <a href="http://www.djangoproject.com/">Django</a>, Python, and PHP. Occasionally, I write tutorials or post other information I find interesting.</p>
+        <p>I enjoy doing freelance work for other websites, mostly non-profits. If you're interested in my services, contact me through one of the links below.</p>
+        </p>
+        </div>
+        <div class="contact">
+            <a href="http://twitter.com/embrangler/">Follow me</a> -- 
+            <a href="http://craciunoiu.net/contact/paul">Email me</a> -- 
+            <a href="http://github.com/pcraciunoiu/">My GitHub</a>
+        </div>
+        <div class="quote">
+        <p>
+            Success is a journey, not a destination. The doing is often more important than the outcome. &mdash; <a href="http://quoteden.net/author/id/337">Arthur Robert Ashe, Jr</a>
+        </p>
+        <p>&copy; Paul Craciunoiu. Some rights reserved. Brought to you by <a href="http://wiki.github.com/mojombo/jekyll/">Jekyll</a></p>
+        </div>
+    </div>
+</div><!-- site -->
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-15382775-1");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+<!-- /Google Analytics -->
+</body>
+</html>
