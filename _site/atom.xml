@@ -4,13 +4,51 @@
  <title>Disembrangling Programming - Paul Craciunoiu</title>
  <link href="http://embrangler.com/atom.xml" rel="self"/>
  <link href="http://embrangler.com/"/>
- <updated>2010-05-22T14:13:30-07:00</updated>
+ <updated>2010-05-26T11:36:22-07:00</updated>
  <id>http://embrangler.com/</id>
  <author>
    <name>Paul Craciunoiu</name>
    <email>paul@craciunoiu.net</email>
  </author>
 
+ 
+ <entry>
+   <title>May 17-21 status</title>
+   <link href="http://embrangler.com/2010/05/weekly-update-may-17-21"/>
+   <updated>2010-05-26T00:00:00-07:00</updated>
+   <id>http://embrangler.com/2010/05/weekly-update-may-17-21</id>
+   <content type="html">&lt;h2 id='last_week_may_37'&gt;Last week (May 3-7)&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;a few reviews&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=564101'&gt;activate admin in forums app&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=561523'&gt;implement ACL&lt;/a&gt; after serious research&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=566907'&gt;migrate user passwords from Tiki on login&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=567291'&gt;migrate users and discussion-forum related groups from Tiki&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;assist IT with &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=567409'&gt;Friday Pac Man issues&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;help out new team members, lots of discussion&lt;/li&gt;
+
+&lt;li&gt;started work on &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=566110'&gt;forms validation and error messages&lt;/a&gt; and adding a &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=567474'&gt;403 handler&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id='this_week_may_1721'&gt;This week (May 17-21)&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;posting this late, so I&amp;#8217;ve already reviewed &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=564912'&gt;some&lt;/a&gt; &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=568067'&gt;bugs&lt;/a&gt; from James&lt;/li&gt;
+
+&lt;li&gt;finish 403 handler, form validation and &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=562188'&gt;sphinx config for discussion forums&lt;/a&gt; as well as &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=562203'&gt;the advanced search UI for it&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;fix up the wiki parser bugs I meant to get to last week: &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=566101'&gt;this&lt;/a&gt; and &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=565801'&gt;this&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;start on some 2.2 bugs&lt;/li&gt;
+&lt;/ul&gt;</content>
+ </entry>
  
  <entry>
    <title>Access control in Django, and django-authority</title>
@@ -1209,56 +1247,6 @@
 &lt;p&gt;So that&amp;#8217;s it. The Quote Den Drupal-&amp;gt;Kohana work summarized. The benefits: performance improvements of more than 50% (in page load time), more flexibility, consistency in the design, and Sphinx search.&lt;/p&gt;
 
 &lt;p&gt;And if you&amp;#8217;re learning Kohana, and would like some help, shoot us a comment below.&lt;/p&gt;</content>
- </entry>
- 
- <entry>
-   <title>Upgrading Windows Vista or 7RC to Windows 7 on dual boot with Linux (Ubuntu)</title>
-   <link href="http://embrangler.com/2010/02/upgrading-windows-vista-or-7rc-to-windows-7-on-dual-boot-with-linux-ubuntu"/>
-   <updated>2010-02-27T00:00:00-08:00</updated>
-   <id>http://embrangler.com/2010/02/upgrading-windows-vista-or-7rc-to-windows-7-on-dual-boot-with-linux-ubuntu</id>
-   <content type="html">&lt;p&gt;As you may or may not know, the Windows 7 RC/beta/other releases expire at the latest on March 1st, 2 days from now. So I had to spend some time this weekend upgrading to a full Windows 7. Fortunately, my school offers Windows 7 Professional for free if you&amp;#8217;re an engineering student (so we &lt;em&gt;do&lt;/em&gt; get special treatment, aw!).&lt;/p&gt;
-
-&lt;p&gt;Anyway, if you&amp;#8217;re like me, you&amp;#8217;re dual booting Windows + Linux, and you have to reinstall Windows, you were probably using GRUB to boot into your &lt;abbr title='Operating System'&gt;OS&lt;/abbr&gt;. Well, as it turns out, reinstalling Windows wipes out GRUB from the boot record. Oh no! What to do?&lt;/p&gt;
-
-&lt;p&gt;Fortunately, the solution is simple. I searched for &amp;#8220;restore grub&amp;#8221; and found &lt;a href='http://ubuntuforums.org/showthread.php?t=1195275'&gt;this excellent guide&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;The summary:&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;
-&lt;p&gt;Get a &lt;a href='http://ubuntu.com'&gt;Ubuntu&lt;/a&gt; Live CD and boot from it.&amp;lt;/li&amp;gt;&lt;/p&gt;
-&lt;/li&gt;
-
-&lt;li&gt;
-&lt;p&gt;Then run these in your terminal:&lt;/p&gt;
-&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='bash'&gt;    sudo -i
- 
- &lt;span class='c'&gt;# get a list of your partitions in /dev/sdX format&lt;/span&gt;
- fdisk -l
- 
- &lt;span class='c'&gt;# if you can&amp;#39;t decide which one is your linux&lt;/span&gt;
- &lt;span class='c'&gt;# partition (see the System column?)&lt;/span&gt;
- df -Th &lt;span class='c'&gt;# lists partitions with size and % used&lt;/span&gt;
- 
- 
- &lt;span class='c'&gt;# mount your Ubuntu partition, mine was sda4&lt;/span&gt;
- mount /dev/sdXY /mnt &lt;span class='c'&gt;# &lt;/span&gt;
- 
- &lt;span class='c'&gt;# install grub on the partition, mine was sda&lt;/span&gt;
- grub-install --root-directory&lt;span class='o'&gt;=&lt;/span&gt;/mnt /dev/sdX
- 
- &lt;span class='c'&gt;# be nice and unmount it, to avoid problems&lt;/span&gt;
- umount /mnt
- 
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;&lt;/li&gt;
-
-&lt;li&gt;
-&lt;p&gt;Reboot. &lt;strong&gt;Done!&lt;/strong&gt; Your old GRUB shows up now.&amp;lt;/li&amp;gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;So that&amp;#8217;s it. Hope this helps you avoid reinstalling Linux, which is really unnecessary :)&lt;/p&gt;</content>
  </entry>
  
  
