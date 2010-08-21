@@ -4,9 +4,4 @@ pygments:    true
 permalink:   /:year/:month/:title
 paginate:    6
 markdown:    maruku
-maruku:
-  use_tex:    true
-  use_divs:   false
-  png_dir:    images/latex
-  png_url:    /images/latex/
 

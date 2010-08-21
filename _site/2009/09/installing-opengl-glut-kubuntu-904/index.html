@@ -59,34 +59,34 @@
 <span class='cp'>#define window_width  640</span>
 <span class='cp'>#define window_height 480</span>
 
-<span class='c'>// Main loop</span>
+<span class='c1'>// Main loop</span>
 <span class='kt'>void</span> <span class='n'>main_loop_function</span><span class='p'>()</span>
 <span class='p'>{</span>
-   <span class='c'>// Z angle</span>
+   <span class='c1'>// Z angle</span>
    <span class='k'>static</span> <span class='kt'>float</span> <span class='n'>angle</span><span class='p'>;</span>
-   <span class='c'>// Clear color (screen)</span>
-   <span class='c'>// And depth (used internally to block obstructed objects)</span>
+   <span class='c1'>// Clear color (screen)</span>
+   <span class='c1'>// And depth (used internally to block obstructed objects)</span>
    <span class='n'>glClear</span><span class='p'>(</span><span class='n'>GL_COLOR_BUFFER_BIT</span> <span class='o'>|</span> <span class='n'>GL_DEPTH_BUFFER_BIT</span><span class='p'>);</span>
-   <span class='c'>// Load identity matrix</span>
+   <span class='c1'>// Load identity matrix</span>
    <span class='n'>glLoadIdentity</span><span class='p'>();</span>
-   <span class='c'>// Multiply in translation matrix</span>
+   <span class='c1'>// Multiply in translation matrix</span>
    <span class='n'>glTranslatef</span><span class='p'>(</span><span class='mi'>0</span><span class='p'>,</span><span class='mi'>0</span><span class='p'>,</span> <span class='o'>-</span><span class='mi'>10</span><span class='p'>);</span>
-   <span class='c'>// Multiply in rotation matrix</span>
+   <span class='c1'>// Multiply in rotation matrix</span>
    <span class='n'>glRotatef</span><span class='p'>(</span><span class='n'>angle</span><span class='p'>,</span> <span class='mi'>0</span><span class='p'>,</span> <span class='mi'>0</span><span class='p'>,</span> <span class='mi'>1</span><span class='p'>);</span>
-   <span class='c'>// Render colored quad</span>
+   <span class='c1'>// Render colored quad</span>
    <span class='n'>glBegin</span><span class='p'>(</span><span class='n'>GL_QUADS</span><span class='p'>);</span>
    <span class='n'>glColor3ub</span><span class='p'>(</span><span class='mi'>255</span><span class='p'>,</span> <span class='mo'>000</span><span class='p'>,</span> <span class='mo'>000</span><span class='p'>);</span> <span class='n'>glVertex2f</span><span class='p'>(</span><span class='o'>-</span><span class='mi'>1</span><span class='p'>,</span>  <span class='mi'>1</span><span class='p'>);</span>
    <span class='n'>glColor3ub</span><span class='p'>(</span><span class='mo'>000</span><span class='p'>,</span> <span class='mi'>255</span><span class='p'>,</span> <span class='mo'>000</span><span class='p'>);</span> <span class='n'>glVertex2f</span><span class='p'>(</span> <span class='mi'>1</span><span class='p'>,</span>  <span class='mi'>1</span><span class='p'>);</span>
    <span class='n'>glColor3ub</span><span class='p'>(</span><span class='mo'>000</span><span class='p'>,</span> <span class='mo'>000</span><span class='p'>,</span> <span class='mi'>255</span><span class='p'>);</span> <span class='n'>glVertex2f</span><span class='p'>(</span> <span class='mi'>1</span><span class='p'>,</span> <span class='o'>-</span><span class='mi'>1</span><span class='p'>);</span>
    <span class='n'>glColor3ub</span><span class='p'>(</span><span class='mi'>255</span><span class='p'>,</span> <span class='mi'>255</span><span class='p'>,</span> <span class='mo'>000</span><span class='p'>);</span> <span class='n'>glVertex2f</span><span class='p'>(</span><span class='o'>-</span><span class='mi'>1</span><span class='p'>,</span> <span class='o'>-</span><span class='mi'>1</span><span class='p'>);</span>
    <span class='n'>glEnd</span><span class='p'>();</span>
-   <span class='c'>// Swap buffers (color buffers, makes previous render visible)</span>
+   <span class='c1'>// Swap buffers (color buffers, makes previous render visible)</span>
     <span class='n'>glutSwapBuffers</span><span class='p'>();</span>
-   <span class='c'>// Increase angle to rotate</span>
+   <span class='c1'>// Increase angle to rotate</span>
    <span class='n'>angle</span><span class='o'>+=</span><span class='mf'>0.25</span><span class='p'>;</span>
 <span class='p'>}</span>
 
-<span class='c'>// Initialze OpenGL perspective matrix</span>
+<span class='c1'>// Initialze OpenGL perspective matrix</span>
 <span class='kt'>void</span> <span class='n'>GL_Setup</span><span class='p'>(</span><span class='kt'>int</span> <span class='n'>width</span><span class='p'>,</span> <span class='kt'>int</span> <span class='n'>height</span><span class='p'>)</span>
 <span class='p'>{</span>
 
@@ -97,7 +97,7 @@
     <span class='n'>glMatrixMode</span><span class='p'>(</span> <span class='n'>GL_MODELVIEW</span> <span class='p'>);</span>
 <span class='p'>}</span>
 
-<span class='c'>// Initialize GLUT and start main loop</span>
+<span class='c1'>// Initialize GLUT and start main loop</span>
 <span class='kt'>int</span> <span class='n'>main</span><span class='p'>(</span><span class='kt'>int</span> <span class='n'>argc</span><span class='p'>,</span> <span class='kt'>char</span><span class='o'>**</span> <span class='n'>argv</span><span class='p'>)</span> <span class='p'>{</span>
     <span class='n'>glutInit</span><span class='p'>(</span><span class='o'>&amp;</span><span class='n'>argc</span><span class='p'>,</span> <span class='n'>argv</span><span class='p'>);</span>
 
@@ -139,9 +139,9 @@
     
       <li><a href="/2010/03/quoteden-moving-to-kohana-3">Quoteden: Moving to Kohana 3</a> &mdash; 12 Mar 2010</li>
     
-      <li><a href="/2010/03/embrangler-moving-to-jekyll">Embrangler: Moving to Jekyll</a> &mdash; 21 Mar 2010</li>
-    
       <li><a href="/2010/04/testing-in-kohana-3">Introduction to testing in Kohana 3</a> &mdash; 25 Apr 2010</li>
+    
+      <li><a href="/2010/03/embrangler-moving-to-jekyll">Embrangler: Moving to Jekyll</a> &mdash; 21 Mar 2010</li>
     
   </ul>
 </div>

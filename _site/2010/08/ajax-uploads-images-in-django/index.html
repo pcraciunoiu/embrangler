@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Django and AJAX image uploads</title>
+    <meta name="author" content="Paul Craciunoiu" />
+    <link href="http://feeds.feedburner.com/embrangler" rel="alternate" title="Paul Craciunoiu" type="application/atom+xml" />
+    <link type="image/x-icon" href="/favicon.ico" rel="shortcut icon">
+
+    <!-- syntax highlighting CSS -->
+    <link rel="stylesheet" href="/css/syntax.css" type="text/css" />
+
+    <!-- Homepage CSS -->
+    <link rel="stylesheet" href="/css/main.css" type="text/css" media="screen, projection" />
+</head>
+<body>
+
+<div class="site">
+
+    <div id="header" role="banner">
+        <h1 class="title">
+            <a href="/">Disembrangling Programming</a>
+        </h1>
+        <h2 class="subtitle">
+            <a href="/about" title="About Paul Craciunoiu">The simple life of a web developer &mdash; by Paul Craciunoiu<span> (About)</span></a>
+        </h2>
+    </div>
+    <div id="content" role="main">    
+    <div id="post">
+<h1>Django and AJAX image uploads</h1>
+
+<p>Table of contents:</p>
+
+<ul>
+<li>
+<p><a href='#demo'>Demo</a></p>
+</li>
+
+<li>
+<p><a href='#summary'>Summary</a></p>
+</li>
+
+<li>
+<p><a href='#server_side_django'>Server side (Django)</a></p>
+
+<ul>
+<li><a href='#model'>Model</a></li>
+
+<li><a href='#form'>Form</a></li>
+
+<li><a href='#view_uploading_image_saving_to_disk'>View</a></li>
+
+<li><a href='#generating_the_thumbnail_with_pil'>Generating the thumbnail with PIL</a></li>
+</ul>
+</li>
+
+<li>
+<p><a href='#client_side'>Client side</a></p>
+</li>
+
+<li>
+<p><a href='#a_note_about_graceful_degradation'>Graceful degradation</a></p>
+</li>
+</ul>
+
+<h2 id='demo'>Demo</h2>
+
+<ul>
+<li>
+<p><a href='http://screencast.com/t/ZGI0NTA3'>Screencast</a></p>
+</li>
+
+<li>
+<p>Screenshots:</p>
+
+<ul>
+<li>
+<p>The upload form, empty and ready for action: <div class='img-wrap'><div class='img'>
+  <img title='Empty upload form' src='/images/upload/upload_1.png' alt='Empty upload form' />
+</div></div></p>
+</li>
+
+<li>
+<p>Browsing for an image: <div class='img-wrap'><div class='img'>
+  <img title='Browsing for an image' src='/images/upload/upload_2.png' alt='Browsing for an image' />
+</div></div></p>
+</li>
+
+<li>
+<p>Uploading the image (in progress): <div class='img-wrap'><div class='img'>
+  <img title='Uploading the image' src='/images/upload/upload_3.png' alt='Uploading the image' />
+</div></div></p>
+</li>
+
+<li>
+<p>The image is uploaded: <div class='img-wrap'><div class='img'>
+  <img title='Uploaded image' src='/images/upload/upload_4.png' alt='Uploaded image' />
+</div></div></p>
+</li>
+
+<li>
+<p>Deleting the image would show a similar progress block as uploading: <div class='img-wrap'><div class='img'>
+  <img title='Delete the image' src='/images/upload/upload_5.png' alt='Delete the image' />
+</div></div></p>
+</li>
+</ul>
+</li>
+</ul>
+
+<h2 id='summary'>Summary</h2>
+
+<p>In this post, we&#8217;ll go through how to get AJAX uploads to work with Django, including:</p>
+
+<ul>
+<li><a href='http://en.wikipedia.org/wiki/Cross-site_request_forgery'>csrf protection</a> with <a href='http://docs.djangoproject.com/en/dev/topics/forms/'>Django&#8217;s forms</a></li>
+
+<li><a href='http://en.wikipedia.org/wiki/Graceful_degradation'>graceful degradation</a> (see also <a href='http://en.wikipedia.org/wiki/Unobtrusive_JavaScript'>unobtrusive JavaScript</a>)</li>
+
+<li><a href='http://docs.djangoproject.com/en/dev/topics/http/file-uploads/'>uploading files in Django</a></li>
+
+<li>thumbnail generation with <a href='http://www.pythonware.com/products/pil/'>PIL</a></li>
+
+<li>cross-browser uploading of files through AJAX</li>
+</ul>
+
+<p><strong>Note:</strong> I&#8217;m planning to add upload progress. If you can&#8217;t wait for that post (understandably), there are several ways to go about it:</p>
+
+<ul>
+<li>If your site isn&#8217;t using multiple webheads, you can just ask the webhead to get you the size of what&#8217;s been uploaded so far. Since Django can read in chunks, it can tell you how much has been processed. See <a href='http://fairviewcomputing.com/blog/2008/10/21/ajax-upload-progress-bars-jquery-django-nginx/'>this post</a> for implementation ideas.</li>
+
+<li>Or, regardless of the server setup, you can use the File API (in Firefox and Chrome) - easier, cleaner, no server-side interaction required.</li>
+
+<li>Other multi-webhead approaches: writing progress to a file shared among them, or saving directly to a shared folder and e.g. returning the size uploaded so far.</li>
+</ul>
+
+<h2 id='server_side_django'>Server side (Django)</h2>
+
+<p>First, we&#8217;ll look at how the server handles files sent to it.</p>
+
+<h3 id='model'>Model</h3>
+
+<p>I created an app called <code>upload</code> with an ImageAttachment model, like so:</p>
+
+<p><a href='http://github.com/pcraciunoiu/kitsune/blob/3387483e4f401fc04045180a8caa1e3f141d32ee/apps/upload/models.py'>apps/upload/models.py</a>:</p>
+<div class='highlight'><pre><code class='python'><span class='kn'>from</span> <span class='nn'>django.conf</span> <span class='kn'>import</span> <span class='n'>settings</span>
+<span class='kn'>from</span> <span class='nn'>django.contrib.auth.models</span> <span class='kn'>import</span> <span class='n'>User</span>
+<span class='kn'>from</span> <span class='nn'>django.contrib.contenttypes.models</span> <span class='kn'>import</span> <span class='n'>ContentType</span>
+<span class='kn'>from</span> <span class='nn'>django.contrib.contenttypes</span> <span class='kn'>import</span> <span class='n'>generic</span>
+<span class='kn'>from</span> <span class='nn'>django.db</span> <span class='kn'>import</span> <span class='n'>models</span>
+
+
+<span class='k'>class</span> <span class='nc'>ImageAttachment</span><span class='p'>(</span><span class='n'>models</span><span class='o'>.</span><span class='n'>Model</span><span class='p'>):</span>
+    <span class='sd'>&quot;&quot;&quot;A tag on an item.&quot;&quot;&quot;</span>
+    <span class='nb'>file</span> <span class='o'>=</span> <span class='n'>models</span><span class='o'>.</span><span class='n'>ImageField</span><span class='p'>(</span><span class='n'>upload_to</span><span class='o'>=</span><span class='n'>settings</span><span class='o'>.</span><span class='n'>IMAGE_UPLOAD_PATH</span><span class='p'>)</span>
+    <span class='n'>thumbnail</span> <span class='o'>=</span> <span class='n'>models</span><span class='o'>.</span><span class='n'>ImageField</span><span class='p'>(</span><span class='n'>upload_to</span><span class='o'>=</span><span class='n'>settings</span><span class='o'>.</span><span class='n'>THUMBNAIL_UPLOAD_PATH</span><span class='p'>)</span>
+    <span class='n'>creator</span> <span class='o'>=</span> <span class='n'>models</span><span class='o'>.</span><span class='n'>ForeignKey</span><span class='p'>(</span><span class='n'>User</span><span class='p'>,</span> <span class='n'>related_name</span><span class='o'>=</span><span class='s'>&#39;image_attachments&#39;</span><span class='p'>)</span>
+    <span class='n'>content_type</span> <span class='o'>=</span> <span class='n'>models</span><span class='o'>.</span><span class='n'>ForeignKey</span><span class='p'>(</span><span class='n'>ContentType</span><span class='p'>)</span>
+    <span class='n'>object_id</span> <span class='o'>=</span> <span class='n'>models</span><span class='o'>.</span><span class='n'>PositiveIntegerField</span><span class='p'>()</span>
+
+    <span class='n'>content_object</span> <span class='o'>=</span> <span class='n'>generic</span><span class='o'>.</span><span class='n'>GenericForeignKey</span><span class='p'>()</span>
+
+    <span class='k'>def</span> <span class='nf'>__unicode__</span><span class='p'>(</span><span class='bp'>self</span><span class='p'>):</span>
+        <span class='k'>return</span> <span class='bp'>self</span><span class='o'>.</span><span class='n'>file</span><span class='o'>.</span><span class='n'>name</span>
+</code></pre>
+</div>
+<p>This represents an image attached to a piece of content (using a generic foreign key). Pretty basic stuff. The form is ridiculously simple:</p>
+
+<h3 id='form'>Form</h3>
+
+<p><a href='http://github.com/pcraciunoiu/kitsune/blob/3387483e4f401fc04045180a8caa1e3f141d32ee/apps/upload/forms.py'>apps/upload/forms.py</a>:</p>
+<div class='highlight'><pre><code class='python'><span class='kn'>from</span> <span class='nn'>django</span> <span class='kn'>import</span> <span class='n'>forms</span>
+
+
+<span class='k'>class</span> <span class='nc'>ImageUploadForm</span><span class='p'>(</span><span class='n'>forms</span><span class='o'>.</span><span class='n'>Form</span><span class='p'>):</span>
+    <span class='sd'>&quot;&quot;&quot;Image upload form.&quot;&quot;&quot;</span>
+    <span class='n'>image</span> <span class='o'>=</span> <span class='n'>forms</span><span class='o'>.</span><span class='n'>ImageField</span><span class='p'>()</span>
+</code></pre>
+</div>
+<h3 id='view_uploading_image_saving_to_disk'>View (uploading image, saving to disk)</h3>
+
+<p>The view is a bit more complicated, so I won&#8217;t go into the details. But you can <a href='http://github.com/pcraciunoiu/kitsune/blob/3387483e4f401fc04045180a8caa1e3f141d32ee/apps/upload'>have a look at the entire app</a> and <a href='#footer'>contact me</a> if you have questions. Basically, the view does the file upload as you see in <a href='http://docs.djangoproject.com/en/dev/topics/http/file-uploads/'>Django&#8217;s documentation</a>. The function <a href='http://github.com/pcraciunoiu/kitsune/blob/3387483e4f401fc04045180a8caa1e3f141d32ee/apps/upload/utils.py#L9'><code>create_image_attachment</code></a> deals with the part about saving a file to disk.</p>
+
+<h3 id='generating_the_thumbnail_with_pil'>Generating the thumbnail with PIL</h3>
+
+<p>There is also a task for generating thumbnails, which is offloaded from the web server thread to improve performance. If you don&#8217;t need that, you can just call generate_thumbnail directly, it&#8217;s defined <a href='http://github.com/pcraciunoiu/kitsune/blob/3387483e4f401fc04045180a8caa1e3f141d32ee/apps/upload/tasks.py'>here</a>.</p>
+
+<h2 id='client_side'>Client side</h2>
+
+<p>Now, the magical JavaScript!</p>
+
+<p>We&#8217;re using jQuery on <a href='http://support.mozilla.com'>SUMO</a>, so I wrote two jQuery extensions:</p>
+
+<ul>
+<li>jQuery.fn.ajaxSubmitInput(options) &#8211; wraps an <code>&lt;input type=&quot;file&gt;&quot;</code> in a <code>&lt;form&gt;</code> and creates an <code>&lt;iframe&gt;</code> to which that form posts. To get around Django&#8217;s csrf protection, it also copies the <code>csrfmiddlewaretoken</code> hidden input into the form. You can&#8217;t clone a file input for security reasons (nor can you change or access its value), so you need to wrap it in a form.</li>
+
+<li>jQuery.fn.wrapDeleteInput(options) &#8211; wraps an <code>input&lt;type=&quot;submit&quot;&gt;</code> in a <code>&lt;form&gt;</code> and creates an <code>&lt;iframe&gt;</code> to which that form posts.</li>
+</ul>
+
+<p>These two pretty much summarize the process:</p>
+
+<ul>
+<li>when the user changes the value of the file input, post the form ** show some progress while the file is uploading</li>
+
+<li>once the file is done uploading, show a thumbnail of the image ** also create the delete input and wrap it in the form using <code>wrapDeleteInput()</code></li>
+
+<li>when the user clicks on the delete button, post the action ** show some progress while the file is being deleted</li>
+</ul>
+
+<h2 id='a_note_about_graceful_degradation'>A note about graceful degradation</h2>
+
+<p>To degrade gracefully, you want to post the file input to whatever view you&#8217;re including it to. And you can just do something like:</p>
+<div class='highlight'><pre><code class='python'><span class='k'>def</span> <span class='nf'>some_view</span><span class='p'>(</span><span class='n'>request</span><span class='p'>):</span>
+    <span class='c'># ...</span>
+    <span class='c'># NOJS: upload image</span>
+    <span class='k'>if</span> <span class='s'>&#39;upload_image&#39;</span> <span class='ow'>in</span> <span class='n'>request</span><span class='o'>.</span><span class='n'>POST</span><span class='p'>:</span>
+        <span class='n'>upload_images</span><span class='p'>(</span><span class='n'>request</span><span class='p'>,</span> <span class='n'>obj</span><span class='p'>)</span>
+    <span class='c'># ...</span>
+</code></pre>
+</div>
+<p>Thanks for reading, hope it helps!</p>
+</div>
+
+<div id="related">
+  <h2>Related Posts</h2>
+  <ul>
+    
+      <li><a href="/2010/03/quoteden-moving-to-kohana-3">Quoteden: Moving to Kohana 3</a> &mdash; 12 Mar 2010</li>
+    
+      <li><a href="/2009/11/hacking-wordpress-check-contact-messages-for-spam-using-wordpress-built-in-akismet-spam-for-comments">Hacking Wordpress: check contact messages for spam using Wordpress' built-in Akismet spam for comments</a> &mdash; 14 Nov 2009</li>
+    
+      <li><a href="/2010/03/embrangler-moving-to-jekyll">Embrangler: Moving to Jekyll</a> &mdash; 21 Mar 2010</li>
+    
+  </ul>
+</div>
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  (function() {
+   var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+   dsq.src = 'http://blogpaulcraciunoiu.disqus.com/embed.js';
+   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript=blogpaulcraciunoiu">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+<script type="text/javascript">
+//<![CDATA[
+(function() {
+    var links = document.getElementsByTagName('a');
+    var query = '?';
+    for(var i = 0; i < links.length; i++) {
+    if(links[i].href.indexOf('#disqus_thread') >= 0) {
+        query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
+    }
+    }
+    document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/blogpaulcraciunoiu/get_num_replies.js' + query + '"></' + 'script>');
+})();
+//]]>
+</script>
+    </div>
+
+    <div id="footer" role="contentinfo">
+        <div class="about">
+        <p>I work as a web developer for <a href="http://mozilla.com">Mozilla</a>, with main focus on <a href="http://www.djangoproject.com/">Django</a>, Python, and PHP. Occasionally, I write tutorials or post other information I find interesting.</p>
+        <p>I enjoy doing freelance work for other websites, mostly non-profits. If you're interested in my services, contact me through one of the links below.</p>
+        </p>
+        </div>
+        <div class="contact">
+            <a href="http://twitter.com/embrangler/">Follow me</a> -- 
+            <a href="http://craciunoiu.net/contact/paul">Email me</a> -- 
+            <a href="http://github.com/pcraciunoiu/">My GitHub</a>
+        </div>
+        <div class="quote">
+        <p>
+            Success is a journey, not a destination. The doing is often more important than the outcome. &mdash; <a href="http://quoteden.net/author/id/337">Arthur Robert Ashe, Jr</a>
+        </p>
+        <p>&copy; Paul Craciunoiu. Some rights reserved. Brought to you by <a href="http://wiki.github.com/mojombo/jekyll/">Jekyll</a></p>
+        </div>
+    </div>
+</div><!-- site -->
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-15382775-1");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+<!-- /Google Analytics -->
+</body>
+</html>

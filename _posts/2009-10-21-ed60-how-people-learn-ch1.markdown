@@ -19,6 +19,7 @@ Three major theories of learning:
 
 
 More currently:
+
 * New focus is on understanding
 * This leads to focus on processes of knowing. Human = goal-oriented agent who actively seeks information.
 * Active learning: people take control of their own learning
@@ -28,6 +29,7 @@ More currently:
 
 
 Key findings of scientific analysis:
+
 * Students come to the classroom with preconceptions about how the world works. If their initial understanding is not engaged, they may fail to grasp the new concepts and information that are taught, or they may learn them for purposes of a test but revert to their preconceptions outside the classroom.
 * To develop competence in an area of inquiry, students must:
 	* have a deep foundation of factual knowledge

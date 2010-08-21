@@ -110,9 +110,9 @@
 </ul>
 
 <h3 id='step_1b_the_jquery'>Step 1b: The jQuery:</h3>
-<div class='highlight'><pre><code class='javascript'><span class='kd'>var</span> <span class='nx'>MIN_FIELDLENGTH</span> <span class='o'>=</span> <span class='mi'>5</span><span class='o'>;</span>
-<span class='kd'>var</span> <span class='nx'>EMAIL_PREFIX</span> <span class='o'>=</span> <span class='s1'>&#39;me&#39;</span><span class='o'>;</span>
-<span class='kd'>var</span> <span class='nx'>EMAIL_END</span> <span class='o'>=</span> <span class='s1'>&#39;examplesite.com&#39;</span><span class='o'>;</span>
+<div class='highlight'><pre><code class='javascript'><span class='kd'>var</span> <span class='nx'>MIN_FIELDLENGTH</span> <span class='o'>=</span> <span class='mi'>5</span><span class='p'>;</span>
+<span class='kd'>var</span> <span class='nx'>EMAIL_PREFIX</span> <span class='o'>=</span> <span class='s1'>&#39;me&#39;</span><span class='p'>;</span>
+<span class='kd'>var</span> <span class='nx'>EMAIL_END</span> <span class='o'>=</span> <span class='s1'>&#39;examplesite.com&#39;</span><span class='p'>;</span>
 <span class='nx'>jQuery</span><span class='p'>(</span><span class='nb'>document</span><span class='p'>).</span><span class='nx'>ready</span><span class='p'>(</span><span class='kd'>function</span><span class='p'>(</span><span class='nx'>$</span><span class='p'>)</span> <span class='p'>{</span>
     <span class='kd'>function</span> <span class='nx'>is_valid_email_address</span><span class='p'>(</span><span class='nx'>email_address</span><span class='p'>)</span> <span class='p'>{</span>
         <span class='kd'>var</span> <span class='nx'>pattern</span> <span class='o'>=</span> <span class='k'>new</span> <span class='nb'>RegExp</span><span class='p'>(</span><span class='sr'>/^((&quot;[\w-\s]+&quot;)|([\w-]+(?:\.[\w-]+)*)|(&quot;[\w-\s]+&quot;)([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i</span><span class='p'>);</span>
@@ -123,26 +123,26 @@
             <span class='kd'>var</span> <span class='nx'>fields</span> <span class='o'>=</span> <span class='p'>[</span><span class='nx'>field</span><span class='p'>];</span>
         <span class='p'>}</span>
         <span class='k'>else</span> <span class='p'>{</span>
-            <span class='kd'>var</span> <span class='nx'>fields</span> <span class='o'>=</span> <span class='p'>[</span><span class='s1'>&#39;name&#39;</span><span class='o'>,</span> <span class='s1'>&#39;email&#39;</span><span class='o'>,</span> <span class='s1'>&#39;message&#39;</span><span class='p'>];</span>
+            <span class='kd'>var</span> <span class='nx'>fields</span> <span class='o'>=</span> <span class='p'>[</span><span class='s1'>&#39;name&#39;</span><span class='p'>,</span> <span class='s1'>&#39;email&#39;</span><span class='p'>,</span> <span class='s1'>&#39;message&#39;</span><span class='p'>];</span>
         <span class='p'>}</span>
-        <span class='kd'>var</span> <span class='nx'>returnval</span> <span class='o'>=</span> <span class='kc'>true</span><span class='o'>;</span>
-        <span class='kd'>var</span> <span class='nx'>text</span><span class='o'>;</span>
+        <span class='kd'>var</span> <span class='nx'>returnval</span> <span class='o'>=</span> <span class='kc'>true</span><span class='p'>;</span>
+        <span class='kd'>var</span> <span class='nx'>text</span><span class='p'>;</span>
         <span class='k'>for</span> <span class='p'>(</span><span class='kd'>var</span> <span class='nx'>i</span> <span class='k'>in</span> <span class='nx'>fields</span><span class='p'>)</span> <span class='p'>{</span>
             <span class='nx'>text</span> <span class='o'>=</span> <span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#contact_&#39;</span><span class='o'>+</span><span class='nx'>fields</span><span class='p'>[</span><span class='nx'>i</span><span class='p'>]).</span><span class='nx'>val</span><span class='p'>();</span>
-            <span class='nx'>minlen</span> <span class='o'>=</span> <span class='nx'>MIN_FIELDLENGTH</span><span class='o'>;</span>
-            <span class='k'>if</span> <span class='p'>(</span><span class='nx'>fields</span><span class='p'>[</span><span class='nx'>i</span><span class='p'>]</span> <span class='o'>==</span> <span class='s1'>&#39;message&#39;</span><span class='p'>)</span> <span class='nx'>minlen</span> <span class='o'>*=</span> <span class='mi'>10</span><span class='o'>;</span>
+            <span class='nx'>minlen</span> <span class='o'>=</span> <span class='nx'>MIN_FIELDLENGTH</span><span class='p'>;</span>
+            <span class='k'>if</span> <span class='p'>(</span><span class='nx'>fields</span><span class='p'>[</span><span class='nx'>i</span><span class='p'>]</span> <span class='o'>==</span> <span class='s1'>&#39;message&#39;</span><span class='p'>)</span> <span class='nx'>minlen</span> <span class='o'>*=</span> <span class='mi'>10</span><span class='p'>;</span>
             <span class='k'>if</span> <span class='p'>((</span><span class='nx'>text</span><span class='p'>.</span><span class='nx'>length</span> <span class='o'>&lt;</span> <span class='nx'>minlen</span><span class='p'>)</span>
                 <span class='o'>||</span> <span class='p'>((</span><span class='nx'>fields</span><span class='p'>[</span><span class='nx'>i</span><span class='p'>]</span> <span class='o'>==</span> <span class='s1'>&#39;email&#39;</span><span class='p'>)</span>
                 <span class='o'>&amp;&amp;</span> <span class='o'>!</span><span class='nx'>is_valid_email_address</span><span class='p'>(</span><span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#contact_&#39;</span><span class='o'>+</span><span class='nx'>fields</span><span class='p'>[</span><span class='nx'>i</span><span class='p'>]).</span><span class='nx'>val</span><span class='p'>())))</span>
             <span class='p'>{</span>
-                <span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#contact_&#39;</span><span class='o'>+</span><span class='nx'>fields</span><span class='p'>[</span><span class='nx'>i</span><span class='p'>]).</span><span class='nx'>attr</span><span class='p'>(</span><span class='s1'>&#39;class&#39;</span><span class='o'>,</span> <span class='s1'>&#39;chighlight&#39;</span><span class='p'>);</span>
-                <span class='nx'>returnval</span> <span class='o'>=</span> <span class='kc'>false</span><span class='o'>;</span>
+                <span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#contact_&#39;</span><span class='o'>+</span><span class='nx'>fields</span><span class='p'>[</span><span class='nx'>i</span><span class='p'>]).</span><span class='nx'>attr</span><span class='p'>(</span><span class='s1'>&#39;class&#39;</span><span class='p'>,</span> <span class='s1'>&#39;chighlight&#39;</span><span class='p'>);</span>
+                <span class='nx'>returnval</span> <span class='o'>=</span> <span class='kc'>false</span><span class='p'>;</span>
             <span class='p'>}</span>
             <span class='k'>else</span> <span class='p'>{</span>
-                <span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#contact_&#39;</span><span class='o'>+</span><span class='nx'>fields</span><span class='p'>[</span><span class='nx'>i</span><span class='p'>]).</span><span class='nx'>attr</span><span class='p'>(</span><span class='s1'>&#39;class&#39;</span><span class='o'>,</span> <span class='s1'>&#39;&#39;</span><span class='p'>);</span>
+                <span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#contact_&#39;</span><span class='o'>+</span><span class='nx'>fields</span><span class='p'>[</span><span class='nx'>i</span><span class='p'>]).</span><span class='nx'>attr</span><span class='p'>(</span><span class='s1'>&#39;class&#39;</span><span class='p'>,</span> <span class='s1'>&#39;&#39;</span><span class='p'>);</span>
             <span class='p'>}</span>
         <span class='p'>};</span>
-        <span class='k'>return</span> <span class='nx'>returnval</span><span class='o'>;</span>
+        <span class='k'>return</span> <span class='nx'>returnval</span><span class='p'>;</span>
     <span class='p'>}</span>
     <span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#contact_name&#39;</span><span class='p'>).</span><span class='nx'>keypress</span><span class='p'>(</span><span class='kd'>function</span><span class='p'>()</span> <span class='p'>{</span>
         <span class='nx'>validate_submission</span><span class='p'>(</span><span class='s1'>&#39;name&#39;</span><span class='p'>);</span>
@@ -157,48 +157,48 @@
     <span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#contact_form&#39;</span><span class='p'>).</span><span class='nx'>submit</span><span class='p'>(</span><span class='kd'>function</span> <span class='p'>()</span> <span class='p'>{</span>
         <span class='k'>if</span> <span class='p'>(</span><span class='nx'>validate_submission</span><span class='p'>())</span> <span class='p'>{</span>
             <span class='kd'>var</span> <span class='nx'>formInput</span> <span class='o'>=</span> <span class='nx'>$</span><span class='p'>(</span><span class='k'>this</span><span class='p'>).</span><span class='nx'>serialize</span><span class='p'>();</span>
-            <span class='nx'>$</span><span class='p'>.</span><span class='nx'>post</span><span class='p'>(</span><span class='s1'>&#39;/contact_form.php&#39;</span><span class='o'>,</span> <span class='nx'>formInput</span><span class='o'>,</span> <span class='kd'>function</span><span class='p'>(</span><span class='nx'>data</span><span class='p'>){</span>
+            <span class='nx'>$</span><span class='p'>.</span><span class='nx'>post</span><span class='p'>(</span><span class='s1'>&#39;/contact_form.php&#39;</span><span class='p'>,</span> <span class='nx'>formInput</span><span class='p'>,</span> <span class='kd'>function</span><span class='p'>(</span><span class='nx'>data</span><span class='p'>){</span>
                 <span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#contact_form&#39;</span><span class='p'>).</span><span class='nx'>hide</span><span class='p'>();</span>
                 <span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#contact_thanks&#39;</span><span class='p'>).</span><span class='nx'>show</span><span class='p'>();</span>
             <span class='p'>});</span>
         <span class='p'>}</span>
         <span class='k'>else</span> <span class='k'>if</span> <span class='p'>(</span><span class='nx'>showing_message</span> <span class='o'>!=</span> <span class='mi'>1</span><span class='p'>)</span> <span class='p'>{</span>
-            <span class='nx'>showing_message</span> <span class='o'>=</span> <span class='mi'>1</span><span class='o'>;</span>
+            <span class='nx'>showing_message</span> <span class='o'>=</span> <span class='mi'>1</span><span class='p'>;</span>
             <span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#contact_msgbox&#39;</span><span class='p'>).</span><span class='nx'>html</span><span class='p'>(</span><span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#contact_error&#39;</span><span class='p'>).</span><span class='nx'>html</span><span class='p'>());</span>
             <span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#contact_msgbox&#39;</span><span class='p'>).</span><span class='nx'>addClass</span><span class='p'>(</span><span class='s1'>&#39;error&#39;</span><span class='p'>)</span>
                                 <span class='p'>.</span><span class='nx'>removeClass</span><span class='p'>(</span><span class='s1'>&#39;message&#39;</span><span class='p'>).</span><span class='nx'>show</span><span class='p'>();</span>
             <span class='k'>if</span> <span class='p'>(</span><span class='nx'>msg_timeout</span><span class='p'>)</span> <span class='nx'>clearTimeout</span><span class='p'>(</span><span class='nx'>msg_timeout</span><span class='p'>);</span>
-            <span class='nx'>msg_timeout</span> <span class='o'>=</span> <span class='nx'>setTimeout</span><span class='p'>(</span><span class='kd'>function</span><span class='p'>(){</span> <span class='nx'>close_msgbox</span><span class='p'>();</span> <span class='p'>}</span><span class='o'>,</span> <span class='mi'>10000</span><span class='p'>);</span>
+            <span class='nx'>msg_timeout</span> <span class='o'>=</span> <span class='nx'>setTimeout</span><span class='p'>(</span><span class='kd'>function</span><span class='p'>(){</span> <span class='nx'>close_msgbox</span><span class='p'>();</span> <span class='p'>},</span> <span class='mi'>10000</span><span class='p'>);</span>
         <span class='p'>}</span>
-        <span class='k'>return</span> <span class='kc'>false</span><span class='o'>;</span>
+        <span class='k'>return</span> <span class='kc'>false</span><span class='p'>;</span>
     <span class='p'>});</span>
 
     <span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#contact_form_info&#39;</span><span class='p'>).</span><span class='nx'>click</span><span class='p'>(</span><span class='kd'>function</span> <span class='p'>()</span> <span class='p'>{</span>
         <span class='k'>if</span> <span class='p'>(</span><span class='nx'>showing_message</span> <span class='o'>==</span> <span class='mi'>2</span><span class='p'>)</span> <span class='p'>{</span>
             <span class='nx'>close_msgbox</span><span class='p'>();</span>
-            <span class='k'>return</span> <span class='kc'>false</span><span class='o'>;</span>
+            <span class='k'>return</span> <span class='kc'>false</span><span class='p'>;</span>
         <span class='p'>}</span>
         <span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#contact_msgbox&#39;</span><span class='p'>).</span><span class='nx'>html</span><span class='p'>(</span><span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#contact_info&#39;</span><span class='p'>).</span><span class='nx'>html</span><span class='p'>());</span>
         <span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#contact_msgbox&#39;</span><span class='p'>).</span><span class='nx'>removeClass</span><span class='p'>(</span><span class='s1'>&#39;error&#39;</span><span class='p'>)</span>
                             <span class='p'>.</span><span class='nx'>addClass</span><span class='p'>(</span><span class='s1'>&#39;message&#39;</span><span class='p'>).</span><span class='nx'>show</span><span class='p'>();</span>
-        <span class='nx'>showing_message</span> <span class='o'>=</span> <span class='mi'>2</span><span class='o'>;</span>
+        <span class='nx'>showing_message</span> <span class='o'>=</span> <span class='mi'>2</span><span class='p'>;</span>
         <span class='k'>if</span> <span class='p'>(</span><span class='nx'>msg_timeout</span><span class='p'>)</span> <span class='nx'>clearTimeout</span><span class='p'>(</span><span class='nx'>msg_timeout</span><span class='p'>);</span>
-        <span class='nx'>msg_timeout</span> <span class='o'>=</span> <span class='nx'>setTimeout</span><span class='p'>(</span><span class='kd'>function</span><span class='p'>(){</span> <span class='nx'>close_msgbox</span><span class='p'>();</span> <span class='p'>}</span><span class='o'>,</span> <span class='mi'>10000</span><span class='p'>);</span>
-        <span class='k'>return</span> <span class='kc'>false</span><span class='o'>;</span>
+        <span class='nx'>msg_timeout</span> <span class='o'>=</span> <span class='nx'>setTimeout</span><span class='p'>(</span><span class='kd'>function</span><span class='p'>(){</span> <span class='nx'>close_msgbox</span><span class='p'>();</span> <span class='p'>},</span> <span class='mi'>10000</span><span class='p'>);</span>
+        <span class='k'>return</span> <span class='kc'>false</span><span class='p'>;</span>
     <span class='p'>});</span>
 
     <span class='kd'>function</span> <span class='nx'>close_msgbox</span><span class='p'>()</span> <span class='p'>{</span>
         <span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#contact_msgbox&#39;</span><span class='p'>).</span><span class='nx'>hide</span><span class='p'>();</span>
-        <span class='nx'>showing_message</span> <span class='o'>=</span> <span class='mi'>0</span><span class='o'>;</span>
-        <span class='k'>return</span> <span class='kc'>false</span><span class='o'>;</span>
+        <span class='nx'>showing_message</span> <span class='o'>=</span> <span class='mi'>0</span><span class='p'>;</span>
+        <span class='k'>return</span> <span class='kc'>false</span><span class='p'>;</span>
     <span class='p'>}</span>
 
    <span class='kd'>function</span> <span class='nx'>email_link</span><span class='p'>()</span> <span class='p'>{</span>
-        <span class='nb'>window</span><span class='p'>.</span><span class='nx'>location</span> <span class='o'>=</span> <span class='s2'>&quot;mailto:&quot;</span> <span class='o'>+</span> <span class='nx'>EMAIL_PREFIX</span> <span class='o'>+</span> <span class='s2'>&quot;@&quot;</span> <span class='o'>+</span> <span class='nx'>EMAIL_END</span><span class='o'>;</span>
-        <span class='k'>return</span> <span class='kc'>false</span><span class='o'>;</span>
+        <span class='nb'>window</span><span class='p'>.</span><span class='nx'>location</span> <span class='o'>=</span> <span class='s2'>&quot;mailto:&quot;</span> <span class='o'>+</span> <span class='nx'>EMAIL_PREFIX</span> <span class='o'>+</span> <span class='s2'>&quot;@&quot;</span> <span class='o'>+</span> <span class='nx'>EMAIL_END</span><span class='p'>;</span>
+        <span class='k'>return</span> <span class='kc'>false</span><span class='p'>;</span>
     <span class='p'>}</span>
-    <span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#contact_msgbox a:first-child&#39;</span><span class='p'>).</span><span class='nx'>live</span><span class='p'>(</span><span class='s1'>&#39;click&#39;</span><span class='o'>,</span> <span class='nx'>close_msgbox</span><span class='p'>);</span>
-    <span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#contact_email_addr&#39;</span><span class='p'>).</span><span class='nx'>live</span><span class='p'>(</span><span class='s1'>&#39;click&#39;</span><span class='o'>,</span> <span class='kd'>function</span><span class='p'>()</span> <span class='p'>{</span>
+    <span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#contact_msgbox a:first-child&#39;</span><span class='p'>).</span><span class='nx'>live</span><span class='p'>(</span><span class='s1'>&#39;click&#39;</span><span class='p'>,</span> <span class='nx'>close_msgbox</span><span class='p'>);</span>
+    <span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#contact_email_addr&#39;</span><span class='p'>).</span><span class='nx'>live</span><span class='p'>(</span><span class='s1'>&#39;click&#39;</span><span class='p'>,</span> <span class='kd'>function</span><span class='p'>()</span> <span class='p'>{</span>
       <span class='k'>return</span> <span class='nx'>email_link</span><span class='p'>();</span>
     <span class='p'>});</span>
 <span class='p'>});</span>
@@ -223,7 +223,7 @@
 <p>This is fairly short :)</p>
 <div class='highlight'><pre><code class='php'><span class='cp'>&lt;?php</span>
 <span class='nb'>define</span><span class='p'>(</span><span class='s1'>&#39;DEFAULT_POST_ID&#39;</span><span class='p'>,</span> <span class='nx'>post_id_here</span><span class='p'>);</span>
-<span class='c'>/* Contact form handling here */</span>
+<span class='cm'>/* Contact form handling here */</span>
 <span class='k'>if</span> <span class='p'>(</span><span class='nv'>$_POST</span><span class='p'>[</span><span class='s1'>&#39;contact&#39;</span><span class='p'>])</span> <span class='p'>{</span>
     <span class='k'>require_once</span><span class='p'>(</span> <span class='s1'>&#39;/wp-load.php&#39;</span> <span class='p'>);</span>
     <span class='nv'>$contact_invalid</span> <span class='o'>=</span> <span class='k'>array</span><span class='p'>();</span>
@@ -260,10 +260,10 @@
 <span class='s2'>            FROM wp_comments</span>
 <span class='s2'>            WHERE comment_ID = &#39;</span><span class='si'>{</span><span class='nv'>$comment_id</span><span class='si'>}</span><span class='s2'> LIMIT 1;&#39;&quot;</span>
         <span class='p'>);</span>
-        <span class='c'>// allow contact again after one hour</span>
+        <span class='c1'>// allow contact again after one hour</span>
         <span class='nb'>setcookie</span><span class='p'>(</span><span class='s1'>&#39;awesomemath_contact&#39;</span><span class='p'>,</span> <span class='m'>1</span><span class='p'>,</span> <span class='nb'>time</span><span class='p'>()</span> <span class='o'>+</span> <span class='m'>3600</span><span class='p'>,</span> <span class='s1'>&#39;/&#39;</span><span class='p'>);</span>
         <span class='k'>if</span> <span class='p'>(</span><span class='nv'>$comment_id</span> <span class='o'>&amp;&amp;</span> <span class='o'>!</span><span class='nv'>$comment_approved</span><span class='o'>-&gt;</span><span class='na'>spam</span><span class='p'>)</span> <span class='p'>{</span>
-            <span class='c'>// not spam!</span>
+            <span class='c1'>// not spam!</span>
             <span class='nv'>$contact_headers</span> <span class='o'>=</span> 
             <span class='s2'>&quot;From: </span><span class='si'>{</span><span class='nv'>$contact_data</span><span class='p'>[</span><span class='s1'>&#39;name&#39;</span><span class='p'>]</span><span class='si'>}</span><span class='s2'> &lt;</span><span class='si'>{</span><span class='nv'>$contact_data</span><span class='p'>[</span><span class='s1'>&#39;email&#39;</span><span class='p'>]</span><span class='si'>}</span><span class='s2'>&gt;</span><span class='se'>\r\n</span><span class='s2'>\\&quot;</span><span class='p'>;</span>
             <span class='nx'>wp_mail</span><span class='p'>(</span><span class='nx'>get_option</span><span class='p'>(</span><span class='s1'>&#39;admin_email&#39;</span><span class='p'>),</span>
@@ -281,7 +281,7 @@
 <span class='s1'>------------------------------</span>
 
 <span class='s1'>&#39;</span> <span class='o'>.</span> <span class='nv'>$contact_data</span><span class='p'>[</span><span class='s1'>&#39;message&#39;</span><span class='p'>],</span> <span class='nv'>$contact_headers</span><span class='p'>);</span>
-            <span class='c'>// redirect to prevent resubmission</span>
+            <span class='c1'>// redirect to prevent resubmission</span>
             <span class='nb'>header</span><span class='p'>(</span><span class='s2'>&quot;Location: </span><span class='si'>{</span><span class='nv'>$_SERVER</span><span class='p'>[</span><span class='s1'>&#39;HTTP_REFERER&#39;</span><span class='p'>]</span><span class='si'>}</span><span class='s2'>?contacted=1&quot;</span><span class='p'>);</span>
             <span class='k'>die</span><span class='p'>;</span>
         <span class='p'>}</span>

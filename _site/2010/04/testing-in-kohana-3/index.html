@@ -132,7 +132,7 @@
 <p>Start by reading <a href='http://www.phpunit.de/manual/3.4/en/writing-tests-for-phpunit.html'>the PHPUnit documentation</a>. It&#8217;s full of great examples. My project is fairly complex, and so I&#8217;m using <strong>TestSuites</strong>, <strong>TestCases</strong>, and <strong>fixtures</strong>. I will write about the latter in subsequent posts.</p>
 
 <p>Here is a simple example of a <strong>TestCase</strong>:</p>
-<div class='highlight'><pre><code class='php'><span class='cp'>&lt;?php</span> <span class='c'>// application/tests/test_example.php</span>
+<div class='highlight'><pre><code class='php'><span class='cp'>&lt;?php</span> <span class='c1'>// application/tests/test_example.php</span>
 
 <span class='sd'>/**</span>
 <span class='sd'> * Logged out, 403 forbidden everywhere.</span>
@@ -154,7 +154,7 @@
         <span class='nv'>$this</span><span class='o'>-&gt;</span><span class='na'>assertSame</span><span class='p'>(</span><span class='nv'>$response</span><span class='o'>-&gt;</span><span class='na'>status</span><span class='p'>,</span> <span class='m'>403</span><span class='p'>);</span>
     <span class='p'>}</span>
 
-    <span class='c'>// ... more tests here ...</span>
+    <span class='c1'>// ... more tests here ...</span>
 <span class='p'>}</span>
 </code></pre>
 </div>
@@ -184,7 +184,7 @@
 <p>Again, <a href='http://www.phpunit.de/manual/3.4/en/api.html#api.testsuite'>the PHPUnit documentation</a> is golden.</p>
 
 <p>Test suites come in handy when multiple tests can use the same setup. You can also <a href='http://www.phpunit.de/manual/3.4/en/fixtures.html#fixtures.sharing-fixture'>share fixtures between tests</a> this way. My main reason for using test suites was actually the gain in speed. This next example shows why.</p>
-<div class='highlight'><pre><code class='php'><span class='cp'>&lt;?php</span> <span class='c'>// application/tests/testsuite_fastask_search.php</span>
+<div class='highlight'><pre><code class='php'><span class='cp'>&lt;?php</span> <span class='c1'>// application/tests/testsuite_fastask_search.php</span>
 
 <span class='sd'>/**</span>
 <span class='sd'> * This suite tests search functionality in the main controller.</span>
@@ -203,25 +203,25 @@
 
     <span class='k'>protected</span> <span class='k'>function</span> <span class='nf'>setUp</span><span class='p'>()</span>
     <span class='p'>{</span>
-        <span class='c'>// Set database connection and log in the user.</span>
+        <span class='c1'>// Set database connection and log in the user.</span>
         <span class='nx'>Kohana</span><span class='o'>::</span><span class='na'>config</span><span class='p'>(</span><span class='s1'>&#39;database&#39;</span><span class='p'>)</span><span class='o'>-&gt;</span><span class='na'>default</span> <span class='o'>=</span> <span class='nx'>Kohana</span><span class='o'>::</span><span class='na'>config</span><span class='p'>(</span><span class='s1'>&#39;database&#39;</span><span class='p'>)</span>
                                                 <span class='o'>-&gt;</span><span class='na'>unit_testing</span><span class='p'>;</span>
         <span class='nx'>Auth</span><span class='o'>::</span><span class='na'>instance</span><span class='p'>()</span><span class='o'>-&gt;</span><span class='na'>login</span><span class='p'>(</span><span class='nx'>TEST_USERNAME</span><span class='p'>,</span> <span class='nx'>TEST_PASSWORD</span><span class='p'>);</span>
 
-        <span class='c'>// Index data and start up the search daemon</span>
+        <span class='c1'>// Index data and start up the search daemon</span>
         <span class='nb'>exec</span><span class='p'>(</span><span class='s1'>&#39;indexer --all --config &#39;</span> <span class='o'>.</span> <span class='nx'>SPHINX_CONF</span><span class='p'>);</span>
         <span class='nb'>exec</span><span class='p'>(</span><span class='s1'>&#39;searchd --config &#39;</span> <span class='o'>.</span> <span class='nx'>SPHINX_CONF</span><span class='p'>);</span>
     <span class='p'>}</span>
 
     <span class='k'>protected</span> <span class='k'>function</span> <span class='nf'>tearDown</span><span class='p'>()</span>
     <span class='p'>{</span>
-        <span class='c'>// Reset logins and log out the user</span>
+        <span class='c1'>// Reset logins and log out the user</span>
         <span class='nv'>$test_user</span>         <span class='o'>=</span> <span class='nx'>Auth</span><span class='o'>::</span><span class='na'>instance</span><span class='p'>()</span><span class='o'>-&gt;</span><span class='na'>get_user</span><span class='p'>();</span>
         <span class='nv'>$test_user</span><span class='o'>-&gt;</span><span class='na'>logins</span> <span class='o'>=</span> <span class='m'>1</span><span class='p'>;</span>
         <span class='nv'>$test_user</span><span class='o'>-&gt;</span><span class='na'>save</span><span class='p'>();</span>
         <span class='nx'>Auth</span><span class='o'>::</span><span class='na'>instance</span><span class='p'>()</span><span class='o'>-&gt;</span><span class='na'>logout</span><span class='p'>();</span>
 
-        <span class='c'>// Stop the search daemon</span>
+        <span class='c1'>// Stop the search daemon</span>
         <span class='nb'>exec</span><span class='p'>(</span><span class='s1'>&#39;killall searchd&#39;</span><span class='p'>);</span>
     <span class='p'>}</span>
 <span class='p'>}</span>
@@ -240,7 +240,7 @@
 </ul>
 
 <p>Next, some test cases.</p>
-<div class='highlight'><pre><code class='php'><span class='cp'>&lt;?php</span> <span class='c'>// application/testcases/test_fastask_search.php</span>
+<div class='highlight'><pre><code class='php'><span class='cp'>&lt;?php</span> <span class='c1'>// application/testcases/test_fastask_search.php</span>
 
 <span class='sd'>/**</span>
 <span class='sd'> * @group loggedin</span>
@@ -254,15 +254,15 @@
 <span class='sd'>     */</span>
     <span class='k'>function</span> <span class='nf'>providerSearch</span><span class='p'>()</span>
     <span class='p'>{</span>
-        <span class='c'>/* format for each test:</span>
-<span class='c'>            array(</span>
-<span class='c'>                search term</span>
-<span class='c'>                status code to expect</span>
-<span class='c'>        */</span>
+        <span class='cm'>/* format for each test:</span>
+<span class='cm'>            array(</span>
+<span class='cm'>                search term</span>
+<span class='cm'>                status code to expect</span>
+<span class='cm'>        */</span>
         <span class='k'>return</span> <span class='k'>array</span><span class='p'>(</span>
             <span class='k'>array</span><span class='p'>(</span><span class='s1'>&#39;s&#39;</span> <span class='o'>=&gt;</span> <span class='s1'>&#39;asdfgh&#39;</span><span class='p'>,</span> <span class='m'>404</span><span class='p'>),</span>
             <span class='k'>array</span><span class='p'>(</span><span class='s1'>&#39;s&#39;</span> <span class='o'>=&gt;</span> <span class='s1'>&#39;&#39;</span><span class='p'>,</span> <span class='m'>404</span><span class='p'>),</span>
-            <span class='k'>array</span><span class='p'>(</span><span class='s1'>&#39;s&#39;</span> <span class='o'>=&gt;</span> <span class='s1'>&#39;nulla&#39;</span><span class='p'>,</span> <span class='m'>200</span><span class='p'>),</span>  <span class='c'>// One of those lorem-ipsum results</span>
+            <span class='k'>array</span><span class='p'>(</span><span class='s1'>&#39;s&#39;</span> <span class='o'>=&gt;</span> <span class='s1'>&#39;nulla&#39;</span><span class='p'>,</span> <span class='m'>200</span><span class='p'>),</span>  <span class='c1'>// One of those lorem-ipsum results</span>
         <span class='p'>);</span>
     <span class='p'>}</span>
 

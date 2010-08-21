@@ -177,7 +177,7 @@
 <p>Afterwards, we added <a href='http://code.google.com/p/minify/'>minify</a>, categories, author pages. Since quotes use categories everywhere they are displayed, a good option was to overwrote the quote model constructor to always grab the related categories, sorted.</p>
 <div class='highlight'><pre><code class='php'><span class='cp'>&lt;?php</span>
 <span class='k'>class</span> <span class='nc'>Model_Quote</span> <span class='k'>extends</span> <span class='nx'>ORM</span> <span class='p'>{</span>
-  <span class='c'>// ...</span>
+  <span class='c1'>// ...</span>
   <span class='k'>public</span> <span class='k'>function</span> <span class='nf'>__construct</span><span class='p'>(</span><span class='nv'>$id</span> <span class='o'>=</span> <span class='k'>NULL</span><span class='p'>)</span> <span class='p'>{</span>
     <span class='k'>parent</span><span class='o'>::</span><span class='na'>__construct</span><span class='p'>(</span><span class='nv'>$id</span><span class='p'>);</span>
     <span class='nv'>$this</span><span class='o'>-&gt;</span><span class='na'>_object</span><span class='p'>[</span><span class='s1'>&#39;categories_list&#39;</span><span class='p'>]</span> <span class='o'>=</span> <span class='nv'>$this</span><span class='o'>-&gt;</span><span class='na'>categories</span>
@@ -193,16 +193,16 @@
 
 <p>The final crucial aspect was having a way to add and edit content. This required user authentication &#8211; which, fortunately, comes with Kohana 3 and works well. We just use the default auth module and we haven&#8217;t had any problems. Here&#8217;s a code sample:</p>
 <div class='highlight'><pre><code class='php'><span class='cp'>&lt;?php</span>
-<span class='c'>// application/classes/controller/user.php</span>
+<span class='c1'>// application/classes/controller/user.php</span>
   <span class='k'>public</span> <span class='k'>function</span> <span class='nf'>action_login</span><span class='p'>()</span> <span class='p'>{</span>
-    <span class='c'>// ...</span>
-    <span class='c'>// if posted data</span>
+    <span class='c1'>// ...</span>
+    <span class='c1'>// if posted data</span>
     <span class='k'>if</span> <span class='p'>(</span><span class='nv'>$_POST</span><span class='p'>)</span> <span class='p'>{</span>
     <span class='nv'>$user</span> <span class='o'>=</span> <span class='nx'>ORM</span><span class='o'>::</span><span class='na'>factory</span><span class='p'>(</span><span class='s1'>&#39;user&#39;</span><span class='p'>);</span>
 
-    <span class='c'>// check auth</span>
+    <span class='c1'>// check auth</span>
     <span class='k'>if</span> <span class='p'>(</span><span class='nv'>$user</span><span class='o'>-&gt;</span><span class='na'>login</span><span class='p'>(</span><span class='nv'>$_POST</span><span class='p'>))</span> <span class='p'>{</span>
-      <span class='c'>// redirect to my account</span>
+      <span class='c1'>// redirect to my account</span>
     <span class='p'>}</span> <span class='k'>else</span> <span class='p'>{</span>
       <span class='nv'>$view</span><span class='o'>-&gt;</span><span class='na'>errors</span> <span class='o'>=</span> <span class='nv'>$_POST</span><span class='o'>-&gt;</span><span class='na'>errors</span><span class='p'>(</span><span class='s1'>&#39;login&#39;</span><span class='p'>);</span>
       <span class='nv'>$this</span><span class='o'>-&gt;</span><span class='na'>template</span><span class='o'>-&gt;</span><span class='na'>title</span> <span class='o'>=</span> <span class='s1'>&#39;Error logging in&#39;</span><span class='p'>;</span>
