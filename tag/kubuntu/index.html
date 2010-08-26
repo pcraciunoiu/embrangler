@@ -1,0 +1,13 @@
+---
+layout: default
+title: Posts tagged "kubuntu"
+tag: kubuntu
+type: "Kubuntu"
+---
+    <h1 class="title" id="kubuntu">Posts tagged <em>kubuntu</em></h1>
+
+    <ul>
+      {% for post in site.tags['kubuntu'] %}
+      {% include item.html %}
+      {% endfor %}
+    </ul>

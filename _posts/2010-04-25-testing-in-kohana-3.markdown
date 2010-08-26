@@ -2,6 +2,7 @@
 layout: post
 title: "Introduction to testing in Kohana 3"
 summary: A quick intro to writing tests in Kohana 3 with real code examples.
+tags: [kohana, testing, tutorial]
 ---
 
 Table of contents:

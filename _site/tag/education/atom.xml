@@ -1,0 +1,680 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+ <title>Disembrangling Programming</title>
+ <link href="http://embrangler.com/tag/education/atom.xml" rel="self"/>
+ <link href="http://embrangler.com/tag/education"/>
+ <updated>2010-08-25T22:00:14-07:00</updated>
+ <id>http://embrangler.com/</id>
+ <author>
+   <name>Paul Craciunoiu</name>
+   <email>paul@craciunoiu.net</email>
+ </author>
+
+ 
+ <entry>
+   <title>EDUC60 - nov 2 - lecture notes</title>
+   <link href="http://embrangler.com/2009/11/educ60-nov-2-lecture-notes"/>
+   <updated>2009-11-03T00:00:00-08:00</updated>
+   <id>http://embrangler.com/2009/11/educ60-nov-2-lecture-notes</id>
+   <content type="html">&lt;p&gt;Ideas about teaching:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Pedagogical content knowledge&lt;/li&gt;
+
+&lt;li&gt;Culturally responsive teaching&lt;/li&gt;
+
+&lt;li&gt;Teacher as facilitator&lt;/li&gt;
+
+&lt;li&gt;Teacher learning&lt;/li&gt;
+
+&lt;li&gt;Teacher learning communities&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Community of practices&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Common ways of doing things, common structure of teaching&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Quick review&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Behaviorism and teaching&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;a response to a stimulus is enforced&lt;/li&gt;
+
+&lt;li&gt;vs teaching - positive and negative reinforcement techniques&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Constructivism&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;teacher is guide or facilitator&lt;/li&gt;
+
+&lt;li&gt;work that ZPD!&lt;/li&gt;
+
+&lt;li&gt;research what students know&lt;/li&gt;
+
+&lt;li&gt;hands-on problem solving&lt;/li&gt;
+
+&lt;li&gt;open-ended questions&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Community of practice&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;shared language and practices&lt;/li&gt;
+
+&lt;li&gt;establish, promote and understand student communities&lt;/li&gt;
+
+&lt;li&gt;provide scaffolding/mentoring&lt;/li&gt;
+
+&lt;li&gt;scaffolding = diagnosing of ZPD; hinting, leading question based on what student already knows&lt;/li&gt;
+
+&lt;li&gt;the best assessment occurs in the practice&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Pedagogical knowledge&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;of subject matter&lt;/li&gt;
+
+&lt;li&gt;of students&amp;#8217; understanding&lt;/li&gt;
+
+&lt;li&gt;of curricula&lt;/li&gt;
+
+&lt;li&gt;of general pedagogy&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Content knowledge&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;of subjects&lt;/li&gt;
+
+&lt;li&gt;of relationships among subjects&lt;/li&gt;
+
+&lt;li&gt;of methods of acquiring and applying knowledge&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Culturally responsive teaching&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;who are my students? where do they live? what are typical parental occupations? what &amp;#8220;funds of knowledge&amp;#8221; are family members able to share&lt;/li&gt;
+
+&lt;li&gt;funds of knowledge = intersting important ideas that individual haves which are not parts of school&lt;/li&gt;
+
+&lt;li&gt;build outside knowledge into curriculum, goes back to knowing how people learn&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Teacher as facilitator vs didactic&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;having students contribute from their own experiences&lt;/li&gt;
+
+&lt;li&gt;involves some kind of egalitarian effort&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&amp;#8220;Teaching for understanding&amp;#8221; paper, by Perkins&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Make learning a long-term, thinking-centered process&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Provide rich ongoing assesment&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Support learning with powerful representations&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Pay heed to developmental factors&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Induct students into the discipline&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;e.g. think like historians&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Teach for transfer&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;e.g. use information in more than one setting&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;strong&gt;We all need to be reflective, lifelong learners.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Teacher learning communities&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Mutual Support&lt;/li&gt;
+
+&lt;li&gt;Shared Focus&lt;/li&gt;
+
+&lt;li&gt;Individual Investigations of Topics of Interest&lt;/li&gt;
+
+&lt;li&gt;Discussion of Selected Reading&lt;/li&gt;
+
+&lt;li&gt;Conference Presentations and writing for Publication&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Oakes critical against &amp;#8220;let&amp;#8217;s fix teaching&amp;#8221; mentality. She is arguing about offering opportunity and making social justice a reality rather than &amp;#8220;fixing&amp;#8221; and &amp;#8220;improving.&amp;#8221;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;encourage students to ask&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;whose interest is being served?&lt;/li&gt;
+
+&lt;li&gt;whose interest is being ignored?&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;think about this whenever you are asked to do something (e.g. in class)&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Essay prompt:&lt;/p&gt;
+
+&lt;p&gt;&amp;#8220;Provide arguments to make a case either for or against large lecture format teaching (a forced dichotomy).&lt;/p&gt;
+
+&lt;p&gt;Use learning theory and reading on teaching and learning environment design to support your arguments - be specific. Indicated why the selected theory is useful, i.e. don&amp;#8217;t just list it.&lt;/p&gt;
+
+&lt;p&gt;You do not need to cite every coinceivable theory or article/chapter. Please be selective but pointed. I want to see that you have digested the material and can use it in a new situation (transfer).&amp;#8221;&lt;/p&gt;
+
+&lt;p&gt;Address the implications beyond yourself and UCSC. Use 3-5 sources.&lt;/p&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>ED60 - How people learn, Ch1</title>
+   <link href="http://embrangler.com/2009/10/ed60-how-people-learn-ch1"/>
+   <updated>2009-10-21T00:00:00-07:00</updated>
+   <id>http://embrangler.com/2009/10/ed60-how-people-learn-ch1</id>
+   <content type="html">&lt;p&gt;Three major theories of learning:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Behaviorism&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;learning based on behavior&lt;/li&gt;
+
+&lt;li&gt;came as response to old psychology based on &amp;#8220;consciousness&amp;#8221;&lt;/li&gt;
+
+&lt;li&gt;conditioning response based on stimuli&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Constructivism&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;new knowledge constructed on top of pre-existing knowledge&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;More currently:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;New focus is on understanding&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;This leads to focus on processes of knowing. Human = goal-oriented agent who actively seeks information.&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Active learning: people take control of their own learning&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Comparison between teachers A, B, and C, with each having different goals&lt;/li&gt;
+
+&lt;li&gt;Teacher C helps the students &lt;em&gt;want&lt;/em&gt; to learn about the material before the class starts, and therefore during class merely supervises their course of learning to ensure students keep sight of their purposes.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Key findings of scientific analysis:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Students come to the classroom with preconceptions about how the world works. If their initial understanding is not engaged, they may fail to grasp the new concepts and information that are taught, or they may learn them for purposes of a test but revert to their preconceptions outside the classroom.&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;To develop competence in an area of inquiry, students must:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;have a deep foundation of factual knowledge&lt;/li&gt;
+
+&lt;li&gt;understand facts and ideas in the context of a conceptual framework&lt;/li&gt;
+
+&lt;li&gt;organize knowledge in ways that faciitate retrieval and application&lt;/li&gt;
+
+&lt;li&gt;This fact emphasizes the importance of having expertise and connecting multiple bits of knowledge to understand larger concepts. Experts are also able to filter out irrelevant information from their knowledge, when working on a specific issue.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;A &amp;#8220;metacognitive&amp;#8221; approach to instruction can help students learn to take control of their own learning by defining learning goals and monitoring their progress in achieving them.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Consequences for teachers:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Teachers must draw out and work with the preexisting understandings that their students bring with them.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;The model of a child as an empty vessel is wrong. Teacher must inquire into students&amp;#8217; thinking&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Roles for assessment must expanded beyond traditional testing. Formative assesment helps students observe their thinking, and provides feedback that can guide modification of the course.&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Beginning teachers must be provided with opportunities to learn&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;To recognize predictable preconceptions of students&lt;/li&gt;
+
+&lt;li&gt;To draw out preconceptions that are not predictable&lt;/li&gt;
+
+&lt;li&gt;To work with preconceptions so that children build on them, challenge them, and, when appropriate, replace them&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Teachers must teach some subject matter in depth, providing many examples in which the same concept is at work and providing a firm foundation of factual knowledge&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Superficial coverage of many areas must be replaced by in-depth coverage of fewer topics&lt;/li&gt;
+
+&lt;li&gt;Coordination across coursework and school years to aid transition from informal to formal ideas&lt;/li&gt;
+
+&lt;li&gt;Teacher must be aware of development of students thinking about the concepts (developing teaching expertise)&lt;/li&gt;
+
+&lt;li&gt;Of course, teacher must know the subject and connect major concepts (discipline expertise)&lt;/li&gt;
+
+&lt;li&gt;Tests must be for deep understanding rather than surface knowledge. Need new assessment tools. Need to minimize trade-off between assessing depth and assessing ovjectively.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;The teaching of metacognitive skills should be integrated into the curriculum rather of subject areas.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Designing classroom environments:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Schools and classrooms must be learner centered&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Cultural differences can affect ability to learn&lt;/li&gt;
+
+&lt;li&gt;Students&amp;#8217; theories of what it means to be intelligent can affect their performance. Students who think intelligence is fixed are more likely to give up, whereas those who think it&amp;#8217;s flexible are more likely to admit mistakes and keep going (more comfortable with risk)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;To provide a knowledge-centered classroom environment, attention must be given to what is taught (information, subject matter), why it is taught (understanding), and what competence or mastery looks like&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;need to aid deeper understanding&lt;/li&gt;
+
+&lt;li&gt;tests often evaluate memorizing&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Formative assessments&amp;#8211;ongoing assessments designed to make students&amp;#8217; thinking visible to both teachers and students&amp;#8211;are essential. They permit the teacher to grasp the students&amp;#8217; preconceptions, understand where the students are in the &amp;#8220;developmental corridor&amp;#8221; from informal to formal thinking, and design instruction accordingly. In the assessment-centered classroom environment, formative assesments help both teachers and students monitor progress.&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Learning is influenced in fundamental ways by the context in which it takes place. A community-centered approach requires the development of norms for the classroom and school, as well as connections to the outside world that support core learning values * Teachers must encourage a community of learners, it&amp;#8217;s okay to make mistakes, engender sense of excitement&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Students spend only 13% of their time in schools. Focus learning on what they do outside school too, provide ways, etc.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Mistakes in professional development programs for teachers:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Are not learner centered&lt;/li&gt;
+
+&lt;li&gt;Are not knowledge centered&lt;/li&gt;
+
+&lt;li&gt;Are not assessment centered&lt;/li&gt;
+
+&lt;li&gt;Are not community centered&lt;/li&gt;
+&lt;/ul&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>ED60 - David Labaree - Public goods, private goods, the American struggle over educational goals</title>
+   <link href="http://embrangler.com/2009/10/ed60-labaree"/>
+   <updated>2009-10-05T00:00:00-07:00</updated>
+   <id>http://embrangler.com/2009/10/ed60-labaree</id>
+   <content type="html">&lt;p&gt;As part of my education 60 class, we have to read a paper by David Labaree, on schools: seen as a private vs public goal.&lt;/p&gt;
+
+&lt;p&gt;Summary:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Three alternative goals for american education:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;democratic equality&lt;/strong&gt;: for citizens, everyone needs to know as much as possible, education needs to be accessible to everyone in order to create a true democracy, so anyone can contribute (public good)&lt;/li&gt;
+
+&lt;li&gt;&lt;strong&gt;social efficiency&lt;/strong&gt;: for workers, everyone benefits from more skilled workers, make education more practical by offering more practical study matters and some degree of stratification (private training for public benefit)&lt;/li&gt;
+
+&lt;li&gt;&lt;strong&gt;social mobility&lt;/strong&gt;: for individuals, the benefit largely goes to the individual consumer, who gains a salary increase or mainains his/her position on the social scale; this provides further stratification and differentiation between institutions (even with similar programs), as well as within institutions (from remedial to gifted)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Democratic equality&lt;/strong&gt; - Summary:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Most political purpose of American education&lt;/li&gt;
+
+&lt;li&gt;Three distinct operational forms:&lt;/li&gt;
+
+&lt;li&gt;Citizenship training &amp;#8211; prevent selfishness, instill dedication to public, &amp;#8220;it&amp;#8217;s hard to make Republicans,&amp;#8221; need to training&lt;/li&gt;
+
+&lt;li&gt;Equal treatment &amp;#8211; Horace Mann, fear of class conflict, sense of shared membership and community, egalitarian to sex, race, ethnicity&lt;/li&gt;
+
+&lt;li&gt;Equal access &amp;#8211; everyone should have an equal opportunity, provide enough schools, higher education becomes the norm&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Social efficiency&lt;/strong&gt; - Summary:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Practical constraints, vocationalism: make the school curriculum more responsive to job needs&lt;/li&gt;
+
+&lt;li&gt;Ruled by the simple reality that students eventually leave schools and join the workforce&lt;/li&gt;
+
+&lt;li&gt;Result was the creation of vocational programs, particularly at high school and community college levels&lt;/li&gt;
+
+&lt;li&gt;General education seen as impractical: &amp;#8220;For a long time all boys were trained to be President&amp;#8230; Now we are training them to get jobs.&amp;#8221; (Robert and Helen Lynd)&lt;/li&gt;
+
+&lt;li&gt;Compelling logic: benefits public (anyone) to spend on education. It is in the interest of the taxpayer (sound investment)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Social mobility&lt;/strong&gt; - Summary:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Individual benefit, status attainment. Private good.&lt;/li&gt;
+
+&lt;li&gt;Asks &amp;#8220;what can a school do for me, the individual consumer?&amp;#8221;&lt;/li&gt;
+
+&lt;li&gt;Education understood as a way to get ahead or stay in sync.&lt;/li&gt;
+
+&lt;li&gt;Grading, hierarchy, more selective at higher levels to ensure distinction&lt;/li&gt;
+
+&lt;li&gt;Qualitative differences between institutions&lt;/li&gt;
+
+&lt;li&gt;Qualitative differences within institutions&lt;/li&gt;
+
+&lt;li&gt;Contrasts with previous two, education is seen as an &lt;em&gt;exchange&lt;/em&gt; value rather than a &lt;em&gt;use&lt;/em&gt; value&lt;/li&gt;
+
+&lt;li&gt;&amp;#8220;Students quickly come to the conclusion that what matters most is not the knowledge they learn in school but the credentials they acquire there&amp;#8221; (Labaree)&lt;/li&gt;
+
+&lt;li&gt;Education becomes more &lt;em&gt;meritocratic&lt;/em&gt;, leads to competition and wariness =&amp;#62; fairness&lt;/li&gt;
+
+&lt;li&gt;Meritocracy much more visible in higher levels&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Historical patterns of goal ascendancy&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;19th century was dominated by democratic equality&lt;/li&gt;
+
+&lt;li&gt;increasing number of students led to need for distinction, potential for getting ahead =&amp;#62; social mobility and efficiency&lt;/li&gt;
+
+&lt;li&gt;1960s - 1970s - democratic equality again, for racial and sex discrimination&lt;/li&gt;
+
+&lt;li&gt;1980s - 1990s - shifted back to social efficiency + mobility, for educational standards and usefulness of education&lt;/li&gt;
+
+&lt;li&gt;More and more, education goals emphasize winning over learning, opportunity over efficiency&lt;/li&gt;
+
+&lt;li&gt;Resulted from decentralized control (little federal and state ruling), which led to market/local education, consumer choice, competition, stratified curriculum, local autonomy for schools&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Social mobility vs social efficiency&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;(agree with democratic equality) Social mobility supports greater access to schooling for people to have an equal chance of getting ahead&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;(agree with democratic equality) Social mobility allocates rewards based on individual achievement, not race, gender, ethnicity, class, etc&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Ideology of the three programs:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;democratic equality: politically democratic, socially egalitarian&lt;/li&gt;
+
+&lt;li&gt;social mobility: politically liberal, socially meritocratic&lt;/li&gt;
+
+&lt;li&gt;common ground between the above two, socially + politically is considered a progressive view&lt;/li&gt;
+
+&lt;li&gt;social efficiency: politically conservative, socially reproductive (reinforce existing structure)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Successes from coalition between social mobility and democratic equality:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;variety of choices&lt;/li&gt;
+
+&lt;li&gt;less discrimination&lt;/li&gt;
+
+&lt;li&gt;accepting returning students&lt;/li&gt;
+
+&lt;li&gt;hiring because of credentials rather than characteristics&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Primary opposition comes from social efficiency&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;need for positions in job market is not met&lt;/li&gt;
+
+&lt;li&gt;rising costs for poor families&lt;/li&gt;
+
+&lt;li&gt;more worry about getting a job than getting ahead&lt;/li&gt;
+
+&lt;li&gt;as taxpayers, contributing to education for &lt;em&gt;other people&amp;#8217;s children&lt;/em&gt;&lt;/li&gt;
+
+&lt;li&gt;produce workforce to provide measurable economic benefits to society as a whole&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Dispute over tracking, guidance and vocationalism&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Result is a bold mixture of purposes in American education, anyone has a possibility to get to the top (_contest mobility_, acc. to Turner), but with low probability&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Contrasts:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;greater access (mobility) vs reducing costs (effective)&lt;/li&gt;
+
+&lt;li&gt;concentrate resources on highest levels (mobility) vs high quality on all levels (effective)&lt;/li&gt;
+
+&lt;li&gt;undercuts learning by promoting minimum level to attain credentials (mobility) vs need to upgrade skills of the workforce (effective)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Similarities:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;schools need to adapt to the structure of inequality&lt;/li&gt;
+
+&lt;li&gt;subordinate schools to needs of market&lt;/li&gt;
+
+&lt;li&gt;lead to highly stratified structure of education&lt;/li&gt;
+
+&lt;li&gt;providing high access to highest end, most desirable jobs is counterproductive and also not giving an edge to a select few&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Social mobility can only be promoted to the extent that it reduce the chance for the lower end to get to the top (opposite of democratic equality)&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Social mobility vs democratic equality&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;both for equal access&lt;/li&gt;
+
+&lt;li&gt;mobility against equal treatment and civic virtue&lt;/li&gt;
+
+&lt;li&gt;equal &lt;em&gt;treatment&lt;/em&gt;opposite of equal &lt;em&gt;educational treatment&lt;/em&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;em&gt;civic virtue&lt;/em&gt; is about politics as opposed to the market. social mobility is for market value (progressive individualism, capitalist ideology), not political value&lt;/li&gt;
+
+&lt;li&gt;progressive individualism = individual pursuing competitive success in the market&lt;/li&gt;
+
+&lt;li&gt;purpose of democratic equality: republicans&lt;/li&gt;
+
+&lt;li&gt;purpose of social efficiency: workers&lt;/li&gt;
+
+&lt;li&gt;purpose of social mobility: winners&lt;/li&gt;
+
+&lt;li&gt;social mobility caused school to have value not for its intrinsic usefulness (things you learn), but for its exchangeability&lt;/li&gt;
+
+&lt;li&gt;citizenship training has become, as a result, much less present&lt;/li&gt;
+
+&lt;li&gt;good citizenship has morphed into behaving in accordance with school rules&lt;/li&gt;
+
+&lt;li&gt;social mobility encourages &lt;em&gt;surrogate learning&lt;/em&gt; - &lt;strong&gt;&lt;em&gt;as long as credits are gained, what occurs in classrooms is allowed to pass for education&lt;/em&gt;&lt;/strong&gt;&lt;/li&gt;
+
+&lt;li&gt;exchange value is assumed (mistakenly) to reflect use value&lt;/li&gt;
+
+&lt;li&gt;schooling for mobility is like farming for the market &amp;#8211; maximize the exchange value&lt;/li&gt;
+
+&lt;li&gt;Labaree suggests that the reason students are less successful from the perspective of academic achievement is because the purpose of schooling is, at its core, anti-educational &amp;#8211;&amp;#62; students are well schooled but poorly educated, master of forms but not of content. The classic question &amp;#8220;Will this be on the test?&amp;#8221; illustrates this.&lt;/li&gt;
+
+&lt;li&gt;&amp;#8220;levels of educational attainment keep rising, while levels of social mobility remain the same&amp;#8221; (pg 70)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Conclusion&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Contradiction:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;these three goals created a contradiction that is contradictory and frequently counterproductive&lt;/li&gt;
+
+&lt;li&gt;we &lt;em&gt;distinguish&lt;/em&gt; students by merit and grades, but undermine this through &lt;em&gt;homogenizing&lt;/em&gt; practices such as grade inflation, social promotion&lt;/li&gt;
+
+&lt;li&gt;we bring all students under the same roof, but make sure everyone has a different experience there&lt;/li&gt;
+
+&lt;li&gt;we offer everyone access to higher education, while assuming social benefits are sharply stratified&lt;/li&gt;
+
+&lt;li&gt;we focus on preparing students for work, but devote our efforts to providing a thoroughly general education&lt;/li&gt;
+
+&lt;li&gt;education is deficient at carrying out any of its goals effectively &amp;#8211; we continue to ask ends that are mutually exclusive&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Credentialism&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;translating educational attainment into social attainment&lt;/li&gt;
+
+&lt;li&gt;since the interests are either job competency or general knowledge (from gen ed), credentials are expected to be irrelevant&lt;/li&gt;
+
+&lt;li&gt;the reality, however, is the opposite &amp;#8211; Boudon&amp;#8217;s model predicts this&lt;/li&gt;
+
+&lt;li&gt;elevates schooling into an instrument for achieving the American dream&lt;/li&gt;
+
+&lt;li&gt;credentials market is where aspirations raised by education meet the cold reality of socioeconomic limits&lt;/li&gt;
+
+&lt;li&gt;educational opportunities grow faster than job opportunities&lt;/li&gt;
+
+&lt;li&gt;the ability of a diploma to buy a good job declines&lt;/li&gt;
+
+&lt;li&gt;credentialism undermines learning, promotes spending time and money for little economic benefit&lt;/li&gt;
+
+&lt;li&gt;carries out in a manner that is individually rational and collectively irrational&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Possibility&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;biggest problem in society nowadays is not that these three major ideals exist and are in conflict, but the thread of social mobility overshadowing the other two =&amp;#62; education as private good&lt;/li&gt;
+
+&lt;li&gt;need to draw on core goal of education &amp;#8211; to provide everyone with the capacities required for full political participation and working abilities&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;And that&amp;#8217;s the summary of a 45 page article!&lt;/p&gt;
+
+&lt;p&gt;I look forward to writing an essay based on this, in 2 weeks time.&lt;/p&gt;</content>
+ </entry>
+ 
+
+</feed>

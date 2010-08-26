@@ -2,6 +2,7 @@
 layout: post
 title: "May 3-14 status"
 summary: Past and future weekly goals @ Mozilla.
+tags: [mozilla, webdev, weekly updates]
 ---
 
 ## Two weeks ago (May 3-7)

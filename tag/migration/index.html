@@ -1,0 +1,13 @@
+---
+layout: default
+title: Posts tagged "migration"
+tag: migration
+type: "Migration"
+---
+    <h1 class="title" id="migration">Posts tagged <em>migration</em></h1>
+
+    <ul>
+      {% for post in site.tags['migration'] %}
+      {% include item.html %}
+      {% endfor %}
+    </ul>

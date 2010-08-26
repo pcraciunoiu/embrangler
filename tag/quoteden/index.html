@@ -1,0 +1,13 @@
+---
+layout: default
+title: Posts tagged "quoteden"
+tag: quoteden
+type: "Quoteden"
+---
+    <h1 class="title" id="quoteden">Posts tagged <em>quoteden</em></h1>
+
+    <ul>
+      {% for post in site.tags['quoteden'] %}
+      {% include item.html %}
+      {% endfor %}
+    </ul>

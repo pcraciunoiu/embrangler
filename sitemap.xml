@@ -1,0 +1,21 @@
+---
+rooturl: http://embrangler.com
+---
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+   <url>
+      <loc>{{ page.rooturl }}/</loc>
+      <lastmod>{{ site.time | date: '%Y-%m-%d' }}</lastmod>
+      <changefreq>daily</changefreq>
+      <priority>1</priority>
+   </url>
+{% for post in site.posts limit:200 %}
+   <url>
+      <loc>{{ page.rooturl }}{{ post.url }}</loc>
+      <lastmod>{{ site.time | date: '%Y-%m-%d' }}</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>0.8</priority>
+   </url>
+{% endfor %}
+</urlset>
+

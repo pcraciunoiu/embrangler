@@ -4,6 +4,7 @@ layout: post
 title: Installing OpenGL + GLUT on Kubuntu 9.04
 wordpress_url: http://embrangler.com/?p=6
 summary: Some of the tricks involved in setting up GLUT and OpenGL on Kubuntu 9.04
+tags: [opengl, ubuntu, kubuntu, computer graphics, UCSC]
 ---
 I'm taking a Computer Graphics class, and during the first week we need to install OpenGL and write a first, very simple program. I looked around for tutorials and couldn't find any simple ones, so I've compiled one below.
 

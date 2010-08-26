@@ -1,0 +1,13 @@
+---
+layout: default
+title: Posts tagged "education"
+tag: education
+type: "Education"
+---
+    <h1 class="title" id="education">Posts tagged <em>education</em></h1>
+
+    <ul>
+      {% for post in site.tags['education'] %}
+      {% include item.html %}
+      {% endfor %}
+    </ul>

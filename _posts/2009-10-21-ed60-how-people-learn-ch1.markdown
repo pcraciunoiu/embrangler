@@ -4,6 +4,7 @@ layout: post
 title: ED60 - How people learn, Ch1
 wordpress_url: http://embrangler.com/?p=105
 summary: Lecture notes from October 21, 2009, Education 60, a intro class at UC Santa Cruz
+tags: [education, UCSC]
 ---
 Three major theories of learning:
 

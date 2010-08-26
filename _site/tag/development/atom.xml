@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+ <title>Disembrangling Programming</title>
+ <link href="http://embrangler.com/tag/development/atom.xml" rel="self"/>
+ <link href="http://embrangler.com/tag/development"/>
+ <updated>2010-08-25T22:00:14-07:00</updated>
+ <id>http://embrangler.com/</id>
+ <author>
+   <name>Paul Craciunoiu</name>
+   <email>paul@craciunoiu.net</email>
+ </author>
+
+ 
+ <entry>
+   <title>My SUMO local development environment</title>
+   <link href="http://embrangler.com/2010/01/my-sumo-local-development-environment"/>
+   <updated>2010-01-04T00:00:00-08:00</updated>
+   <id>http://embrangler.com/2010/01/my-sumo-local-development-environment</id>
+   <content type="html">&lt;h2 id='summary'&gt;Summary&lt;/h2&gt;
+
+&lt;p&gt;A while back, James wrote about &lt;a href='http://coffeeonthekeyboard.com/local-web-development-323/' title='James&amp;apos; local development environment'&gt;his development environment&lt;/a&gt;. I wanted to summarize my approach, and go into a bit more detail about the specific setup you would need to have SUMO work locally. For more information, see also &lt;a href='http://https://wiki.mozilla.org/Support:Sumodev#Get_Involved'&gt;this wiki page&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id='my_lde_ubuntu_linux'&gt;My LDE: Ubuntu Linux&lt;/h2&gt;
+
+&lt;p&gt;My &lt;abbr title='local development environment'&gt;LDE&lt;/abbr&gt; is slightly different: I dual boot Windows 7 and Kubuntu 9.10. As of now I&amp;#8217;m still a student, and I work on my own machine. There are several reasons I find dual booting a great solution:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Best performance&lt;/strong&gt; while developing. Although less and less of an issue, being in the native &lt;abbr title='Operating System'&gt;OS&lt;/abbr&gt; is always be faster than running a &lt;abbr title='Virtual Machine'&gt;VM&lt;/abbr&gt;.&lt;/li&gt;
+
+&lt;li&gt;A &lt;strong&gt;full powered OS&lt;/strong&gt; that I can use for other work. I do schoolwork and other contracting work, and sometimes Windows is not an option. Even a VM has its limitations when it comes to certain drivers (one example is audio &amp;#8211; which I needed for a &lt;a href='http://code.google.com/p/music-visualizer-cs160/' title='Music Visualizer for CMPS160'&gt;graphics project&lt;/a&gt;)&lt;/li&gt;
+
+&lt;li&gt;Keeps my &lt;strong&gt;work and pleasure separate&lt;/strong&gt; &amp;#8211; having dual boot is basically like having two machines. Typically, when I&amp;#8217;m in Linux, I do work, otherwise I&amp;#8217;m in Windows to do personal things.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The only downside is some additional wait time for rebooting if you need to switch to the other OS. Since I work on Linux only, I rarely need to switch while working. However, everything works fine for me on Linux &amp;#8211; sound, video, even webcam and VPN (will blog later about all of these).&lt;/p&gt;
+
+&lt;h2 id='lamp'&gt;LAMP&lt;/h2&gt;
+
+&lt;p&gt;For web development in general, you&amp;#8217;ll need to have the &lt;a href='http://en.wikipedia.org/wiki/LAMP_%28software_bundle%29'&gt;LAMP stack&lt;/a&gt; installed. Fortunately, Ubuntu provides an easy way to do this in one line. From a terminal, run:&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='bash'&gt;sudo tasksel
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Select &lt;em&gt;LAMP server&lt;/em&gt; from the list, and choose OK (TAB + ENTER). Follow the steps to choose a MySQL password and any other configuration there may be. Once that&amp;#8217;s done, you should be able to go to &lt;code&gt;http://localhost&lt;/code&gt; and see the &amp;#8220;It works!&amp;#8221; text. Here are some useful paths:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Web root: &lt;code&gt;/var/www/&lt;/code&gt;&lt;/li&gt;
+
+&lt;li&gt;Hosts file: &lt;code&gt;/etc/hosts&lt;/code&gt;&lt;/li&gt;
+
+&lt;li&gt;Apache sites: &lt;code&gt;/etc/apache2/sites-available/&lt;/code&gt; and &lt;code&gt;/etc/apache2/sites-enabled/&lt;/code&gt;&lt;/li&gt;
+
+&lt;li&gt;PHP ini: &lt;code&gt;/etc/php5/apache2/php.ini&lt;/code&gt;&lt;/li&gt;
+
+&lt;li&gt;MySQL ini: &lt;code&gt;/etc/php5/conf.d/mysql.ini&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id='sumo_setup'&gt;SUMO setup&lt;/h2&gt;
+
+&lt;p&gt;What you&amp;#8217;ll need:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;LAMP stack &amp;#8211; see &lt;a href='#lamp'&gt;above&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;A host (optional) &amp;#8211; see &lt;a href='#host'&gt;below&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;SSL &amp;#8211; see &lt;a href='http://www.tc.umn.edu/~brams006/selfsign_ubuntu.html'&gt;this guide&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;Sphinx &amp;#8211; see &lt;a href='https://wiki.mozilla.org/Support/Sphinx_Installation' title='installing Sphinx'&gt;this guide&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;Memcached &amp;#8211; I just install the package and that&amp;#8217;s enough: &lt;code&gt;sudo apt-get install memcached php5-memcache&lt;/code&gt;&lt;/li&gt;
+
+&lt;li&gt;Virtualbox (optional) &amp;#8211; for testing: &lt;code&gt;sudo apt-get install virtualbox&lt;/code&gt;&lt;/li&gt;
+
+&lt;li&gt;A copy of our database &amp;#8211; you may ask James, Laura or myself for this &amp;#8211; &lt;a href='#help'&gt;see how, below&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;SVN &amp;#8211; &lt;code&gt;sudo apt-get install subversion&lt;/code&gt;&lt;/li&gt;
+
+&lt;li&gt;Checking out and configuring the SUMO codebase &amp;#8211; &lt;a href='https://wiki.mozilla.org/Support/SUMO_install_process' title='checking out and configuring SUMO'&gt;see this guide&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;span id='host'&gt;To set up a SUMO host, I add the entry for it in `/etc/hosts`. Here is the top of my file:&lt;/span&gt;&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='bash'&gt;127.0.0.1   localhost
+127.0.1.2   sumo
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Then, add the site info to apache. Here&amp;#8217;s my complete conf file (with SSL), in &lt;code&gt;/etc/apache2/sites-available/sumo&lt;/code&gt;:&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='bash'&gt;&amp;lt;VirtualHost 127.0.1.2:80&amp;gt;
+    ServerAdmin webmaster@sumo
+    ServerName sumo
+    ServerAlias sumo
+    DocumentRoot /var/www/trunk/webroot
+    &amp;lt;Directory /var/www/trunk/webroot&amp;gt;
+        Options Indexes FollowSymLinks MultiViews
+        AllowOverride All
+        Order allow,deny
+        allow from all
+    &amp;lt;/Directory&amp;gt;
+&amp;lt;/VirtualHost&amp;gt;
+
+&amp;lt;IfModule mod_ssl.c&amp;gt;
+&amp;lt;VirtualHost _default_:443&amp;gt;
+
+    ServerAdmin webmaster@sumo
+    ServerName sumo
+    ServerAlias sumo
+    DocumentRoot /var/www/trunk/webroot
+    &amp;lt;Directory /var/www/trunk/webroot&amp;gt;
+        Options Indexes FollowSymLinks MultiViews
+        AllowOverride All
+        Order allow,deny
+        allow from all
+    &amp;lt;/Directory&amp;gt;
+    SSLEngine on
+    SSLCertificateFile /etc/apache2/ssl/apache.pem
+&amp;lt;/VirtualHost&amp;gt;
+&amp;lt;/IfModule&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;To enable the site, just do this:&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='bash'&gt;&lt;span class='nb'&gt;cd&lt;/span&gt; /etc/apache2/sites-enabled
+sudo ln -s ../sites-available/sumo
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Then, restart apache:&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='bash'&gt;sudo /etc/init.d/apache2 restart
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;h2 id='testing'&gt;Testing&lt;/h2&gt;
+
+&lt;p&gt;For testing, I also use a VM in VirtualBox, running WinXP with multiple IEs. I chose WinXP to save space &amp;#8211; only takes up 3GB. You should allow 4GB just in case you want to install more stuff. Using multiple IEs is not the best, as &lt;a href='http://www.quirksmode.org/css/condcom.html'&gt;quirksmode points out&lt;/a&gt;, so you may consider running a VM for each IE version you wish to test. However, I haven&amp;#8217;t experienced that many problems. On WinXP I&amp;#8217;ve also installed Firefox (of course), Chrome, and Opera. On Ubuntu I just use the defaults: Firefox and Konqueror (since I&amp;#8217;m running Kubuntu).&lt;/p&gt;
+
+&lt;h2 id='help'&gt;Help?&lt;/h2&gt;
+
+&lt;p&gt;I&amp;#8217;ve tried to cover everything, but of course there may be stuff I missed. If you need additional info, you may leave a comment. To obtain a copy of our database, you can find &lt;a href='https://wiki.mozilla.org/Support:Sumodev#Get_Involved'&gt;us on IRC or contact us by email&lt;/a&gt;.&lt;/p&gt;</content>
+ </entry>
+ 
+
+</feed>

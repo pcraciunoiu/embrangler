@@ -1,0 +1,13 @@
+---
+layout: default
+title: Posts tagged "computer graphics"
+tag: computer graphics
+type: "Computer Graphics"
+---
+    <h1 class="title" id="computer graphics">Posts tagged <em>computer graphics</em></h1>
+
+    <ul>
+      {% for post in site.tags['computer graphics'] %}
+      {% include item.html %}
+      {% endfor %}
+    </ul>

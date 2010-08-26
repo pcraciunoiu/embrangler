@@ -1,0 +1,13 @@
+---
+layout: default
+title: Posts tagged "life"
+tag: life
+type: "Life"
+---
+    <h1 class="title" id="life">Posts tagged <em>life</em></h1>
+
+    <ul>
+      {% for post in site.tags['life'] %}
+      {% include item.html %}
+      {% endfor %}
+    </ul>

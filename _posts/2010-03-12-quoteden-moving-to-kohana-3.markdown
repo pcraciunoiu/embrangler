@@ -4,6 +4,7 @@ layout: post
 title: "Quoteden: Moving to Kohana 3"
 wordpress_url: http://embrangler.com/?p=163
 summary: The migration process of <a href="http://quoteden.net">Quote Den</a>, from Drupal 6 to Kohana 3.
+tags: [quoteden, kohana, drupal, migration]
 ---
 _This post is written in collaboration with Marius Craciunoiu, my brother, and designer of Quote Den and [other](http://craciunoiu.net) [sites](http://awesomemath.org)._
 

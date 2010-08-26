@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+ <title>Disembrangling Programming</title>
+ <link href="http://embrangler.com/tag/firefox/atom.xml" rel="self"/>
+ <link href="http://embrangler.com/tag/firefox"/>
+ <updated>2010-08-25T22:00:14-07:00</updated>
+ <id>http://embrangler.com/</id>
+ <author>
+   <name>Paul Craciunoiu</name>
+   <email>paul@craciunoiu.net</email>
+ </author>
+
+ 
+ <entry>
+   <title>My list of Firefox add-ons</title>
+   <link href="http://embrangler.com/2009/11/my-list-of-firefox-add-ons"/>
+   <updated>2009-11-15T00:00:00-08:00</updated>
+   <id>http://embrangler.com/2009/11/my-list-of-firefox-add-ons</id>
+   <content type="html">&lt;p&gt;&lt;strong&gt;UPDATE (27 Feb 2010)&lt;/strong&gt; &lt;a href='https://addons.mozilla.org/en-US/firefox/addon/67651'&gt;BarTab&lt;/a&gt; is an awesome extension.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href='https://addons.mozilla.org/en-US/firefox/addon/67651'&gt;BarTab&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://addons.mozilla.org/en-US/firefox/addon/6076'&gt;Better Gmail 2&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://addons.mozilla.org/en-US/firefox/addon/2064'&gt;Dummy Lipsum&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://addons.mozilla.org/en-US/firefox/addon/1843'&gt;Firebug&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://addons.mozilla.org/en-US/firefox/addon/1951'&gt;Fission&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://addons.mozilla.org/en-US/firefox/addon/173'&gt;Gmail Notifier&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://addons.mozilla.org/en-US/firefox/addon/4762'&gt;Hide Menubar&lt;/a&gt; - &lt;del datetime='2010-02-28T04:47:09+00:00'&gt;Now part of Firefox 3.6&lt;/del&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://addons.mozilla.org/en-US/firefox/addon/173'&gt;Jetpack&lt;/a&gt; (only Mozilla specific jetpacks yet)&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://addons.mozilla.org/en-US/firefox/addon/3829'&gt;Live HTTP headers&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://addons.mozilla.org/en-US/firefox/addon/10900'&gt;Personas&lt;/a&gt; - &lt;del datetime='2010-02-28T04:47:09+00:00'&gt;Now part of Firefox 3.6, but I keep the addon&lt;/del&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://addons.mozilla.org/en-US/firefox/addon/7661'&gt;Read It Later&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://addons.mozilla.org/en-US/firefox/addon/1956'&gt;Tabs Open Relative&lt;/a&gt; - &lt;del datetime='2010-02-28T04:47:09+00:00'&gt;Now part of Firefox 3.6&lt;/del&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://addons.mozilla.org/en-US/firefox/addon/10868'&gt;Weave&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://addons.mozilla.org/en-US/firefox/addon/60'&gt;Web Developer&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://addons.mozilla.org/en-US/firefox/addon/1264'&gt;Yahoo! Mail Notifier&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://addons.mozilla.org/en-US/firefox/addon/5369'&gt;YSlow&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Other potentially useful that I haven&amp;#8217;t installed:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href='http://platypus.mozdev.org/'&gt;Platypus&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='http://www.sitepoint.com/dustmeselectors/'&gt;Dust Me Selectors&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content>
+ </entry>
+ 
+
+</feed>

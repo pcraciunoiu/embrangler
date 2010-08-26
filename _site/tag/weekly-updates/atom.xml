@@ -1,0 +1,450 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+ <title>Disembrangling Programming</title>
+ <link href="http://embrangler.com/tag/weekly-updates/atom.xml" rel="self"/>
+ <link href="http://embrangler.com/tag/weekly-updates"/>
+ <updated>2010-08-25T22:00:14-07:00</updated>
+ <id>http://embrangler.com/</id>
+ <author>
+   <name>Paul Craciunoiu</name>
+   <email>paul@craciunoiu.net</email>
+ </author>
+
+ 
+ <entry>
+   <title>May 17-21 status</title>
+   <link href="http://embrangler.com/2010/05/weekly-update-may-17-21"/>
+   <updated>2010-05-26T00:00:00-07:00</updated>
+   <id>http://embrangler.com/2010/05/weekly-update-may-17-21</id>
+   <content type="html">&lt;h2 id='last_week_may_37'&gt;Last week (May 3-7)&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;a few reviews&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=564101'&gt;activate admin in forums app&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=561523'&gt;implement ACL&lt;/a&gt; after serious research&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=566907'&gt;migrate user passwords from Tiki on login&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=567291'&gt;migrate users and discussion-forum related groups from Tiki&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;assist IT with &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=567409'&gt;Friday Pac Man issues&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;help out new team members, lots of discussion&lt;/li&gt;
+
+&lt;li&gt;started work on &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=566110'&gt;forms validation and error messages&lt;/a&gt; and adding a &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=567474'&gt;403 handler&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id='this_week_may_1721'&gt;This week (May 17-21)&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;posting this late, so I&amp;#8217;ve already reviewed &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=564912'&gt;some&lt;/a&gt; &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=568067'&gt;bugs&lt;/a&gt; from James&lt;/li&gt;
+
+&lt;li&gt;finish 403 handler, form validation and &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=562188'&gt;sphinx config for discussion forums&lt;/a&gt; as well as &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=562203'&gt;the advanced search UI for it&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;fix up the wiki parser bugs I meant to get to last week: &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=566101'&gt;this&lt;/a&gt; and &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=565801'&gt;this&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;start on some 2.2 bugs&lt;/li&gt;
+&lt;/ul&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>May 3-14 status</title>
+   <link href="http://embrangler.com/2010/05/weekly-update-may-10-14"/>
+   <updated>2010-05-19T00:00:00-07:00</updated>
+   <id>http://embrangler.com/2010/05/weekly-update-may-10-14</id>
+   <content type="html">&lt;h2 id='two_weeks_ago_may_37'&gt;Two weeks ago (May 3-7)&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;pushed 2.0/1.5.4 with rest of SUMOdev&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;first time had problems with nfs mounts&lt;/li&gt;
+
+&lt;li&gt;second time was a success, yay!&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;r?d &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=561537'&gt;nicer 404/500 handlers&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;r?d &lt;a href='http://github.com/jsocol/kitsune/commit/dbfc4488fc8df9d1f7a07fe3c6d1ecbc17752441'&gt;new wsgi script&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;r?d &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=563995'&gt;rewrite for discussion forums&lt;/a&gt;, which also cleaned up some of the search rewrites from previous push&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;r?d &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=563593'&gt;posting should update # of replies&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=563111'&gt;threads list view&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id='last_week_may_1014'&gt;Last week (May 10-14)&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;r?d preliminary work on &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=565362'&gt;atom feeds&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=563586'&gt;forums list view&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=561524'&gt;wiki markup in discussion forums&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;filed some &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=565801'&gt;new&lt;/a&gt; &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=565481'&gt;bugs&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;added some &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=565320'&gt;omitted indexes&lt;/a&gt; to tiki&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=565701'&gt;re-sync db&lt;/a&gt;, to test the SQL fix from above, also had IT &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=565810'&gt;run schematic&lt;/a&gt; and set up test forum&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=558499'&gt;remove omniture tags from tiki&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=564385'&gt;fix crc32 not working with unicode&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;discussion with &lt;a href='http://spindrop.us/'&gt;Dave Dash&lt;/a&gt; about &lt;a href='http://github.com/davedash/zamboni/blob/master/docs/topics/acl.rst'&gt;ACL&lt;/a&gt; on &lt;a href='https://addons.mozilla.org/en-US/firefox/'&gt;AMO&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id='this_week_may_1721'&gt;This week (May 17-21)&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=561523'&gt;implement ACL&lt;/a&gt; after serious research&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=564101'&gt;activate admin in forums app&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;help out new team members&lt;/li&gt;
+
+&lt;li&gt;fix up &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=565801'&gt;some&lt;/a&gt; &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=566102'&gt;of the&lt;/a&gt; wiki parser bugs&lt;/li&gt;
+&lt;/ul&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>April 26-30 status</title>
+   <link href="http://embrangler.com/2010/05/weekly-update-apr-26-30"/>
+   <updated>2010-05-03T00:00:00-07:00</updated>
+   <id>http://embrangler.com/2010/05/weekly-update-apr-26-30</id>
+   <content type="html">&lt;h2 id='last_week_april_2630'&gt;Last week (April 26-30)&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;awesome webdev onsite&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;learned about localization, the mass of krill, and cooking indian food, among other things&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;kitsune&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;r?d &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=561487'&gt;use bleach to clean up sphinx results&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;r?d &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=561931'&gt;remove didyoumean&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;r?d &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=560702'&gt;htaccess fix for trailing slash in search url&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;finish up &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=561266'&gt;minor&lt;/a&gt; &lt;a href=''&gt;bugs&lt;/a&gt; for &lt;a href='https://bugzilla.mozilla.org/buglist.cgi?quicksearch=OPEN+product%3Asupport+milestone%3A2.0'&gt;2.0&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=562259'&gt;some&lt;/a&gt; &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=561522'&gt;work&lt;/a&gt; on &lt;a href='https://bugzilla.mozilla.org/buglist.cgi?field1-0-0=target_milestone&amp;amp;target_milestone=2.1&amp;amp;product=support.mozilla.com'&gt;2.1 bugs&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;started &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=562217'&gt;converting the staging database to UTF8 with outage page&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=562259'&gt;remove YUI dependency from kitsune&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=558105'&gt;add WebTrends tracking&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;investigating &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=561124'&gt;missing excerpts&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;tiki&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;r?d &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=556672'&gt;using kitsune for search&lt;/a&gt; on &lt;a href='http://support-stage-new.mozilla.com/'&gt;stage-new&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;verified &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=560759'&gt;duplicates have been renamed on prod&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=66514'&gt;add a few locales&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=561857'&gt;searching from tiki remembers locale&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=554781'&gt;screencast bug&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=558105'&gt;add WebTrends tracking&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id='this_week_may_37'&gt;This week (May 3-7)&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;kitsune&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;pick up &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=563586'&gt;some&lt;/a&gt; &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=563577'&gt;of&lt;/a&gt; &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=563578'&gt;the bugs&lt;/a&gt; &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=563581'&gt;filed by&lt;/a&gt; James&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;push 2.0/1.5.4 with rest of SUMOdev&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;in particular: ensure UTF8 conversion of database goes well&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;team goal: handle all anonymous-access forums actions and views&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>April 19-25 status</title>
+   <link href="http://embrangler.com/2010/04/weekly-update-apr-19-25"/>
+   <updated>2010-04-25T00:00:00-07:00</updated>
+   <id>http://embrangler.com/2010/04/weekly-update-apr-19-25</id>
+   <content type="html">&lt;h2 id='last_week_april_1925'&gt;Last week (April 19-25)&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;kitsune&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;r?d &lt;a href='http://github.com/jsocol/kitsune/commit/03b9b540b96968dda4bffacb0f6abdee351e9b12'&gt;adding sumo-dev to receive useful stack traces from kitsune&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;r?d &lt;a href='http://github.com/jsocol/kitsune/commit/a5ceb6974a03a8f0487c58a56baf9ed88c1a3701'&gt;improved maintenance of locales&lt;/a&gt;, go James!&lt;/li&gt;
+
+&lt;li&gt;r?d &lt;a href='http://github.com/jsocol/kitsune/commit/79847afa23ee9a3ff3200949824463e6d50e9bf2'&gt;kitsune documentation&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;r?d &lt;a href='http://github.com/jsocol/kitsune/commit/97fe787bae6592360e7603dc6440b4db729126de'&gt;better handling of timeouts for excerpts&lt;/a&gt; and &lt;a href='http://github.com/jsocol/kitsune/commit/29d2134f6d0d5ca22e0bbdcf6832c21aea9ee00a'&gt;merged&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;r?d &lt;a href='http://github.com/jsocol/kitsune/commit/32be0335fd22876379e9716e0df88ffc953fc151'&gt;unicode improvements, adding sumo.utils.urlencode&lt;/a&gt; and &lt;a href='http://github.com/jsocol/kitsune/commit/633d0166c9bf65fc35886ad05c038f5f74058448'&gt;merged&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;r?d &lt;a href='http://github.com/jsocol/kitsune/commit/23f586b285d3c63b842dd643623ce2491f1a3b87'&gt;fixing an IE6/7 bug&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;r?d &lt;a href='http://github.com/jsocol/kitsune/commit/e9aa5d2f87e163917ad339c0d6c06fc0b58625c2'&gt;case insensitive Accept-Language for Opera, Chrome, Safari&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;r?d &lt;a href='http://github.com/jsocol/kitsune/commit/4464b2033a4c5ce079034dabdafed808e0bcfc51'&gt;adding a search plugin&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='http://github.com/jsocol/kitsune/commit/633d0166c9bf65fc35886ad05c038f5f74058448'&gt;fix pagination on IE6&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='http://github.com/jsocol/kitsune/commit/b2563c4dffcf2515d23f7f861600fc01cb0578da'&gt;adding two new supported locales&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;finished &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=555251'&gt;lots of tests for search filters and JSON for all&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;finished &lt;a href='https://bugzilla.mozilla.org/buglist.cgi?quicksearch=ALL+product%3Asupport+milestone%3A2.0'&gt;the remaining 2.0 bugs&lt;/a&gt; with the rest of the SUMOdev team&lt;/li&gt;
+
+&lt;li&gt;installed mod_wsgi locally with help of &lt;a href='http://github.com/jsocol/kitsune/blob/development/docs/wsgi.rst'&gt;James&amp;#8217; docs&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;assisted with IT bugs to &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=559997'&gt;convert the database to UTF8&lt;/a&gt; according to &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=554210'&gt;this bug&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=559109'&gt;debugging server issues for kitsune stage&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;begin work on milestone 2.1&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;tiki&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;r?d &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=556672'&gt;using kitsune for search&lt;/a&gt; on &lt;a href='http://support-stage-new.mozilla.com/'&gt;stage-new&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;filed patch for &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=558105'&gt;adding WebTrends to SUMO for tracking&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;revert &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=558828'&gt;a notifications bug for articles&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=519927'&gt;add .htaccess rewrites for Fx3.7 help topic: keyboard shortcuts&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=554781'&gt;debugging screencast bug on mobile&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id='this_week_april_2630'&gt;This week (April 26-30)&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;WebDev onsite! Excited to hang out with the team.&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;kitsune&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;work on &lt;a href='https://bugzilla.mozilla.org/buglist.cgi?type1-0-0=substring&amp;amp;query_format=advanced&amp;amp;field0-0-0=product&amp;amp;value1-0-0=2.1&amp;amp;type0-0-0=substring&amp;amp;value0-0-0=support&amp;amp;field1-0-0=target_milestone&amp;amp;target_milestone=2.1&amp;amp;product=support.mozilla.com'&gt;forums and other 2.1 stuff&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;prepare for kitsune push, potential QA bugs&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;tiki&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;prepare for 1.5.4 push, potential QA bugs&lt;/li&gt;
+
+&lt;li&gt;figure out &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=554781'&gt;screencast bug&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>April 12-16 status</title>
+   <link href="http://embrangler.com/2010/04/weekly-update-apr-12-16"/>
+   <updated>2010-04-16T00:00:00-07:00</updated>
+   <id>http://embrangler.com/2010/04/weekly-update-apr-12-16</id>
+   <content type="html">&lt;h2 id='last_week_april_1216'&gt;Last week (April 12-16)&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;kitsune&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;r? &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=558228'&gt;cool vim indenting in templates&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;r? &lt;a href='http://github.com/jsocol/kitsune/commits/bug-550515'&gt;minify bug 550515&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;finish &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=554210'&gt;converting our current database from latin1 to utf8&lt;/a&gt; after lots of painful dealing with data&lt;/li&gt;
+
+&lt;li&gt;fix &lt;a href='http://github.com/pcraciunoiu/kitsune/commits/bug-555249'&gt;advanced search form logic&lt;/a&gt;, deals with default values, validation, cleanup. fixes &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=559086'&gt;a few&lt;/a&gt; &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=559249'&gt;other&lt;/a&gt; &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=559117'&gt;bugs&lt;/a&gt; in the process&lt;/li&gt;
+
+&lt;li&gt;fix &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=555251'&gt;json results and add lots of tests&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;fix &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=558941'&gt;search results sorting&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;IT bugs to &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=559645'&gt;truncate a table&lt;/a&gt;, &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=559717'&gt;sync stage db with prod&lt;/a&gt; and &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=559997'&gt;convert the database to UTF8&lt;/a&gt; according to &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=554210'&gt;this bug&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;tiki&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=553131'&gt;session fixes&lt;/a&gt; required for kitsune integration &lt;a href='https://bug553131.bugzilla.mozilla.org/attachment.cgi?id=439362'&gt;filed&lt;/a&gt; and &lt;a href='https://bug553131.bugzilla.mozilla.org/attachment.cgi?id=438241'&gt;reviewed&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;fix and review some security vulnerabilities on mobile&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id='this_week_april_1923'&gt;This week (April 19-23)&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;kitsune&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;finish &lt;a href='https://bugzilla.mozilla.org/buglist.cgi?quicksearch=OPEN+product%3Asupport+milestone%3A2.0'&gt;the remaining kitsune bugs&lt;/a&gt; with the rest of the SUMOdev team&lt;/li&gt;
+
+&lt;li&gt;finish &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=559997'&gt;UTF conversion of the database&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;prepare for kitsune push, potential QA bugs&lt;/li&gt;
+
+&lt;li&gt;begin work on discussion forums &amp;#8211; milestone 2.1&lt;/li&gt;
+
+&lt;li&gt;install mod_wsgi and run tiki in parallel with kitsune locally&lt;/li&gt;
+
+&lt;li&gt;discuss/learn more about Test Driven Development&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;tiki&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;finish &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=558105'&gt;adding WebTrends to SUMO for tracking&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>April 5-9 status</title>
+   <link href="http://embrangler.com/2010/04/weekly-update-apr-5-9"/>
+   <updated>2010-04-11T00:00:00-07:00</updated>
+   <id>http://embrangler.com/2010/04/weekly-update-apr-5-9</id>
+   <content type="html">&lt;h2 id='last_week_april_59'&gt;Last week (April 5-9)&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;kitsune&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;r? &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=554740'&gt;exclude staging articles from search&lt;/a&gt;, which also includes &lt;a href='http://github.com/jsocol/kitsune/commit/ef50d5fcd64f65f89ff688874f3fa920f69ff216'&gt;sphinx tests&lt;/a&gt;, reviewed again later after &lt;a href='http://github.com/jsocol/kitsune/commit/c2a1356e084a68de17f20376ad051c918ecfd172'&gt;a fix to not require FORCE_DB&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;r? &lt;a href='http://github.com/jsocol/kitsune/commit/dbdb116aecda1332c932e278786dba2719c71d09'&gt;l10n -&amp;gt; tower rename&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;r? &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=556810'&gt;add JINJA_CONFIG() for string extraction and caching&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;quick look at &lt;a href='http://github.com/jsocol/kitsune/commit/f159b8f25ea78c38cc7e60fae6004ccb5e1273c6'&gt;minify in kitsune&lt;/a&gt;, TODO next week&lt;/li&gt;
+
+&lt;li&gt;fixed &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=556418'&gt;duplicate page param in paginator URL&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;spent most of the week &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=554210'&gt;converting our current database from latin1 to utf8&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;tiki&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;started work on &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=558105'&gt;adding WebTrends to SUMO for tracking&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=555003'&gt;push desktop 1.5.3 on Tuesday&lt;/a&gt; &amp;#8212; &lt;a href='https://bugzilla.mozilla.org/buglist.cgi?quicksearch=ALL+product%3Asupport+milestone%3A1.5.3'&gt;see bugs&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id='this_week_april_1216'&gt;This week (April 12-16)&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;kitsune&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;r? &lt;a href='http://github.com/jsocol/kitsune/commits/bug-550515'&gt;minify bug 550515&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;r? &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=553131'&gt;tiki patch for django sessions&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;r? &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=558228'&gt;cool vim indenting in templates&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;strong&gt;finish up &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=554210'&gt;character encoding conversion&lt;/a&gt;&lt;/strong&gt;&lt;/li&gt;
+
+&lt;li&gt;finish up &lt;a href='http://github.com/pcraciunoiu/kitsune/commits/bug-555249'&gt;when to trigger advanced search&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;finish getting sessions into kitsune, i.e. fix any issues spotted by davedash/jbalogh/jsocol on &lt;a href='http://github.com/pcraciunoiu/kitsune/tree/bug-553131'&gt;bug 553131&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;tiki&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;finish &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=558105'&gt;adding WebTrends to SUMO for tracking&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id='stretch_goals'&gt;Stretch goals&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=553734'&gt;search summaries are Jinja-friendly&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content>
+ </entry>
+ 
+
+</feed>

@@ -2,6 +2,7 @@
 layout: post
 title: "Full time @ Mozilla, yay!"
 summary: Started my full time job at Mozilla -- what changed?
+tags: [mozilla, webdev, job, life]
 ---
 
 I've been meaning to blog about this for about a month now! Finally, here it is: I started my full time envolvement with Mozilla on July 12, right after an amazing [Summit](https://wiki.mozilla.org/Summit2010).

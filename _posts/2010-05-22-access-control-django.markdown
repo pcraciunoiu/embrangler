@@ -2,6 +2,7 @@
 layout: post
 title: "Access control in Django, and django-authority"
 summary: A summary of various options for access control with details about django-authority for per-object permissions.
+tags: [mozilla, webdev, django, access control, SUMO]
 ---
 
 The past week I've been working with Django and permissions. I'll talk here about the available options and go into details about the one [Kitsune](https://wiki.mozilla.org/Support/Kitsune) is using.

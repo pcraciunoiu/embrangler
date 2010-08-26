@@ -1,0 +1,13 @@
+---
+layout: default
+title: Posts tagged "tutorial"
+tag: tutorial
+type: "Tutorial"
+---
+    <h1 class="title" id="tutorial">Posts tagged <em>tutorial</em></h1>
+
+    <ul>
+      {% for post in site.tags['tutorial'] %}
+      {% include item.html %}
+      {% endfor %}
+    </ul>

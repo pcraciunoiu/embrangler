@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+ <title>Disembrangling Programming</title>
+ <link href="http://embrangler.com/tag/blog/atom.xml" rel="self"/>
+ <link href="http://embrangler.com/tag/blog"/>
+ <updated>2010-08-25T22:00:14-07:00</updated>
+ <id>http://embrangler.com/</id>
+ <author>
+   <name>Paul Craciunoiu</name>
+   <email>paul@craciunoiu.net</email>
+ </author>
+
+ 
+ <entry>
+   <title>Embrangler: Moving to Jekyll</title>
+   <link href="http://embrangler.com/2010/03/embrangler-moving-to-jekyll"/>
+   <updated>2010-03-21T00:00:00-07:00</updated>
+   <id>http://embrangler.com/2010/03/embrangler-moving-to-jekyll</id>
+   <content type="html">&lt;p&gt;It took only three days to migrate my blog from &lt;a href='http://wordpress.org'&gt;Wordpress&lt;/a&gt; to &lt;a href='http://wiki.github.com/mojombo/jekyll/'&gt;Jekyll&lt;/a&gt;. For anyone who plans to do this, I&amp;#8217;m summarizing the whole process below.&lt;/p&gt;
+
+&lt;p&gt;Table of contents:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href='#why_change'&gt;Why change?&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='#why_jekyll'&gt;Why Jekyll?&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='#migration_process'&gt;Migration process&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='#conclusion'&gt;Conclusion&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id='why_change'&gt;Why change?&lt;/h2&gt;
+
+&lt;p&gt;While I realize Wordpress the most popular blogging platform for a reason, I was bothered by the workflow involved with having a WP blog. Some of the (arguable) inconveniences I found were:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;the WYSIWYG editor doesn&amp;#8217;t handle some of the markup I would like (headings, tables aren&amp;#8217;t great either), so I would constantly switch between the Visual and HTML tabs to format things the way I wanted to. While I realize this could be fixed by customizing the editor, why should I have to do that? Plus, I have long given up hope of the ideal WYSIWYG editor. Besides not handling markup very well, it would sometimes reformat some of my plain HTML and break it.&lt;/li&gt;
+
+&lt;li&gt;creating posts is pretty much the only thing I do. I don&amp;#8217;t use categories, tags, or any other features. Yet I had this admin area cluttered with features.&lt;/li&gt;
+
+&lt;li&gt;I&amp;#8217;m not too fond of WP&amp;#8217;s version control. I would often see the message that &amp;#8220;a more recent version of this post is available&amp;#8221; erroneously, I&amp;#8217;m still not sure why. While changing versions worked well enough, I find the idea of an actual version control system more appealing.&lt;/li&gt;
+
+&lt;li&gt;My blog could use a redesign. For a while, I was using the &lt;a href='http://wordpress.org/extend/themes/carrington-text'&gt;Carrington Text&lt;/a&gt; theme, which was ok but not great. I wanted to make it feel more like &lt;em&gt;my&lt;/em&gt; blog &amp;#8211; no sidebar, larger font, a better home page to name a few.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id='why_jekyll'&gt;Why Jekyll?&lt;/h2&gt;
+
+&lt;p&gt;A few weeks before I decided to switch off of Wordpress, I found out about static site-generator engines alternatives that would use available version control software such as git or svn. After looking around I hesitated to switch to any of these because they were mostly Ruby-based, and I was unfamliar with how they work. However, all other alternatives seem to be heading towards full-fledged &lt;abbr title='Content Management System'&gt;CMS&lt;/abbr&gt;&amp;#8217;s.&lt;/p&gt;
+
+&lt;p&gt;A quick note on static sites: they have virtually no security holes (well, in theory), because there is no server-side handling of data submission. I&amp;#8217;m using a &lt;abbr title='Virtual Private Server'&gt;VPS&lt;/abbr&gt; too, so I was fond of having less CPU usage on the server (due to not having to process, say, PHP scripts for Wordpress).&lt;/p&gt;
+
+&lt;p&gt;Some of the alternatives to Jekyll that I considered are &lt;a href='http://www.cloudhead.io/toto'&gt;Toto&lt;/a&gt;, &lt;a href='http://www.staceyapp.com/'&gt;StaceyApp&lt;/a&gt;, &lt;a href='http://chyrp.net/'&gt;Chyrp&lt;/a&gt;, &lt;a href='http://subtextproject.com/'&gt;Subtext&lt;/a&gt; and &lt;a href='http://typosphere.org/'&gt;Typo&lt;/a&gt;. I picked &lt;a href='http://wiki.github.com/mojombo/jekyll/'&gt;Jekyll&lt;/a&gt; for two main reasons:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;popularity &amp;#8211; looking at the &lt;a href='http://wiki.github.com/mojombo/jekyll/'&gt;project&amp;#8217;s github&lt;/a&gt; watches/forks&lt;/li&gt;
+
+&lt;li&gt;documentation and examples &amp;#8211; there is actually a &lt;a href='http://wiki.github.com/mojombo/jekyll/sites'&gt;Sites&lt;/a&gt; page, leading to other sites and their github hosted sources, immensely helpful when starting out&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id='migration_process'&gt;Migration process&lt;/h2&gt;
+
+&lt;p&gt;I followed these instructions:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href='http://wiki.github.com/mojombo/jekyll/install'&gt;Installation steps from the Jekyll documentation&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='http://blog.favrik.com/2009/03/02/installing-jekyll-on-ubuntu-8-10/'&gt;Installing Jekyll on Ubuntu&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&amp;#8230; and started by looking at &lt;a href='http://tom.preston-werner.com/'&gt;Tom Preston-Werner&amp;#8217;s blog&lt;/a&gt; and its &lt;a href='http://github.com/mojombo/mojombo.github.com'&gt;source on github&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id='migrating_posts'&gt;Migrating posts&lt;/h3&gt;
+
+&lt;p&gt;After I got the redesign to look good on Jekyll, the next step was migrating my Wordpress posts. Fortunately, &lt;a href='http://wiki.github.com/mojombo/jekyll/blog-migrationsl'&gt;there is documentation for that too&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Unfortunately, the automatic migration did not convert some of the markup very well, such as LaTex, images with captions, most lists and links. Yet I had less than 15 posts, so I just went through them and checked everything. Because I&amp;#8217;m using &lt;a href='http://www.latex-project.org/'&gt;LaTeX&lt;/a&gt; in some of my posts, I used &lt;a href='http://maruku.rubyforge.org/maruku.html'&gt;maruku&lt;/a&gt; (instead of &lt;a href='http://github.com/rtomayko/rdiscount'&gt;rdiscount&lt;/a&gt;) to parse them. I couldn&amp;#8217;t find LaTeX support for rdiscount, which is a faster parser.&lt;/p&gt;
+
+&lt;p&gt;I&amp;#8217;m also using lsi for related posts, and &lt;a href='http://pygments.org/'&gt;python-pygments&lt;/a&gt; for syntax highlighting. The latter is simply a wonderful tool, and I recommend it to anyone posting code on the web. Of course, all of these are documented in the Jekyll documentation, so it was easy to get it all working.&lt;/p&gt;
+
+&lt;p&gt;The code for this site is up on github as well, so you can &lt;a href='http://github.com/pcraciunoiu/embrangler/'&gt;check it out there&lt;/a&gt; to see how it works.&lt;/p&gt;
+
+&lt;h3 id='migrating_comments'&gt;Migrating comments&lt;/h3&gt;
+
+&lt;p&gt;This took me about 20 minutes :), following &lt;a href='http://disqus.com/comments/wordpress/'&gt;these instructions&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id='server_setup_and_more'&gt;Server setup and more&lt;/h3&gt;
+
+&lt;p&gt;I actually didn&amp;#8217;t want to install jekyll on my server, and preferred to do all the generating locally. My server only works with plain html this way. The one thing I did do, however, was use github&amp;#8217;s post-receive-hook service. I ended up having something &lt;a href='http://forum.webfaction.com/viewtopic.php?id=964'&gt;similar to this&lt;/a&gt;:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;github posts data to a php file on my server&lt;/li&gt;
+
+&lt;li&gt;this file verifies the posted data, logs the commit, and runs a C script.&lt;/li&gt;
+
+&lt;li&gt;the C script runs &lt;code&gt;git pull&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Here&amp;#8217;s the code for all of this:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;php script&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;strong&gt;Update:&lt;/strong&gt; &lt;a href='http://coffeeonthekeyboard.com/'&gt;James&lt;/a&gt; pointed out that my security measures weren&amp;#8217;t good enough, so I updated the script. If you don&amp;#8217;t care much for security, you may prefer automated publishing. See my &lt;a href='#second-script'&gt;second script&lt;/a&gt;, below.&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='php'&gt;&lt;span class='cp'&gt;&amp;lt;?php&lt;/span&gt;
+
+&lt;span class='nv'&gt;$check&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='nx'&gt;auth&lt;/span&gt;&lt;span class='p'&gt;();&lt;/span&gt;
+&lt;span class='k'&gt;if&lt;/span&gt; &lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='o'&gt;!&lt;/span&gt;&lt;span class='nv'&gt;$check&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt; &lt;span class='k'&gt;die&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt;
+
+&lt;span class='k'&gt;echo&lt;/span&gt; &lt;span class='s1'&gt;&amp;#39;&amp;lt;pre&amp;gt;&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt;
+&lt;span class='k'&gt;echo&lt;/span&gt; &lt;span class='nb'&gt;exec&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;/path/to/site/pull_script&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+&lt;span class='k'&gt;echo&lt;/span&gt; &lt;span class='s1'&gt;&amp;#39;&amp;lt;/pre&amp;gt;&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt;
+
+&lt;span class='k'&gt;function&lt;/span&gt; &lt;span class='nf'&gt;auth&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+    &lt;span class='c1'&gt;// do some parameter checking here&lt;/span&gt;
+    &lt;span class='c1'&gt;// and return true when matches&lt;/span&gt;
+&lt;span class='p'&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;To make things even more awesome, I bookmarked this URL using &lt;a href='http://lifehacker.com/196779/hack-attack-firefox-and-the-art-of-keyword-bookmarking'&gt;Firefox&amp;#8217;s keywords&lt;/a&gt;, so I only need to type one character to publish ;)&lt;/p&gt;
+&lt;span id='second-script' /&gt;
+&lt;p&gt;Here is my second script, which does automatic publishing.&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='php'&gt;&lt;span class='cp'&gt;&amp;lt;?php&lt;/span&gt;
+
+&lt;span class='k'&gt;if&lt;/span&gt; &lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='o'&gt;!&lt;/span&gt;&lt;span class='nv'&gt;$_POST&lt;/span&gt;&lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;payload&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;])&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+    &lt;span class='nb'&gt;header&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;HTTP/1.0 403 Forbidden&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+    &lt;span class='k'&gt;exit&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt;
+&lt;span class='p'&gt;}&lt;/span&gt;
+
+&lt;span class='nb'&gt;define&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;HOOKLOG&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='s1'&gt;&amp;#39;../logs/hooks.log&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+&lt;span class='nv'&gt;$fh&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='nb'&gt;fopen&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nx'&gt;HOOKLOG&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='s1'&gt;&amp;#39;w&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt; &lt;span class='k'&gt;or&lt;/span&gt; &lt;span class='k'&gt;die&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s2'&gt;&amp;quot;Can&amp;#39;t open file&amp;quot;&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+&lt;span class='nv'&gt;$data&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='s1'&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt;
+
+&lt;span class='nv'&gt;$hook&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='nx'&gt;json_decode&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nv'&gt;$_POST&lt;/span&gt;&lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;payload&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;]);&lt;/span&gt;
+
+&lt;span class='k'&gt;if&lt;/span&gt; &lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nv'&gt;$hook&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;repository&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;owner&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;name&lt;/span&gt; &lt;span class='o'&gt;!=&lt;/span&gt; &lt;span class='s1'&gt;&amp;#39;pcraciunoiu&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+    &lt;span class='nb'&gt;header&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;HTTP/1.0 403 Forbidden&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+    &lt;span class='k'&gt;exit&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt;
+&lt;span class='p'&gt;}&lt;/span&gt;
+
+&lt;span class='nv'&gt;$cs&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='nv'&gt;$hook&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;commits&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt;
+
+&lt;span class='k'&gt;foreach&lt;/span&gt; &lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nv'&gt;$cs&lt;/span&gt; &lt;span class='k'&gt;as&lt;/span&gt; &lt;span class='nv'&gt;$c&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+    &lt;span class='nv'&gt;$data&lt;/span&gt; &lt;span class='o'&gt;.=&lt;/span&gt; &lt;span class='nv'&gt;$c&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;timestamp&lt;/span&gt; &lt;span class='o'&gt;.&lt;/span&gt; &lt;span class='s2'&gt;&amp;quot;&lt;/span&gt;&lt;span class='se'&gt;\n&lt;/span&gt;&lt;span class='s2'&gt;&amp;quot;&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt;
+    &lt;span class='nv'&gt;$data&lt;/span&gt; &lt;span class='o'&gt;.=&lt;/span&gt; &lt;span class='nv'&gt;$c&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;author&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;name&lt;/span&gt;
+        &lt;span class='o'&gt;.&lt;/span&gt; &lt;span class='s1'&gt;&amp;#39; (&amp;#39;&lt;/span&gt; &lt;span class='o'&gt;.&lt;/span&gt; &lt;span class='nv'&gt;$c&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;author&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;email&lt;/span&gt; &lt;span class='o'&gt;.&lt;/span&gt; &lt;span class='s1'&gt;&amp;#39;)&amp;#39;&lt;/span&gt;
+        &lt;span class='o'&gt;.&lt;/span&gt; &lt;span class='s1'&gt;&amp;#39; pushed to &amp;#39;&lt;/span&gt; &lt;span class='o'&gt;.&lt;/span&gt; &lt;span class='nv'&gt;$hook&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;repository&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;url&lt;/span&gt; &lt;span class='o'&gt;.&lt;/span&gt; &lt;span class='s2'&gt;&amp;quot;&lt;/span&gt;&lt;span class='se'&gt;\n&lt;/span&gt;&lt;span class='s2'&gt;&amp;quot;&lt;/span&gt;
+        &lt;span class='o'&gt;.&lt;/span&gt; &lt;span class='s1'&gt;&amp;#39;View commit at &amp;#39;&lt;/span&gt; &lt;span class='o'&gt;.&lt;/span&gt; &lt;span class='nv'&gt;$c&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;url&lt;/span&gt; &lt;span class='o'&gt;.&lt;/span&gt; &lt;span class='s2'&gt;&amp;quot;&lt;/span&gt;&lt;span class='se'&gt;\n&lt;/span&gt;&lt;span class='s2'&gt;&amp;quot;&lt;/span&gt;
+        &lt;span class='o'&gt;.&lt;/span&gt; &lt;span class='s2'&gt;&amp;quot;&lt;/span&gt;&lt;span class='se'&gt;\n\n&lt;/span&gt;&lt;span class='s2'&gt;Commit message was:&lt;/span&gt;&lt;span class='se'&gt;\n&lt;/span&gt;&lt;span class='s2'&gt;&amp;quot;&lt;/span&gt; &lt;span class='o'&gt;.&lt;/span&gt; &lt;span class='nv'&gt;$c&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;message&lt;/span&gt; &lt;span class='o'&gt;.&lt;/span&gt; &lt;span class='s2'&gt;&amp;quot;&lt;/span&gt;&lt;span class='se'&gt;\n\n&lt;/span&gt;&lt;span class='s2'&gt;&amp;quot;&lt;/span&gt;
+    &lt;span class='p'&gt;;&lt;/span&gt;
+&lt;span class='p'&gt;}&lt;/span&gt;
+
+&lt;span class='nb'&gt;fwrite&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nv'&gt;$fh&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='nv'&gt;$data&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+&lt;span class='nb'&gt;fclose&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nv'&gt;$fh&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+
+&lt;span class='c1'&gt;// set this to your path&lt;/span&gt;
+&lt;span class='nb'&gt;exec&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;/path/to/site/pull_script&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;There are two important security measures in the first script:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;it not write to a file, so if it gets hit by someone trying to find the secret codes, my server&amp;#8217;s disk doesn&amp;#8217;t perform intensive &lt;abbr title='input-output'&gt;IO&lt;/abbr&gt;&lt;/li&gt;
+
+&lt;li&gt;it does not hint in any way at parameter names, number of parameters that must be submitted, or whether they should be submitted through GET or POST &amp;#8211; if you don&amp;#8217;t get the right values, you don&amp;#8217;t see anything&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;ol&gt;
+&lt;li&gt;the c file&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='cpp'&gt;&lt;span class='cp'&gt;#include &amp;lt;stddef.h&amp;gt;&lt;/span&gt;
+&lt;span class='cp'&gt;#include &amp;lt;stdlib.h&amp;gt;&lt;/span&gt;
+&lt;span class='cp'&gt;#include &amp;lt;unistd.h&amp;gt;&lt;/span&gt;
+
+&lt;span class='kt'&gt;int&lt;/span&gt; &lt;span class='n'&gt;main&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='kt'&gt;void&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+    &lt;span class='n'&gt;execl&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;/usr/bin/git&amp;quot;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='s'&gt;&amp;quot;git&amp;quot;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='s'&gt;&amp;quot;pull&amp;quot;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='s'&gt;&amp;quot;origin&amp;quot;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='s'&gt;&amp;quot;master&amp;quot;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt;
+        &lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='k'&gt;const&lt;/span&gt; &lt;span class='kt'&gt;char&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt; &lt;span class='nb'&gt;NULL&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+
+    &lt;span class='k'&gt;return&lt;/span&gt; &lt;span class='n'&gt;EXIT_FAILURE&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt;
+&lt;span class='p'&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Compile this with&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='bash'&gt;gcc pull_script.c -o pull_script
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;So now, every time I push to github, the server automatically updates. Really cool way of publishing!&lt;/p&gt;
+
+&lt;h2 id='conclusion'&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;I enjoy using git, and having a static site. My comments are offloaded to a separate server, and I write plain text files using the markdown syntax. My blog gets published when I visit a bookmarked URL.&lt;/p&gt;
+
+&lt;p&gt;Goodbye Wordpress!&lt;/p&gt;</content>
+ </entry>
+ 
+
+</feed>

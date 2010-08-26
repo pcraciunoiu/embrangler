@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+ <title>Disembrangling Programming</title>
+ <link href="http://embrangler.com/tag/job/atom.xml" rel="self"/>
+ <link href="http://embrangler.com/tag/job"/>
+ <updated>2010-08-25T22:00:14-07:00</updated>
+ <id>http://embrangler.com/</id>
+ <author>
+   <name>Paul Craciunoiu</name>
+   <email>paul@craciunoiu.net</email>
+ </author>
+
+ 
+ <entry>
+   <title>Full time @ Mozilla, yay!</title>
+   <link href="http://embrangler.com/2010/08/full-time-at-mozilla"/>
+   <updated>2010-08-04T00:00:00-07:00</updated>
+   <id>http://embrangler.com/2010/08/full-time-at-mozilla</id>
+   <content type="html">&lt;p&gt;I&amp;#8217;ve been meaning to blog about this for about a month now! Finally, here it is: I started my full time envolvement with Mozilla on July 12, right after an amazing &lt;a href='https://wiki.mozilla.org/Summit2010'&gt;Summit&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id='whats_it_like'&gt;What&amp;#8217;s it like?&lt;/h2&gt;
+
+&lt;p&gt;First of all I must say that working &lt;a href='http://mozilla.com'&gt;here&lt;/a&gt; is amazing. It&amp;#8217;s more than just the things we do here &amp;#8211; web browser, mail client, lots of websites and serious community engagement (and many many other things, some of which you can read about on &lt;a href='http://planet.mozilla.org'&gt;planet&lt;/a&gt;, &lt;a href='http://spreadfirefox.com'&gt;spread firefox&lt;/a&gt;, or &lt;a href='http://mozilla.org'&gt;mozilla.org&lt;/a&gt;). It&amp;#8217;s about the spirit of Mozilla. It goes hand in hand with our &lt;a href='http://www.mozilla.org/about/manifesto'&gt;manifesto&lt;/a&gt; &amp;#8211; our mission is to help make a better internet for everyone (&lt;a href='http://john.jubjubs.net/2009/10/19/open-letter-supporting-proposed-net-neutrality/'&gt;e.g.&lt;/a&gt;). To strangers of the Mozilla culture, that may sound like a catchy advertisement, but those who have been in contact with the Mozilla community know the dedication and excitement that drives us, to help drive toward a world in which it&amp;#8217;s all about real people being able to have and create the world that they want, privately, securely, freely.&lt;/p&gt;
+
+&lt;p&gt;As a side note, one of the things a lot of people don&amp;#8217;t know about Mozilla is that it&amp;#8217;s a non profit. Yes, that&amp;#8217;s right. And we&amp;#8217;re &lt;a href='http://blog.lizardwrangler.com/2010/05/10/heartfelt-moment-of-the-week/'&gt;open&lt;/a&gt; and &lt;a href='http://www.mozilla.com/en-US/about/careers.html'&gt;always looking for help&lt;/a&gt; :)&lt;/p&gt;
+
+&lt;h2 id='what_changed'&gt;What changed?&lt;/h2&gt;
+
+&lt;p&gt;I&amp;#8217;d been contracting for Mozilla for the past 2 years, while in college. Working full time is better in many ways, but here are just some that have made a difference for me:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;I graduated &lt;a href='http://ucsc.edu'&gt;UCSC&lt;/a&gt;, woot! (still waiting for that official diploma, though!)&lt;/li&gt;
+
+&lt;li&gt;More focus. Having just one job to focus on, as opposed to other side things that come along with contracting&lt;/li&gt;
+
+&lt;li&gt;Oficially, more responsibility and say in decisions, always a good thing!&lt;/li&gt;
+
+&lt;li&gt;And a phone line (which I don&amp;#8217;t use, but it makes me feel important!)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;I was never a volunteer, but I was an intern &amp;#8211; that&amp;#8217;s how I started. I had no idea that I was going to enjoy working here so much. Really, though, it doesn&amp;#8217;t feel like work.&lt;/p&gt;
+
+&lt;h2 id='whats_in_store_for_me_and_for_you'&gt;What&amp;#8217;s in store for me (and for you)?&lt;/h2&gt;
+
+&lt;p&gt;Mostly, &lt;a href='http://support.mozilla.com'&gt;SUMO&lt;/a&gt;. Some things I&amp;#8217;m helping with, past and future:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;migrating legacy data (which I&amp;#8217;ll blog about)&lt;/li&gt;
+
+&lt;li&gt;a very smooth process for uploading images, with awesome UX thanks to &lt;a href='http://howsehold.org/'&gt;chowse&lt;/a&gt; (blog about that too)&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='http://github.com/endtwist/inko'&gt;a live chat system based on node.js&lt;/a&gt; (you guessed! blog post coming)&lt;/li&gt;
+
+&lt;li&gt;Getting a Knowledge Base in Django, with &lt;a href='https://wiki.mozilla.org/Support/Kitsune/KB'&gt;cool Wiki and non-Wiki features&lt;/a&gt; (see also &lt;a href='https://wiki.mozilla.org/Support/Kitsune/KB/Priorities'&gt;this&lt;/a&gt;).&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id='the_end'&gt;The end&lt;/h2&gt;
+
+&lt;p&gt;Thank you, Mozilla, for being so awesome! I&amp;#8217;m glad to have the fortune of working here.&lt;/p&gt;
+
+&lt;p&gt;If you would like to know more about Mozilla, web development (here and in general), and what I do here, don&amp;#8217;t hesitate to ask.&lt;/p&gt;</content>
+ </entry>
+ 
+
+</feed>

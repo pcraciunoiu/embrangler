@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+ <title>Disembrangling Programming</title>
+ <link href="http://embrangler.com/tag/tutorial/atom.xml" rel="self"/>
+ <link href="http://embrangler.com/tag/tutorial"/>
+ <updated>2010-08-25T22:00:14-07:00</updated>
+ <id>http://embrangler.com/</id>
+ <author>
+   <name>Paul Craciunoiu</name>
+   <email>paul@craciunoiu.net</email>
+ </author>
+
+ 
+ <entry>
+   <title>Introduction to testing in Kohana 3</title>
+   <link href="http://embrangler.com/2010/04/testing-in-kohana-3"/>
+   <updated>2010-04-25T00:00:00-07:00</updated>
+   <id>http://embrangler.com/2010/04/testing-in-kohana-3</id>
+   <content type="html">&lt;p&gt;Table of contents:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href='#introduction'&gt;Introduction to introduction&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='#resources'&gt;Resources&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='#setup'&gt;Setup&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='#running_tests'&gt;Running tests&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='#writing_tests'&gt;Writing tests&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='#test_suites'&gt;Test suites&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='#up_next'&gt;Up next&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id='introduction'&gt;Introduction&lt;/h2&gt;
+
+&lt;p&gt;I&amp;#8217;m working on a project largely written in Kohana and JavaScript + jQuery. (Under construction at &lt;a href='http://fastask.net'&gt;fastask.net&lt;/a&gt;.) It&amp;#8217;s getting complicated enough to be worth having tests for it. While I&amp;#8217;m at it, I&amp;#8217;ll blog about the process, for several reasons:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;There aren&amp;#8217;t that many resources on Kohana 3 and testing out there, I&amp;#8217;ve found.&lt;/li&gt;
+
+&lt;li&gt;Testing is hugely important for complex projects.&lt;/li&gt;
+
+&lt;li&gt;Testing JavaScript is new to me (and fairly uncommon practice on the web, still).&lt;/li&gt;
+
+&lt;li&gt;I plan to make this project publicly available fairly soon and it&amp;#8217;s an opportunity to share information about it with my readers :)&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Along the way I will write about:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Writing tests in Kohana 3, the basics (this post)&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Writing JavaScript + jQuery tests&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;so far I&amp;#8217;m set on using &lt;a href='http://code.google.com/p/js-test-driver/'&gt;JS Test Driver&lt;/a&gt; with &lt;a href='http://docs.jquery.com/QUnit'&gt;QUnit&lt;/a&gt; or &lt;a href='http://developer.yahoo.com/yui/3/test/'&gt;YUI Test&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;In-depth testing: using fixtures and mock objects, understanding code coverage, and more&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id='resources'&gt;Resources&lt;/h2&gt;
+
+&lt;p&gt;Testing on Kohana 3 is easy. It&amp;#8217;s so easy, in fact, that I&amp;#8217;ve written tests covering almost 1000 lines of code over one weekend.&lt;/p&gt;
+
+&lt;p&gt;Here are the necessary resources to get you going:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href='http://github.com/kohana/unittest'&gt;The Kohana 3 unittest module&lt;/a&gt;, awesomely written by the Kohana team (thanks guys!)&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='http://www.phpunit.de/'&gt;PHPUnit&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='http://www.phpunit.de/manual/3.4/en/'&gt;PHPUnit&amp;#8217;s brilliant documentation&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='http://github.com/kohana/unittest/tree/master/guide/'&gt;unittest&amp;#8217;s documentation&lt;/a&gt;, I mostly used it for &lt;a href='http://github.com/kohana/unittest/blob/master/guide/unittest.testing.md'&gt;grouping tests&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id='setup'&gt;Setup&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Install PHPUnit. &lt;a href='http://www.phpunit.de/manual/current/en/installation.html'&gt;See their documentation&lt;/a&gt;.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;I&amp;#8217;m using Ubuntu and the package manager offers a relatively recent version. But, I wanted the latest. Installing it from source was so quick that I can&amp;#8217;t remember if I had any problems with it :)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Git a copy the unittest module: &lt;code&gt;git submodule add git://github.com/kohana/unittest.git modules/unittest&lt;/code&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Follow their &lt;a href='http://github.com/kohana/unittest#readme'&gt;installation instructions&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;I wanted code coverage reports. At the time of writing, these require the archive module, but they really don&amp;#8217;t have to. So I forked their unittest repo and rolled my own. &lt;a href='http://github.com/pcraciunoiu/unittest'&gt;My unittest repository&lt;/a&gt; doesn&amp;#8217;t require the archive module. I&amp;#8217;ll write about code coverage in a later post.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;em&gt;You&amp;#8217;re all set!&lt;/em&gt;&lt;/p&gt;
+
+&lt;h2 id='running_tests'&gt;Running tests&lt;/h2&gt;
+
+&lt;p&gt;I&amp;#8217;m using the UI provided by the &lt;strong&gt;unittest&lt;/strong&gt; module. That means I&amp;#8217;ve added a route to it in my &lt;strong&gt;bootstrap.php&lt;/strong&gt; file, and I&amp;#8217;m accessing it at &lt;code&gt;http://mysite/phpunit&lt;/code&gt;. From there, I pick the group of tests that I wish to run, and examine the results. Yep, it&amp;#8217;s that easy.&lt;/p&gt;
+
+&lt;p&gt;Here&amp;#8217;s how it looks: &lt;img src='/images/phpunit/fastask-running-tests.png' alt='Running PHPUnit tests in Kohana 3' /&gt;&lt;/p&gt;
+
+&lt;h2 id='writing_tests'&gt;Writing tests&lt;/h2&gt;
+
+&lt;p&gt;Start by reading &lt;a href='http://www.phpunit.de/manual/3.4/en/writing-tests-for-phpunit.html'&gt;the PHPUnit documentation&lt;/a&gt;. It&amp;#8217;s full of great examples. My project is fairly complex, and so I&amp;#8217;m using &lt;strong&gt;TestSuites&lt;/strong&gt;, &lt;strong&gt;TestCases&lt;/strong&gt;, and &lt;strong&gt;fixtures&lt;/strong&gt;. I will write about the latter in subsequent posts.&lt;/p&gt;
+
+&lt;p&gt;Here is a simple example of a &lt;strong&gt;TestCase&lt;/strong&gt;:&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='php'&gt;&lt;span class='cp'&gt;&amp;lt;?php&lt;/span&gt; &lt;span class='c1'&gt;// application/tests/test_example.php&lt;/span&gt;
+
+&lt;span class='sd'&gt;/**&lt;/span&gt;
+&lt;span class='sd'&gt; * Logged out, 403 forbidden everywhere.&lt;/span&gt;
+&lt;span class='sd'&gt; * @group anonymous&lt;/span&gt;
+&lt;span class='sd'&gt; * @group invalid&lt;/span&gt;
+&lt;span class='sd'&gt; */&lt;/span&gt;
+&lt;span class='k'&gt;class&lt;/span&gt; &lt;span class='nc'&gt;AnonymousTest&lt;/span&gt; &lt;span class='k'&gt;extends&lt;/span&gt; &lt;span class='nx'&gt;PHPUnit_Framework_TestCase&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+    &lt;span class='k'&gt;protected&lt;/span&gt; &lt;span class='k'&gt;function&lt;/span&gt; &lt;span class='nf'&gt;setUp&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+        &lt;span class='nx'&gt;Kohana&lt;/span&gt;&lt;span class='o'&gt;::&lt;/span&gt;&lt;span class='na'&gt;config&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;database&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;default&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='nx'&gt;Kohana&lt;/span&gt;&lt;span class='o'&gt;::&lt;/span&gt;&lt;span class='na'&gt;config&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;database&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt;
+                                                &lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;unit_testing&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt;
+    &lt;span class='p'&gt;}&lt;/span&gt;
+
+    &lt;span class='k'&gt;function&lt;/span&gt; &lt;span class='nf'&gt;testFastask&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+        &lt;span class='nv'&gt;$fastask&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='k'&gt;new&lt;/span&gt; &lt;span class='nx'&gt;Controller_Fastask&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='k'&gt;new&lt;/span&gt; &lt;span class='nx'&gt;Request&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;in/t&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;));&lt;/span&gt;
+        &lt;span class='nv'&gt;$fastask&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;action_t&lt;/span&gt;&lt;span class='p'&gt;();&lt;/span&gt;
+        &lt;span class='nv'&gt;$response&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='nv'&gt;$fastask&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;request&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt;
+        &lt;span class='nv'&gt;$this&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;assertSame&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nv'&gt;$response&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;headers&lt;/span&gt;&lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;Content-Type&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;],&lt;/span&gt;
+                          &lt;span class='s1'&gt;&amp;#39;application/json&amp;#39;&lt;/span&gt; &lt;span class='p'&gt;);&lt;/span&gt;
+        &lt;span class='nv'&gt;$this&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;assertSame&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nv'&gt;$response&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;status&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='m'&gt;403&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+    &lt;span class='p'&gt;}&lt;/span&gt;
+
+    &lt;span class='c1'&gt;// ... more tests here ...&lt;/span&gt;
+&lt;span class='p'&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;So what&amp;#8217;s happening here?&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Use &lt;code&gt;@group&lt;/code&gt; to pile tests together. I&amp;#8217;m using the UI at &lt;code&gt;http://mysite/phpunit&lt;/code&gt; to pick which to run at any time.&lt;/li&gt;
+
+&lt;li&gt;The &lt;em&gt;anonymous&lt;/em&gt; group is handy to run all tests for actions performed by anonymous users.&lt;/li&gt;
+
+&lt;li&gt;You can use multiple groups, as many as you want.&lt;/li&gt;
+
+&lt;li&gt;I&amp;#8217;m using an MySQL database to test in this example. This is a quick way to set the database Kohana uses when running tests:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='php'&gt;&lt;span class='x'&gt;Kohana::config(&amp;#39;database&amp;#39;)-&amp;gt;default = Kohana::config(&amp;#39;database&amp;#39;)&lt;/span&gt;
+&lt;span class='x'&gt;                                        -&amp;gt;unit_testing;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;ul&gt;
+&lt;li&gt;Set up a test database in MySQL and configure access to it in &lt;code&gt;application/config/database.php&lt;/code&gt;&lt;/li&gt;
+
+&lt;li&gt;I have multiple tests, hence the &lt;code&gt;setUp()&lt;/code&gt; method. If you only have one test, don&amp;#8217;t use this.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id='test_suites'&gt;Test suites&lt;/h2&gt;
+
+&lt;p&gt;Again, &lt;a href='http://www.phpunit.de/manual/3.4/en/api.html#api.testsuite'&gt;the PHPUnit documentation&lt;/a&gt; is golden.&lt;/p&gt;
+
+&lt;p&gt;Test suites come in handy when multiple tests can use the same setup. You can also &lt;a href='http://www.phpunit.de/manual/3.4/en/fixtures.html#fixtures.sharing-fixture'&gt;share fixtures between tests&lt;/a&gt; this way. My main reason for using test suites was actually the gain in speed. This next example shows why.&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='php'&gt;&lt;span class='cp'&gt;&amp;lt;?php&lt;/span&gt; &lt;span class='c1'&gt;// application/tests/testsuite_fastask_search.php&lt;/span&gt;
+
+&lt;span class='sd'&gt;/**&lt;/span&gt;
+&lt;span class='sd'&gt; * This suite tests search functionality in the main controller.&lt;/span&gt;
+&lt;span class='sd'&gt; * @group authenticated&lt;/span&gt;
+&lt;span class='sd'&gt; * @group fastask&lt;/span&gt;
+&lt;span class='sd'&gt; * @group fastask.search&lt;/span&gt;
+&lt;span class='sd'&gt; */&lt;/span&gt;
+&lt;span class='k'&gt;class&lt;/span&gt; &lt;span class='nc'&gt;FastaskSearchTestSuite&lt;/span&gt; &lt;span class='k'&gt;extends&lt;/span&gt; &lt;span class='nx'&gt;PHPUnit_Framework_TestSuite&lt;/span&gt;
+&lt;span class='p'&gt;{&lt;/span&gt;
+    &lt;span class='k'&gt;public&lt;/span&gt; &lt;span class='k'&gt;static&lt;/span&gt; &lt;span class='k'&gt;function&lt;/span&gt; &lt;span class='nf'&gt;suite&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt;
+    &lt;span class='p'&gt;{&lt;/span&gt;
+        &lt;span class='k'&gt;include_once&lt;/span&gt; &lt;span class='s1'&gt;&amp;#39;/path/to/kohana/application/testcases/&amp;#39;&lt;/span&gt; &lt;span class='o'&gt;.&lt;/span&gt;
+            &lt;span class='s1'&gt;&amp;#39;test_fastask_search.php&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt;
+        &lt;span class='k'&gt;return&lt;/span&gt; &lt;span class='k'&gt;new&lt;/span&gt; &lt;span class='nx'&gt;FastaskSearchTestSuite&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;FastaskSearchTest&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+    &lt;span class='p'&gt;}&lt;/span&gt;
+
+    &lt;span class='k'&gt;protected&lt;/span&gt; &lt;span class='k'&gt;function&lt;/span&gt; &lt;span class='nf'&gt;setUp&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt;
+    &lt;span class='p'&gt;{&lt;/span&gt;
+        &lt;span class='c1'&gt;// Set database connection and log in the user.&lt;/span&gt;
+        &lt;span class='nx'&gt;Kohana&lt;/span&gt;&lt;span class='o'&gt;::&lt;/span&gt;&lt;span class='na'&gt;config&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;database&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;default&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='nx'&gt;Kohana&lt;/span&gt;&lt;span class='o'&gt;::&lt;/span&gt;&lt;span class='na'&gt;config&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;database&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt;
+                                                &lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;unit_testing&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt;
+        &lt;span class='nx'&gt;Auth&lt;/span&gt;&lt;span class='o'&gt;::&lt;/span&gt;&lt;span class='na'&gt;instance&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;login&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nx'&gt;TEST_USERNAME&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='nx'&gt;TEST_PASSWORD&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+
+        &lt;span class='c1'&gt;// Index data and start up the search daemon&lt;/span&gt;
+        &lt;span class='nb'&gt;exec&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;indexer --all --config &amp;#39;&lt;/span&gt; &lt;span class='o'&gt;.&lt;/span&gt; &lt;span class='nx'&gt;SPHINX_CONF&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+        &lt;span class='nb'&gt;exec&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;searchd --config &amp;#39;&lt;/span&gt; &lt;span class='o'&gt;.&lt;/span&gt; &lt;span class='nx'&gt;SPHINX_CONF&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+    &lt;span class='p'&gt;}&lt;/span&gt;
+
+    &lt;span class='k'&gt;protected&lt;/span&gt; &lt;span class='k'&gt;function&lt;/span&gt; &lt;span class='nf'&gt;tearDown&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt;
+    &lt;span class='p'&gt;{&lt;/span&gt;
+        &lt;span class='c1'&gt;// Reset logins and log out the user&lt;/span&gt;
+        &lt;span class='nv'&gt;$test_user&lt;/span&gt;         &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='nx'&gt;Auth&lt;/span&gt;&lt;span class='o'&gt;::&lt;/span&gt;&lt;span class='na'&gt;instance&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;get_user&lt;/span&gt;&lt;span class='p'&gt;();&lt;/span&gt;
+        &lt;span class='nv'&gt;$test_user&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;logins&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='m'&gt;1&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt;
+        &lt;span class='nv'&gt;$test_user&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;save&lt;/span&gt;&lt;span class='p'&gt;();&lt;/span&gt;
+        &lt;span class='nx'&gt;Auth&lt;/span&gt;&lt;span class='o'&gt;::&lt;/span&gt;&lt;span class='na'&gt;instance&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;logout&lt;/span&gt;&lt;span class='p'&gt;();&lt;/span&gt;
+
+        &lt;span class='c1'&gt;// Stop the search daemon&lt;/span&gt;
+        &lt;span class='nb'&gt;exec&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;killall searchd&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+    &lt;span class='p'&gt;}&lt;/span&gt;
+&lt;span class='p'&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Explanation:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;TEST_USERNAME&lt;/code&gt; and &lt;code&gt;TEST_PASSWORD&lt;/code&gt; are used for multiple test suites, so I defined them in &lt;code&gt;application/config/phpunit.php&lt;/code&gt;&lt;/li&gt;
+
+&lt;li&gt;I&amp;#8217;m using the Sphinx search engine here to search through data. So I need to tell Sphinx to index my test data and start up the search daemon.&lt;/li&gt;
+
+&lt;li&gt;Obviously, doing this for every search test is gonna slow things down &lt;em&gt;a lot&lt;/em&gt;.&lt;/li&gt;
+
+&lt;li&gt;I&amp;#8217;m doing all these tests for authenticated users, so logging in and out for every test is also a waste.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Next, some test cases.&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='php'&gt;&lt;span class='cp'&gt;&amp;lt;?php&lt;/span&gt; &lt;span class='c1'&gt;// application/testcases/test_fastask_search.php&lt;/span&gt;
+
+&lt;span class='sd'&gt;/**&lt;/span&gt;
+&lt;span class='sd'&gt; * @group loggedin&lt;/span&gt;
+&lt;span class='sd'&gt; * @group fastask&lt;/span&gt;
+&lt;span class='sd'&gt; * @group fastask.search&lt;/span&gt;
+&lt;span class='sd'&gt; */&lt;/span&gt;
+&lt;span class='k'&gt;class&lt;/span&gt; &lt;span class='nc'&gt;FastaskSearchTest&lt;/span&gt; &lt;span class='k'&gt;extends&lt;/span&gt; &lt;span class='nx'&gt;PHPUnit_Framework_TestCase&lt;/span&gt;
+&lt;span class='p'&gt;{&lt;/span&gt;
+    &lt;span class='sd'&gt;/**&lt;/span&gt;
+&lt;span class='sd'&gt;     * Sets the data for search.&lt;/span&gt;
+&lt;span class='sd'&gt;     */&lt;/span&gt;
+    &lt;span class='k'&gt;function&lt;/span&gt; &lt;span class='nf'&gt;providerSearch&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt;
+    &lt;span class='p'&gt;{&lt;/span&gt;
+        &lt;span class='cm'&gt;/* format for each test:&lt;/span&gt;
+&lt;span class='cm'&gt;            array(&lt;/span&gt;
+&lt;span class='cm'&gt;                search term&lt;/span&gt;
+&lt;span class='cm'&gt;                status code to expect&lt;/span&gt;
+&lt;span class='cm'&gt;        */&lt;/span&gt;
+        &lt;span class='k'&gt;return&lt;/span&gt; &lt;span class='k'&gt;array&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;
+            &lt;span class='k'&gt;array&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;s&amp;#39;&lt;/span&gt; &lt;span class='o'&gt;=&amp;gt;&lt;/span&gt; &lt;span class='s1'&gt;&amp;#39;asdfgh&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='m'&gt;404&lt;/span&gt;&lt;span class='p'&gt;),&lt;/span&gt;
+            &lt;span class='k'&gt;array&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;s&amp;#39;&lt;/span&gt; &lt;span class='o'&gt;=&amp;gt;&lt;/span&gt; &lt;span class='s1'&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='m'&gt;404&lt;/span&gt;&lt;span class='p'&gt;),&lt;/span&gt;
+            &lt;span class='k'&gt;array&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;s&amp;#39;&lt;/span&gt; &lt;span class='o'&gt;=&amp;gt;&lt;/span&gt; &lt;span class='s1'&gt;&amp;#39;nulla&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='m'&gt;200&lt;/span&gt;&lt;span class='p'&gt;),&lt;/span&gt;  &lt;span class='c1'&gt;// One of those lorem-ipsum results&lt;/span&gt;
+        &lt;span class='p'&gt;);&lt;/span&gt;
+    &lt;span class='p'&gt;}&lt;/span&gt;
+
+    &lt;span class='sd'&gt;/**&lt;/span&gt;
+&lt;span class='sd'&gt;     * Test search.&lt;/span&gt;
+&lt;span class='sd'&gt;     * @dataProvider providerSearch&lt;/span&gt;
+&lt;span class='sd'&gt;     */&lt;/span&gt;
+    &lt;span class='k'&gt;function&lt;/span&gt; &lt;span class='nf'&gt;testSearch&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nv'&gt;$search&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='nv'&gt;$status&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt;
+    &lt;span class='p'&gt;{&lt;/span&gt;
+        &lt;span class='nv'&gt;$_GET&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='k'&gt;array&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;
+            &lt;span class='s1'&gt;&amp;#39;ep&amp;#39;&lt;/span&gt; &lt;span class='o'&gt;=&amp;gt;&lt;/span&gt; &lt;span class='m'&gt;1&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt;
+            &lt;span class='s1'&gt;&amp;#39;s&amp;#39;&lt;/span&gt;  &lt;span class='o'&gt;=&amp;gt;&lt;/span&gt; &lt;span class='nv'&gt;$search&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt;
+        &lt;span class='p'&gt;);&lt;/span&gt;
+        &lt;span class='nv'&gt;$fastask&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='k'&gt;new&lt;/span&gt; &lt;span class='nx'&gt;Controller_Fastask&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='k'&gt;new&lt;/span&gt; &lt;span class='nx'&gt;Request&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;in/t&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;));&lt;/span&gt;
+        &lt;span class='nv'&gt;$fastask&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;before&lt;/span&gt;&lt;span class='p'&gt;();&lt;/span&gt;
+        &lt;span class='nv'&gt;$fastask&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;action_t&lt;/span&gt;&lt;span class='p'&gt;();&lt;/span&gt;
+        &lt;span class='nv'&gt;$response&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='nv'&gt;$fastask&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;request&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt;
+
+        &lt;span class='nv'&gt;$this&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;assertSame&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nv'&gt;$response&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;headers&lt;/span&gt;&lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;Content-Type&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;],&lt;/span&gt;
+                          &lt;span class='s1'&gt;&amp;#39;application/json&amp;#39;&lt;/span&gt; &lt;span class='p'&gt;);&lt;/span&gt;
+        &lt;span class='nv'&gt;$this&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;assertSame&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nv'&gt;$response&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;status&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='nv'&gt;$status&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+
+        &lt;span class='nv'&gt;$json&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='nx'&gt;json_decode&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nv'&gt;$response&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;response&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+        &lt;span class='nv'&gt;$count&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='nb'&gt;count&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nv'&gt;$json&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;tasks&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+        &lt;span class='k'&gt;if&lt;/span&gt; &lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nv'&gt;$count&lt;/span&gt; &lt;span class='o'&gt;&amp;gt;&lt;/span&gt; &lt;span class='m'&gt;0&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+            &lt;span class='k'&gt;foreach&lt;/span&gt; &lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nv'&gt;$json&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;tasks&lt;/span&gt; &lt;span class='k'&gt;as&lt;/span&gt; &lt;span class='nv'&gt;$task&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+                &lt;span class='nv'&gt;$follower_ids&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='k'&gt;array&lt;/span&gt;&lt;span class='p'&gt;();&lt;/span&gt;
+                &lt;span class='k'&gt;foreach&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nv'&gt;$task&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;followers&lt;/span&gt; &lt;span class='k'&gt;as&lt;/span&gt; &lt;span class='nv'&gt;$follower&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+                    &lt;span class='nv'&gt;$follower_ids&lt;/span&gt;&lt;span class='p'&gt;[]&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='nv'&gt;$follower&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;id&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt;
+                &lt;span class='p'&gt;}&lt;/span&gt;
+                &lt;span class='nv'&gt;$follower_ids&lt;/span&gt;&lt;span class='p'&gt;[]&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='nv'&gt;$task&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;user_id&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt;
+
+                &lt;span class='nv'&gt;$this&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;assertContains&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nx'&gt;TEST_USER_ID&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='nv'&gt;$follower_ids&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+            &lt;span class='p'&gt;}&lt;/span&gt;
+        &lt;span class='p'&gt;}&lt;/span&gt;
+    &lt;span class='p'&gt;}&lt;/span&gt;
+&lt;span class='p'&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;The test case looks basically the same as it would if it were stand alone, but it has no &lt;code&gt;setUp()&lt;/code&gt; or &lt;code&gt;tearDown()&lt;/code&gt;. I was too lazy to write a separate test for having results, so I check the &lt;code&gt;$count&lt;/code&gt; for testing the actual data.&lt;/p&gt;
+
+&lt;h2 id='up_next'&gt;Up next&lt;/h2&gt;
+
+&lt;p&gt;Stay tuned for Kohana tests using &lt;a href='http://www.phpunit.de/manual/3.4/en/fixtures.html'&gt;fixtures&lt;/a&gt;, getting and using &lt;a href='http://www.phpunit.de/manual/3.4/en/code-coverage-analysis.html'&gt;code coverage&lt;/a&gt; reports, and &lt;a href='http://www.phpunit.de/manual/3.4/en/test-doubles.html#test-doubles.mock-objects'&gt;mock objects&lt;/a&gt;. Also, JavaScript tests!&lt;/p&gt;</content>
+ </entry>
+ 
+
+</feed>

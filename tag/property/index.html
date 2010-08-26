@@ -1,0 +1,13 @@
+---
+layout: default
+title: Posts tagged "property"
+tag: property
+type: "Property"
+---
+    <h1 class="title" id="property">Posts tagged <em>property</em></h1>
+
+    <ul>
+      {% for post in site.tags['property'] %}
+      {% include item.html %}
+      {% endfor %}
+    </ul>

@@ -1,0 +1,13 @@
+---
+layout: default
+title: Posts tagged "ubuntu"
+tag: ubuntu
+type: "Ubuntu"
+---
+    <h1 class="title" id="ubuntu">Posts tagged <em>ubuntu</em></h1>
+
+    <ul>
+      {% for post in site.tags['ubuntu'] %}
+      {% include item.html %}
+      {% endfor %}
+    </ul>

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+ <title>Disembrangling Programming</title>
+ <link href="http://embrangler.com/tag/kubuntu/atom.xml" rel="self"/>
+ <link href="http://embrangler.com/tag/kubuntu"/>
+ <updated>2010-08-25T22:00:14-07:00</updated>
+ <id>http://embrangler.com/</id>
+ <author>
+   <name>Paul Craciunoiu</name>
+   <email>paul@craciunoiu.net</email>
+ </author>
+
+ 
+ <entry>
+   <title>Installing OpenGL + GLUT on Kubuntu 9.04</title>
+   <link href="http://embrangler.com/2009/09/installing-opengl-glut-kubuntu-904"/>
+   <updated>2009-09-02T00:00:00-07:00</updated>
+   <id>http://embrangler.com/2009/09/installing-opengl-glut-kubuntu-904</id>
+   <content type="html">&lt;p&gt;I&amp;#8217;m taking a Computer Graphics class, and during the first week we need to install OpenGL and write a first, very simple program. I looked around for tutorials and couldn&amp;#8217;t find any simple ones, so I&amp;#8217;ve compiled one below.&lt;/p&gt;
+
+&lt;p&gt;This tutorial should help you install OpenGL + Glut on Debian-based Linux distributions.&lt;/p&gt;
+
+&lt;p&gt;My OS: Kubuntu 9.04 i386 (32 bit)&lt;/p&gt;
+
+&lt;p&gt;Installing GLUT:&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='bash'&gt;sudo apt-get install freeglut3 glut-doc
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;In my case, I had to install an nvidia driver as well:&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='bash'&gt;sudo apt-get install nvidia-glx-180-dev
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;For some of you, this might not be the case, and the mesa-common package would work:&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='bash'&gt;sudo apt-get install mesa-common-dev
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Then (and here&amp;#8217;s the part that got me worried), you can try testing a simple example, but I got this error:&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='bash'&gt;OpenGL GLX extension not supported by display &lt;span class='s1'&gt;&amp;#39;:0.0&amp;#39;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;To fix this, it was much simpler than I thought &amp;#8211; I just needed to reboot. (If you don&amp;#8217;t want to, for some reason, restarting X should work just fine.) If this problem doesn&amp;#8217;t go away, I found a couple of resources in my search before rebooting, &lt;a href='http://ubuntuforums.org/showthread.php?t=380175'&gt;here&lt;/a&gt; and &lt;a href='http://www.linuxquestions.org/questions/linux-newbie-8/opengl-glx-extension-not-supported-by-display-0.0-107369/'&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;After setting this up, I looked up tutorials, and decided to use this simple example: (found &lt;a href='http://ubuntuforums.org/showthread.php?t=375425'&gt;here&lt;/a&gt;)&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='cpp'&gt;&lt;span class='cp'&gt;#include &amp;amp;lt;GL/glut.h&amp;amp;gt;&lt;/span&gt;
+
+&lt;span class='cp'&gt;#define window_width  640&lt;/span&gt;
+&lt;span class='cp'&gt;#define window_height 480&lt;/span&gt;
+
+&lt;span class='c1'&gt;// Main loop&lt;/span&gt;
+&lt;span class='kt'&gt;void&lt;/span&gt; &lt;span class='n'&gt;main_loop_function&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt;
+&lt;span class='p'&gt;{&lt;/span&gt;
+   &lt;span class='c1'&gt;// Z angle&lt;/span&gt;
+   &lt;span class='k'&gt;static&lt;/span&gt; &lt;span class='kt'&gt;float&lt;/span&gt; &lt;span class='n'&gt;angle&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt;
+   &lt;span class='c1'&gt;// Clear color (screen)&lt;/span&gt;
+   &lt;span class='c1'&gt;// And depth (used internally to block obstructed objects)&lt;/span&gt;
+   &lt;span class='n'&gt;glClear&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='n'&gt;GL_COLOR_BUFFER_BIT&lt;/span&gt; &lt;span class='o'&gt;|&lt;/span&gt; &lt;span class='n'&gt;GL_DEPTH_BUFFER_BIT&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+   &lt;span class='c1'&gt;// Load identity matrix&lt;/span&gt;
+   &lt;span class='n'&gt;glLoadIdentity&lt;/span&gt;&lt;span class='p'&gt;();&lt;/span&gt;
+   &lt;span class='c1'&gt;// Multiply in translation matrix&lt;/span&gt;
+   &lt;span class='n'&gt;glTranslatef&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='mi'&gt;0&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt;&lt;span class='mi'&gt;0&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='o'&gt;-&lt;/span&gt;&lt;span class='mi'&gt;10&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+   &lt;span class='c1'&gt;// Multiply in rotation matrix&lt;/span&gt;
+   &lt;span class='n'&gt;glRotatef&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='n'&gt;angle&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='mi'&gt;0&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='mi'&gt;0&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='mi'&gt;1&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+   &lt;span class='c1'&gt;// Render colored quad&lt;/span&gt;
+   &lt;span class='n'&gt;glBegin&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='n'&gt;GL_QUADS&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+   &lt;span class='n'&gt;glColor3ub&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='mi'&gt;255&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='mo'&gt;000&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='mo'&gt;000&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt; &lt;span class='n'&gt;glVertex2f&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='o'&gt;-&lt;/span&gt;&lt;span class='mi'&gt;1&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt;  &lt;span class='mi'&gt;1&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+   &lt;span class='n'&gt;glColor3ub&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='mo'&gt;000&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='mi'&gt;255&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='mo'&gt;000&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt; &lt;span class='n'&gt;glVertex2f&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt; &lt;span class='mi'&gt;1&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt;  &lt;span class='mi'&gt;1&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+   &lt;span class='n'&gt;glColor3ub&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='mo'&gt;000&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='mo'&gt;000&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='mi'&gt;255&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt; &lt;span class='n'&gt;glVertex2f&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt; &lt;span class='mi'&gt;1&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='o'&gt;-&lt;/span&gt;&lt;span class='mi'&gt;1&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+   &lt;span class='n'&gt;glColor3ub&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='mi'&gt;255&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='mi'&gt;255&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='mo'&gt;000&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt; &lt;span class='n'&gt;glVertex2f&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='o'&gt;-&lt;/span&gt;&lt;span class='mi'&gt;1&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='o'&gt;-&lt;/span&gt;&lt;span class='mi'&gt;1&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+   &lt;span class='n'&gt;glEnd&lt;/span&gt;&lt;span class='p'&gt;();&lt;/span&gt;
+   &lt;span class='c1'&gt;// Swap buffers (color buffers, makes previous render visible)&lt;/span&gt;
+    &lt;span class='n'&gt;glutSwapBuffers&lt;/span&gt;&lt;span class='p'&gt;();&lt;/span&gt;
+   &lt;span class='c1'&gt;// Increase angle to rotate&lt;/span&gt;
+   &lt;span class='n'&gt;angle&lt;/span&gt;&lt;span class='o'&gt;+=&lt;/span&gt;&lt;span class='mf'&gt;0.25&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt;
+&lt;span class='p'&gt;}&lt;/span&gt;
+
+&lt;span class='c1'&gt;// Initialze OpenGL perspective matrix&lt;/span&gt;
+&lt;span class='kt'&gt;void&lt;/span&gt; &lt;span class='n'&gt;GL_Setup&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='kt'&gt;int&lt;/span&gt; &lt;span class='n'&gt;width&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='kt'&gt;int&lt;/span&gt; &lt;span class='n'&gt;height&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt;
+&lt;span class='p'&gt;{&lt;/span&gt;
+
+    &lt;span class='n'&gt;glViewport&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt; &lt;span class='mi'&gt;0&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='mi'&gt;0&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='n'&gt;width&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='n'&gt;height&lt;/span&gt; &lt;span class='p'&gt;);&lt;/span&gt;
+    &lt;span class='n'&gt;glMatrixMode&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt; &lt;span class='n'&gt;GL_PROJECTION&lt;/span&gt; &lt;span class='p'&gt;);&lt;/span&gt;
+    &lt;span class='n'&gt;glEnable&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt; &lt;span class='n'&gt;GL_DEPTH_TEST&lt;/span&gt; &lt;span class='p'&gt;);&lt;/span&gt;
+    &lt;span class='n'&gt;gluPerspective&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt; &lt;span class='mi'&gt;45&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='kt'&gt;float&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt;&lt;span class='n'&gt;width&lt;/span&gt;&lt;span class='o'&gt;/&lt;/span&gt;&lt;span class='n'&gt;height&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='mf'&gt;.1&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='mi'&gt;100&lt;/span&gt; &lt;span class='p'&gt;);&lt;/span&gt;
+    &lt;span class='n'&gt;glMatrixMode&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt; &lt;span class='n'&gt;GL_MODELVIEW&lt;/span&gt; &lt;span class='p'&gt;);&lt;/span&gt;
+&lt;span class='p'&gt;}&lt;/span&gt;
+
+&lt;span class='c1'&gt;// Initialize GLUT and start main loop&lt;/span&gt;
+&lt;span class='kt'&gt;int&lt;/span&gt; &lt;span class='n'&gt;main&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='kt'&gt;int&lt;/span&gt; &lt;span class='n'&gt;argc&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='kt'&gt;char&lt;/span&gt;&lt;span class='o'&gt;**&lt;/span&gt; &lt;span class='n'&gt;argv&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+    &lt;span class='n'&gt;glutInit&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='o'&gt;&amp;amp;&lt;/span&gt;&lt;span class='n'&gt;argc&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='n'&gt;argv&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+
+    &lt;span class='n'&gt;glutInitWindowSize&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='n'&gt;window_width&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='n'&gt;window_height&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+
+    &lt;span class='n'&gt;glutInitDisplayMode&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='n'&gt;GLUT_RGB&lt;/span&gt; &lt;span class='o'&gt;|&lt;/span&gt; &lt;span class='n'&gt;GLUT_DOUBLE&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+
+    &lt;span class='n'&gt;glutCreateWindow&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;GLUT Example!!!&amp;quot;&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+
+    &lt;span class='n'&gt;glutIdleFunc&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='n'&gt;main_loop_function&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+
+    &lt;span class='n'&gt;GL_Setup&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='n'&gt;window_width&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='n'&gt;window_height&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+   &lt;span class='n'&gt;glutMainLoop&lt;/span&gt;&lt;span class='p'&gt;();&lt;/span&gt;
+&lt;span class='p'&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Thanks! I&amp;#8217;m eager to update this tutorial with more information, so if you&amp;#8217;re having problems, let me know!&lt;/p&gt;
+
+&lt;h2 id='additional_resources'&gt;Additional resources:&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href='http://www.opengl.org/documentation/specs/glut/spec3/spec3.html'&gt;GLUT documentation&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='http://www.spacesimulator.net/tutorials.html'&gt;Tutorials on spacesimulator&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='http://www.gamedev.net/reference/list.asp?categoryid=31'&gt;GameDev Forum&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='http://www.glprogramming.com/red/index.html'&gt;OpenGL Programming guide&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='http://lazyfoo.net/SDL_tutorials/lesson36/index.php'&gt;Using SDL with OpenGL&lt;/a&gt; (part of &lt;a href='http://lazyfoo.net/SDL_tutorials/index.php'&gt;Beginning Game Programming&lt;/a&gt;)&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='http://www.videotutorialsrock.com/'&gt;OpenGL Video Tutorials&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content>
+ </entry>
+ 
+
+</feed>

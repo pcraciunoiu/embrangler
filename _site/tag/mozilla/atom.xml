@@ -1,0 +1,969 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+ <title>Disembrangling Programming</title>
+ <link href="http://embrangler.com/tag/mozilla/atom.xml" rel="self"/>
+ <link href="http://embrangler.com/tag/mozilla"/>
+ <updated>2010-08-25T22:00:14-07:00</updated>
+ <id>http://embrangler.com/</id>
+ <author>
+   <name>Paul Craciunoiu</name>
+   <email>paul@craciunoiu.net</email>
+ </author>
+
+ 
+ <entry>
+   <title>Django and AJAX image uploads</title>
+   <link href="http://embrangler.com/2010/08/ajax-uploads-images-in-django"/>
+   <updated>2010-08-20T00:00:00-07:00</updated>
+   <id>http://embrangler.com/2010/08/ajax-uploads-images-in-django</id>
+   <content type="html">&lt;p&gt;Table of contents:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href='#demo'&gt;Demo&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;&lt;a href='#summary'&gt;Summary&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;&lt;a href='#server_side_django'&gt;Server side (Django)&lt;/a&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href='#model'&gt;Model&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='#form'&gt;Form&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='#view_uploading_image_saving_to_disk'&gt;View&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='#generating_the_thumbnail_with_pil'&gt;Generating the thumbnail with PIL&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;&lt;a href='#client_side'&gt;Client side&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;&lt;a href='#a_note_about_graceful_degradation'&gt;Graceful degradation&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id='demo'&gt;Demo&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href='http://screencast.com/t/ZGI0NTA3'&gt;Screencast&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Screenshots:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;The upload form, empty and ready for action: &lt;div class='img-wrap'&gt;&lt;div class='img'&gt;
+  &lt;img title='Empty upload form' src='/images/upload/upload_1.png' alt='Empty upload form' /&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Browsing for an image: &lt;div class='img-wrap'&gt;&lt;div class='img'&gt;
+  &lt;img title='Browsing for an image' src='/images/upload/upload_2.png' alt='Browsing for an image' /&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Uploading the image (in progress): &lt;div class='img-wrap'&gt;&lt;div class='img'&gt;
+  &lt;img title='Uploading the image' src='/images/upload/upload_3.png' alt='Uploading the image' /&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;The image is uploaded: &lt;div class='img-wrap'&gt;&lt;div class='img'&gt;
+  &lt;img title='Uploaded image' src='/images/upload/upload_4.png' alt='Uploaded image' /&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Deleting the image would show a similar progress block as uploading: &lt;div class='img-wrap'&gt;&lt;div class='img'&gt;
+  &lt;img title='Delete the image' src='/images/upload/upload_5.png' alt='Delete the image' /&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id='summary'&gt;Summary&lt;/h2&gt;
+
+&lt;p&gt;In this post, we&amp;#8217;ll go through how to get AJAX uploads to work with Django, including:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href='http://en.wikipedia.org/wiki/Cross-site_request_forgery'&gt;csrf protection&lt;/a&gt; with &lt;a href='http://docs.djangoproject.com/en/dev/topics/forms/'&gt;Django&amp;#8217;s forms&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='http://en.wikipedia.org/wiki/Graceful_degradation'&gt;graceful degradation&lt;/a&gt; (see also &lt;a href='http://en.wikipedia.org/wiki/Unobtrusive_JavaScript'&gt;unobtrusive JavaScript&lt;/a&gt;)&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='http://docs.djangoproject.com/en/dev/topics/http/file-uploads/'&gt;uploading files in Django&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;thumbnail generation with &lt;a href='http://www.pythonware.com/products/pil/'&gt;PIL&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;cross-browser uploading of files through AJAX&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; I&amp;#8217;m planning to add upload progress. If you can&amp;#8217;t wait for that post (understandably), there are several ways to go about it:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;If your site isn&amp;#8217;t using multiple webheads, you can just ask the webhead to get you the size of what&amp;#8217;s been uploaded so far. Since Django can read in chunks, it can tell you how much has been processed. See &lt;a href='http://fairviewcomputing.com/blog/2008/10/21/ajax-upload-progress-bars-jquery-django-nginx/'&gt;this post&lt;/a&gt; for implementation ideas.&lt;/li&gt;
+
+&lt;li&gt;Or, regardless of the server setup, you can use the File API (in Firefox and Chrome) - easier, cleaner, no server-side interaction required.&lt;/li&gt;
+
+&lt;li&gt;Other multi-webhead approaches: writing progress to a file shared among them, or saving directly to a shared folder and e.g. returning the size uploaded so far.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id='server_side_django'&gt;Server side (Django)&lt;/h2&gt;
+
+&lt;p&gt;First, we&amp;#8217;ll look at how the server handles files sent to it.&lt;/p&gt;
+
+&lt;h3 id='model'&gt;Model&lt;/h3&gt;
+
+&lt;p&gt;I created an app called &lt;code&gt;upload&lt;/code&gt; with an ImageAttachment model, like so:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href='http://github.com/pcraciunoiu/kitsune/blob/3387483e4f401fc04045180a8caa1e3f141d32ee/apps/upload/models.py'&gt;apps/upload/models.py&lt;/a&gt;:&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='python'&gt;&lt;span class='kn'&gt;from&lt;/span&gt; &lt;span class='nn'&gt;django.conf&lt;/span&gt; &lt;span class='kn'&gt;import&lt;/span&gt; &lt;span class='n'&gt;settings&lt;/span&gt;
+&lt;span class='kn'&gt;from&lt;/span&gt; &lt;span class='nn'&gt;django.contrib.auth.models&lt;/span&gt; &lt;span class='kn'&gt;import&lt;/span&gt; &lt;span class='n'&gt;User&lt;/span&gt;
+&lt;span class='kn'&gt;from&lt;/span&gt; &lt;span class='nn'&gt;django.contrib.contenttypes.models&lt;/span&gt; &lt;span class='kn'&gt;import&lt;/span&gt; &lt;span class='n'&gt;ContentType&lt;/span&gt;
+&lt;span class='kn'&gt;from&lt;/span&gt; &lt;span class='nn'&gt;django.contrib.contenttypes&lt;/span&gt; &lt;span class='kn'&gt;import&lt;/span&gt; &lt;span class='n'&gt;generic&lt;/span&gt;
+&lt;span class='kn'&gt;from&lt;/span&gt; &lt;span class='nn'&gt;django.db&lt;/span&gt; &lt;span class='kn'&gt;import&lt;/span&gt; &lt;span class='n'&gt;models&lt;/span&gt;
+
+
+&lt;span class='k'&gt;class&lt;/span&gt; &lt;span class='nc'&gt;ImageAttachment&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='n'&gt;models&lt;/span&gt;&lt;span class='o'&gt;.&lt;/span&gt;&lt;span class='n'&gt;Model&lt;/span&gt;&lt;span class='p'&gt;):&lt;/span&gt;
+    &lt;span class='sd'&gt;&amp;quot;&amp;quot;&amp;quot;A tag on an item.&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+    &lt;span class='nb'&gt;file&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='n'&gt;models&lt;/span&gt;&lt;span class='o'&gt;.&lt;/span&gt;&lt;span class='n'&gt;ImageField&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='n'&gt;upload_to&lt;/span&gt;&lt;span class='o'&gt;=&lt;/span&gt;&lt;span class='n'&gt;settings&lt;/span&gt;&lt;span class='o'&gt;.&lt;/span&gt;&lt;span class='n'&gt;IMAGE_UPLOAD_PATH&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt;
+    &lt;span class='n'&gt;thumbnail&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='n'&gt;models&lt;/span&gt;&lt;span class='o'&gt;.&lt;/span&gt;&lt;span class='n'&gt;ImageField&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='n'&gt;upload_to&lt;/span&gt;&lt;span class='o'&gt;=&lt;/span&gt;&lt;span class='n'&gt;settings&lt;/span&gt;&lt;span class='o'&gt;.&lt;/span&gt;&lt;span class='n'&gt;THUMBNAIL_UPLOAD_PATH&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt;
+    &lt;span class='n'&gt;creator&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='n'&gt;models&lt;/span&gt;&lt;span class='o'&gt;.&lt;/span&gt;&lt;span class='n'&gt;ForeignKey&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='n'&gt;User&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='n'&gt;related_name&lt;/span&gt;&lt;span class='o'&gt;=&lt;/span&gt;&lt;span class='s'&gt;&amp;#39;image_attachments&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt;
+    &lt;span class='n'&gt;content_type&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='n'&gt;models&lt;/span&gt;&lt;span class='o'&gt;.&lt;/span&gt;&lt;span class='n'&gt;ForeignKey&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='n'&gt;ContentType&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt;
+    &lt;span class='n'&gt;object_id&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='n'&gt;models&lt;/span&gt;&lt;span class='o'&gt;.&lt;/span&gt;&lt;span class='n'&gt;PositiveIntegerField&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt;
+
+    &lt;span class='n'&gt;content_object&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='n'&gt;generic&lt;/span&gt;&lt;span class='o'&gt;.&lt;/span&gt;&lt;span class='n'&gt;GenericForeignKey&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt;
+
+    &lt;span class='k'&gt;def&lt;/span&gt; &lt;span class='nf'&gt;__unicode__&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='bp'&gt;self&lt;/span&gt;&lt;span class='p'&gt;):&lt;/span&gt;
+        &lt;span class='k'&gt;return&lt;/span&gt; &lt;span class='bp'&gt;self&lt;/span&gt;&lt;span class='o'&gt;.&lt;/span&gt;&lt;span class='n'&gt;file&lt;/span&gt;&lt;span class='o'&gt;.&lt;/span&gt;&lt;span class='n'&gt;name&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;This represents an image attached to a piece of content (using a generic foreign key). Pretty basic stuff. The form is ridiculously simple:&lt;/p&gt;
+
+&lt;h3 id='form'&gt;Form&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href='http://github.com/pcraciunoiu/kitsune/blob/3387483e4f401fc04045180a8caa1e3f141d32ee/apps/upload/forms.py'&gt;apps/upload/forms.py&lt;/a&gt;:&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='python'&gt;&lt;span class='kn'&gt;from&lt;/span&gt; &lt;span class='nn'&gt;django&lt;/span&gt; &lt;span class='kn'&gt;import&lt;/span&gt; &lt;span class='n'&gt;forms&lt;/span&gt;
+
+
+&lt;span class='k'&gt;class&lt;/span&gt; &lt;span class='nc'&gt;ImageUploadForm&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='n'&gt;forms&lt;/span&gt;&lt;span class='o'&gt;.&lt;/span&gt;&lt;span class='n'&gt;Form&lt;/span&gt;&lt;span class='p'&gt;):&lt;/span&gt;
+    &lt;span class='sd'&gt;&amp;quot;&amp;quot;&amp;quot;Image upload form.&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+    &lt;span class='n'&gt;image&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='n'&gt;forms&lt;/span&gt;&lt;span class='o'&gt;.&lt;/span&gt;&lt;span class='n'&gt;ImageField&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;h3 id='view_uploading_image_saving_to_disk'&gt;View (uploading image, saving to disk)&lt;/h3&gt;
+
+&lt;p&gt;The view is a bit more complicated, so I won&amp;#8217;t go into the details. But you can &lt;a href='http://github.com/pcraciunoiu/kitsune/blob/3387483e4f401fc04045180a8caa1e3f141d32ee/apps/upload'&gt;have a look at the entire app&lt;/a&gt; and &lt;a href='#footer'&gt;contact me&lt;/a&gt; if you have questions. Basically, the view does the file upload as you see in &lt;a href='http://docs.djangoproject.com/en/dev/topics/http/file-uploads/'&gt;Django&amp;#8217;s documentation&lt;/a&gt;. The function &lt;a href='http://github.com/pcraciunoiu/kitsune/blob/3387483e4f401fc04045180a8caa1e3f141d32ee/apps/upload/utils.py#L9'&gt;&lt;code&gt;create_image_attachment&lt;/code&gt;&lt;/a&gt; deals with the part about saving a file to disk.&lt;/p&gt;
+
+&lt;h3 id='generating_the_thumbnail_with_pil'&gt;Generating the thumbnail with PIL&lt;/h3&gt;
+
+&lt;p&gt;There is also a task for generating thumbnails, which is offloaded from the web server thread to improve performance. If you don&amp;#8217;t need that, you can just call generate_thumbnail directly, it&amp;#8217;s defined &lt;a href='http://github.com/pcraciunoiu/kitsune/blob/3387483e4f401fc04045180a8caa1e3f141d32ee/apps/upload/tasks.py'&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id='client_side'&gt;Client side&lt;/h2&gt;
+
+&lt;p&gt;Now, the magical JavaScript!&lt;/p&gt;
+
+&lt;p&gt;We&amp;#8217;re using jQuery on &lt;a href='http://support.mozilla.com'&gt;SUMO&lt;/a&gt;, so I wrote two jQuery extensions:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;jQuery.fn.ajaxSubmitInput(options) &amp;#8211; wraps an &lt;code&gt;&amp;lt;input type=&amp;quot;file&amp;quot;&amp;gt;&lt;/code&gt; in a &lt;code&gt;&amp;lt;form&amp;gt;&lt;/code&gt; and creates an &lt;code&gt;&amp;lt;iframe&amp;gt;&lt;/code&gt; to which that form posts. To get around Django&amp;#8217;s csrf protection, it also copies the &lt;code&gt;csrfmiddlewaretoken&lt;/code&gt; hidden input into the form. You can&amp;#8217;t clone a file input for security reasons (nor can you change or access its value), so you need to wrap it in a form.&lt;/li&gt;
+
+&lt;li&gt;jQuery.fn.wrapDeleteInput(options) &amp;#8211; wraps an &lt;code&gt;input&amp;lt;type=&amp;quot;submit&amp;quot;&amp;gt;&lt;/code&gt; in a &lt;code&gt;&amp;lt;form&amp;gt;&lt;/code&gt; and creates an &lt;code&gt;&amp;lt;iframe&amp;gt;&lt;/code&gt; to which that form posts.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;These two pretty much summarize the process:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;when the user changes the value of the file input, post the form&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;show some progress while the file is uploading&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;once the file is done uploading, show a thumbnail of the image&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;also create the delete input and wrap it in the form using &lt;code&gt;wrapDeleteInput()&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;when the user clicks on the delete button, post the action&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;show some progress while the file is being deleted&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id='a_note_about_graceful_degradation'&gt;A note about graceful degradation&lt;/h2&gt;
+
+&lt;p&gt;To degrade gracefully, you want to post the file input to whatever view you&amp;#8217;re including it to. And you can just do something like:&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='python'&gt;&lt;span class='k'&gt;def&lt;/span&gt; &lt;span class='nf'&gt;some_view&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='n'&gt;request&lt;/span&gt;&lt;span class='p'&gt;):&lt;/span&gt;
+    &lt;span class='c'&gt;# ...&lt;/span&gt;
+    &lt;span class='c'&gt;# NOJS: upload image&lt;/span&gt;
+    &lt;span class='k'&gt;if&lt;/span&gt; &lt;span class='s'&gt;&amp;#39;upload_image&amp;#39;&lt;/span&gt; &lt;span class='ow'&gt;in&lt;/span&gt; &lt;span class='n'&gt;request&lt;/span&gt;&lt;span class='o'&gt;.&lt;/span&gt;&lt;span class='n'&gt;POST&lt;/span&gt;&lt;span class='p'&gt;:&lt;/span&gt;
+        &lt;span class='n'&gt;upload_images&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='n'&gt;request&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='n'&gt;obj&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt;
+    &lt;span class='c'&gt;# ...&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Thanks for reading, hope it helps!&lt;/p&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>Full time @ Mozilla, yay!</title>
+   <link href="http://embrangler.com/2010/08/full-time-at-mozilla"/>
+   <updated>2010-08-04T00:00:00-07:00</updated>
+   <id>http://embrangler.com/2010/08/full-time-at-mozilla</id>
+   <content type="html">&lt;p&gt;I&amp;#8217;ve been meaning to blog about this for about a month now! Finally, here it is: I started my full time envolvement with Mozilla on July 12, right after an amazing &lt;a href='https://wiki.mozilla.org/Summit2010'&gt;Summit&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id='whats_it_like'&gt;What&amp;#8217;s it like?&lt;/h2&gt;
+
+&lt;p&gt;First of all I must say that working &lt;a href='http://mozilla.com'&gt;here&lt;/a&gt; is amazing. It&amp;#8217;s more than just the things we do here &amp;#8211; web browser, mail client, lots of websites and serious community engagement (and many many other things, some of which you can read about on &lt;a href='http://planet.mozilla.org'&gt;planet&lt;/a&gt;, &lt;a href='http://spreadfirefox.com'&gt;spread firefox&lt;/a&gt;, or &lt;a href='http://mozilla.org'&gt;mozilla.org&lt;/a&gt;). It&amp;#8217;s about the spirit of Mozilla. It goes hand in hand with our &lt;a href='http://www.mozilla.org/about/manifesto'&gt;manifesto&lt;/a&gt; &amp;#8211; our mission is to help make a better internet for everyone (&lt;a href='http://john.jubjubs.net/2009/10/19/open-letter-supporting-proposed-net-neutrality/'&gt;e.g.&lt;/a&gt;). To strangers of the Mozilla culture, that may sound like a catchy advertisement, but those who have been in contact with the Mozilla community know the dedication and excitement that drives us, to help drive toward a world in which it&amp;#8217;s all about real people being able to have and create the world that they want, privately, securely, freely.&lt;/p&gt;
+
+&lt;p&gt;As a side note, one of the things a lot of people don&amp;#8217;t know about Mozilla is that it&amp;#8217;s a non profit. Yes, that&amp;#8217;s right. And we&amp;#8217;re &lt;a href='http://blog.lizardwrangler.com/2010/05/10/heartfelt-moment-of-the-week/'&gt;open&lt;/a&gt; and &lt;a href='http://www.mozilla.com/en-US/about/careers.html'&gt;always looking for help&lt;/a&gt; :)&lt;/p&gt;
+
+&lt;h2 id='what_changed'&gt;What changed?&lt;/h2&gt;
+
+&lt;p&gt;I&amp;#8217;d been contracting for Mozilla for the past 2 years, while in college. Working full time is better in many ways, but here are just some that have made a difference for me:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;I graduated &lt;a href='http://ucsc.edu'&gt;UCSC&lt;/a&gt;, woot! (still waiting for that official diploma, though!)&lt;/li&gt;
+
+&lt;li&gt;More focus. Having just one job to focus on, as opposed to other side things that come along with contracting&lt;/li&gt;
+
+&lt;li&gt;Oficially, more responsibility and say in decisions, always a good thing!&lt;/li&gt;
+
+&lt;li&gt;And a phone line (which I don&amp;#8217;t use, but it makes me feel important!)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;I was never a volunteer, but I was an intern &amp;#8211; that&amp;#8217;s how I started. I had no idea that I was going to enjoy working here so much. Really, though, it doesn&amp;#8217;t feel like work.&lt;/p&gt;
+
+&lt;h2 id='whats_in_store_for_me_and_for_you'&gt;What&amp;#8217;s in store for me (and for you)?&lt;/h2&gt;
+
+&lt;p&gt;Mostly, &lt;a href='http://support.mozilla.com'&gt;SUMO&lt;/a&gt;. Some things I&amp;#8217;m helping with, past and future:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;migrating legacy data (which I&amp;#8217;ll blog about)&lt;/li&gt;
+
+&lt;li&gt;a very smooth process for uploading images, with awesome UX thanks to &lt;a href='http://howsehold.org/'&gt;chowse&lt;/a&gt; (blog about that too)&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='http://github.com/endtwist/inko'&gt;a live chat system based on node.js&lt;/a&gt; (you guessed! blog post coming)&lt;/li&gt;
+
+&lt;li&gt;Getting a Knowledge Base in Django, with &lt;a href='https://wiki.mozilla.org/Support/Kitsune/KB'&gt;cool Wiki and non-Wiki features&lt;/a&gt; (see also &lt;a href='https://wiki.mozilla.org/Support/Kitsune/KB/Priorities'&gt;this&lt;/a&gt;).&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id='the_end'&gt;The end&lt;/h2&gt;
+
+&lt;p&gt;Thank you, Mozilla, for being so awesome! I&amp;#8217;m glad to have the fortune of working here.&lt;/p&gt;
+
+&lt;p&gt;If you would like to know more about Mozilla, web development (here and in general), and what I do here, don&amp;#8217;t hesitate to ask.&lt;/p&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>May 17-21 status</title>
+   <link href="http://embrangler.com/2010/05/weekly-update-may-17-21"/>
+   <updated>2010-05-26T00:00:00-07:00</updated>
+   <id>http://embrangler.com/2010/05/weekly-update-may-17-21</id>
+   <content type="html">&lt;h2 id='last_week_may_37'&gt;Last week (May 3-7)&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;a few reviews&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=564101'&gt;activate admin in forums app&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=561523'&gt;implement ACL&lt;/a&gt; after serious research&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=566907'&gt;migrate user passwords from Tiki on login&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=567291'&gt;migrate users and discussion-forum related groups from Tiki&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;assist IT with &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=567409'&gt;Friday Pac Man issues&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;help out new team members, lots of discussion&lt;/li&gt;
+
+&lt;li&gt;started work on &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=566110'&gt;forms validation and error messages&lt;/a&gt; and adding a &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=567474'&gt;403 handler&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id='this_week_may_1721'&gt;This week (May 17-21)&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;posting this late, so I&amp;#8217;ve already reviewed &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=564912'&gt;some&lt;/a&gt; &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=568067'&gt;bugs&lt;/a&gt; from James&lt;/li&gt;
+
+&lt;li&gt;finish 403 handler, form validation and &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=562188'&gt;sphinx config for discussion forums&lt;/a&gt; as well as &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=562203'&gt;the advanced search UI for it&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;fix up the wiki parser bugs I meant to get to last week: &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=566101'&gt;this&lt;/a&gt; and &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=565801'&gt;this&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;start on some 2.2 bugs&lt;/li&gt;
+&lt;/ul&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>Access control in Django, and django-authority</title>
+   <link href="http://embrangler.com/2010/05/access-control-django"/>
+   <updated>2010-05-22T00:00:00-07:00</updated>
+   <id>http://embrangler.com/2010/05/access-control-django</id>
+   <content type="html">&lt;p&gt;The past week I&amp;#8217;ve been working with Django and permissions. I&amp;#8217;ll talk here about the available options and go into details about the one &lt;a href='https://wiki.mozilla.org/Support/Kitsune'&gt;Kitsune&lt;/a&gt; is using.&lt;/p&gt;
+
+&lt;p&gt;Here are the options I looked at:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href='#djangos_default_permissions'&gt;Django&amp;#8217;s default permissions&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='#amos_access_app'&gt;AMO&amp;#8217;s access app&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='#djangoauthority'&gt;django-authority&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id='djangos_default_permissions'&gt;Django&amp;#8217;s default permissions&lt;/h2&gt;
+
+&lt;p&gt;&lt;em&gt;Read more about this in &lt;a href='http://docs.djangoproject.com/en/dev/topics/auth/'&gt;Django&amp;#8217;s documentation&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Django provides a convenient and easy to use permissions system. The documentation covers it all, so I&amp;#8217;m just going to summarize the pros and cons:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Pros:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Comes with Django (=&amp;gt; robust, well-written and stable)&lt;/li&gt;
+
+&lt;li&gt;Permission functions attached to the user object&lt;/li&gt;
+
+&lt;li&gt;Per-group permissions and per-user permissions&lt;/li&gt;
+
+&lt;li&gt;Model-level (a.k.a. per content_type) permissions (can add custom model-level permissions as well)&lt;/li&gt;
+
+&lt;li&gt;Work with Jinja templates, simply use &lt;code&gt;user.has_perm(&amp;#39;perm_name&amp;#39;)&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Cons:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;No per-object permissions&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id='amos_access_app'&gt;AMO&amp;#8217;s access app&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href='http://github.com/davedash/zamboni/blob/master/docs/topics/acl.rst'&gt;AMO&amp;#8217;s access app&lt;/a&gt; adds some flexibility on assigning permissions with wildcards and also stores the user&amp;#8217;s groups in &lt;code&gt;request.groups&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Pros:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Flexible way to assign all permissions in a certain group&lt;/li&gt;
+
+&lt;li&gt;Does not store permissions in the models &lt;code&gt;Meta&lt;/code&gt; class&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Cons:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Replaces django&amp;#8217;s permission system (either use one or the other)&lt;/li&gt;
+
+&lt;li&gt;No per-object permissions&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;To use this, you can do something like this in your views:&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='python'&gt;&lt;span class='kn'&gt;from&lt;/span&gt; &lt;span class='nn'&gt;access&lt;/span&gt; &lt;span class='kn'&gt;import&lt;/span&gt; &lt;span class='n'&gt;acl&lt;/span&gt;
+
+&lt;span class='c'&gt;# ...&lt;/span&gt;
+
+&lt;span class='k'&gt;def&lt;/span&gt; &lt;span class='nf'&gt;some_view_action&lt;/span&gt;&lt;span class='p'&gt;():&lt;/span&gt;
+    &lt;span class='n'&gt;acl&lt;/span&gt;&lt;span class='o'&gt;.&lt;/span&gt;&lt;span class='n'&gt;action_allowed&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='n'&gt;request&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='s'&gt;&amp;#39;Group&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='s'&gt;&amp;#39;PermissionName&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;h2 id='djangoauthority'&gt;django-authority&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href='http://packages.python.org/django-authority/'&gt;django-authority&lt;/a&gt; was the most promising of the three. It adds per-object permissions and wraps Django&amp;#8217;s default permissions system without forcing an either-or choice. It also has a decent documentation, and although still in draft at the time of this writing, it was enough for me to figure out how to use.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Pros:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Per-object permissions&lt;/li&gt;
+
+&lt;li&gt;Wraps Django&amp;#8217;s default permissions system, so you can use both&lt;/li&gt;
+
+&lt;li&gt;Custom permissions&lt;/li&gt;
+
+&lt;li&gt;Add permissions to &lt;code&gt;appname/permissions.py&lt;/code&gt;, so they are completely separate from the models (unlike Django&amp;#8217;s permissions)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Cons:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Needs a bit of work to hook in with &lt;a href='http://jinja.pocoo.org/2/documentation'&gt;Jinja&lt;/a&gt; templates&lt;/li&gt;
+
+&lt;li&gt;Admin functionality not yet complete - the admin form &lt;a href='http://packages.python.org/django-authority/handling_admin.html'&gt;generated by the &lt;code&gt;edit_permissions&lt;/code&gt;&lt;/a&gt; &lt;a href='http://docs.djangoproject.com/en/dev/ref/contrib/admin/actions/'&gt;admin action&lt;/a&gt; does not work at the time of this writing. The alternative is not too bad however, you can manually add to the Permission model using that model&amp;#8217;s admin.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id='djangoauthority_on_kitsune'&gt;django-authority on Kitsune&lt;/h3&gt;
+
+&lt;p&gt;We are currently focused on rewriting SUMO&amp;#8217;s discussion forums. For Kitsune, we have multiple forums and we wanted the ability to have different forum moderators per forum. We&amp;#8217;re also using Jinja. django-authority comes with default Django template support, so if you&amp;#8217;re using that, you don&amp;#8217;t need to write your own template functions/filters.&lt;/p&gt;
+
+&lt;p&gt;For Jinja support, just add this to some app&amp;#8217;s helpers.py&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='python'&gt;&lt;span class='kn'&gt;import&lt;/span&gt; &lt;span class='nn'&gt;jinja2&lt;/span&gt;
+&lt;span class='kn'&gt;from&lt;/span&gt; &lt;span class='nn'&gt;jingo&lt;/span&gt; &lt;span class='kn'&gt;import&lt;/span&gt; &lt;span class='n'&gt;register&lt;/span&gt;
+&lt;span class='kn'&gt;import&lt;/span&gt; &lt;span class='nn'&gt;authority&lt;/span&gt;
+
+&lt;span class='c'&gt;# ...&lt;/span&gt;
+
+&lt;span class='nd'&gt;@register.function&lt;/span&gt;
+&lt;span class='nd'&gt;@jinja2.contextfunction&lt;/span&gt;
+&lt;span class='k'&gt;def&lt;/span&gt; &lt;span class='nf'&gt;has_perm&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='n'&gt;context&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='n'&gt;perm&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='n'&gt;obj&lt;/span&gt;&lt;span class='p'&gt;):&lt;/span&gt;
+    &lt;span class='sd'&gt;&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+&lt;span class='sd'&gt;    Check if the user has a permission on a specific object.&lt;/span&gt;
+
+&lt;span class='sd'&gt;    Returns boolean.&lt;/span&gt;
+&lt;span class='sd'&gt;    &amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+    &lt;span class='n'&gt;check&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='n'&gt;authority&lt;/span&gt;&lt;span class='o'&gt;.&lt;/span&gt;&lt;span class='n'&gt;get_check&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='n'&gt;context&lt;/span&gt;&lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='s'&gt;&amp;#39;request&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;]&lt;/span&gt;&lt;span class='o'&gt;.&lt;/span&gt;&lt;span class='n'&gt;user&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='n'&gt;perm&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt;
+    &lt;span class='k'&gt;return&lt;/span&gt; &lt;span class='n'&gt;check&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='n'&gt;obj&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Then, in your templates, you can just use:&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='jinja'&gt;&lt;span class='x'&gt;[% if has_perm(&amp;#39;perm_cls.codename_model&amp;#39;, object) %]&lt;/span&gt;
+&lt;span class='x'&gt;  &lt;/span&gt;&lt;span class='c'&gt;{# grats, you&amp;#39;ve got the perms! #}&lt;/span&gt;&lt;span class='x' /&gt;
+&lt;span class='x'&gt;[% endif %]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;(Couldn&amp;#8217;t figure out how to escape braces in jekyll, so you&amp;#8217;ll need to replace the square brackets above.)&lt;/p&gt;
+
+&lt;p&gt;See &lt;a href='http://packages.python.org/django-authority/create_per_object_permission.html'&gt;this link&lt;/a&gt; for more information on the &lt;code&gt;perm_cls&lt;/code&gt; and &lt;code&gt;codename&lt;/code&gt; variables.&lt;/p&gt;
+
+&lt;p&gt;If you&amp;#8217;re interested, here&amp;#8217;s the &lt;a href='http://github.com/pcraciunoiu/kitsune/commit/f2f256b5e70ef3c89cda95dde29823ae48e057bb'&gt;Kitsune code&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Hope that helps others who may decide to go this route. Questions and suggestions for improvement are always welcome, of course.&lt;/p&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>May 3-14 status</title>
+   <link href="http://embrangler.com/2010/05/weekly-update-may-10-14"/>
+   <updated>2010-05-19T00:00:00-07:00</updated>
+   <id>http://embrangler.com/2010/05/weekly-update-may-10-14</id>
+   <content type="html">&lt;h2 id='two_weeks_ago_may_37'&gt;Two weeks ago (May 3-7)&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;pushed 2.0/1.5.4 with rest of SUMOdev&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;first time had problems with nfs mounts&lt;/li&gt;
+
+&lt;li&gt;second time was a success, yay!&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;r?d &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=561537'&gt;nicer 404/500 handlers&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;r?d &lt;a href='http://github.com/jsocol/kitsune/commit/dbfc4488fc8df9d1f7a07fe3c6d1ecbc17752441'&gt;new wsgi script&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;r?d &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=563995'&gt;rewrite for discussion forums&lt;/a&gt;, which also cleaned up some of the search rewrites from previous push&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;r?d &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=563593'&gt;posting should update # of replies&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=563111'&gt;threads list view&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id='last_week_may_1014'&gt;Last week (May 10-14)&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;r?d preliminary work on &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=565362'&gt;atom feeds&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=563586'&gt;forums list view&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=561524'&gt;wiki markup in discussion forums&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;filed some &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=565801'&gt;new&lt;/a&gt; &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=565481'&gt;bugs&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;added some &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=565320'&gt;omitted indexes&lt;/a&gt; to tiki&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=565701'&gt;re-sync db&lt;/a&gt;, to test the SQL fix from above, also had IT &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=565810'&gt;run schematic&lt;/a&gt; and set up test forum&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=558499'&gt;remove omniture tags from tiki&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=564385'&gt;fix crc32 not working with unicode&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;discussion with &lt;a href='http://spindrop.us/'&gt;Dave Dash&lt;/a&gt; about &lt;a href='http://github.com/davedash/zamboni/blob/master/docs/topics/acl.rst'&gt;ACL&lt;/a&gt; on &lt;a href='https://addons.mozilla.org/en-US/firefox/'&gt;AMO&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id='this_week_may_1721'&gt;This week (May 17-21)&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=561523'&gt;implement ACL&lt;/a&gt; after serious research&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=564101'&gt;activate admin in forums app&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;help out new team members&lt;/li&gt;
+
+&lt;li&gt;fix up &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=565801'&gt;some&lt;/a&gt; &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=566102'&gt;of the&lt;/a&gt; wiki parser bugs&lt;/li&gt;
+&lt;/ul&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>April 26-30 status</title>
+   <link href="http://embrangler.com/2010/05/weekly-update-apr-26-30"/>
+   <updated>2010-05-03T00:00:00-07:00</updated>
+   <id>http://embrangler.com/2010/05/weekly-update-apr-26-30</id>
+   <content type="html">&lt;h2 id='last_week_april_2630'&gt;Last week (April 26-30)&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;awesome webdev onsite&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;learned about localization, the mass of krill, and cooking indian food, among other things&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;kitsune&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;r?d &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=561487'&gt;use bleach to clean up sphinx results&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;r?d &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=561931'&gt;remove didyoumean&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;r?d &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=560702'&gt;htaccess fix for trailing slash in search url&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;finish up &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=561266'&gt;minor&lt;/a&gt; &lt;a href=''&gt;bugs&lt;/a&gt; for &lt;a href='https://bugzilla.mozilla.org/buglist.cgi?quicksearch=OPEN+product%3Asupport+milestone%3A2.0'&gt;2.0&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=562259'&gt;some&lt;/a&gt; &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=561522'&gt;work&lt;/a&gt; on &lt;a href='https://bugzilla.mozilla.org/buglist.cgi?field1-0-0=target_milestone&amp;amp;target_milestone=2.1&amp;amp;product=support.mozilla.com'&gt;2.1 bugs&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;started &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=562217'&gt;converting the staging database to UTF8 with outage page&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=562259'&gt;remove YUI dependency from kitsune&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=558105'&gt;add WebTrends tracking&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;investigating &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=561124'&gt;missing excerpts&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;tiki&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;r?d &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=556672'&gt;using kitsune for search&lt;/a&gt; on &lt;a href='http://support-stage-new.mozilla.com/'&gt;stage-new&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;verified &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=560759'&gt;duplicates have been renamed on prod&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=66514'&gt;add a few locales&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=561857'&gt;searching from tiki remembers locale&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=554781'&gt;screencast bug&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=558105'&gt;add WebTrends tracking&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id='this_week_may_37'&gt;This week (May 3-7)&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;kitsune&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;pick up &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=563586'&gt;some&lt;/a&gt; &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=563577'&gt;of&lt;/a&gt; &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=563578'&gt;the bugs&lt;/a&gt; &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=563581'&gt;filed by&lt;/a&gt; James&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;push 2.0/1.5.4 with rest of SUMOdev&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;in particular: ensure UTF8 conversion of database goes well&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;team goal: handle all anonymous-access forums actions and views&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>April 19-25 status</title>
+   <link href="http://embrangler.com/2010/04/weekly-update-apr-19-25"/>
+   <updated>2010-04-25T00:00:00-07:00</updated>
+   <id>http://embrangler.com/2010/04/weekly-update-apr-19-25</id>
+   <content type="html">&lt;h2 id='last_week_april_1925'&gt;Last week (April 19-25)&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;kitsune&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;r?d &lt;a href='http://github.com/jsocol/kitsune/commit/03b9b540b96968dda4bffacb0f6abdee351e9b12'&gt;adding sumo-dev to receive useful stack traces from kitsune&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;r?d &lt;a href='http://github.com/jsocol/kitsune/commit/a5ceb6974a03a8f0487c58a56baf9ed88c1a3701'&gt;improved maintenance of locales&lt;/a&gt;, go James!&lt;/li&gt;
+
+&lt;li&gt;r?d &lt;a href='http://github.com/jsocol/kitsune/commit/79847afa23ee9a3ff3200949824463e6d50e9bf2'&gt;kitsune documentation&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;r?d &lt;a href='http://github.com/jsocol/kitsune/commit/97fe787bae6592360e7603dc6440b4db729126de'&gt;better handling of timeouts for excerpts&lt;/a&gt; and &lt;a href='http://github.com/jsocol/kitsune/commit/29d2134f6d0d5ca22e0bbdcf6832c21aea9ee00a'&gt;merged&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;r?d &lt;a href='http://github.com/jsocol/kitsune/commit/32be0335fd22876379e9716e0df88ffc953fc151'&gt;unicode improvements, adding sumo.utils.urlencode&lt;/a&gt; and &lt;a href='http://github.com/jsocol/kitsune/commit/633d0166c9bf65fc35886ad05c038f5f74058448'&gt;merged&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;r?d &lt;a href='http://github.com/jsocol/kitsune/commit/23f586b285d3c63b842dd643623ce2491f1a3b87'&gt;fixing an IE6/7 bug&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;r?d &lt;a href='http://github.com/jsocol/kitsune/commit/e9aa5d2f87e163917ad339c0d6c06fc0b58625c2'&gt;case insensitive Accept-Language for Opera, Chrome, Safari&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;r?d &lt;a href='http://github.com/jsocol/kitsune/commit/4464b2033a4c5ce079034dabdafed808e0bcfc51'&gt;adding a search plugin&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='http://github.com/jsocol/kitsune/commit/633d0166c9bf65fc35886ad05c038f5f74058448'&gt;fix pagination on IE6&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='http://github.com/jsocol/kitsune/commit/b2563c4dffcf2515d23f7f861600fc01cb0578da'&gt;adding two new supported locales&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;finished &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=555251'&gt;lots of tests for search filters and JSON for all&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;finished &lt;a href='https://bugzilla.mozilla.org/buglist.cgi?quicksearch=ALL+product%3Asupport+milestone%3A2.0'&gt;the remaining 2.0 bugs&lt;/a&gt; with the rest of the SUMOdev team&lt;/li&gt;
+
+&lt;li&gt;installed mod_wsgi locally with help of &lt;a href='http://github.com/jsocol/kitsune/blob/development/docs/wsgi.rst'&gt;James&amp;#8217; docs&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;assisted with IT bugs to &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=559997'&gt;convert the database to UTF8&lt;/a&gt; according to &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=554210'&gt;this bug&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=559109'&gt;debugging server issues for kitsune stage&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;begin work on milestone 2.1&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;tiki&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;r?d &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=556672'&gt;using kitsune for search&lt;/a&gt; on &lt;a href='http://support-stage-new.mozilla.com/'&gt;stage-new&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;filed patch for &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=558105'&gt;adding WebTrends to SUMO for tracking&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;revert &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=558828'&gt;a notifications bug for articles&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=519927'&gt;add .htaccess rewrites for Fx3.7 help topic: keyboard shortcuts&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=554781'&gt;debugging screencast bug on mobile&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id='this_week_april_2630'&gt;This week (April 26-30)&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;WebDev onsite! Excited to hang out with the team.&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;kitsune&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;work on &lt;a href='https://bugzilla.mozilla.org/buglist.cgi?type1-0-0=substring&amp;amp;query_format=advanced&amp;amp;field0-0-0=product&amp;amp;value1-0-0=2.1&amp;amp;type0-0-0=substring&amp;amp;value0-0-0=support&amp;amp;field1-0-0=target_milestone&amp;amp;target_milestone=2.1&amp;amp;product=support.mozilla.com'&gt;forums and other 2.1 stuff&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;prepare for kitsune push, potential QA bugs&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;tiki&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;prepare for 1.5.4 push, potential QA bugs&lt;/li&gt;
+
+&lt;li&gt;figure out &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=554781'&gt;screencast bug&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>April 12-16 status</title>
+   <link href="http://embrangler.com/2010/04/weekly-update-apr-12-16"/>
+   <updated>2010-04-16T00:00:00-07:00</updated>
+   <id>http://embrangler.com/2010/04/weekly-update-apr-12-16</id>
+   <content type="html">&lt;h2 id='last_week_april_1216'&gt;Last week (April 12-16)&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;kitsune&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;r? &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=558228'&gt;cool vim indenting in templates&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;r? &lt;a href='http://github.com/jsocol/kitsune/commits/bug-550515'&gt;minify bug 550515&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;finish &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=554210'&gt;converting our current database from latin1 to utf8&lt;/a&gt; after lots of painful dealing with data&lt;/li&gt;
+
+&lt;li&gt;fix &lt;a href='http://github.com/pcraciunoiu/kitsune/commits/bug-555249'&gt;advanced search form logic&lt;/a&gt;, deals with default values, validation, cleanup. fixes &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=559086'&gt;a few&lt;/a&gt; &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=559249'&gt;other&lt;/a&gt; &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=559117'&gt;bugs&lt;/a&gt; in the process&lt;/li&gt;
+
+&lt;li&gt;fix &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=555251'&gt;json results and add lots of tests&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;fix &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=558941'&gt;search results sorting&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;IT bugs to &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=559645'&gt;truncate a table&lt;/a&gt;, &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=559717'&gt;sync stage db with prod&lt;/a&gt; and &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=559997'&gt;convert the database to UTF8&lt;/a&gt; according to &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=554210'&gt;this bug&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;tiki&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=553131'&gt;session fixes&lt;/a&gt; required for kitsune integration &lt;a href='https://bug553131.bugzilla.mozilla.org/attachment.cgi?id=439362'&gt;filed&lt;/a&gt; and &lt;a href='https://bug553131.bugzilla.mozilla.org/attachment.cgi?id=438241'&gt;reviewed&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;fix and review some security vulnerabilities on mobile&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id='this_week_april_1923'&gt;This week (April 19-23)&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;kitsune&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;finish &lt;a href='https://bugzilla.mozilla.org/buglist.cgi?quicksearch=OPEN+product%3Asupport+milestone%3A2.0'&gt;the remaining kitsune bugs&lt;/a&gt; with the rest of the SUMOdev team&lt;/li&gt;
+
+&lt;li&gt;finish &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=559997'&gt;UTF conversion of the database&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;prepare for kitsune push, potential QA bugs&lt;/li&gt;
+
+&lt;li&gt;begin work on discussion forums &amp;#8211; milestone 2.1&lt;/li&gt;
+
+&lt;li&gt;install mod_wsgi and run tiki in parallel with kitsune locally&lt;/li&gt;
+
+&lt;li&gt;discuss/learn more about Test Driven Development&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;tiki&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;finish &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=558105'&gt;adding WebTrends to SUMO for tracking&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>April 5-9 status</title>
+   <link href="http://embrangler.com/2010/04/weekly-update-apr-5-9"/>
+   <updated>2010-04-11T00:00:00-07:00</updated>
+   <id>http://embrangler.com/2010/04/weekly-update-apr-5-9</id>
+   <content type="html">&lt;h2 id='last_week_april_59'&gt;Last week (April 5-9)&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;kitsune&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;r? &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=554740'&gt;exclude staging articles from search&lt;/a&gt;, which also includes &lt;a href='http://github.com/jsocol/kitsune/commit/ef50d5fcd64f65f89ff688874f3fa920f69ff216'&gt;sphinx tests&lt;/a&gt;, reviewed again later after &lt;a href='http://github.com/jsocol/kitsune/commit/c2a1356e084a68de17f20376ad051c918ecfd172'&gt;a fix to not require FORCE_DB&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;r? &lt;a href='http://github.com/jsocol/kitsune/commit/dbdb116aecda1332c932e278786dba2719c71d09'&gt;l10n -&amp;gt; tower rename&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;r? &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=556810'&gt;add JINJA_CONFIG() for string extraction and caching&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;quick look at &lt;a href='http://github.com/jsocol/kitsune/commit/f159b8f25ea78c38cc7e60fae6004ccb5e1273c6'&gt;minify in kitsune&lt;/a&gt;, TODO next week&lt;/li&gt;
+
+&lt;li&gt;fixed &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=556418'&gt;duplicate page param in paginator URL&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;spent most of the week &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=554210'&gt;converting our current database from latin1 to utf8&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;tiki&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;started work on &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=558105'&gt;adding WebTrends to SUMO for tracking&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=555003'&gt;push desktop 1.5.3 on Tuesday&lt;/a&gt; &amp;#8212; &lt;a href='https://bugzilla.mozilla.org/buglist.cgi?quicksearch=ALL+product%3Asupport+milestone%3A1.5.3'&gt;see bugs&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id='this_week_april_1216'&gt;This week (April 12-16)&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;kitsune&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;r? &lt;a href='http://github.com/jsocol/kitsune/commits/bug-550515'&gt;minify bug 550515&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;r? &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=553131'&gt;tiki patch for django sessions&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;r? &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=558228'&gt;cool vim indenting in templates&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;strong&gt;finish up &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=554210'&gt;character encoding conversion&lt;/a&gt;&lt;/strong&gt;&lt;/li&gt;
+
+&lt;li&gt;finish up &lt;a href='http://github.com/pcraciunoiu/kitsune/commits/bug-555249'&gt;when to trigger advanced search&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;finish getting sessions into kitsune, i.e. fix any issues spotted by davedash/jbalogh/jsocol on &lt;a href='http://github.com/pcraciunoiu/kitsune/tree/bug-553131'&gt;bug 553131&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;tiki&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;finish &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=558105'&gt;adding WebTrends to SUMO for tracking&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id='stretch_goals'&gt;Stretch goals&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=553734'&gt;search summaries are Jinja-friendly&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>My SUMO local development environment</title>
+   <link href="http://embrangler.com/2010/01/my-sumo-local-development-environment"/>
+   <updated>2010-01-04T00:00:00-08:00</updated>
+   <id>http://embrangler.com/2010/01/my-sumo-local-development-environment</id>
+   <content type="html">&lt;h2 id='summary'&gt;Summary&lt;/h2&gt;
+
+&lt;p&gt;A while back, James wrote about &lt;a href='http://coffeeonthekeyboard.com/local-web-development-323/' title='James&amp;apos; local development environment'&gt;his development environment&lt;/a&gt;. I wanted to summarize my approach, and go into a bit more detail about the specific setup you would need to have SUMO work locally. For more information, see also &lt;a href='http://https://wiki.mozilla.org/Support:Sumodev#Get_Involved'&gt;this wiki page&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id='my_lde_ubuntu_linux'&gt;My LDE: Ubuntu Linux&lt;/h2&gt;
+
+&lt;p&gt;My &lt;abbr title='local development environment'&gt;LDE&lt;/abbr&gt; is slightly different: I dual boot Windows 7 and Kubuntu 9.10. As of now I&amp;#8217;m still a student, and I work on my own machine. There are several reasons I find dual booting a great solution:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Best performance&lt;/strong&gt; while developing. Although less and less of an issue, being in the native &lt;abbr title='Operating System'&gt;OS&lt;/abbr&gt; is always be faster than running a &lt;abbr title='Virtual Machine'&gt;VM&lt;/abbr&gt;.&lt;/li&gt;
+
+&lt;li&gt;A &lt;strong&gt;full powered OS&lt;/strong&gt; that I can use for other work. I do schoolwork and other contracting work, and sometimes Windows is not an option. Even a VM has its limitations when it comes to certain drivers (one example is audio &amp;#8211; which I needed for a &lt;a href='http://code.google.com/p/music-visualizer-cs160/' title='Music Visualizer for CMPS160'&gt;graphics project&lt;/a&gt;)&lt;/li&gt;
+
+&lt;li&gt;Keeps my &lt;strong&gt;work and pleasure separate&lt;/strong&gt; &amp;#8211; having dual boot is basically like having two machines. Typically, when I&amp;#8217;m in Linux, I do work, otherwise I&amp;#8217;m in Windows to do personal things.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The only downside is some additional wait time for rebooting if you need to switch to the other OS. Since I work on Linux only, I rarely need to switch while working. However, everything works fine for me on Linux &amp;#8211; sound, video, even webcam and VPN (will blog later about all of these).&lt;/p&gt;
+
+&lt;h2 id='lamp'&gt;LAMP&lt;/h2&gt;
+
+&lt;p&gt;For web development in general, you&amp;#8217;ll need to have the &lt;a href='http://en.wikipedia.org/wiki/LAMP_%28software_bundle%29'&gt;LAMP stack&lt;/a&gt; installed. Fortunately, Ubuntu provides an easy way to do this in one line. From a terminal, run:&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='bash'&gt;sudo tasksel
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Select &lt;em&gt;LAMP server&lt;/em&gt; from the list, and choose OK (TAB + ENTER). Follow the steps to choose a MySQL password and any other configuration there may be. Once that&amp;#8217;s done, you should be able to go to &lt;code&gt;http://localhost&lt;/code&gt; and see the &amp;#8220;It works!&amp;#8221; text. Here are some useful paths:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Web root: &lt;code&gt;/var/www/&lt;/code&gt;&lt;/li&gt;
+
+&lt;li&gt;Hosts file: &lt;code&gt;/etc/hosts&lt;/code&gt;&lt;/li&gt;
+
+&lt;li&gt;Apache sites: &lt;code&gt;/etc/apache2/sites-available/&lt;/code&gt; and &lt;code&gt;/etc/apache2/sites-enabled/&lt;/code&gt;&lt;/li&gt;
+
+&lt;li&gt;PHP ini: &lt;code&gt;/etc/php5/apache2/php.ini&lt;/code&gt;&lt;/li&gt;
+
+&lt;li&gt;MySQL ini: &lt;code&gt;/etc/php5/conf.d/mysql.ini&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id='sumo_setup'&gt;SUMO setup&lt;/h2&gt;
+
+&lt;p&gt;What you&amp;#8217;ll need:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;LAMP stack &amp;#8211; see &lt;a href='#lamp'&gt;above&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;A host (optional) &amp;#8211; see &lt;a href='#host'&gt;below&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;SSL &amp;#8211; see &lt;a href='http://www.tc.umn.edu/~brams006/selfsign_ubuntu.html'&gt;this guide&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;Sphinx &amp;#8211; see &lt;a href='https://wiki.mozilla.org/Support/Sphinx_Installation' title='installing Sphinx'&gt;this guide&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;Memcached &amp;#8211; I just install the package and that&amp;#8217;s enough: &lt;code&gt;sudo apt-get install memcached php5-memcache&lt;/code&gt;&lt;/li&gt;
+
+&lt;li&gt;Virtualbox (optional) &amp;#8211; for testing: &lt;code&gt;sudo apt-get install virtualbox&lt;/code&gt;&lt;/li&gt;
+
+&lt;li&gt;A copy of our database &amp;#8211; you may ask James, Laura or myself for this &amp;#8211; &lt;a href='#help'&gt;see how, below&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;SVN &amp;#8211; &lt;code&gt;sudo apt-get install subversion&lt;/code&gt;&lt;/li&gt;
+
+&lt;li&gt;Checking out and configuring the SUMO codebase &amp;#8211; &lt;a href='https://wiki.mozilla.org/Support/SUMO_install_process' title='checking out and configuring SUMO'&gt;see this guide&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;span id='host'&gt;To set up a SUMO host, I add the entry for it in `/etc/hosts`. Here is the top of my file:&lt;/span&gt;&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='bash'&gt;127.0.0.1   localhost
+127.0.1.2   sumo
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Then, add the site info to apache. Here&amp;#8217;s my complete conf file (with SSL), in &lt;code&gt;/etc/apache2/sites-available/sumo&lt;/code&gt;:&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='bash'&gt;&amp;lt;VirtualHost 127.0.1.2:80&amp;gt;
+    ServerAdmin webmaster@sumo
+    ServerName sumo
+    ServerAlias sumo
+    DocumentRoot /var/www/trunk/webroot
+    &amp;lt;Directory /var/www/trunk/webroot&amp;gt;
+        Options Indexes FollowSymLinks MultiViews
+        AllowOverride All
+        Order allow,deny
+        allow from all
+    &amp;lt;/Directory&amp;gt;
+&amp;lt;/VirtualHost&amp;gt;
+
+&amp;lt;IfModule mod_ssl.c&amp;gt;
+&amp;lt;VirtualHost _default_:443&amp;gt;
+
+    ServerAdmin webmaster@sumo
+    ServerName sumo
+    ServerAlias sumo
+    DocumentRoot /var/www/trunk/webroot
+    &amp;lt;Directory /var/www/trunk/webroot&amp;gt;
+        Options Indexes FollowSymLinks MultiViews
+        AllowOverride All
+        Order allow,deny
+        allow from all
+    &amp;lt;/Directory&amp;gt;
+    SSLEngine on
+    SSLCertificateFile /etc/apache2/ssl/apache.pem
+&amp;lt;/VirtualHost&amp;gt;
+&amp;lt;/IfModule&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;To enable the site, just do this:&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='bash'&gt;&lt;span class='nb'&gt;cd&lt;/span&gt; /etc/apache2/sites-enabled
+sudo ln -s ../sites-available/sumo
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Then, restart apache:&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='bash'&gt;sudo /etc/init.d/apache2 restart
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;h2 id='testing'&gt;Testing&lt;/h2&gt;
+
+&lt;p&gt;For testing, I also use a VM in VirtualBox, running WinXP with multiple IEs. I chose WinXP to save space &amp;#8211; only takes up 3GB. You should allow 4GB just in case you want to install more stuff. Using multiple IEs is not the best, as &lt;a href='http://www.quirksmode.org/css/condcom.html'&gt;quirksmode points out&lt;/a&gt;, so you may consider running a VM for each IE version you wish to test. However, I haven&amp;#8217;t experienced that many problems. On WinXP I&amp;#8217;ve also installed Firefox (of course), Chrome, and Opera. On Ubuntu I just use the defaults: Firefox and Konqueror (since I&amp;#8217;m running Kubuntu).&lt;/p&gt;
+
+&lt;h2 id='help'&gt;Help?&lt;/h2&gt;
+
+&lt;p&gt;I&amp;#8217;ve tried to cover everything, but of course there may be stuff I missed. If you need additional info, you may leave a comment. To obtain a copy of our database, you can find &lt;a href='https://wiki.mozilla.org/Support:Sumodev#Get_Involved'&gt;us on IRC or contact us by email&lt;/a&gt;.&lt;/p&gt;</content>
+ </entry>
+ 
+
+</feed>

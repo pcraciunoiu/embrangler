@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+ <title>Disembrangling Programming</title>
+ <link href="http://embrangler.com/tag/dual-boot/atom.xml" rel="self"/>
+ <link href="http://embrangler.com/tag/dual-boot"/>
+ <updated>2010-08-25T22:00:14-07:00</updated>
+ <id>http://embrangler.com/</id>
+ <author>
+   <name>Paul Craciunoiu</name>
+   <email>paul@craciunoiu.net</email>
+ </author>
+
+ 
+ <entry>
+   <title>Upgrading Windows Vista or 7RC to Windows 7 on dual boot with Linux (Ubuntu)</title>
+   <link href="http://embrangler.com/2010/02/upgrading-windows-vista-or-7rc-to-windows-7-on-dual-boot-with-linux-ubuntu"/>
+   <updated>2010-02-27T00:00:00-08:00</updated>
+   <id>http://embrangler.com/2010/02/upgrading-windows-vista-or-7rc-to-windows-7-on-dual-boot-with-linux-ubuntu</id>
+   <content type="html">&lt;p&gt;As you may or may not know, the Windows 7 RC/beta/other releases expire at the latest on March 1st, 2 days from now. So I had to spend some time this weekend upgrading to a full Windows 7. Fortunately, my school offers Windows 7 Professional for free if you&amp;#8217;re an engineering student (so we &lt;em&gt;do&lt;/em&gt; get special treatment, aw!).&lt;/p&gt;
+
+&lt;p&gt;Anyway, if you&amp;#8217;re like me, you&amp;#8217;re dual booting Windows + Linux, and you have to reinstall Windows, you were probably using GRUB to boot into your &lt;abbr title='Operating System'&gt;OS&lt;/abbr&gt;. Well, as it turns out, reinstalling Windows wipes out GRUB from the boot record. Oh no! What to do?&lt;/p&gt;
+
+&lt;p&gt;Fortunately, the solution is simple. I searched for &amp;#8220;restore grub&amp;#8221; and found &lt;a href='http://ubuntuforums.org/showthread.php?t=1195275'&gt;this excellent guide&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;The summary:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Get a &lt;a href='http://ubuntu.com'&gt;Ubuntu&lt;/a&gt; Live CD and boot from it.&amp;lt;/li&amp;gt;&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Then run these in your terminal:&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='bash'&gt;    sudo -i
+ 
+ &lt;span class='c'&gt;# get a list of your partitions in /dev/sdX format&lt;/span&gt;
+ fdisk -l
+ 
+ &lt;span class='c'&gt;# if you can&amp;#39;t decide which one is your linux&lt;/span&gt;
+ &lt;span class='c'&gt;# partition (see the System column?)&lt;/span&gt;
+ df -Th &lt;span class='c'&gt;# lists partitions with size and % used&lt;/span&gt;
+ 
+ 
+ &lt;span class='c'&gt;# mount your Ubuntu partition, mine was sda4&lt;/span&gt;
+ mount /dev/sdXY /mnt &lt;span class='c'&gt;# &lt;/span&gt;
+ 
+ &lt;span class='c'&gt;# install grub on the partition, mine was sda&lt;/span&gt;
+ grub-install --root-directory&lt;span class='o'&gt;=&lt;/span&gt;/mnt /dev/sdX
+ 
+ &lt;span class='c'&gt;# be nice and unmount it, to avoid problems&lt;/span&gt;
+ umount /mnt
+ 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Reboot. &lt;strong&gt;Done!&lt;/strong&gt; Your old GRUB shows up now.&amp;lt;/li&amp;gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;So that&amp;#8217;s it. Hope this helps you avoid reinstalling Linux, which is really unnecessary :)&lt;/p&gt;</content>
+ </entry>
+ 
+
+</feed>

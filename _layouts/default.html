@@ -4,7 +4,7 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <title>{{ page.title }}</title>
     <meta name="author" content="Paul Craciunoiu" />
-    <link href="http://feeds.feedburner.com/embrangler" rel="alternate" title="Paul Craciunoiu" type="application/atom+xml" />
+    <link href="http://feeds.feedburner.com/embrangler" rel="alternate" title="Disembrangling Programming" type="application/atom+xml" />
     <link type="image/x-icon" href="/favicon.ico" rel="shortcut icon">
 
     <!-- syntax highlighting CSS -->
@@ -12,6 +12,16 @@
 
     <!-- Homepage CSS -->
     <link rel="stylesheet" href="/css/main.css" type="text/css" media="screen, projection" />
+
+    {% if page.tags %}
+      <!-- Tag feed -->
+      {% for tag in page.tags %}
+        <link href="/tag/{{ tag | replace:' ','-' | downcase }}/atom.xml"
+	      rel="alternate"
+              type="application/atom+xml"
+              title="Disembrangling Programming (tag: {{ tag }})" />
+      {% endfor %}
+    {% endif %}
 </head>
 <body>
 
@@ -49,16 +59,6 @@
     </div>
 </div><!-- site -->
 
-<!-- Google Analytics -->
-<script type="text/javascript">
-var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-</script>
-<script type="text/javascript">
-try {
-var pageTracker = _gat._getTracker("UA-15382775-1");
-pageTracker._trackPageview();
-} catch(err) {}</script>
-<!-- /Google Analytics -->
+{% include stats.html %}
 </body>
 </html>

@@ -1,0 +1,13 @@
+---
+layout: default
+title: Posts tagged "drupal"
+tag: drupal
+type: "Drupal"
+---
+    <h1 class="title" id="drupal">Posts tagged <em>drupal</em></h1>
+
+    <ul>
+      {% for post in site.tags['drupal'] %}
+      {% include item.html %}
+      {% endfor %}
+    </ul>

@@ -1,0 +1,13 @@
+---
+layout: default
+title: Posts tagged "dual boot"
+tag: dual boot
+type: "Dual Boot"
+---
+    <h1 class="title" id="dual boot">Posts tagged <em>dual boot</em></h1>
+
+    <ul>
+      {% for post in site.tags['dual boot'] %}
+      {% include item.html %}
+      {% endfor %}
+    </ul>

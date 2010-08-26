@@ -4,6 +4,7 @@ layout: post
 title: Upgrading Windows Vista or 7RC to Windows 7 on dual boot with Linux (Ubuntu)
 wordpress_url: http://embrangler.com/?p=196
 summary: When dual booting Linux and Windows, updating Windows causes GRUB to disappear. This is how I fixed it.
+tags: [windows, dual boot, ubuntu, linux]
 ---
 As you may or may not know, the Windows 7 RC/beta/other releases expire at the latest on March 1st, 2 days from now. So I had to spend some time this weekend upgrading to a full Windows 7. Fortunately, my school offers Windows 7 Professional for free if you're an engineering student (so we _do_ get special treatment, aw!).
 

@@ -2,6 +2,7 @@
 layout: post
 title: "Embrangler: Moving to Jekyll"
 summary: The migration process of <a href="http://embrangler.com">this blog</a>, from Wordpress 2.9 to Jekyll 0.5.7
+tags: [blog, migration, jekyll, wordpress]
 ---
 
 It took only three days to migrate my blog from [Wordpress](http://wordpress.org) to [Jekyll](http://wiki.github.com/mojombo/jekyll/). For anyone who plans to do this, I'm summarizing the whole process below.

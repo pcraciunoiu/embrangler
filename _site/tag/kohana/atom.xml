@@ -1,0 +1,502 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+ <title>Disembrangling Programming</title>
+ <link href="http://embrangler.com/tag/kohana/atom.xml" rel="self"/>
+ <link href="http://embrangler.com/tag/kohana"/>
+ <updated>2010-08-25T22:00:14-07:00</updated>
+ <id>http://embrangler.com/</id>
+ <author>
+   <name>Paul Craciunoiu</name>
+   <email>paul@craciunoiu.net</email>
+ </author>
+
+ 
+ <entry>
+   <title>Introduction to testing in Kohana 3</title>
+   <link href="http://embrangler.com/2010/04/testing-in-kohana-3"/>
+   <updated>2010-04-25T00:00:00-07:00</updated>
+   <id>http://embrangler.com/2010/04/testing-in-kohana-3</id>
+   <content type="html">&lt;p&gt;Table of contents:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href='#introduction'&gt;Introduction to introduction&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='#resources'&gt;Resources&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='#setup'&gt;Setup&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='#running_tests'&gt;Running tests&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='#writing_tests'&gt;Writing tests&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='#test_suites'&gt;Test suites&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='#up_next'&gt;Up next&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id='introduction'&gt;Introduction&lt;/h2&gt;
+
+&lt;p&gt;I&amp;#8217;m working on a project largely written in Kohana and JavaScript + jQuery. (Under construction at &lt;a href='http://fastask.net'&gt;fastask.net&lt;/a&gt;.) It&amp;#8217;s getting complicated enough to be worth having tests for it. While I&amp;#8217;m at it, I&amp;#8217;ll blog about the process, for several reasons:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;There aren&amp;#8217;t that many resources on Kohana 3 and testing out there, I&amp;#8217;ve found.&lt;/li&gt;
+
+&lt;li&gt;Testing is hugely important for complex projects.&lt;/li&gt;
+
+&lt;li&gt;Testing JavaScript is new to me (and fairly uncommon practice on the web, still).&lt;/li&gt;
+
+&lt;li&gt;I plan to make this project publicly available fairly soon and it&amp;#8217;s an opportunity to share information about it with my readers :)&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Along the way I will write about:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Writing tests in Kohana 3, the basics (this post)&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Writing JavaScript + jQuery tests&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;so far I&amp;#8217;m set on using &lt;a href='http://code.google.com/p/js-test-driver/'&gt;JS Test Driver&lt;/a&gt; with &lt;a href='http://docs.jquery.com/QUnit'&gt;QUnit&lt;/a&gt; or &lt;a href='http://developer.yahoo.com/yui/3/test/'&gt;YUI Test&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;In-depth testing: using fixtures and mock objects, understanding code coverage, and more&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id='resources'&gt;Resources&lt;/h2&gt;
+
+&lt;p&gt;Testing on Kohana 3 is easy. It&amp;#8217;s so easy, in fact, that I&amp;#8217;ve written tests covering almost 1000 lines of code over one weekend.&lt;/p&gt;
+
+&lt;p&gt;Here are the necessary resources to get you going:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href='http://github.com/kohana/unittest'&gt;The Kohana 3 unittest module&lt;/a&gt;, awesomely written by the Kohana team (thanks guys!)&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='http://www.phpunit.de/'&gt;PHPUnit&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='http://www.phpunit.de/manual/3.4/en/'&gt;PHPUnit&amp;#8217;s brilliant documentation&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='http://github.com/kohana/unittest/tree/master/guide/'&gt;unittest&amp;#8217;s documentation&lt;/a&gt;, I mostly used it for &lt;a href='http://github.com/kohana/unittest/blob/master/guide/unittest.testing.md'&gt;grouping tests&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id='setup'&gt;Setup&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Install PHPUnit. &lt;a href='http://www.phpunit.de/manual/current/en/installation.html'&gt;See their documentation&lt;/a&gt;.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;I&amp;#8217;m using Ubuntu and the package manager offers a relatively recent version. But, I wanted the latest. Installing it from source was so quick that I can&amp;#8217;t remember if I had any problems with it :)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Git a copy the unittest module: &lt;code&gt;git submodule add git://github.com/kohana/unittest.git modules/unittest&lt;/code&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Follow their &lt;a href='http://github.com/kohana/unittest#readme'&gt;installation instructions&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;I wanted code coverage reports. At the time of writing, these require the archive module, but they really don&amp;#8217;t have to. So I forked their unittest repo and rolled my own. &lt;a href='http://github.com/pcraciunoiu/unittest'&gt;My unittest repository&lt;/a&gt; doesn&amp;#8217;t require the archive module. I&amp;#8217;ll write about code coverage in a later post.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;em&gt;You&amp;#8217;re all set!&lt;/em&gt;&lt;/p&gt;
+
+&lt;h2 id='running_tests'&gt;Running tests&lt;/h2&gt;
+
+&lt;p&gt;I&amp;#8217;m using the UI provided by the &lt;strong&gt;unittest&lt;/strong&gt; module. That means I&amp;#8217;ve added a route to it in my &lt;strong&gt;bootstrap.php&lt;/strong&gt; file, and I&amp;#8217;m accessing it at &lt;code&gt;http://mysite/phpunit&lt;/code&gt;. From there, I pick the group of tests that I wish to run, and examine the results. Yep, it&amp;#8217;s that easy.&lt;/p&gt;
+
+&lt;p&gt;Here&amp;#8217;s how it looks: &lt;img src='/images/phpunit/fastask-running-tests.png' alt='Running PHPUnit tests in Kohana 3' /&gt;&lt;/p&gt;
+
+&lt;h2 id='writing_tests'&gt;Writing tests&lt;/h2&gt;
+
+&lt;p&gt;Start by reading &lt;a href='http://www.phpunit.de/manual/3.4/en/writing-tests-for-phpunit.html'&gt;the PHPUnit documentation&lt;/a&gt;. It&amp;#8217;s full of great examples. My project is fairly complex, and so I&amp;#8217;m using &lt;strong&gt;TestSuites&lt;/strong&gt;, &lt;strong&gt;TestCases&lt;/strong&gt;, and &lt;strong&gt;fixtures&lt;/strong&gt;. I will write about the latter in subsequent posts.&lt;/p&gt;
+
+&lt;p&gt;Here is a simple example of a &lt;strong&gt;TestCase&lt;/strong&gt;:&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='php'&gt;&lt;span class='cp'&gt;&amp;lt;?php&lt;/span&gt; &lt;span class='c1'&gt;// application/tests/test_example.php&lt;/span&gt;
+
+&lt;span class='sd'&gt;/**&lt;/span&gt;
+&lt;span class='sd'&gt; * Logged out, 403 forbidden everywhere.&lt;/span&gt;
+&lt;span class='sd'&gt; * @group anonymous&lt;/span&gt;
+&lt;span class='sd'&gt; * @group invalid&lt;/span&gt;
+&lt;span class='sd'&gt; */&lt;/span&gt;
+&lt;span class='k'&gt;class&lt;/span&gt; &lt;span class='nc'&gt;AnonymousTest&lt;/span&gt; &lt;span class='k'&gt;extends&lt;/span&gt; &lt;span class='nx'&gt;PHPUnit_Framework_TestCase&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+    &lt;span class='k'&gt;protected&lt;/span&gt; &lt;span class='k'&gt;function&lt;/span&gt; &lt;span class='nf'&gt;setUp&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+        &lt;span class='nx'&gt;Kohana&lt;/span&gt;&lt;span class='o'&gt;::&lt;/span&gt;&lt;span class='na'&gt;config&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;database&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;default&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='nx'&gt;Kohana&lt;/span&gt;&lt;span class='o'&gt;::&lt;/span&gt;&lt;span class='na'&gt;config&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;database&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt;
+                                                &lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;unit_testing&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt;
+    &lt;span class='p'&gt;}&lt;/span&gt;
+
+    &lt;span class='k'&gt;function&lt;/span&gt; &lt;span class='nf'&gt;testFastask&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+        &lt;span class='nv'&gt;$fastask&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='k'&gt;new&lt;/span&gt; &lt;span class='nx'&gt;Controller_Fastask&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='k'&gt;new&lt;/span&gt; &lt;span class='nx'&gt;Request&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;in/t&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;));&lt;/span&gt;
+        &lt;span class='nv'&gt;$fastask&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;action_t&lt;/span&gt;&lt;span class='p'&gt;();&lt;/span&gt;
+        &lt;span class='nv'&gt;$response&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='nv'&gt;$fastask&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;request&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt;
+        &lt;span class='nv'&gt;$this&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;assertSame&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nv'&gt;$response&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;headers&lt;/span&gt;&lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;Content-Type&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;],&lt;/span&gt;
+                          &lt;span class='s1'&gt;&amp;#39;application/json&amp;#39;&lt;/span&gt; &lt;span class='p'&gt;);&lt;/span&gt;
+        &lt;span class='nv'&gt;$this&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;assertSame&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nv'&gt;$response&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;status&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='m'&gt;403&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+    &lt;span class='p'&gt;}&lt;/span&gt;
+
+    &lt;span class='c1'&gt;// ... more tests here ...&lt;/span&gt;
+&lt;span class='p'&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;So what&amp;#8217;s happening here?&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Use &lt;code&gt;@group&lt;/code&gt; to pile tests together. I&amp;#8217;m using the UI at &lt;code&gt;http://mysite/phpunit&lt;/code&gt; to pick which to run at any time.&lt;/li&gt;
+
+&lt;li&gt;The &lt;em&gt;anonymous&lt;/em&gt; group is handy to run all tests for actions performed by anonymous users.&lt;/li&gt;
+
+&lt;li&gt;You can use multiple groups, as many as you want.&lt;/li&gt;
+
+&lt;li&gt;I&amp;#8217;m using an MySQL database to test in this example. This is a quick way to set the database Kohana uses when running tests:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='php'&gt;&lt;span class='x'&gt;Kohana::config(&amp;#39;database&amp;#39;)-&amp;gt;default = Kohana::config(&amp;#39;database&amp;#39;)&lt;/span&gt;
+&lt;span class='x'&gt;                                        -&amp;gt;unit_testing;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;ul&gt;
+&lt;li&gt;Set up a test database in MySQL and configure access to it in &lt;code&gt;application/config/database.php&lt;/code&gt;&lt;/li&gt;
+
+&lt;li&gt;I have multiple tests, hence the &lt;code&gt;setUp()&lt;/code&gt; method. If you only have one test, don&amp;#8217;t use this.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id='test_suites'&gt;Test suites&lt;/h2&gt;
+
+&lt;p&gt;Again, &lt;a href='http://www.phpunit.de/manual/3.4/en/api.html#api.testsuite'&gt;the PHPUnit documentation&lt;/a&gt; is golden.&lt;/p&gt;
+
+&lt;p&gt;Test suites come in handy when multiple tests can use the same setup. You can also &lt;a href='http://www.phpunit.de/manual/3.4/en/fixtures.html#fixtures.sharing-fixture'&gt;share fixtures between tests&lt;/a&gt; this way. My main reason for using test suites was actually the gain in speed. This next example shows why.&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='php'&gt;&lt;span class='cp'&gt;&amp;lt;?php&lt;/span&gt; &lt;span class='c1'&gt;// application/tests/testsuite_fastask_search.php&lt;/span&gt;
+
+&lt;span class='sd'&gt;/**&lt;/span&gt;
+&lt;span class='sd'&gt; * This suite tests search functionality in the main controller.&lt;/span&gt;
+&lt;span class='sd'&gt; * @group authenticated&lt;/span&gt;
+&lt;span class='sd'&gt; * @group fastask&lt;/span&gt;
+&lt;span class='sd'&gt; * @group fastask.search&lt;/span&gt;
+&lt;span class='sd'&gt; */&lt;/span&gt;
+&lt;span class='k'&gt;class&lt;/span&gt; &lt;span class='nc'&gt;FastaskSearchTestSuite&lt;/span&gt; &lt;span class='k'&gt;extends&lt;/span&gt; &lt;span class='nx'&gt;PHPUnit_Framework_TestSuite&lt;/span&gt;
+&lt;span class='p'&gt;{&lt;/span&gt;
+    &lt;span class='k'&gt;public&lt;/span&gt; &lt;span class='k'&gt;static&lt;/span&gt; &lt;span class='k'&gt;function&lt;/span&gt; &lt;span class='nf'&gt;suite&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt;
+    &lt;span class='p'&gt;{&lt;/span&gt;
+        &lt;span class='k'&gt;include_once&lt;/span&gt; &lt;span class='s1'&gt;&amp;#39;/path/to/kohana/application/testcases/&amp;#39;&lt;/span&gt; &lt;span class='o'&gt;.&lt;/span&gt;
+            &lt;span class='s1'&gt;&amp;#39;test_fastask_search.php&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt;
+        &lt;span class='k'&gt;return&lt;/span&gt; &lt;span class='k'&gt;new&lt;/span&gt; &lt;span class='nx'&gt;FastaskSearchTestSuite&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;FastaskSearchTest&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+    &lt;span class='p'&gt;}&lt;/span&gt;
+
+    &lt;span class='k'&gt;protected&lt;/span&gt; &lt;span class='k'&gt;function&lt;/span&gt; &lt;span class='nf'&gt;setUp&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt;
+    &lt;span class='p'&gt;{&lt;/span&gt;
+        &lt;span class='c1'&gt;// Set database connection and log in the user.&lt;/span&gt;
+        &lt;span class='nx'&gt;Kohana&lt;/span&gt;&lt;span class='o'&gt;::&lt;/span&gt;&lt;span class='na'&gt;config&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;database&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;default&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='nx'&gt;Kohana&lt;/span&gt;&lt;span class='o'&gt;::&lt;/span&gt;&lt;span class='na'&gt;config&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;database&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt;
+                                                &lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;unit_testing&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt;
+        &lt;span class='nx'&gt;Auth&lt;/span&gt;&lt;span class='o'&gt;::&lt;/span&gt;&lt;span class='na'&gt;instance&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;login&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nx'&gt;TEST_USERNAME&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='nx'&gt;TEST_PASSWORD&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+
+        &lt;span class='c1'&gt;// Index data and start up the search daemon&lt;/span&gt;
+        &lt;span class='nb'&gt;exec&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;indexer --all --config &amp;#39;&lt;/span&gt; &lt;span class='o'&gt;.&lt;/span&gt; &lt;span class='nx'&gt;SPHINX_CONF&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+        &lt;span class='nb'&gt;exec&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;searchd --config &amp;#39;&lt;/span&gt; &lt;span class='o'&gt;.&lt;/span&gt; &lt;span class='nx'&gt;SPHINX_CONF&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+    &lt;span class='p'&gt;}&lt;/span&gt;
+
+    &lt;span class='k'&gt;protected&lt;/span&gt; &lt;span class='k'&gt;function&lt;/span&gt; &lt;span class='nf'&gt;tearDown&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt;
+    &lt;span class='p'&gt;{&lt;/span&gt;
+        &lt;span class='c1'&gt;// Reset logins and log out the user&lt;/span&gt;
+        &lt;span class='nv'&gt;$test_user&lt;/span&gt;         &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='nx'&gt;Auth&lt;/span&gt;&lt;span class='o'&gt;::&lt;/span&gt;&lt;span class='na'&gt;instance&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;get_user&lt;/span&gt;&lt;span class='p'&gt;();&lt;/span&gt;
+        &lt;span class='nv'&gt;$test_user&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;logins&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='m'&gt;1&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt;
+        &lt;span class='nv'&gt;$test_user&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;save&lt;/span&gt;&lt;span class='p'&gt;();&lt;/span&gt;
+        &lt;span class='nx'&gt;Auth&lt;/span&gt;&lt;span class='o'&gt;::&lt;/span&gt;&lt;span class='na'&gt;instance&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;logout&lt;/span&gt;&lt;span class='p'&gt;();&lt;/span&gt;
+
+        &lt;span class='c1'&gt;// Stop the search daemon&lt;/span&gt;
+        &lt;span class='nb'&gt;exec&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;killall searchd&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+    &lt;span class='p'&gt;}&lt;/span&gt;
+&lt;span class='p'&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Explanation:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;TEST_USERNAME&lt;/code&gt; and &lt;code&gt;TEST_PASSWORD&lt;/code&gt; are used for multiple test suites, so I defined them in &lt;code&gt;application/config/phpunit.php&lt;/code&gt;&lt;/li&gt;
+
+&lt;li&gt;I&amp;#8217;m using the Sphinx search engine here to search through data. So I need to tell Sphinx to index my test data and start up the search daemon.&lt;/li&gt;
+
+&lt;li&gt;Obviously, doing this for every search test is gonna slow things down &lt;em&gt;a lot&lt;/em&gt;.&lt;/li&gt;
+
+&lt;li&gt;I&amp;#8217;m doing all these tests for authenticated users, so logging in and out for every test is also a waste.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Next, some test cases.&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='php'&gt;&lt;span class='cp'&gt;&amp;lt;?php&lt;/span&gt; &lt;span class='c1'&gt;// application/testcases/test_fastask_search.php&lt;/span&gt;
+
+&lt;span class='sd'&gt;/**&lt;/span&gt;
+&lt;span class='sd'&gt; * @group loggedin&lt;/span&gt;
+&lt;span class='sd'&gt; * @group fastask&lt;/span&gt;
+&lt;span class='sd'&gt; * @group fastask.search&lt;/span&gt;
+&lt;span class='sd'&gt; */&lt;/span&gt;
+&lt;span class='k'&gt;class&lt;/span&gt; &lt;span class='nc'&gt;FastaskSearchTest&lt;/span&gt; &lt;span class='k'&gt;extends&lt;/span&gt; &lt;span class='nx'&gt;PHPUnit_Framework_TestCase&lt;/span&gt;
+&lt;span class='p'&gt;{&lt;/span&gt;
+    &lt;span class='sd'&gt;/**&lt;/span&gt;
+&lt;span class='sd'&gt;     * Sets the data for search.&lt;/span&gt;
+&lt;span class='sd'&gt;     */&lt;/span&gt;
+    &lt;span class='k'&gt;function&lt;/span&gt; &lt;span class='nf'&gt;providerSearch&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt;
+    &lt;span class='p'&gt;{&lt;/span&gt;
+        &lt;span class='cm'&gt;/* format for each test:&lt;/span&gt;
+&lt;span class='cm'&gt;            array(&lt;/span&gt;
+&lt;span class='cm'&gt;                search term&lt;/span&gt;
+&lt;span class='cm'&gt;                status code to expect&lt;/span&gt;
+&lt;span class='cm'&gt;        */&lt;/span&gt;
+        &lt;span class='k'&gt;return&lt;/span&gt; &lt;span class='k'&gt;array&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;
+            &lt;span class='k'&gt;array&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;s&amp;#39;&lt;/span&gt; &lt;span class='o'&gt;=&amp;gt;&lt;/span&gt; &lt;span class='s1'&gt;&amp;#39;asdfgh&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='m'&gt;404&lt;/span&gt;&lt;span class='p'&gt;),&lt;/span&gt;
+            &lt;span class='k'&gt;array&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;s&amp;#39;&lt;/span&gt; &lt;span class='o'&gt;=&amp;gt;&lt;/span&gt; &lt;span class='s1'&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='m'&gt;404&lt;/span&gt;&lt;span class='p'&gt;),&lt;/span&gt;
+            &lt;span class='k'&gt;array&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;s&amp;#39;&lt;/span&gt; &lt;span class='o'&gt;=&amp;gt;&lt;/span&gt; &lt;span class='s1'&gt;&amp;#39;nulla&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='m'&gt;200&lt;/span&gt;&lt;span class='p'&gt;),&lt;/span&gt;  &lt;span class='c1'&gt;// One of those lorem-ipsum results&lt;/span&gt;
+        &lt;span class='p'&gt;);&lt;/span&gt;
+    &lt;span class='p'&gt;}&lt;/span&gt;
+
+    &lt;span class='sd'&gt;/**&lt;/span&gt;
+&lt;span class='sd'&gt;     * Test search.&lt;/span&gt;
+&lt;span class='sd'&gt;     * @dataProvider providerSearch&lt;/span&gt;
+&lt;span class='sd'&gt;     */&lt;/span&gt;
+    &lt;span class='k'&gt;function&lt;/span&gt; &lt;span class='nf'&gt;testSearch&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nv'&gt;$search&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='nv'&gt;$status&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt;
+    &lt;span class='p'&gt;{&lt;/span&gt;
+        &lt;span class='nv'&gt;$_GET&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='k'&gt;array&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;
+            &lt;span class='s1'&gt;&amp;#39;ep&amp;#39;&lt;/span&gt; &lt;span class='o'&gt;=&amp;gt;&lt;/span&gt; &lt;span class='m'&gt;1&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt;
+            &lt;span class='s1'&gt;&amp;#39;s&amp;#39;&lt;/span&gt;  &lt;span class='o'&gt;=&amp;gt;&lt;/span&gt; &lt;span class='nv'&gt;$search&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt;
+        &lt;span class='p'&gt;);&lt;/span&gt;
+        &lt;span class='nv'&gt;$fastask&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='k'&gt;new&lt;/span&gt; &lt;span class='nx'&gt;Controller_Fastask&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='k'&gt;new&lt;/span&gt; &lt;span class='nx'&gt;Request&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;in/t&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;));&lt;/span&gt;
+        &lt;span class='nv'&gt;$fastask&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;before&lt;/span&gt;&lt;span class='p'&gt;();&lt;/span&gt;
+        &lt;span class='nv'&gt;$fastask&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;action_t&lt;/span&gt;&lt;span class='p'&gt;();&lt;/span&gt;
+        &lt;span class='nv'&gt;$response&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='nv'&gt;$fastask&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;request&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt;
+
+        &lt;span class='nv'&gt;$this&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;assertSame&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nv'&gt;$response&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;headers&lt;/span&gt;&lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;Content-Type&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;],&lt;/span&gt;
+                          &lt;span class='s1'&gt;&amp;#39;application/json&amp;#39;&lt;/span&gt; &lt;span class='p'&gt;);&lt;/span&gt;
+        &lt;span class='nv'&gt;$this&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;assertSame&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nv'&gt;$response&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;status&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='nv'&gt;$status&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+
+        &lt;span class='nv'&gt;$json&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='nx'&gt;json_decode&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nv'&gt;$response&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;response&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+        &lt;span class='nv'&gt;$count&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='nb'&gt;count&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nv'&gt;$json&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;tasks&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+        &lt;span class='k'&gt;if&lt;/span&gt; &lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nv'&gt;$count&lt;/span&gt; &lt;span class='o'&gt;&amp;gt;&lt;/span&gt; &lt;span class='m'&gt;0&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+            &lt;span class='k'&gt;foreach&lt;/span&gt; &lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nv'&gt;$json&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;tasks&lt;/span&gt; &lt;span class='k'&gt;as&lt;/span&gt; &lt;span class='nv'&gt;$task&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+                &lt;span class='nv'&gt;$follower_ids&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='k'&gt;array&lt;/span&gt;&lt;span class='p'&gt;();&lt;/span&gt;
+                &lt;span class='k'&gt;foreach&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nv'&gt;$task&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;followers&lt;/span&gt; &lt;span class='k'&gt;as&lt;/span&gt; &lt;span class='nv'&gt;$follower&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+                    &lt;span class='nv'&gt;$follower_ids&lt;/span&gt;&lt;span class='p'&gt;[]&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='nv'&gt;$follower&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;id&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt;
+                &lt;span class='p'&gt;}&lt;/span&gt;
+                &lt;span class='nv'&gt;$follower_ids&lt;/span&gt;&lt;span class='p'&gt;[]&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='nv'&gt;$task&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;user_id&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt;
+
+                &lt;span class='nv'&gt;$this&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;assertContains&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nx'&gt;TEST_USER_ID&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='nv'&gt;$follower_ids&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+            &lt;span class='p'&gt;}&lt;/span&gt;
+        &lt;span class='p'&gt;}&lt;/span&gt;
+    &lt;span class='p'&gt;}&lt;/span&gt;
+&lt;span class='p'&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;The test case looks basically the same as it would if it were stand alone, but it has no &lt;code&gt;setUp()&lt;/code&gt; or &lt;code&gt;tearDown()&lt;/code&gt;. I was too lazy to write a separate test for having results, so I check the &lt;code&gt;$count&lt;/code&gt; for testing the actual data.&lt;/p&gt;
+
+&lt;h2 id='up_next'&gt;Up next&lt;/h2&gt;
+
+&lt;p&gt;Stay tuned for Kohana tests using &lt;a href='http://www.phpunit.de/manual/3.4/en/fixtures.html'&gt;fixtures&lt;/a&gt;, getting and using &lt;a href='http://www.phpunit.de/manual/3.4/en/code-coverage-analysis.html'&gt;code coverage&lt;/a&gt; reports, and &lt;a href='http://www.phpunit.de/manual/3.4/en/test-doubles.html#test-doubles.mock-objects'&gt;mock objects&lt;/a&gt;. Also, JavaScript tests!&lt;/p&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>Quoteden: Moving to Kohana 3</title>
+   <link href="http://embrangler.com/2010/03/quoteden-moving-to-kohana-3"/>
+   <updated>2010-03-12T00:00:00-08:00</updated>
+   <id>http://embrangler.com/2010/03/quoteden-moving-to-kohana-3</id>
+   <content type="html">&lt;p&gt;&lt;em&gt;This post is written in collaboration with Marius Craciunoiu, my brother, and designer of Quote Den and &lt;a href='http://craciunoiu.net'&gt;other&lt;/a&gt; &lt;a href='http://awesomemath.org'&gt;sites&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Hooray! 2 weeks after it started, &lt;a href='http://quoteden.net'&gt;Quote Den&lt;/a&gt;&amp;#8217;s migration from &lt;a href='http://drupal.org'&gt;Drupal&lt;/a&gt; 6 to &lt;a href='http://kohanaphp.com/'&gt;Kohana&lt;/a&gt; 3 is complete. This post offers a summary of that process, and lists some of the design improvements and implementation accomplishments. Along the way, it links to some of the resources used.&lt;/p&gt;
+
+&lt;p&gt;Table of contents:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href='#why_change'&gt;Why change?&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='#redesign_details'&gt;Redesign details&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='#implementation_process'&gt;Implementation process&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='#conclusion'&gt;Conclusion&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id='why_change'&gt;Why change?&lt;/h2&gt;
+
+&lt;p&gt;First of all, why the change? The reason for the change is threefold.&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Redesign opportunity&lt;/strong&gt; - First of all, &lt;em&gt;Quote Den&lt;/em&gt; needed a redesign. Almost every part of the site was going to be affected. This was a great opportunity to move on to a better platform.&lt;/li&gt;
+
+&lt;li&gt;&lt;strong&gt;Ease of development&lt;/strong&gt; - The &lt;a href='http://en.wikipedia.org/wiki/Presentation-abstraction-control'&gt;(H)MVC&lt;/a&gt; model is a pleasure to work with, and once you get it, it&amp;#8217;s clear where your code goes, when you want to do something. While Drupal uses a similar model (module is similar to controller, template is similar to view), it is not exactly a &lt;a href='http://buytaert.net/drupal-learning-curve'&gt;breeze&lt;/a&gt; to develop in, and having worked with &lt;a href='http://craciunoiu.net/'&gt;several&lt;/a&gt;, &lt;a href='http://quality.mozilla.org/'&gt;drupal&lt;/a&gt; &lt;a href='http://spreadfirefox.com/'&gt;sites&lt;/a&gt;, must say Kohana is much nicer.&lt;/li&gt;
+
+&lt;li&gt;&lt;strong&gt;Flexibility&lt;/strong&gt; - Using custom built models in a framework allows for more flexibility and ultimately control over the application. Basically, you can make it do what you want without having to hack it.&lt;/li&gt;
+
+&lt;li&gt;&lt;strong&gt;Performance&lt;/strong&gt; - Kohana is a fairly simple framework. Compared to &lt;a href='http://framework.zend.com/'&gt;Zend&lt;/a&gt;, for example, it offers fewer features and is perfect for a simpler website such as &lt;a href='http://quoteden.net'&gt;Quote Den&lt;/a&gt;. We didn&amp;#8217;t need all of the features that Drupal offers either. Finally, Kohana works quite a bit faster than Drupal for Quote Den&amp;#8217;s purposes. As a comparison, the new site now loads in ~0.5s versus ~0.75s on my computer (over an average of 20 page loads). Here is a YSlow comparison of &lt;a href='/files/quoteden/quoteden-stage.html'&gt;new&lt;/a&gt; versus &lt;a href='/files/quoteden/quoteden.html'&gt;old&lt;/a&gt;. Content caching is not yet in place.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id='redesign_details'&gt;Redesign details&lt;/h2&gt;
+
+&lt;p&gt;In terms of design, the old site suffered quite a bit. Some of the pre-launch issues include:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;lacking a clear and consistent navigation&lt;/li&gt;
+
+&lt;li&gt;inconsistent design across the website&lt;/li&gt;
+
+&lt;li&gt;inconsistent spacing and centering of elements&lt;/li&gt;
+
+&lt;li&gt;search pages were not very useful&lt;/li&gt;
+
+&lt;li&gt;individual quote pages were almost empty (now they list related quotes)&lt;/li&gt;
+
+&lt;li&gt;there was no link to the landing page (besides the logo)&lt;/li&gt;
+
+&lt;li&gt;Drupal and the quotes module did not offer good administrative options&lt;/li&gt;
+
+&lt;li&gt;the site had no contact link&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The rest of this section summarizes some of the improvements in more detail.&lt;/p&gt;
+
+&lt;h3 id='search_engine'&gt;Search engine&lt;/h3&gt;
+
+&lt;p&gt;The older search was the default Drupal search, presumably using MySQL fulltext search. The new implementation uses Sphinx search, which does &lt;a href='http://en.wikipedia.org/wiki/Stemming'&gt;stemming&lt;/a&gt;, and searches for other inflections of the same word. For example, searching for &amp;#8220;hopeless&amp;#8221; includes results with &amp;#8220;hopelessness&amp;#8221;, or searching for &amp;#8220;loving&amp;#8221; includes results with &amp;#8220;love&amp;#8221;. The new search is also much faster, at least in part because it does not need to query the database. You can read more about Sphinx search &lt;a href='http://sphinxsearch.com/'&gt;here&lt;/a&gt;. It is worth noting that Drupal could also be &lt;a href='http://drupal.org/project/sphinx'&gt;configured with Sphinx&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id='navigation'&gt;Navigation&lt;/h3&gt;
+
+&lt;p&gt;When we first designed the website, we wanted it to be as simple as possible. This meant stripping it down of all features except the basics: a page to list quotes and a search function. Later on, this became a problem because we added other features, such as the &lt;em&gt;Top Rated&lt;/em&gt; page and categories for each quote. We wanted to add a &lt;a href='http://quoteden.net/quote/top'&gt;Top Rated&lt;/a&gt; link to the header, but there wasn&amp;#8217;t a good place for it. If it were placed next to the search bar, it seemed to be the label for the input box, but if it were placed too far away, it looked alienated.&lt;/p&gt;
+&lt;div class='img-wrap'&gt;&lt;div class='img'&gt;
+    &lt;img title='top-rated-link' src='/images/quoteden/top-rated-link.jpg' alt='Top Rated placement in previous design' /&gt;
+    &lt;div&gt;Top Rated placement in previous design&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;This issue was solved with the introduction of the &lt;em&gt;tabbed navigation&lt;/em&gt; menu. The &lt;em&gt;Top Rated&lt;/em&gt; tab is now located next to the &amp;#8220;Newest&amp;#8221; tab. The menu also solved another issue: the user can now see which page they are located on because the active tab changes color.&lt;/p&gt;
+&lt;div class='img-wrap'&gt;&lt;div class='img'&gt;
+    &lt;img title='navigation' src='/images/quoteden/navigation.jpg' alt='Top Rated placement in new design' /&gt;
+    &lt;div&gt;Top Rated placement in new design&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;h3 id='categories'&gt;Categories&lt;/h3&gt;
+
+&lt;p&gt;Another feature introduced after the initial launch of the website was the addition of categories. In the old design, they were placed at the top of the quote, which caused the quote itself to receive less attention. To fix this, the new design shows the categories under the quote and reduces the font size.&lt;/p&gt;
+&lt;div class='img-wrap'&gt;&lt;div class='img'&gt;
+    &lt;img title='categories-design' src='/images/quoteden/categories-design.jpg' alt='Categories -- before (right), after (left)' /&gt;
+    &lt;div&gt;Categories -- before (right), after (left)&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;When categories were first added, there wasn&amp;#8217;t a page to list them all. They offered the benefit of seeing quotes in the same category, and were also included in search. Now, we have a &lt;em&gt;Categories&lt;/em&gt; page.&lt;/p&gt;
+&lt;div class='img-wrap'&gt;&lt;div class='img'&gt;
+    &lt;img title='categories' src='/images/quoteden/categories.jpg' alt='The new categories page' /&gt;
+    &lt;div&gt;The new categories page&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;h3 id='polishing_the_design'&gt;Polishing the design&lt;/h3&gt;
+
+&lt;p&gt;One of the issues with the old Quote Den was an inconsistent design. For example, the heading &amp;#8220;Top Rated Quotes&amp;#8221; did not match the general style of the website. To solve this, we removed page headings altogether. The active page is now shown by the navigation menu.&lt;/p&gt;
+&lt;div class='img-wrap'&gt;&lt;div class='img'&gt;
+    &lt;img title='headings' src='/images/quoteden/headings.jpg' alt='Top Rated page is now consistent with new design (left)' /&gt;
+    &lt;div&gt;Top Rated page is now consistent with new design (left)&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;The &lt;em&gt;search&lt;/em&gt; page looked completely different than the rest of the website. Users could click anywhere on the quote to go to the individual quote, although there was no distinction made to indicate this. The quote ID and rating were missing from the results, which diminishes their value across the website and possibly discourages users from rating. If no one would see the rating while searching, then what&amp;#8217;s the point of rating? The search page is now styled just like the other pages. In terms of usability, we made it easier for users to find what they&amp;#8217;re looking for. If users see a quote they like in the search results, they can vote on it right away.&lt;/p&gt;
+&lt;div class='img-wrap'&gt;&lt;div class='img'&gt;
+    &lt;img title='search' src='/images/quoteden/search.jpg' alt='Search uses highlighting and is also consistent' /&gt;
+    &lt;div&gt;Search uses highlighting and is also consistent&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Part of perfecting the design was to &lt;a href='http://webdesign.about.com/od/webdesignbasics/p/aabalance.htm'&gt;balance&lt;/a&gt; all the elements on the page. The first and foremost stage in this process was to make sure all the elements are equally apart from their surrounding elements. For example, the ID and Rating were closer to the bottom of the quote than the top. Second, the stars were too small to balance the visual weight of the ID. To solve these problems, we enlarged the stars and centered them with the quote area.&lt;/p&gt;
+&lt;div class='img-wrap'&gt;&lt;div class='img'&gt;
+    &lt;img title='rating-compare' src='/images/quoteden/rating-compare.jpg' alt='Balance in whitespace and larger stars (on the left)' /&gt;
+    &lt;div&gt;Balance in whitespace and larger stars (on the left)&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;h3 id='administrative_options'&gt;Administrative Options&lt;/h3&gt;
+&lt;div class='img-wrap'&gt;&lt;div class='img'&gt;
+    &lt;img title='rating-compare' src='/images/quoteden/add-quotes.jpg' alt='Admin: quote creation form (left is new)' /&gt;
+    &lt;div&gt;Admin: quote creation form (left is new)&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Although probably none of you may see this anytime soon, one of the reasons we redesigned Quote Den was because it was a pain to add quotes. The add form was incredibly complex. To give you an idea of how BIG this thing was, you should know it had:&lt;/p&gt;
+&lt;div class='table-wrap'&gt;&lt;div class='table'&gt;
+&lt;table cellspacing='0' border='0'&gt;
+&lt;tr&gt;
+&lt;th style='width: 30%'&gt;Before&lt;/th&gt;
+&lt;th style='width: 40%'&gt;and&lt;/th&gt;
+&lt;th&gt;After&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;
+&lt;ul&gt;
+&lt;li&gt;9 input fields&lt;/li&gt;
+&lt;li&gt;2 drop down menus&lt;/li&gt;
+&lt;li&gt;6 radio buttons&lt;/li&gt;
+&lt;li&gt;5 check boxes&lt;/li&gt;
+&lt;li&gt;48 lines of text&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/td&gt;
+&lt;td class='center'&gt;vs&lt;/td&gt;
+&lt;td&gt;
+&lt;ul&gt;
+&lt;li&gt;3 input fields&lt;/li&gt;
+&lt;li&gt;4 lines of text&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;div class='caption'&gt;Quote creation form, improvements&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;h3 id='feedback'&gt;Feedback&lt;/h3&gt;
+
+&lt;p&gt;Of course no website would be complete without the almighty contact us link, so we added one on the bottom. We hope our viewers will contact us about anything related to the website, whether that is feedback on the site or suggestions on the quotes themselves.&lt;/p&gt;
+
+&lt;h2 id='implementation_process'&gt;Implementation process&lt;/h2&gt;
+
+&lt;p&gt;We actually started with Kohana 2, unsure about how easy it will be to migrate. A major concern was how quickly we could get Quote Den up and running on the new platform. Following &lt;a href='http://http//stackoverflow.com/questions/394175/searching-for-a-kohana-beginners-tutorial-for-php'&gt;tutorials&lt;/a&gt; (mostly, a &lt;a href='http://http//learn.kohanaphp.com/2008/03/26/blog-tutorial-1/'&gt;blog tutorial&lt;/a&gt;), getting a simple quote+author page going was quick and painless, so we decided to go ahead and use Kohana.&lt;/p&gt;
+
+&lt;p&gt;As soon as the quote and author models were finalized and tested to work, a quick attempt at a migration was necessary. This turned out to be quick and easy.&lt;/p&gt;
+
+&lt;p&gt;Next, we had templates. Using Kohana&amp;#8217;s &lt;a href='http://kerkness.ca/wiki/doku.php?id=template-site:extending_the_template_controller'&gt;Controller_Template&lt;/a&gt;, set up Controller_Quote. Then wrote a quotes template (under &lt;code&gt;views/quotes/quotes.php&lt;/code&gt;, extending &lt;code&gt;views/base/template.php&lt;/code&gt;).&lt;/p&gt;
+
+&lt;p&gt;Afterwards, we added &lt;a href='http://code.google.com/p/minify/'&gt;minify&lt;/a&gt;, categories, author pages. Since quotes use categories everywhere they are displayed, a good option was to overwrote the quote model constructor to always grab the related categories, sorted.&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='php'&gt;&lt;span class='cp'&gt;&amp;lt;?php&lt;/span&gt;
+&lt;span class='k'&gt;class&lt;/span&gt; &lt;span class='nc'&gt;Model_Quote&lt;/span&gt; &lt;span class='k'&gt;extends&lt;/span&gt; &lt;span class='nx'&gt;ORM&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+  &lt;span class='c1'&gt;// ...&lt;/span&gt;
+  &lt;span class='k'&gt;public&lt;/span&gt; &lt;span class='k'&gt;function&lt;/span&gt; &lt;span class='nf'&gt;__construct&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nv'&gt;$id&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='k'&gt;NULL&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+    &lt;span class='k'&gt;parent&lt;/span&gt;&lt;span class='o'&gt;::&lt;/span&gt;&lt;span class='na'&gt;__construct&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nv'&gt;$id&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+    &lt;span class='nv'&gt;$this&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;_object&lt;/span&gt;&lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;categories_list&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;]&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='nv'&gt;$this&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;categories&lt;/span&gt;
+         &lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;order_by&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;name&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='s1'&gt;&amp;#39;asc&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt;
+         &lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;find_all&lt;/span&gt;&lt;span class='p'&gt;();&lt;/span&gt;
+  &lt;span class='p'&gt;}&lt;/span&gt;
+&lt;span class='p'&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Then pagination. There is a simple pagination module documented on the &lt;a href='http://kerkness.ca/wiki/doku.php?id=how_to_use_the_pagination_module'&gt;unofficial wiki&lt;/a&gt; which works beautifully.&lt;/p&gt;
+
+&lt;p&gt;On to search. We decided on using Sphinx, since Paul is already familiar with it from &lt;a href='http://support.mozilla.com/'&gt;SUMO&lt;/a&gt; and knew how to set it up. Sphinx has many advantages - it scales, it&amp;#8217;s fast, it&amp;#8217;s powerful and customizable. There is a bit of a learning curve to it, but you can mostly learn by examples. Paul started with &lt;a href='http://viewvc.svn.mozilla.org/vc/projects/sumo/trunk/scripts/sphinx/sphinx.conf'&gt;SUMO&amp;#8217;s sphinx.conf&lt;/a&gt; and drastically simplified it, then modified it to match my database structure. Finally, set up a crontab on my VPS to reindex and rotate every 24 hours.&lt;/p&gt;
+
+&lt;p&gt;The final crucial aspect was having a way to add and edit content. This required user authentication &amp;#8211; which, fortunately, comes with Kohana 3 and works well. We just use the default auth module and we haven&amp;#8217;t had any problems. Here&amp;#8217;s a code sample:&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='php'&gt;&lt;span class='cp'&gt;&amp;lt;?php&lt;/span&gt;
+&lt;span class='c1'&gt;// application/classes/controller/user.php&lt;/span&gt;
+  &lt;span class='k'&gt;public&lt;/span&gt; &lt;span class='k'&gt;function&lt;/span&gt; &lt;span class='nf'&gt;action_login&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+    &lt;span class='c1'&gt;// ...&lt;/span&gt;
+    &lt;span class='c1'&gt;// if posted data&lt;/span&gt;
+    &lt;span class='k'&gt;if&lt;/span&gt; &lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nv'&gt;$_POST&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+    &lt;span class='nv'&gt;$user&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='nx'&gt;ORM&lt;/span&gt;&lt;span class='o'&gt;::&lt;/span&gt;&lt;span class='na'&gt;factory&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;user&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+
+    &lt;span class='c1'&gt;// check auth&lt;/span&gt;
+    &lt;span class='k'&gt;if&lt;/span&gt; &lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nv'&gt;$user&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;login&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nv'&gt;$_POST&lt;/span&gt;&lt;span class='p'&gt;))&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+      &lt;span class='c1'&gt;// redirect to my account&lt;/span&gt;
+    &lt;span class='p'&gt;}&lt;/span&gt; &lt;span class='k'&gt;else&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+      &lt;span class='nv'&gt;$view&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;errors&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='nv'&gt;$_POST&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;errors&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;login&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+      &lt;span class='nv'&gt;$this&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;template&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;title&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='s1'&gt;&amp;#39;Error logging in&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt;
+      &lt;span class='k'&gt;return&lt;/span&gt; &lt;span class='p'&gt;;&lt;/span&gt;
+    &lt;span class='p'&gt;}&lt;/span&gt;
+  &lt;span class='p'&gt;}&lt;/span&gt;
+&lt;span class='p'&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;After this, all that was left was the rating system. After some searching for good ways to do it using only CSS, we found a great one &lt;a href='http://www.komodomedia.com/blog/2007/01/css-rating-redux/' title='how to write a css rating system'&gt;here&lt;/a&gt;, and then went on to write a model/controller for it. Rating only works through javascript at the moment, but that will change once we implement a mobile-friendly version.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href='http://kerkness.ca/wiki/doku.php?id=working_with_atom_and_rss_feeds'&gt;Setting up an RSS feed&lt;/a&gt; took Paul literally 20 minutes, and then the final page left to write was the &lt;a href='http://quoteden.net/quote/top'&gt;Top Rated&lt;/a&gt; page.&lt;/p&gt;
+
+&lt;p&gt;To top it off, we have also put in place a bunch of .htaccess RewriteRules for handling redirects from old Drupal URLs.&lt;/p&gt;
+
+&lt;h2 id='conclusion'&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;So that&amp;#8217;s it. The Quote Den Drupal-&amp;gt;Kohana work summarized. The benefits: performance improvements of more than 50% (in page load time), more flexibility, consistency in the design, and Sphinx search.&lt;/p&gt;
+
+&lt;p&gt;And if you&amp;#8217;re learning Kohana, and would like some help, shoot us a comment below.&lt;/p&gt;</content>
+ </entry>
+ 
+
+</feed>

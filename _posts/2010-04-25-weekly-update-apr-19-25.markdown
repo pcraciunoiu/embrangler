@@ -2,6 +2,7 @@
 layout: post
 title: "April 19-25 status"
 summary: Past and future weekly goals @ Mozilla.
+tags: [mozilla, webdev, weekly updates]
 ---
 
 ## Last week (April 19-25)

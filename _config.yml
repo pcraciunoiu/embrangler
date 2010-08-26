@@ -4,4 +4,7 @@ pygments:    true
 permalink:   /:year/:month/:title
 paginate:    6
 markdown:    maruku
-
+exclude:
+  - Rakefile
+  - new.py
+  - publish

@@ -1,0 +1,13 @@
+---
+layout: default
+title: Posts tagged "UCSC"
+tag: UCSC
+type: "UCSC"
+---
+    <h1 class="title" id="UCSC">Posts tagged <em>UCSC</em></h1>
+
+    <ul>
+      {% for post in site.tags['UCSC'] %}
+      {% include item.html %}
+      {% endfor %}
+    </ul>

@@ -2,6 +2,7 @@
 layout: post
 title: "April 5-9 status"
 summary: What I've been busy with this week at Mozilla.
+tags: [mozilla, webdev, weekly updates]
 ---
 
 ## Last week (April 5-9)

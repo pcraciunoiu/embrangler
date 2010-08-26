@@ -1,0 +1,13 @@
+---
+layout: default
+title: Posts tagged "job"
+tag: job
+type: "Job"
+---
+    <h1 class="title" id="job">Posts tagged <em>job</em></h1>
+
+    <ul>
+      {% for post in site.tags['job'] %}
+      {% include item.html %}
+      {% endfor %}
+    </ul>

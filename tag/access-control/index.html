@@ -1,0 +1,13 @@
+---
+layout: default
+title: Posts tagged "access control"
+tag: access control
+type: "Access Control"
+---
+    <h1 class="title" id="access control">Posts tagged <em>access control</em></h1>
+
+    <ul>
+      {% for post in site.tags['access control'] %}
+      {% include item.html %}
+      {% endfor %}
+    </ul>

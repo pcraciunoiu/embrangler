@@ -31,7 +31,7 @@ h1, h2, h3, h4, h5, h6 {
 
 body {
     background-color: #fff;
-    font: 17.6px helvetica, arial, clean, sans-serif;
+    font: 16px helvetica, arial, clean, sans-serif;
     text-align: center;
 }
 
@@ -231,13 +231,14 @@ h2.subtitle a {
 /*
 /*****************************************************************************/
 
-#post h1 {
+#post h1, #tag h1 {
     font-variant: small-caps;
-    margin: 0 0 1em 0;
+    margin: 0;
 }
 
 #post .meta {
-    margin: .2em 0 1em 0;
+    font-size: 85%;
+    margin: -.1em 0 2.5em;
     color: #999;
 }
 

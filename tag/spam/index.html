@@ -1,0 +1,13 @@
+---
+layout: default
+title: Posts tagged "spam"
+tag: spam
+type: "Spam"
+---
+    <h1 class="title" id="spam">Posts tagged <em>spam</em></h1>
+
+    <ul>
+      {% for post in site.tags['spam'] %}
+      {% include item.html %}
+      {% endfor %}
+    </ul>
