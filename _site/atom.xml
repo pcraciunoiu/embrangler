@@ -4,7 +4,7 @@
  <title>Disembrangling Programming - Paul Craciunoiu</title>
  <link href="http://embrangler.com/atom.xml" rel="self"/>
  <link href="http://embrangler.com/"/>
- <updated>2010-08-21T01:10:14-07:00</updated>
+ <updated>2010-08-25T19:33:07-07:00</updated>
  <id>http://embrangler.com/</id>
  <author>
    <name>Paul Craciunoiu</name>
@@ -179,20 +179,38 @@
 &lt;p&gt;We&amp;#8217;re using jQuery on &lt;a href='http://support.mozilla.com'&gt;SUMO&lt;/a&gt;, so I wrote two jQuery extensions:&lt;/p&gt;
 
 &lt;ul&gt;
-&lt;li&gt;jQuery.fn.ajaxSubmitInput(options) &amp;#8211; wraps an &lt;code&gt;&amp;lt;input type=&amp;quot;file&amp;gt;&amp;quot;&lt;/code&gt; in a &lt;code&gt;&amp;lt;form&amp;gt;&lt;/code&gt; and creates an &lt;code&gt;&amp;lt;iframe&amp;gt;&lt;/code&gt; to which that form posts. To get around Django&amp;#8217;s csrf protection, it also copies the &lt;code&gt;csrfmiddlewaretoken&lt;/code&gt; hidden input into the form. You can&amp;#8217;t clone a file input for security reasons (nor can you change or access its value), so you need to wrap it in a form.&lt;/li&gt;
+&lt;li&gt;jQuery.fn.ajaxSubmitInput(options) &amp;#8211; wraps an &lt;code&gt;&amp;lt;input type=&amp;quot;file&amp;quot;&amp;gt;&lt;/code&gt; in a &lt;code&gt;&amp;lt;form&amp;gt;&lt;/code&gt; and creates an &lt;code&gt;&amp;lt;iframe&amp;gt;&lt;/code&gt; to which that form posts. To get around Django&amp;#8217;s csrf protection, it also copies the &lt;code&gt;csrfmiddlewaretoken&lt;/code&gt; hidden input into the form. You can&amp;#8217;t clone a file input for security reasons (nor can you change or access its value), so you need to wrap it in a form.&lt;/li&gt;
 
 &lt;li&gt;jQuery.fn.wrapDeleteInput(options) &amp;#8211; wraps an &lt;code&gt;input&amp;lt;type=&amp;quot;submit&amp;quot;&amp;gt;&lt;/code&gt; in a &lt;code&gt;&amp;lt;form&amp;gt;&lt;/code&gt; and creates an &lt;code&gt;&amp;lt;iframe&amp;gt;&lt;/code&gt; to which that form posts.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;These two pretty much summarize the process:&lt;/p&gt;
 
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;when the user changes the value of the file input, post the form&lt;/p&gt;
+
 &lt;ul&gt;
-&lt;li&gt;when the user changes the value of the file input, post the form ** show some progress while the file is uploading&lt;/li&gt;
-
-&lt;li&gt;once the file is done uploading, show a thumbnail of the image ** also create the delete input and wrap it in the form using &lt;code&gt;wrapDeleteInput()&lt;/code&gt;&lt;/li&gt;
-
-&lt;li&gt;when the user clicks on the delete button, post the action ** show some progress while the file is being deleted&lt;/li&gt;
+&lt;li&gt;show some progress while the file is uploading&lt;/li&gt;
 &lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;once the file is done uploading, show a thumbnail of the image&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;also create the delete input and wrap it in the form using &lt;code&gt;wrapDeleteInput()&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;when the user clicks on the delete button, post the action&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;show some progress while the file is being deleted&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
 
 &lt;h2 id='a_note_about_graceful_degradation'&gt;A note about graceful degradation&lt;/h2&gt;
 

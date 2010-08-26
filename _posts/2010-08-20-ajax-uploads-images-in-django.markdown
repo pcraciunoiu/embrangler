@@ -123,17 +123,20 @@ Now, the magical JavaScript!
 
 We're using jQuery on [SUMO](http://support.mozilla.com), so I wrote two jQuery extensions:
 
-* jQuery.fn.ajaxSubmitInput(options) -- wraps an `<input type="file>"` in a `<form>` and creates an `<iframe>` to which that form posts. To get around Django's csrf protection, it also copies the `csrfmiddlewaretoken` hidden input into the form. You can't clone a file input for security reasons (nor can you change or access its value), so you need to wrap it in a form.
+* jQuery.fn.ajaxSubmitInput(options) -- wraps an `<input type="file">` in a `<form>` and creates an `<iframe>` to which that form posts. To get around Django's csrf protection, it also copies the `csrfmiddlewaretoken` hidden input into the form. You can't clone a file input for security reasons (nor can you change or access its value), so you need to wrap it in a form.
 * jQuery.fn.wrapDeleteInput(options) -- wraps an `input<type="submit">` in a `<form>` and creates an `<iframe>` to which that form posts.
 
 These two pretty much summarize the process:
 
-- when the user changes the value of the file input, post the form
-** show some progress while the file is uploading
-- once the file is done uploading, show a thumbnail of the image
-** also create the delete input and wrap it in the form using `wrapDeleteInput()`
-- when the user clicks on the delete button, post the action
-** show some progress while the file is being deleted
+1. when the user changes the value of the file input, post the form
+
+	* show some progress while the file is uploading
+1. once the file is done uploading, show a thumbnail of the image
+
+	* also create the delete input and wrap it in the form using `wrapDeleteInput()`
+1. when the user clicks on the delete button, post the action
+
+	* show some progress while the file is being deleted
 
 
 ## A note about graceful degradation

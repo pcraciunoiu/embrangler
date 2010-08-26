@@ -191,20 +191,38 @@
 <p>We&#8217;re using jQuery on <a href='http://support.mozilla.com'>SUMO</a>, so I wrote two jQuery extensions:</p>
 
 <ul>
-<li>jQuery.fn.ajaxSubmitInput(options) &#8211; wraps an <code>&lt;input type=&quot;file&gt;&quot;</code> in a <code>&lt;form&gt;</code> and creates an <code>&lt;iframe&gt;</code> to which that form posts. To get around Django&#8217;s csrf protection, it also copies the <code>csrfmiddlewaretoken</code> hidden input into the form. You can&#8217;t clone a file input for security reasons (nor can you change or access its value), so you need to wrap it in a form.</li>
+<li>jQuery.fn.ajaxSubmitInput(options) &#8211; wraps an <code>&lt;input type=&quot;file&quot;&gt;</code> in a <code>&lt;form&gt;</code> and creates an <code>&lt;iframe&gt;</code> to which that form posts. To get around Django&#8217;s csrf protection, it also copies the <code>csrfmiddlewaretoken</code> hidden input into the form. You can&#8217;t clone a file input for security reasons (nor can you change or access its value), so you need to wrap it in a form.</li>
 
 <li>jQuery.fn.wrapDeleteInput(options) &#8211; wraps an <code>input&lt;type=&quot;submit&quot;&gt;</code> in a <code>&lt;form&gt;</code> and creates an <code>&lt;iframe&gt;</code> to which that form posts.</li>
 </ul>
 
 <p>These two pretty much summarize the process:</p>
 
+<ol>
+<li>
+<p>when the user changes the value of the file input, post the form</p>
+
 <ul>
-<li>when the user changes the value of the file input, post the form ** show some progress while the file is uploading</li>
-
-<li>once the file is done uploading, show a thumbnail of the image ** also create the delete input and wrap it in the form using <code>wrapDeleteInput()</code></li>
-
-<li>when the user clicks on the delete button, post the action ** show some progress while the file is being deleted</li>
+<li>show some progress while the file is uploading</li>
 </ul>
+</li>
+
+<li>
+<p>once the file is done uploading, show a thumbnail of the image</p>
+
+<ul>
+<li>also create the delete input and wrap it in the form using <code>wrapDeleteInput()</code></li>
+</ul>
+</li>
+
+<li>
+<p>when the user clicks on the delete button, post the action</p>
+
+<ul>
+<li>show some progress while the file is being deleted</li>
+</ul>
+</li>
+</ol>
 
 <h2 id='a_note_about_graceful_degradation'>A note about graceful degradation</h2>
 
