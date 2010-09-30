@@ -4,13 +4,64 @@
  <title>Disembrangling Programming</title>
  <link href="http://embrangler.com/tag/django/atom.xml" rel="self"/>
  <link href="http://embrangler.com/tag/django"/>
- <updated>2010-08-26T21:01:24-07:00</updated>
+ <updated>2010-09-30T10:45:54-07:00</updated>
  <id>http://embrangler.com/</id>
  <author>
    <name>Paul Craciunoiu</name>
    <email>paul@craciunoiu.net</email>
  </author>
 
+ 
+ <entry>
+   <title>Python debugging (pdb) - quick tip</title>
+   <link href="http://embrangler.com/2010/09/python-debugging-pdb---quick-tip"/>
+   <updated>2010-09-30T00:00:00-07:00</updated>
+   <id>http://embrangler.com/2010/09/python-debugging-pdb---quick-tip</id>
+   <content type="html">&lt;p&gt;Sometimes you want to use multiple breakpoints like so:&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='python'&gt;&lt;span class='c'&gt;# some function/file...&lt;/span&gt;
+&lt;span class='kn'&gt;import&lt;/span&gt; &lt;span class='nn'&gt;pdb&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt; &lt;span class='n'&gt;pdb&lt;/span&gt;&lt;span class='o'&gt;.&lt;/span&gt;&lt;span class='n'&gt;set_trace&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt;
+&lt;span class='n'&gt;some_python_code_on_one_line&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt;
+
+&lt;span class='c'&gt;# some other function/file...&lt;/span&gt;
+&lt;span class='kn'&gt;import&lt;/span&gt; &lt;span class='nn'&gt;pdb&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt; &lt;span class='n'&gt;pdb&lt;/span&gt;&lt;span class='o'&gt;.&lt;/span&gt;&lt;span class='n'&gt;set_trace&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt;
+&lt;span class='n'&gt;some_other_python_code_on_one_line&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;I personally get lost sometimes, tracking through many files and having to read the method name and remember where exactly it is. So it can help me keep track if I leave myself a message:&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='python'&gt;&lt;span class='c'&gt;# some function/file...&lt;/span&gt;
+&lt;span class='kn'&gt;import&lt;/span&gt; &lt;span class='nn'&gt;pdb&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt; &lt;span class='n'&gt;pdb&lt;/span&gt;&lt;span class='o'&gt;.&lt;/span&gt;&lt;span class='n'&gt;set_trace&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt;
+&lt;span class='n'&gt;s&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='s'&gt;&amp;#39;Some function/file&amp;#39;&lt;/span&gt;
+&lt;span class='n'&gt;some_python_code_on_one_line&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt;
+
+&lt;span class='c'&gt;# some other function/file...&lt;/span&gt;
+&lt;span class='kn'&gt;import&lt;/span&gt; &lt;span class='nn'&gt;pdb&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt; &lt;span class='n'&gt;pdb&lt;/span&gt;&lt;span class='o'&gt;.&lt;/span&gt;&lt;span class='n'&gt;set_trace&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt;
+&lt;span class='n'&gt;s&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='s'&gt;&amp;#39;Some other function/file&amp;#39;&lt;/span&gt;
+&lt;span class='n'&gt;some_other_python_code_on_one_line&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;In some cases (when running django on my mac, for example), I can even do this:&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='python'&gt;&lt;span class='c'&gt;# some function/file...&lt;/span&gt;
+&lt;span class='kn'&gt;import&lt;/span&gt; &lt;span class='nn'&gt;pdb&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt; &lt;span class='n'&gt;pdb&lt;/span&gt;&lt;span class='o'&gt;.&lt;/span&gt;&lt;span class='n'&gt;set_trace&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt;
+&lt;span class='sd'&gt;&amp;quot;&amp;quot;&amp;quot;Some function/file&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+&lt;span class='n'&gt;some_python_code_on_one_line&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;&amp;#8230; so it actually looks like a bit cleaner, like a comment)&lt;/p&gt;
+
+&lt;p&gt;So instead of:&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='python'&gt;&lt;span class='o'&gt;&amp;gt;&lt;/span&gt; &lt;span class='o'&gt;/&lt;/span&gt;&lt;span class='n'&gt;path&lt;/span&gt;&lt;span class='o'&gt;/&lt;/span&gt;&lt;span class='n'&gt;to&lt;/span&gt;&lt;span class='o'&gt;/&lt;/span&gt;&lt;span class='n'&gt;some&lt;/span&gt;&lt;span class='o'&gt;/&lt;/span&gt;&lt;span class='nb'&gt;file&lt;/span&gt;&lt;span class='o'&gt;.&lt;/span&gt;&lt;span class='n'&gt;py&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='c'&gt;##)method()&lt;/span&gt;
+&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt; &lt;span class='n'&gt;some_python_code_on_one_line&lt;/span&gt;
+&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='n'&gt;Pdb&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;You see:&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='python'&gt;    &lt;span class='o'&gt;&amp;gt;&lt;/span&gt; &lt;span class='o'&gt;/&lt;/span&gt;&lt;span class='n'&gt;path&lt;/span&gt;&lt;span class='o'&gt;/&lt;/span&gt;&lt;span class='n'&gt;to&lt;/span&gt;&lt;span class='o'&gt;/&lt;/span&gt;&lt;span class='n'&gt;some&lt;/span&gt;&lt;span class='o'&gt;/&lt;/span&gt;&lt;span class='nb'&gt;file&lt;/span&gt;&lt;span class='o'&gt;.&lt;/span&gt;&lt;span class='n'&gt;py&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='c'&gt;##)some_function()&lt;/span&gt;
+    &lt;span class='o'&gt;-&amp;gt;&lt;/span&gt; &lt;span class='n'&gt;s&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='s'&gt;&amp;#39;Some function/file&amp;#39;&lt;/span&gt;
+    &lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='n'&gt;Pdb&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Hope that helps someone.&lt;/p&gt;</content>
+ </entry>
  
  <entry>
    <title>Django and AJAX image uploads</title>

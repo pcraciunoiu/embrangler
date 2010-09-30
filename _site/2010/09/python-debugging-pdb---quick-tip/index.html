@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Python debugging (pdb) - quick tip</title>
+    <meta name="author" content="Paul Craciunoiu" />
+    <link href="http://feeds.feedburner.com/embrangler" rel="alternate" title="Disembrangling Programming" type="application/atom+xml" />
+    
+    <link type="image/x-icon" href="/favicon.ico" rel="shortcut icon">
+
+    <!-- syntax highlighting CSS -->
+    <link rel="stylesheet" href="/css/syntax.css" type="text/css" />
+
+    <!-- Homepage CSS -->
+    <link rel="stylesheet" href="/css/main.css" type="text/css" media="screen, projection" />
+
+    
+      <!-- Tag feed -->
+      
+        <link href="/tag/django/atom.xml"
+	      rel="alternate"
+              type="application/atom+xml"
+              title="Disembrangling Programming (tag: django)" />
+      
+        <link href="/tag/python/atom.xml"
+	      rel="alternate"
+              type="application/atom+xml"
+              title="Disembrangling Programming (tag: python)" />
+      
+        <link href="/tag/debugging/atom.xml"
+	      rel="alternate"
+              type="application/atom+xml"
+              title="Disembrangling Programming (tag: debugging)" />
+      
+    
+</head>
+<body>
+
+<div class="site">
+
+    <div id="header" role="banner">
+        <h1 class="title">
+            <a href="/">Disembrangling Programming</a>
+        </h1>
+        <h2 class="subtitle">
+            <a href="/about" title="About Paul Craciunoiu">The simple life of a web developer &mdash; by Paul Craciunoiu<span> (About)</span></a>
+        </h2>
+    </div>
+    <div id="content" role="main">    
+    <div id="post">
+  <h1>Python debugging (pdb) - quick tip</h1>
+  <div class="meta">
+    
+    <div class="tags">Tags:
+      
+        <a href="/tag/django/">django</a>,
+        
+      
+        <a href="/tag/python/">python</a>,
+        
+      
+        <a href="/tag/debugging/">debugging</a>
+      
+    </div>
+    
+    <time>30 Sep 2010</time>
+  </div>
+  <p>Sometimes you want to use multiple breakpoints like so:</p>
+<div class='highlight'><pre><code class='python'><span class='c'># some function/file...</span>
+<span class='kn'>import</span> <span class='nn'>pdb</span><span class='p'>;</span> <span class='n'>pdb</span><span class='o'>.</span><span class='n'>set_trace</span><span class='p'>()</span>
+<span class='n'>some_python_code_on_one_line</span><span class='p'>()</span>
+
+<span class='c'># some other function/file...</span>
+<span class='kn'>import</span> <span class='nn'>pdb</span><span class='p'>;</span> <span class='n'>pdb</span><span class='o'>.</span><span class='n'>set_trace</span><span class='p'>()</span>
+<span class='n'>some_other_python_code_on_one_line</span><span class='p'>()</span>
+</code></pre>
+</div>
+<p>I personally get lost sometimes, tracking through many files and having to read the method name and remember where exactly it is. So it can help me keep track if I leave myself a message:</p>
+<div class='highlight'><pre><code class='python'><span class='c'># some function/file...</span>
+<span class='kn'>import</span> <span class='nn'>pdb</span><span class='p'>;</span> <span class='n'>pdb</span><span class='o'>.</span><span class='n'>set_trace</span><span class='p'>()</span>
+<span class='n'>s</span> <span class='o'>=</span> <span class='s'>&#39;Some function/file&#39;</span>
+<span class='n'>some_python_code_on_one_line</span><span class='p'>()</span>
+
+<span class='c'># some other function/file...</span>
+<span class='kn'>import</span> <span class='nn'>pdb</span><span class='p'>;</span> <span class='n'>pdb</span><span class='o'>.</span><span class='n'>set_trace</span><span class='p'>()</span>
+<span class='n'>s</span> <span class='o'>=</span> <span class='s'>&#39;Some other function/file&#39;</span>
+<span class='n'>some_other_python_code_on_one_line</span><span class='p'>()</span>
+</code></pre>
+</div>
+<p>In some cases (when running django on my mac, for example), I can even do this:</p>
+<div class='highlight'><pre><code class='python'><span class='c'># some function/file...</span>
+<span class='kn'>import</span> <span class='nn'>pdb</span><span class='p'>;</span> <span class='n'>pdb</span><span class='o'>.</span><span class='n'>set_trace</span><span class='p'>()</span>
+<span class='sd'>&quot;&quot;&quot;Some function/file&quot;&quot;&quot;</span>
+<span class='n'>some_python_code_on_one_line</span><span class='p'>()</span>
+</code></pre>
+</div>
+<p>&#8230; so it actually looks like a bit cleaner, like a comment)</p>
+
+<p>So instead of:</p>
+<div class='highlight'><pre><code class='python'><span class='o'>&gt;</span> <span class='o'>/</span><span class='n'>path</span><span class='o'>/</span><span class='n'>to</span><span class='o'>/</span><span class='n'>some</span><span class='o'>/</span><span class='nb'>file</span><span class='o'>.</span><span class='n'>py</span><span class='p'>(</span><span class='c'>##)method()</span>
+<span class='o'>-&gt;</span> <span class='n'>some_python_code_on_one_line</span>
+<span class='p'>(</span><span class='n'>Pdb</span><span class='p'>)</span>
+</code></pre>
+</div>
+<p>You see:</p>
+<div class='highlight'><pre><code class='python'>    <span class='o'>&gt;</span> <span class='o'>/</span><span class='n'>path</span><span class='o'>/</span><span class='n'>to</span><span class='o'>/</span><span class='n'>some</span><span class='o'>/</span><span class='nb'>file</span><span class='o'>.</span><span class='n'>py</span><span class='p'>(</span><span class='c'>##)some_function()</span>
+    <span class='o'>-&gt;</span> <span class='n'>s</span> <span class='o'>=</span> <span class='s'>&#39;Some function/file&#39;</span>
+    <span class='p'>(</span><span class='n'>Pdb</span><span class='p'>)</span>
+</code></pre>
+</div>
+<p>Hope that helps someone.</p>
+</div>
+
+<div id="related">
+  <h2>Related Posts</h2>
+  <ul>
+    
+      <li><a href="/2010/03/embrangler-moving-to-jekyll">Embrangler: Moving to Jekyll</a> &mdash; 21 Mar 2010</li>
+    
+      <li><a href="/2010/08/ajax-uploads-images-in-django">Django and AJAX image uploads</a> &mdash; 20 Aug 2010</li>
+    
+      <li><a href="/2010/01/my-sumo-local-development-environment">My SUMO local development environment</a> &mdash; 04 Jan 2010</li>
+    
+  </ul>
+</div>
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  (function() {
+   var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+   dsq.src = 'http://blogpaulcraciunoiu.disqus.com/embed.js';
+   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript=blogpaulcraciunoiu">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+<script type="text/javascript">
+//<![CDATA[
+(function() {
+    var links = document.getElementsByTagName('a');
+    var query = '?';
+    for(var i = 0; i < links.length; i++) {
+    if(links[i].href.indexOf('#disqus_thread') >= 0) {
+        query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
+    }
+    }
+    document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/blogpaulcraciunoiu/get_num_replies.js' + query + '"></' + 'script>');
+})();
+//]]>
+</script>
+
+    </div>
+
+    <div id="footer" role="contentinfo">
+        <div class="about">
+        <p>I work as a web developer for <a href="http://mozilla.com">Mozilla</a>, with main focus on <a href="http://www.djangoproject.com/">Django</a>, Python, and PHP. Occasionally, I write tutorials or post other information I find interesting.</p>
+        <p>I enjoy doing freelance work for other websites, mostly non-profits. If you're interested in my services, contact me through one of the links below.</p>
+        </p>
+        </div>
+        <div class="contact">
+            <a href="http://twitter.com/embrangler/">Follow me</a> -- 
+            <a href="http://craciunoiu.net/contact/paul">Email me</a> -- 
+            <a href="http://github.com/pcraciunoiu/">My GitHub</a>
+        </div>
+        <div class="quote">
+        <p>
+            Success is a journey, not a destination. The doing is often more important than the outcome. &mdash; <a href="http://quoteden.net/author/id/337">Arthur Robert Ashe, Jr</a>
+        </p>
+        <p>&copy; Paul Craciunoiu. Some rights reserved. Brought to you by <a href="http://wiki.github.com/mojombo/jekyll/">Jekyll</a></p>
+        </div>
+    </div>
+</div><!-- site -->
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-15382775-1");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+<!-- /Google Analytics -->
+
+</body>
+</html>

@@ -1,0 +1,13 @@
+---
+layout: default
+title: Posts tagged "debugging"
+tag: debugging
+type: "Debugging"
+---
+    <h1 class="title" id="debugging">Posts tagged <em>debugging</em></h1>
+
+    <ul>
+      {% for post in site.tags['debugging'] %}
+      {% include item.html %}
+      {% endfor %}
+    </ul>

@@ -4,13 +4,64 @@
  <title>Disembrangling Programming - Paul Craciunoiu</title>
  <link href="http://embrangler.com/atom.xml" rel="self"/>
  <link href="http://embrangler.com/"/>
- <updated>2010-08-26T21:01:24-07:00</updated>
+ <updated>2010-09-30T10:45:54-07:00</updated>
  <id>http://embrangler.com/</id>
  <author>
    <name>Paul Craciunoiu</name>
    <email>paul@craciunoiu.net</email>
  </author>
 
+ 
+ <entry>
+   <title>Python debugging (pdb) - quick tip</title>
+   <link href="http://embrangler.com/2010/09/python-debugging-pdb---quick-tip"/>
+   <updated>2010-09-30T00:00:00-07:00</updated>
+   <id>http://embrangler.com/2010/09/python-debugging-pdb---quick-tip</id>
+   <content type="html">&lt;p&gt;Sometimes you want to use multiple breakpoints like so:&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='python'&gt;&lt;span class='c'&gt;# some function/file...&lt;/span&gt;
+&lt;span class='kn'&gt;import&lt;/span&gt; &lt;span class='nn'&gt;pdb&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt; &lt;span class='n'&gt;pdb&lt;/span&gt;&lt;span class='o'&gt;.&lt;/span&gt;&lt;span class='n'&gt;set_trace&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt;
+&lt;span class='n'&gt;some_python_code_on_one_line&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt;
+
+&lt;span class='c'&gt;# some other function/file...&lt;/span&gt;
+&lt;span class='kn'&gt;import&lt;/span&gt; &lt;span class='nn'&gt;pdb&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt; &lt;span class='n'&gt;pdb&lt;/span&gt;&lt;span class='o'&gt;.&lt;/span&gt;&lt;span class='n'&gt;set_trace&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt;
+&lt;span class='n'&gt;some_other_python_code_on_one_line&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;I personally get lost sometimes, tracking through many files and having to read the method name and remember where exactly it is. So it can help me keep track if I leave myself a message:&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='python'&gt;&lt;span class='c'&gt;# some function/file...&lt;/span&gt;
+&lt;span class='kn'&gt;import&lt;/span&gt; &lt;span class='nn'&gt;pdb&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt; &lt;span class='n'&gt;pdb&lt;/span&gt;&lt;span class='o'&gt;.&lt;/span&gt;&lt;span class='n'&gt;set_trace&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt;
+&lt;span class='n'&gt;s&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='s'&gt;&amp;#39;Some function/file&amp;#39;&lt;/span&gt;
+&lt;span class='n'&gt;some_python_code_on_one_line&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt;
+
+&lt;span class='c'&gt;# some other function/file...&lt;/span&gt;
+&lt;span class='kn'&gt;import&lt;/span&gt; &lt;span class='nn'&gt;pdb&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt; &lt;span class='n'&gt;pdb&lt;/span&gt;&lt;span class='o'&gt;.&lt;/span&gt;&lt;span class='n'&gt;set_trace&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt;
+&lt;span class='n'&gt;s&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='s'&gt;&amp;#39;Some other function/file&amp;#39;&lt;/span&gt;
+&lt;span class='n'&gt;some_other_python_code_on_one_line&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;In some cases (when running django on my mac, for example), I can even do this:&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='python'&gt;&lt;span class='c'&gt;# some function/file...&lt;/span&gt;
+&lt;span class='kn'&gt;import&lt;/span&gt; &lt;span class='nn'&gt;pdb&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt; &lt;span class='n'&gt;pdb&lt;/span&gt;&lt;span class='o'&gt;.&lt;/span&gt;&lt;span class='n'&gt;set_trace&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt;
+&lt;span class='sd'&gt;&amp;quot;&amp;quot;&amp;quot;Some function/file&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+&lt;span class='n'&gt;some_python_code_on_one_line&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;&amp;#8230; so it actually looks like a bit cleaner, like a comment)&lt;/p&gt;
+
+&lt;p&gt;So instead of:&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='python'&gt;&lt;span class='o'&gt;&amp;gt;&lt;/span&gt; &lt;span class='o'&gt;/&lt;/span&gt;&lt;span class='n'&gt;path&lt;/span&gt;&lt;span class='o'&gt;/&lt;/span&gt;&lt;span class='n'&gt;to&lt;/span&gt;&lt;span class='o'&gt;/&lt;/span&gt;&lt;span class='n'&gt;some&lt;/span&gt;&lt;span class='o'&gt;/&lt;/span&gt;&lt;span class='nb'&gt;file&lt;/span&gt;&lt;span class='o'&gt;.&lt;/span&gt;&lt;span class='n'&gt;py&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='c'&gt;##)method()&lt;/span&gt;
+&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt; &lt;span class='n'&gt;some_python_code_on_one_line&lt;/span&gt;
+&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='n'&gt;Pdb&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;You see:&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='python'&gt;    &lt;span class='o'&gt;&amp;gt;&lt;/span&gt; &lt;span class='o'&gt;/&lt;/span&gt;&lt;span class='n'&gt;path&lt;/span&gt;&lt;span class='o'&gt;/&lt;/span&gt;&lt;span class='n'&gt;to&lt;/span&gt;&lt;span class='o'&gt;/&lt;/span&gt;&lt;span class='n'&gt;some&lt;/span&gt;&lt;span class='o'&gt;/&lt;/span&gt;&lt;span class='nb'&gt;file&lt;/span&gt;&lt;span class='o'&gt;.&lt;/span&gt;&lt;span class='n'&gt;py&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='c'&gt;##)some_function()&lt;/span&gt;
+    &lt;span class='o'&gt;-&amp;gt;&lt;/span&gt; &lt;span class='n'&gt;s&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='s'&gt;&amp;#39;Some function/file&amp;#39;&lt;/span&gt;
+    &lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='n'&gt;Pdb&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Hope that helps someone.&lt;/p&gt;</content>
+ </entry>
  
  <entry>
    <title>Django and AJAX image uploads</title>
@@ -1052,80 +1103,6 @@
 &lt;li&gt;finish &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=558105'&gt;adding WebTrends to SUMO for tracking&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;/ul&gt;</content>
- </entry>
- 
- <entry>
-   <title>April 5-9 status</title>
-   <link href="http://embrangler.com/2010/04/weekly-update-apr-5-9"/>
-   <updated>2010-04-11T00:00:00-07:00</updated>
-   <id>http://embrangler.com/2010/04/weekly-update-apr-5-9</id>
-   <content type="html">&lt;h2 id='last_week_april_59'&gt;Last week (April 5-9)&lt;/h2&gt;
-
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;kitsune&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;r? &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=554740'&gt;exclude staging articles from search&lt;/a&gt;, which also includes &lt;a href='http://github.com/jsocol/kitsune/commit/ef50d5fcd64f65f89ff688874f3fa920f69ff216'&gt;sphinx tests&lt;/a&gt;, reviewed again later after &lt;a href='http://github.com/jsocol/kitsune/commit/c2a1356e084a68de17f20376ad051c918ecfd172'&gt;a fix to not require FORCE_DB&lt;/a&gt;&lt;/li&gt;
-
-&lt;li&gt;r? &lt;a href='http://github.com/jsocol/kitsune/commit/dbdb116aecda1332c932e278786dba2719c71d09'&gt;l10n -&amp;gt; tower rename&lt;/a&gt;&lt;/li&gt;
-
-&lt;li&gt;r? &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=556810'&gt;add JINJA_CONFIG() for string extraction and caching&lt;/a&gt;&lt;/li&gt;
-
-&lt;li&gt;quick look at &lt;a href='http://github.com/jsocol/kitsune/commit/f159b8f25ea78c38cc7e60fae6004ccb5e1273c6'&gt;minify in kitsune&lt;/a&gt;, TODO next week&lt;/li&gt;
-
-&lt;li&gt;fixed &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=556418'&gt;duplicate page param in paginator URL&lt;/a&gt;&lt;/li&gt;
-
-&lt;li&gt;spent most of the week &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=554210'&gt;converting our current database from latin1 to utf8&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-
-&lt;li&gt;
-&lt;p&gt;tiki&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;started work on &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=558105'&gt;adding WebTrends to SUMO for tracking&lt;/a&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=555003'&gt;push desktop 1.5.3 on Tuesday&lt;/a&gt; &amp;#8212; &lt;a href='https://bugzilla.mozilla.org/buglist.cgi?quicksearch=ALL+product%3Asupport+milestone%3A1.5.3'&gt;see bugs&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id='this_week_april_1216'&gt;This week (April 12-16)&lt;/h2&gt;
-
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;kitsune&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;r? &lt;a href='http://github.com/jsocol/kitsune/commits/bug-550515'&gt;minify bug 550515&lt;/a&gt;&lt;/li&gt;
-
-&lt;li&gt;r? &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=553131'&gt;tiki patch for django sessions&lt;/a&gt;&lt;/li&gt;
-
-&lt;li&gt;r? &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=558228'&gt;cool vim indenting in templates&lt;/a&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;strong&gt;finish up &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=554210'&gt;character encoding conversion&lt;/a&gt;&lt;/strong&gt;&lt;/li&gt;
-
-&lt;li&gt;finish up &lt;a href='http://github.com/pcraciunoiu/kitsune/commits/bug-555249'&gt;when to trigger advanced search&lt;/a&gt;&lt;/li&gt;
-
-&lt;li&gt;finish getting sessions into kitsune, i.e. fix any issues spotted by davedash/jbalogh/jsocol on &lt;a href='http://github.com/pcraciunoiu/kitsune/tree/bug-553131'&gt;bug 553131&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-
-&lt;li&gt;
-&lt;p&gt;tiki&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;finish &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=558105'&gt;adding WebTrends to SUMO for tracking&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id='stretch_goals'&gt;Stretch goals&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=553734'&gt;search summaries are Jinja-friendly&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;</content>
  </entry>
  
