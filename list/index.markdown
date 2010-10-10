@@ -33,8 +33,8 @@ __Last updated: _10/10/10___
 1. Own a [hammock](http://en.wikipedia.org/wiki/Hammock).
 1. <span class="done">Visit Paris.</span>
 1. <span class="done">Visit Yosemite National Park.</span>
-	* <span class="done">See Vernal, Nevada, Bridalveil waterfalls.</span>
-	* <span class="done">Watch the sunset from Sentinel's Dome.</span>
+	* See Vernal, Nevada, Bridalveil waterfalls.
+	* Watch the sunset from Sentinel's Dome.
 1. <span class="done">Watch the sunset from Carmel Beach, Monterey.</span>
 1. Have sex on a beach.
 1. Take a Ferrari or Lamborghini for a test drive.
