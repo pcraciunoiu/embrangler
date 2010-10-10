@@ -4,7 +4,7 @@
  <title>Disembrangling Programming - Paul Craciunoiu</title>
  <link href="http://embrangler.com/atom.xml" rel="self"/>
  <link href="http://embrangler.com/"/>
- <updated>2010-09-30T10:45:54-07:00</updated>
+ <updated>2010-10-10T01:44:36-07:00</updated>
  <id>http://embrangler.com/</id>
  <author>
    <name>Paul Craciunoiu</name>
@@ -46,7 +46,7 @@
 &lt;span class='n'&gt;some_python_code_on_one_line&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
-&lt;p&gt;&amp;#8230; so it actually looks like a bit cleaner, like a comment)&lt;/p&gt;
+&lt;p&gt;&amp;#8230; so it actually looks like a bit cleaner, like a comment.&lt;/p&gt;
 
 &lt;p&gt;So instead of:&lt;/p&gt;
 &lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='python'&gt;&lt;span class='o'&gt;&amp;gt;&lt;/span&gt; &lt;span class='o'&gt;/&lt;/span&gt;&lt;span class='n'&gt;path&lt;/span&gt;&lt;span class='o'&gt;/&lt;/span&gt;&lt;span class='n'&gt;to&lt;/span&gt;&lt;span class='o'&gt;/&lt;/span&gt;&lt;span class='n'&gt;some&lt;/span&gt;&lt;span class='o'&gt;/&lt;/span&gt;&lt;span class='nb'&gt;file&lt;/span&gt;&lt;span class='o'&gt;.&lt;/span&gt;&lt;span class='n'&gt;py&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='c'&gt;##)method()&lt;/span&gt;
