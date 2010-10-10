@@ -36,7 +36,7 @@ import pdb; pdb.set_trace()
 """Some function/file"""
 some_python_code_on_one_line()
 {% endhighlight %}
-... so it actually looks like a bit cleaner, like a comment)
+... so it actually looks like a bit cleaner, like a comment.
 
 So instead of:
 {% highlight python %}

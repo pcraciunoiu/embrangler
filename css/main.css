@@ -142,18 +142,17 @@ h2.subtitle {
     font-variant: small-caps;
 }
 
-h2.subtitle a span {
-    color: #999;
+h2.subtitle a span, h2.subtitle a.the-list {
     display: none;
+}
+
+h2.subtitle:hover a.the-list, h2.subtitle:hover span {
+    display: inline;
 }
 
 h2.subtitle a {
     border-bottom: none;
     color: #999;
-}
-
-.subtitle a:hover span {
-    display: inline;
 }
 
 .site {
@@ -223,6 +222,16 @@ h2.subtitle a {
 
 .post h2 {
     margin: 0;
+}
+
+/*****************************************************************************/
+/*
+/* Posts
+/*
+/*****************************************************************************/
+
+span.done {
+    text-decoration: line-through;
 }
 
 /*****************************************************************************/
