@@ -87,4 +87,5 @@ __Last updated: _10/10/10___
 1. Build a large sand castle (e.g. longer than 0.5m).
 1. Ride a horse.
 1. Ski at Lake Tahoe.
-
+1. Be part of a start-up company.
+1. Be lost at sea.

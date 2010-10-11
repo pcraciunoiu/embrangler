@@ -73,7 +73,7 @@ First, we'll look at how the server handles files sent to it.
 ### Model
 I created an app called `upload` with an ImageAttachment model, like so:
 
-[apps/upload/models.py](http://github.com/pcraciunoiu/kitsune/blob/3387483e4f401fc04045180a8caa1e3f141d32ee/apps/upload/models.py):
+[apps/upload/models.py](http://github.com/pcraciunoiu/kitsune/blob/466b65ad885118f0fb8d14f706ea9efa21f49edd/apps/upload/models.py):
 {% highlight python %}
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -100,7 +100,7 @@ This represents an image attached to a piece of content (using a generic foreign
 
 
 ### Form
-[apps/upload/forms.py](http://github.com/pcraciunoiu/kitsune/blob/3387483e4f401fc04045180a8caa1e3f141d32ee/apps/upload/forms.py):
+[apps/upload/forms.py](http://github.com/pcraciunoiu/kitsune/blob/466b65ad885118f0fb8d14f706ea9efa21f49edd/apps/upload/forms.py):
 {% highlight python %}
 from django import forms
 
@@ -112,11 +112,11 @@ class ImageUploadForm(forms.Form):
 
 
 ### View (uploading image, saving to disk)
-The view is a bit more complicated, so I won't go into the details. But you can [have a look at the entire app](http://github.com/pcraciunoiu/kitsune/blob/3387483e4f401fc04045180a8caa1e3f141d32ee/apps/upload) and [contact me](#footer) if you have questions. Basically, the view does the file upload as you see in [Django's documentation](http://docs.djangoproject.com/en/dev/topics/http/file-uploads/). The function [`create_image_attachment`](http://github.com/pcraciunoiu/kitsune/blob/3387483e4f401fc04045180a8caa1e3f141d32ee/apps/upload/utils.py#L9) deals with the part about saving a file to disk.
+The view is a bit more complicated, so I won't go into the details. But you can [have a look at the entire app](http://github.com/pcraciunoiu/kitsune/blob/466b65ad885118f0fb8d14f706ea9efa21f49edd/apps/upload) and [contact me](#footer) if you have questions. Basically, the view does the file upload as you see in [Django's documentation](http://docs.djangoproject.com/en/dev/topics/http/file-uploads/). The function [`create_image_attachment`](http://github.com/pcraciunoiu/kitsune/blob/466b65ad885118f0fb8d14f706ea9efa21f49edd/apps/upload/utils.py#L9) deals with the part about saving a file to disk.
 
 
 ### Generating the thumbnail with PIL
-There is also a task for generating thumbnails, which is offloaded from the web server thread to improve performance. If you don't need that, you can just call generate_thumbnail directly, it's defined [here](http://github.com/pcraciunoiu/kitsune/blob/3387483e4f401fc04045180a8caa1e3f141d32ee/apps/upload/tasks.py).
+There is also a task for generating thumbnails, which is offloaded from the web server thread to improve performance. If you don't need that, you can just call generate_thumbnail directly, it's defined [here](http://github.com/pcraciunoiu/kitsune/blob/466b65ad885118f0fb8d14f706ea9efa21f49edd/apps/upload/tasks.py).
 
 
 ## Client side
