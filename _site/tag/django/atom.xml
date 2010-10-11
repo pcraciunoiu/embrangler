@@ -4,7 +4,7 @@
  <title>Disembrangling Programming</title>
  <link href="http://embrangler.com/tag/django/atom.xml" rel="self"/>
  <link href="http://embrangler.com/tag/django"/>
- <updated>2010-10-10T01:51:02-07:00</updated>
+ <updated>2010-10-11T09:23:56-07:00</updated>
  <id>http://embrangler.com/</id>
  <author>
    <name>Paul Craciunoiu</name>
@@ -180,7 +180,7 @@
 
 &lt;p&gt;I created an app called &lt;code&gt;upload&lt;/code&gt; with an ImageAttachment model, like so:&lt;/p&gt;
 
-&lt;p&gt;&lt;a href='http://github.com/pcraciunoiu/kitsune/blob/3387483e4f401fc04045180a8caa1e3f141d32ee/apps/upload/models.py'&gt;apps/upload/models.py&lt;/a&gt;:&lt;/p&gt;
+&lt;p&gt;&lt;a href='http://github.com/pcraciunoiu/kitsune/blob/466b65ad885118f0fb8d14f706ea9efa21f49edd/apps/upload/models.py'&gt;apps/upload/models.py&lt;/a&gt;:&lt;/p&gt;
 &lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='python'&gt;&lt;span class='kn'&gt;from&lt;/span&gt; &lt;span class='nn'&gt;django.conf&lt;/span&gt; &lt;span class='kn'&gt;import&lt;/span&gt; &lt;span class='n'&gt;settings&lt;/span&gt;
 &lt;span class='kn'&gt;from&lt;/span&gt; &lt;span class='nn'&gt;django.contrib.auth.models&lt;/span&gt; &lt;span class='kn'&gt;import&lt;/span&gt; &lt;span class='n'&gt;User&lt;/span&gt;
 &lt;span class='kn'&gt;from&lt;/span&gt; &lt;span class='nn'&gt;django.contrib.contenttypes.models&lt;/span&gt; &lt;span class='kn'&gt;import&lt;/span&gt; &lt;span class='n'&gt;ContentType&lt;/span&gt;
@@ -206,7 +206,7 @@
 
 &lt;h3 id='form'&gt;Form&lt;/h3&gt;
 
-&lt;p&gt;&lt;a href='http://github.com/pcraciunoiu/kitsune/blob/3387483e4f401fc04045180a8caa1e3f141d32ee/apps/upload/forms.py'&gt;apps/upload/forms.py&lt;/a&gt;:&lt;/p&gt;
+&lt;p&gt;&lt;a href='http://github.com/pcraciunoiu/kitsune/blob/466b65ad885118f0fb8d14f706ea9efa21f49edd/apps/upload/forms.py'&gt;apps/upload/forms.py&lt;/a&gt;:&lt;/p&gt;
 &lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='python'&gt;&lt;span class='kn'&gt;from&lt;/span&gt; &lt;span class='nn'&gt;django&lt;/span&gt; &lt;span class='kn'&gt;import&lt;/span&gt; &lt;span class='n'&gt;forms&lt;/span&gt;
 
 
@@ -217,11 +217,11 @@
 &lt;/div&gt;
 &lt;h3 id='view_uploading_image_saving_to_disk'&gt;View (uploading image, saving to disk)&lt;/h3&gt;
 
-&lt;p&gt;The view is a bit more complicated, so I won&amp;#8217;t go into the details. But you can &lt;a href='http://github.com/pcraciunoiu/kitsune/blob/3387483e4f401fc04045180a8caa1e3f141d32ee/apps/upload'&gt;have a look at the entire app&lt;/a&gt; and &lt;a href='#footer'&gt;contact me&lt;/a&gt; if you have questions. Basically, the view does the file upload as you see in &lt;a href='http://docs.djangoproject.com/en/dev/topics/http/file-uploads/'&gt;Django&amp;#8217;s documentation&lt;/a&gt;. The function &lt;a href='http://github.com/pcraciunoiu/kitsune/blob/3387483e4f401fc04045180a8caa1e3f141d32ee/apps/upload/utils.py#L9'&gt;&lt;code&gt;create_image_attachment&lt;/code&gt;&lt;/a&gt; deals with the part about saving a file to disk.&lt;/p&gt;
+&lt;p&gt;The view is a bit more complicated, so I won&amp;#8217;t go into the details. But you can &lt;a href='http://github.com/pcraciunoiu/kitsune/blob/466b65ad885118f0fb8d14f706ea9efa21f49edd/apps/upload'&gt;have a look at the entire app&lt;/a&gt; and &lt;a href='#footer'&gt;contact me&lt;/a&gt; if you have questions. Basically, the view does the file upload as you see in &lt;a href='http://docs.djangoproject.com/en/dev/topics/http/file-uploads/'&gt;Django&amp;#8217;s documentation&lt;/a&gt;. The function &lt;a href='http://github.com/pcraciunoiu/kitsune/blob/466b65ad885118f0fb8d14f706ea9efa21f49edd/apps/upload/utils.py#L9'&gt;&lt;code&gt;create_image_attachment&lt;/code&gt;&lt;/a&gt; deals with the part about saving a file to disk.&lt;/p&gt;
 
 &lt;h3 id='generating_the_thumbnail_with_pil'&gt;Generating the thumbnail with PIL&lt;/h3&gt;
 
-&lt;p&gt;There is also a task for generating thumbnails, which is offloaded from the web server thread to improve performance. If you don&amp;#8217;t need that, you can just call generate_thumbnail directly, it&amp;#8217;s defined &lt;a href='http://github.com/pcraciunoiu/kitsune/blob/3387483e4f401fc04045180a8caa1e3f141d32ee/apps/upload/tasks.py'&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;There is also a task for generating thumbnails, which is offloaded from the web server thread to improve performance. If you don&amp;#8217;t need that, you can just call generate_thumbnail directly, it&amp;#8217;s defined &lt;a href='http://github.com/pcraciunoiu/kitsune/blob/466b65ad885118f0fb8d14f706ea9efa21f49edd/apps/upload/tasks.py'&gt;here&lt;/a&gt;.&lt;/p&gt;
 
 &lt;h2 id='client_side'&gt;Client side&lt;/h2&gt;
 

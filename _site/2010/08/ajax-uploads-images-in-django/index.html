@@ -202,7 +202,7 @@
 
 <p>I created an app called <code>upload</code> with an ImageAttachment model, like so:</p>
 
-<p><a href='http://github.com/pcraciunoiu/kitsune/blob/3387483e4f401fc04045180a8caa1e3f141d32ee/apps/upload/models.py'>apps/upload/models.py</a>:</p>
+<p><a href='http://github.com/pcraciunoiu/kitsune/blob/466b65ad885118f0fb8d14f706ea9efa21f49edd/apps/upload/models.py'>apps/upload/models.py</a>:</p>
 <div class='highlight'><pre><code class='python'><span class='kn'>from</span> <span class='nn'>django.conf</span> <span class='kn'>import</span> <span class='n'>settings</span>
 <span class='kn'>from</span> <span class='nn'>django.contrib.auth.models</span> <span class='kn'>import</span> <span class='n'>User</span>
 <span class='kn'>from</span> <span class='nn'>django.contrib.contenttypes.models</span> <span class='kn'>import</span> <span class='n'>ContentType</span>
@@ -228,7 +228,7 @@
 
 <h3 id='form'>Form</h3>
 
-<p><a href='http://github.com/pcraciunoiu/kitsune/blob/3387483e4f401fc04045180a8caa1e3f141d32ee/apps/upload/forms.py'>apps/upload/forms.py</a>:</p>
+<p><a href='http://github.com/pcraciunoiu/kitsune/blob/466b65ad885118f0fb8d14f706ea9efa21f49edd/apps/upload/forms.py'>apps/upload/forms.py</a>:</p>
 <div class='highlight'><pre><code class='python'><span class='kn'>from</span> <span class='nn'>django</span> <span class='kn'>import</span> <span class='n'>forms</span>
 
 
@@ -239,11 +239,11 @@
 </div>
 <h3 id='view_uploading_image_saving_to_disk'>View (uploading image, saving to disk)</h3>
 
-<p>The view is a bit more complicated, so I won&#8217;t go into the details. But you can <a href='http://github.com/pcraciunoiu/kitsune/blob/3387483e4f401fc04045180a8caa1e3f141d32ee/apps/upload'>have a look at the entire app</a> and <a href='#footer'>contact me</a> if you have questions. Basically, the view does the file upload as you see in <a href='http://docs.djangoproject.com/en/dev/topics/http/file-uploads/'>Django&#8217;s documentation</a>. The function <a href='http://github.com/pcraciunoiu/kitsune/blob/3387483e4f401fc04045180a8caa1e3f141d32ee/apps/upload/utils.py#L9'><code>create_image_attachment</code></a> deals with the part about saving a file to disk.</p>
+<p>The view is a bit more complicated, so I won&#8217;t go into the details. But you can <a href='http://github.com/pcraciunoiu/kitsune/blob/466b65ad885118f0fb8d14f706ea9efa21f49edd/apps/upload'>have a look at the entire app</a> and <a href='#footer'>contact me</a> if you have questions. Basically, the view does the file upload as you see in <a href='http://docs.djangoproject.com/en/dev/topics/http/file-uploads/'>Django&#8217;s documentation</a>. The function <a href='http://github.com/pcraciunoiu/kitsune/blob/466b65ad885118f0fb8d14f706ea9efa21f49edd/apps/upload/utils.py#L9'><code>create_image_attachment</code></a> deals with the part about saving a file to disk.</p>
 
 <h3 id='generating_the_thumbnail_with_pil'>Generating the thumbnail with PIL</h3>
 
-<p>There is also a task for generating thumbnails, which is offloaded from the web server thread to improve performance. If you don&#8217;t need that, you can just call generate_thumbnail directly, it&#8217;s defined <a href='http://github.com/pcraciunoiu/kitsune/blob/3387483e4f401fc04045180a8caa1e3f141d32ee/apps/upload/tasks.py'>here</a>.</p>
+<p>There is also a task for generating thumbnails, which is offloaded from the web server thread to improve performance. If you don&#8217;t need that, you can just call generate_thumbnail directly, it&#8217;s defined <a href='http://github.com/pcraciunoiu/kitsune/blob/466b65ad885118f0fb8d14f706ea9efa21f49edd/apps/upload/tasks.py'>here</a>.</p>
 
 <h2 id='client_side'>Client side</h2>
 
