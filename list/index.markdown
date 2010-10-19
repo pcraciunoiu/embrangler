@@ -89,3 +89,6 @@ __Last updated: _10/10/10___
 1. Ski at Lake Tahoe.
 1. Be part of a start-up company.
 1. Be lost at sea.
+1. Visit Pucon, Chile (snow, volcano, beach)
+
+	* Saw pictures from October
