@@ -9,20 +9,27 @@ meta_description: Paul Craciunoiu's list of things to experience in this life.
 Following [gandalf's idea](http://diary.braniecki.net/2009/02/13/150-things-to-do-before-you-turn-30/), I'm starting this to-do list for things I want to experience in this life.
 
 __Created on: _10/10/10___
-__Last updated: _10/10/10___
+__Last updated: _11/07/10___
 
 1. Save someone's life.
 1. <span class="done">Cause a car accident.</span>
 1. Spend a week in Tibet and visit the Monks there.
 1. Visit Greece.
+	* Greek Islands
 	* Mediterranean sea.
 	* Ancient Greek artifacts.
+	* North Greece
 1. <span class="done">Visit Oahu, Hawaii</span>
-1. Visit Puerto Rico. _(planned)_
-1. Visit Miami. _(planned)_
+1. <span class="done">Visit Puerto Rico.</span>
+	* See the bioluminescent bay, [one of Pandora's 12 wonders](http://ecorazzi.com/slideshow/pandora-on-earth-12-places-and-things-that-remind-us-of-avatar/123/).
+	* Hike El Yunque mountains.
+	* Eat at Marmalade Restaurant.
+1. <span class="done">Visit Miami.</span>
+	* Visit Key West, southernmost point of continental USA.
 1. See the Amazonian rainforest.
 1. See an African safari.
 1. Visit Sweden/Denmark.
+1. Visit Norway/Iceland. _(planned)_
 1. Visit Japan.
 1. Eat at French Laundry (or other expensive yet ridiculously delicious place).
 1. <span class="done">Sky dive.</span>
@@ -92,3 +99,7 @@ __Last updated: _10/10/10___
 1. Visit Pucon, Chile (snow, volcano, beach)
 
 	* Saw pictures from October
+1. Visit Costa Rica
+	* Volcanoes, lava
+	* River rafting
+	* Black sand beaches
