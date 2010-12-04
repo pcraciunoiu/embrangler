@@ -4,13 +4,317 @@
  <title>Disembrangling Programming</title>
  <link href="http://embrangler.com/tag/migration/atom.xml" rel="self"/>
  <link href="http://embrangler.com/tag/migration"/>
- <updated>2010-11-07T20:50:07-08:00</updated>
+ <updated>2010-12-03T17:05:05-08:00</updated>
  <id>http://embrangler.com/</id>
  <author>
    <name>Paul Craciunoiu</name>
    <email>paul@craciunoiu.net</email>
  </author>
 
+ 
+ <entry>
+   <title>SUMO and migrating large amounts of data</title>
+   <link href="http://embrangler.com/2010/12/migrating-large-amounts-of-data"/>
+   <updated>2010-12-03T00:00:00-08:00</updated>
+   <id>http://embrangler.com/2010/12/migrating-large-amounts-of-data</id>
+   <content type="html">&lt;p&gt;Data migration is a complicated problem. It&amp;#8217;s one of those things nobody wants to do, because it&amp;#8217;s mostly tedious, not engaging, and also important to get right. Often times you have to compromise. I&amp;#8217;ll talk a bit about the history of SUMO&amp;#8217;s data, decisions the product and development team have made regarding its migration, and things I&amp;#8217;ve learned from the experience.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href='#quick_tips'&gt;Quick tips&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;&lt;a href='#background'&gt;Background&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;&lt;a href='#rewriting_where_to_start'&gt;Data influences which components are rewritten first&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;&lt;a href='#too_much_data'&gt;Too much data! What now?&lt;/a&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href='#migrating_questions'&gt;Lesson 1: Migrating questions&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='#migrating_the_knowledge-base'&gt;Lesson 2: Migrating the knowledge base&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;&lt;a href='#can_i_get_away_with_pure_sql'&gt;Can I get away with pure SQL?&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;&lt;a href='#converting_data'&gt;Converting data: some challenges&lt;/a&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href='#data_integrity_and_storage'&gt;Lesson 3: Data integrity and storage&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id='quick_tips'&gt;Quick tips&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Start with the smallest dataset first to get the hang of things. (&lt;a href='#rewriting_where_to_start'&gt;details&lt;/a&gt;)&lt;/li&gt;
+
+&lt;li&gt;You&amp;#8217;ll have to deal with lots of edge cases. Make sure to write tests. (&lt;a href='#testing'&gt;details&lt;/a&gt;)&lt;/li&gt;
+
+&lt;li&gt;Careful when converting dates/times: timezones can be a pain, and data is often stored in the timezone of the server. (&lt;a href='#converting_data'&gt;details&lt;/a&gt;)&lt;/li&gt;
+
+&lt;li&gt;When you have so much data that migrating it would take days: do you need &lt;em&gt;all&lt;/em&gt; of it? (&lt;a href='#too_much_data'&gt;details&lt;/a&gt;)&lt;/li&gt;
+
+&lt;li&gt;Consider the benefits of migrating data offline (&lt;a href='#migrating_the_knowledge_base'&gt;details&lt;/a&gt;)&lt;/li&gt;
+
+&lt;li&gt;It&amp;#8217;s unlikely that you&amp;#8217;ll be able to use raw SQL. (&lt;a href='#can_i_get_away_with_pure_sql'&gt;details&lt;/a&gt;)&lt;/li&gt;
+
+&lt;li&gt;You&amp;#8217;ll learn how important data integrity is, so you&amp;#8217;ll pay attention at the schema your software uses next time. (&lt;a href='#data_integrity_and_storage'&gt;details&lt;/a&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id='background'&gt;Background&lt;/h2&gt;
+
+&lt;p&gt;At the beginning of February, &lt;a href='http://support.mozilla.com'&gt;SUMO&lt;/a&gt; started on a new adventure: rewriting the entire platform from an outdated version of &lt;a href='http://tikiwiki.org/'&gt;TikiWiki&lt;/a&gt; to &lt;a href='http://www.djangoproject.com/'&gt;Django&lt;/a&gt;. As different (more or less stand-alone) pieces of the application were moved over to the new platform, our data had to be migrated over as well.&lt;/p&gt;
+
+&lt;p&gt;Over the course of the past 6 months, I&amp;#8217;ve migrated over 25,000 pieces of content, most of which contained large amounts of text data.&lt;/p&gt;
+
+&lt;h2 id='rewriting_where_to_start'&gt;Rewriting: where to start?&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;Tip: Start with the smallest, simplest dataset first.&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;The first migration of data was part of our new &lt;a href='http://support.mozilla.com/en-US/forums'&gt;discussion forums&lt;/a&gt;. This was by far the smallest component we had to migrate over:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;the forums contained roughly 5000 posts, in just about 1000 threads.&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;by comparison, we had a total of ~450,000 answers for ~260,000 questions, and over 5,000 knowledge base pages.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href='http://support.mozilla.com/en-US/questions'&gt;questions&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='http://support.mozilla.com/en-US/kb/Using%20Firefox'&gt;knowledge base, document example&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;I had never done migrations before, so starting small was a good idea.&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;In addition to being the smallest, the forums content was also more straightforward to migrate (see also &lt;a href='#converting_data'&gt;Converting data&lt;/a&gt;)&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id='too_much_data'&gt;Too much data!!&lt;/h2&gt;
+
+&lt;p&gt;Our questions component had over 450,000 (!) answers in the old system. Should you ever be in this situation, here are some options worth considering:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;do you need all this data? can you keep just a reasonable portion of it?&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;if you don&amp;#8217;t, great! (&lt;a href='#migrating_questions'&gt;details&lt;/a&gt;)&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;if you &lt;strong&gt;do&lt;/strong&gt;, tough luck. Consider:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;migrating data offline and then running a straighforward SQL import on the production database. (&lt;a href='#migrating_the_knowledge_base'&gt;details&lt;/a&gt;)&lt;/li&gt;
+
+&lt;li&gt;running the conversion script in chunks: migrate a part of the data now, and more later.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id='migrating_questions'&gt;Migrating questions&lt;/h3&gt;
+
+&lt;p&gt;Fortunately, even though we had over 260,000 questions to migrate, only about 15,000 were recent enough to be relevant for the currently supported versions of &lt;a href='http://getfirefox.com'&gt;Firefox&lt;/a&gt;. Hence, the development and product teams agreed to &lt;em&gt;not&lt;/em&gt; migrate all of them.&lt;/p&gt;
+
+&lt;p&gt;The script to convert data over was run live on the production server, and took over one hour to finish - not too bad.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Caveat:&lt;/strong&gt; frozen edits to and creation of TikiWiki questions for those a bit over an hour.&lt;/p&gt;
+
+&lt;h3 id='migrating_the_knowledge_base'&gt;Migrating the Knowledge Base&lt;/h3&gt;
+
+&lt;p&gt;The Knowledge base presented a different situation:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Between 5,000 and 6,000 articles, some with long-standing history&lt;/li&gt;
+
+&lt;li&gt;Approved and unreviewed versions of an article were stored as separate articles in TikiWiki (each with its own history)&lt;/li&gt;
+
+&lt;li&gt;Lots and lots of content and metadata &lt;em&gt;per document&lt;/em&gt;&lt;/li&gt;
+
+&lt;li&gt;Changing our wiki syntax from &lt;a href='http://tiki.org/tiki-index.php?page=WikiSyntax'&gt;TikiWiki&lt;/a&gt; to &lt;a href='http://www.mediawiki.org/wiki/Help:Formatting'&gt;MediaWiki&lt;/a&gt; (used by &lt;a href='http://www.wikipedia.org/'&gt;Wikipedia&lt;/a&gt;, among many others).&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Thus, even though the &lt;em&gt;count&lt;/em&gt; was much lower than for forums or questions, migrating these was much more intensive, both CPU and IO-wise.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Our solution&lt;/strong&gt; here was to run the script offline (a.k.a. I ran the script on my machine) and hand our IT team just the SQL output to import.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Why?&lt;/strong&gt; The script was complex enough to take &lt;em&gt;over 3 hours&lt;/em&gt; from start to finish. Unreasonable to run on our production servers: if something went wrong, it could take an entire workday (or more) for the IT and development team to get things back on track.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Caveat:&lt;/strong&gt; frozen edits to and creation of TikiWiki knowledge base articles for a day.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Huge benefits:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;the data migration took less than &lt;strong&gt;5 minutes&lt;/strong&gt; to import on the production database.&lt;/li&gt;
+
+&lt;li&gt;no worrying about a script crashing on untested data&lt;/li&gt;
+
+&lt;li&gt;no overloading the production servers with database queries (replication lag can be an issue)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id='can_i_get_away_with_pure_sql'&gt;Can I get away with pure SQL?&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;Rarely.&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Why?&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Data &lt;strong&gt;changes frequently&lt;/strong&gt; over time.&lt;/li&gt;
+
+&lt;li&gt;Thus, you want to freeze changes for the &lt;strong&gt;minimum possible time&lt;/strong&gt;, so running a script on the production database is the way to go.&lt;/li&gt;
+
+&lt;li&gt;Hence, unless the new schema structure is close enough for raw SQL to handle, you&amp;#8217;re out of luck.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The only time we were able to use pure SQL was when &lt;a href='#migrating_the_knowledge-base'&gt;we froze edits for a day&lt;/a&gt; and generated the SQL offline.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;How similar does schema structure have to be for SQL to work?&lt;/strong&gt; you ask.&lt;/p&gt;
+
+&lt;p&gt;Here is the story for our &lt;a href='http://support.mozilla.com/en-US/forums'&gt;forums&lt;/a&gt;, the &lt;strong&gt;simplest schema:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;we kept the general structure of the data: forum with threads as children, and threads with posts as children.&lt;/li&gt;
+
+&lt;li&gt;in TikiWiki, our threads and posts were stored in the same table, with a parentId column distinguishing which are threads and which are posts.&lt;/li&gt;
+
+&lt;li&gt;in Django, threads had their own table (a good &lt;a href='http://en.wikipedia.org/wiki/Database_normalization'&gt;normalization&lt;/a&gt; to have).&lt;/li&gt;
+
+&lt;li&gt;a thread from TikiWiki mapped to a thread + a post in Django&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Because of those (and other) differences, we couldn&amp;#8217;t run a SQL-only import as reliably as a python/PHP conversion script. You could try doing a SQL-only import, but you&amp;#8217;re gonna hit some &lt;strong&gt;key issues you wish SQL could solve:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;while + if/else if/else structures. Much too often, data is corrupted or columns contain unexpected values - &lt;a href='http://dev.mysql.com/doc/refman/5.0/en/control-flow-functions.html#function_if'&gt;MySQL&amp;#8217;s conditional construct&lt;/a&gt; doesn&amp;#8217;t do much.&lt;/li&gt;
+
+&lt;li&gt;colliding unique keys, or integrity errors due to foreign key references are &lt;em&gt;very&lt;/em&gt; difficult to prevent against in SQL.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id='converting_data'&gt;Converting data&lt;/h2&gt;
+
+&lt;p&gt;Here are some general observations of problems you might run into when converting data, based on our problems:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Frequently, &lt;strong&gt;normalization&lt;/strong&gt;/denormalization changes are &lt;strong&gt;worth the effort&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;More often than not, normalization is the way to go.&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Long-term benefits are:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Data integrity a &lt;a href='#data_integrity_and_storage'&gt;&lt;strong&gt;&lt;em&gt;huge issue&lt;/em&gt;&lt;/strong&gt;&lt;/a&gt;.&lt;/li&gt;
+
+&lt;li&gt;Usually, more flexibility to add functionality later on.&lt;/li&gt;
+
+&lt;li&gt;Easier migration (should you need to do it again).&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='http://lmgtfy.com/?q=benefits+of+normalization'&gt;And more!&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Syntax changes&lt;/strong&gt; are &lt;strong&gt;the worst&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;If you have to change wiki syntax, consider going straight to HTML: this way, you can use the rendered output of the documents from the old platform.&lt;/li&gt;
+
+&lt;li&gt;Can&amp;#8217;t get away with just HTML? Try regex conversion! I&amp;#8217;m not saying that using a proper parser is a bad idea &amp;#8211; but if you have to &lt;strong&gt;write a parser&lt;/strong&gt;, it&amp;#8217;s probably not worth the effort.&lt;/li&gt;
+
+&lt;li&gt;Consider a &lt;a href='http://en.wikipedia.org/wiki/Pushdown_automaton'&gt;simple PDA&lt;/a&gt; instead of a parser, it might just work.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Dates and times are &lt;strong&gt;timezone-sensitive&lt;/strong&gt;. When converting, make sure to test that you&amp;#8217;re taking timezones into account.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;In our case, we were moving over from a basically timezone-ignorant platform (as many PHP applications are), to a timezone-sensitive application (Django).&lt;/li&gt;
+
+&lt;li&gt;Some columns were integers (&lt;a href='http://en.wikipedia.org/wiki/Unix_time'&gt;UNIX timestamps&lt;/a&gt;), which are universally based on UTC, and so less tricky to convert. MySQL&amp;#8217;s &lt;a href='http://dev.mysql.com/doc/refman/5.1/en/date-and-time-functions.html#function_from-unixtime'&gt;FROM_UNIXTIME&lt;/a&gt; can be useful here.&lt;/li&gt;
+
+&lt;li&gt;Others were mysql dates/datetimes/timestamps, recorded at the server&amp;#8217;s timezone (for us, US/Pacific, or PDT).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Be prepared for &lt;strong&gt;lots and lots of edge cases:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Syntax changes are a nightmare of edge cases, as the old syntax probably has different rules and a different parser than the new one. One common problem for us was whitespace handling.&lt;/li&gt;
+
+&lt;li&gt;If foreign keys were not (well) enforced in the old system, there will be numerous exceptions to catch in the new one.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id='data_integrity_and_storage'&gt;Data integrity and storage&lt;/h3&gt;
+
+&lt;p&gt;One of the most valuable lessons to learn from migrating data is &lt;a href='http://en.wikipedia.org/wiki/Data_integrity'&gt;integrity&lt;/a&gt;. Another one is storing data properly encoded and consistently. I&amp;#8217;ll highlight just a few things that help with respect to data migration:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Use foreign keys and any other constraints as much as technically accurate&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;E.g. you will have fewer exceptions to handle if you can rely on foreign keys to refer to valid rows&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Storing text in one encoding is better than multiple; preferably unicode.&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Store dates and times in the same timezone; preferably UTC.&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Use a database that &lt;a href='http://coffeeonthekeyboard.com/django-fixtures-with-circular-foreign-keys-480/'&gt;supports deferred foreign key checks&lt;/a&gt;, and is generally better about &lt;a href='http://en.wikipedia.org/wiki/ACID'&gt;ACID&lt;/a&gt;. That&amp;#8217;s not MySQL.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id='testing'&gt;Testing&lt;/h2&gt;
+
+&lt;p&gt;Although testing some temporary code that you&amp;#8217;ll use once may seem like a waste, if you&amp;#8217;re dealing with large amounts of data that can change, you will be better off writing tests.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Cover the basics - migrating a typical piece of content.&lt;/li&gt;
+
+&lt;li&gt;Cover some, if not all of the edge cases.&lt;/li&gt;
+
+&lt;li&gt;(somewhat related to testing) Write some helper scripts (e.g. bash) to make it easy to run the migration and spot check.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;I worked on migrating the Knowledge Base over several weeks, and sometimes changes I made to the script broke tests &amp;#8211; if it wasn&amp;#8217;t for those tests, lots of content could have been migrated poorly, or not at all.&lt;/p&gt;</content>
+ </entry>
  
  <entry>
    <title>Embrangler: Moving to Jekyll</title>

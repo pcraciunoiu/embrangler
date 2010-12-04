@@ -1,0 +1,13 @@
+---
+layout: default
+title: Posts tagged "legacy data"
+tag: legacy data
+type: "Legacy Data"
+---
+    <h1 class="title" id="legacy data">Posts tagged <em>legacy data</em></h1>
+
+    <ul>
+      {% for post in site.tags['legacy data'] %}
+      {% include item.html %}
+      {% endfor %}
+    </ul>

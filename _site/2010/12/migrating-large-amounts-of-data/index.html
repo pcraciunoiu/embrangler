@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>SUMO and migrating large amounts of data</title>
+    <meta name="author" content="Paul Craciunoiu" />
+    <link href="http://feeds.feedburner.com/embrangler" rel="alternate" title="Disembrangling Programming" type="application/atom+xml" />
+    
+    <link type="image/x-icon" href="/favicon.ico" rel="shortcut icon">
+
+    <!-- syntax highlighting CSS -->
+    <link rel="stylesheet" href="/css/syntax.css" type="text/css" />
+
+    <!-- Homepage CSS -->
+    <link rel="stylesheet" href="/css/main.css" type="text/css" media="screen, projection" />
+
+    
+      <!-- Tag feed -->
+      
+        <link href="/tag/legacy-data/atom.xml"
+	      rel="alternate"
+              type="application/atom+xml"
+              title="Disembrangling Programming (tag: legacy data)" />
+      
+        <link href="/tag/migration/atom.xml"
+	      rel="alternate"
+              type="application/atom+xml"
+              title="Disembrangling Programming (tag: migration)" />
+      
+        <link href="/tag/mozilla/atom.xml"
+	      rel="alternate"
+              type="application/atom+xml"
+              title="Disembrangling Programming (tag: mozilla)" />
+      
+    
+</head>
+<body>
+
+<div class="site">
+
+    <div id="header" role="banner">
+        <h1 class="title">
+            <a href="/">Disembrangling Programming</a>
+        </h1>
+        <h2 class="subtitle">
+            <a href="/about" title="About Paul Craciunoiu">The simple life of a web developer &mdash; by Paul Craciunoiu<span> (About)</span></a>
+            <a class="the-list" href="/list">(The List)</a>
+        </h2>
+    </div>
+    <div id="content" role="main">    
+    <div id="post">
+  <h1>SUMO and migrating large amounts of data</h1>
+  <div class="meta">
+    
+    <div class="tags">Tags:
+      
+        <a href="/tag/legacy-data/">legacy data</a>,
+        
+      
+        <a href="/tag/migration/">migration</a>,
+        
+      
+        <a href="/tag/mozilla/">mozilla</a>
+      
+    </div>
+    
+    <time>03 Dec 2010</time>
+  </div>
+  <p>Data migration is a complicated problem. It&#8217;s one of those things nobody wants to do, because it&#8217;s mostly tedious, not engaging, and also important to get right. Often times you have to compromise. I&#8217;ll talk a bit about the history of SUMO&#8217;s data, decisions the product and development team have made regarding its migration, and things I&#8217;ve learned from the experience.</p>
+
+<ul>
+<li>
+<p><a href='#quick_tips'>Quick tips</a></p>
+</li>
+
+<li>
+<p><a href='#background'>Background</a></p>
+</li>
+
+<li>
+<p><a href='#rewriting_where_to_start'>Data influences which components are rewritten first</a></p>
+</li>
+
+<li>
+<p><a href='#too_much_data'>Too much data! What now?</a></p>
+
+<ul>
+<li><a href='#migrating_questions'>Lesson 1: Migrating questions</a></li>
+
+<li><a href='#migrating_the_knowledge-base'>Lesson 2: Migrating the knowledge base</a></li>
+</ul>
+</li>
+
+<li>
+<p><a href='#can_i_get_away_with_pure_sql'>Can I get away with pure SQL?</a></p>
+</li>
+
+<li>
+<p><a href='#converting_data'>Converting data: some challenges</a></p>
+
+<ul>
+<li><a href='#data_integrity_and_storage'>Lesson 3: Data integrity and storage</a></li>
+</ul>
+</li>
+</ul>
+
+<h2 id='quick_tips'>Quick tips</h2>
+
+<ul>
+<li>Start with the smallest dataset first to get the hang of things. (<a href='#rewriting_where_to_start'>details</a>)</li>
+
+<li>You&#8217;ll have to deal with lots of edge cases. Make sure to write tests. (<a href='#testing'>details</a>)</li>
+
+<li>Careful when converting dates/times: timezones can be a pain, and data is often stored in the timezone of the server. (<a href='#converting_data'>details</a>)</li>
+
+<li>When you have so much data that migrating it would take days: do you need <em>all</em> of it? (<a href='#too_much_data'>details</a>)</li>
+
+<li>Consider the benefits of migrating data offline (<a href='#migrating_the_knowledge_base'>details</a>)</li>
+
+<li>It&#8217;s unlikely that you&#8217;ll be able to use raw SQL. (<a href='#can_i_get_away_with_pure_sql'>details</a>)</li>
+
+<li>You&#8217;ll learn how important data integrity is, so you&#8217;ll pay attention at the schema your software uses next time. (<a href='#data_integrity_and_storage'>details</a>)</li>
+</ul>
+
+<h2 id='background'>Background</h2>
+
+<p>At the beginning of February, <a href='http://support.mozilla.com'>SUMO</a> started on a new adventure: rewriting the entire platform from an outdated version of <a href='http://tikiwiki.org/'>TikiWiki</a> to <a href='http://www.djangoproject.com/'>Django</a>. As different (more or less stand-alone) pieces of the application were moved over to the new platform, our data had to be migrated over as well.</p>
+
+<p>Over the course of the past 6 months, I&#8217;ve migrated over 25,000 pieces of content, most of which contained large amounts of text data.</p>
+
+<h2 id='rewriting_where_to_start'>Rewriting: where to start?</h2>
+
+<p><strong><em>Tip: Start with the smallest, simplest dataset first.</em></strong></p>
+
+<p>The first migration of data was part of our new <a href='http://support.mozilla.com/en-US/forums'>discussion forums</a>. This was by far the smallest component we had to migrate over:</p>
+
+<ul>
+<li>
+<p>the forums contained roughly 5000 posts, in just about 1000 threads.</p>
+</li>
+
+<li>
+<p>by comparison, we had a total of ~450,000 answers for ~260,000 questions, and over 5,000 knowledge base pages.</p>
+
+<ul>
+<li><a href='http://support.mozilla.com/en-US/questions'>questions</a></li>
+
+<li><a href='http://support.mozilla.com/en-US/kb/Using%20Firefox'>knowledge base, document example</a></li>
+</ul>
+</li>
+
+<li>
+<p>I had never done migrations before, so starting small was a good idea.</p>
+</li>
+
+<li>
+<p>In addition to being the smallest, the forums content was also more straightforward to migrate (see also <a href='#converting_data'>Converting data</a>)</p>
+</li>
+</ul>
+
+<h2 id='too_much_data'>Too much data!!</h2>
+
+<p>Our questions component had over 450,000 (!) answers in the old system. Should you ever be in this situation, here are some options worth considering:</p>
+
+<ul>
+<li>
+<p>do you need all this data? can you keep just a reasonable portion of it?</p>
+</li>
+
+<li>
+<p>if you don&#8217;t, great! (<a href='#migrating_questions'>details</a>)</p>
+</li>
+
+<li>
+<p>if you <strong>do</strong>, tough luck. Consider:</p>
+
+<ul>
+<li>migrating data offline and then running a straighforward SQL import on the production database. (<a href='#migrating_the_knowledge_base'>details</a>)</li>
+
+<li>running the conversion script in chunks: migrate a part of the data now, and more later.</li>
+</ul>
+</li>
+</ul>
+
+<h3 id='migrating_questions'>Migrating questions</h3>
+
+<p>Fortunately, even though we had over 260,000 questions to migrate, only about 15,000 were recent enough to be relevant for the currently supported versions of <a href='http://getfirefox.com'>Firefox</a>. Hence, the development and product teams agreed to <em>not</em> migrate all of them.</p>
+
+<p>The script to convert data over was run live on the production server, and took over one hour to finish - not too bad.</p>
+
+<p><strong>Caveat:</strong> frozen edits to and creation of TikiWiki questions for those a bit over an hour.</p>
+
+<h3 id='migrating_the_knowledge_base'>Migrating the Knowledge Base</h3>
+
+<p>The Knowledge base presented a different situation:</p>
+
+<ul>
+<li>Between 5,000 and 6,000 articles, some with long-standing history</li>
+
+<li>Approved and unreviewed versions of an article were stored as separate articles in TikiWiki (each with its own history)</li>
+
+<li>Lots and lots of content and metadata <em>per document</em></li>
+
+<li>Changing our wiki syntax from <a href='http://tiki.org/tiki-index.php?page=WikiSyntax'>TikiWiki</a> to <a href='http://www.mediawiki.org/wiki/Help:Formatting'>MediaWiki</a> (used by <a href='http://www.wikipedia.org/'>Wikipedia</a>, among many others).</li>
+</ul>
+
+<p>Thus, even though the <em>count</em> was much lower than for forums or questions, migrating these was much more intensive, both CPU and IO-wise.</p>
+
+<p><strong>Our solution</strong> here was to run the script offline (a.k.a. I ran the script on my machine) and hand our IT team just the SQL output to import.</p>
+
+<p><strong>Why?</strong> The script was complex enough to take <em>over 3 hours</em> from start to finish. Unreasonable to run on our production servers: if something went wrong, it could take an entire workday (or more) for the IT and development team to get things back on track.</p>
+
+<p><strong>Caveat:</strong> frozen edits to and creation of TikiWiki knowledge base articles for a day.</p>
+
+<p><strong>Huge benefits:</strong></p>
+
+<ul>
+<li>the data migration took less than <strong>5 minutes</strong> to import on the production database.</li>
+
+<li>no worrying about a script crashing on untested data</li>
+
+<li>no overloading the production servers with database queries (replication lag can be an issue)</li>
+</ul>
+
+<h2 id='can_i_get_away_with_pure_sql'>Can I get away with pure SQL?</h2>
+
+<p><strong><em>Rarely.</em></strong></p>
+
+<p><strong>Why?</strong></p>
+
+<ul>
+<li>Data <strong>changes frequently</strong> over time.</li>
+
+<li>Thus, you want to freeze changes for the <strong>minimum possible time</strong>, so running a script on the production database is the way to go.</li>
+
+<li>Hence, unless the new schema structure is close enough for raw SQL to handle, you&#8217;re out of luck.</li>
+</ul>
+
+<p>The only time we were able to use pure SQL was when <a href='#migrating_the_knowledge-base'>we froze edits for a day</a> and generated the SQL offline.</p>
+
+<p><strong>How similar does schema structure have to be for SQL to work?</strong> you ask.</p>
+
+<p>Here is the story for our <a href='http://support.mozilla.com/en-US/forums'>forums</a>, the <strong>simplest schema:</strong></p>
+
+<ul>
+<li>we kept the general structure of the data: forum with threads as children, and threads with posts as children.</li>
+
+<li>in TikiWiki, our threads and posts were stored in the same table, with a parentId column distinguishing which are threads and which are posts.</li>
+
+<li>in Django, threads had their own table (a good <a href='http://en.wikipedia.org/wiki/Database_normalization'>normalization</a> to have).</li>
+
+<li>a thread from TikiWiki mapped to a thread + a post in Django</li>
+</ul>
+
+<p>Because of those (and other) differences, we couldn&#8217;t run a SQL-only import as reliably as a python/PHP conversion script. You could try doing a SQL-only import, but you&#8217;re gonna hit some <strong>key issues you wish SQL could solve:</strong></p>
+
+<ul>
+<li>while + if/else if/else structures. Much too often, data is corrupted or columns contain unexpected values - <a href='http://dev.mysql.com/doc/refman/5.0/en/control-flow-functions.html#function_if'>MySQL&#8217;s conditional construct</a> doesn&#8217;t do much.</li>
+
+<li>colliding unique keys, or integrity errors due to foreign key references are <em>very</em> difficult to prevent against in SQL.</li>
+</ul>
+
+<h2 id='converting_data'>Converting data</h2>
+
+<p>Here are some general observations of problems you might run into when converting data, based on our problems:</p>
+
+<ul>
+<li>
+<p>Frequently, <strong>normalization</strong>/denormalization changes are <strong>worth the effort</strong>:</p>
+
+<ul>
+<li>
+<p>More often than not, normalization is the way to go.</p>
+</li>
+
+<li>
+<p>Long-term benefits are:</p>
+
+<ul>
+<li>Data integrity a <a href='#data_integrity_and_storage'><strong><em>huge issue</em></strong></a>.</li>
+
+<li>Usually, more flexibility to add functionality later on.</li>
+
+<li>Easier migration (should you need to do it again).</li>
+
+<li><a href='http://lmgtfy.com/?q=benefits+of+normalization'>And more!</a></li>
+</ul>
+</li>
+</ul>
+</li>
+
+<li>
+<p><strong>Syntax changes</strong> are <strong>the worst</strong>:</p>
+
+<ul>
+<li>If you have to change wiki syntax, consider going straight to HTML: this way, you can use the rendered output of the documents from the old platform.</li>
+
+<li>Can&#8217;t get away with just HTML? Try regex conversion! I&#8217;m not saying that using a proper parser is a bad idea &#8211; but if you have to <strong>write a parser</strong>, it&#8217;s probably not worth the effort.</li>
+
+<li>Consider a <a href='http://en.wikipedia.org/wiki/Pushdown_automaton'>simple PDA</a> instead of a parser, it might just work.</li>
+</ul>
+</li>
+
+<li>
+<p>Dates and times are <strong>timezone-sensitive</strong>. When converting, make sure to test that you&#8217;re taking timezones into account.</p>
+
+<ul>
+<li>In our case, we were moving over from a basically timezone-ignorant platform (as many PHP applications are), to a timezone-sensitive application (Django).</li>
+
+<li>Some columns were integers (<a href='http://en.wikipedia.org/wiki/Unix_time'>UNIX timestamps</a>), which are universally based on UTC, and so less tricky to convert. MySQL&#8217;s <a href='http://dev.mysql.com/doc/refman/5.1/en/date-and-time-functions.html#function_from-unixtime'>FROM_UNIXTIME</a> can be useful here.</li>
+
+<li>Others were mysql dates/datetimes/timestamps, recorded at the server&#8217;s timezone (for us, US/Pacific, or PDT).</li>
+</ul>
+</li>
+
+<li>
+<p>Be prepared for <strong>lots and lots of edge cases:</strong></p>
+
+<ul>
+<li>Syntax changes are a nightmare of edge cases, as the old syntax probably has different rules and a different parser than the new one. One common problem for us was whitespace handling.</li>
+
+<li>If foreign keys were not (well) enforced in the old system, there will be numerous exceptions to catch in the new one.</li>
+</ul>
+</li>
+</ul>
+
+<h3 id='data_integrity_and_storage'>Data integrity and storage</h3>
+
+<p>One of the most valuable lessons to learn from migrating data is <a href='http://en.wikipedia.org/wiki/Data_integrity'>integrity</a>. Another one is storing data properly encoded and consistently. I&#8217;ll highlight just a few things that help with respect to data migration:</p>
+
+<ul>
+<li>
+<p>Use foreign keys and any other constraints as much as technically accurate</p>
+
+<ul>
+<li>E.g. you will have fewer exceptions to handle if you can rely on foreign keys to refer to valid rows</li>
+</ul>
+</li>
+
+<li>
+<p>Storing text in one encoding is better than multiple; preferably unicode.</p>
+</li>
+
+<li>
+<p>Store dates and times in the same timezone; preferably UTC.</p>
+</li>
+
+<li>
+<p>Use a database that <a href='http://coffeeonthekeyboard.com/django-fixtures-with-circular-foreign-keys-480/'>supports deferred foreign key checks</a>, and is generally better about <a href='http://en.wikipedia.org/wiki/ACID'>ACID</a>. That&#8217;s not MySQL.</p>
+</li>
+</ul>
+
+<h2 id='testing'>Testing</h2>
+
+<p>Although testing some temporary code that you&#8217;ll use once may seem like a waste, if you&#8217;re dealing with large amounts of data that can change, you will be better off writing tests.</p>
+
+<ul>
+<li>Cover the basics - migrating a typical piece of content.</li>
+
+<li>Cover some, if not all of the edge cases.</li>
+
+<li>(somewhat related to testing) Write some helper scripts (e.g. bash) to make it easy to run the migration and spot check.</li>
+</ul>
+
+<p>I worked on migrating the Knowledge Base over several weeks, and sometimes changes I made to the script broke tests &#8211; if it wasn&#8217;t for those tests, lots of content could have been migrated poorly, or not at all.</p>
+</div>
+
+<div id="related">
+  <h2>Related Posts</h2>
+  <ul>
+    
+      <li><a href="/2010/03/quoteden-moving-to-kohana-3">Quoteden: Moving to Kohana 3</a> &mdash; 12 Mar 2010</li>
+    
+      <li><a href="/2010/03/embrangler-moving-to-jekyll">Embrangler: Moving to Jekyll</a> &mdash; 21 Mar 2010</li>
+    
+      <li><a href="/2010/04/testing-in-kohana-3">Introduction to testing in Kohana 3</a> &mdash; 25 Apr 2010</li>
+    
+  </ul>
+</div>
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  (function() {
+   var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+   dsq.src = 'http://blogpaulcraciunoiu.disqus.com/embed.js';
+   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript=blogpaulcraciunoiu">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+<script type="text/javascript">
+//<![CDATA[
+(function() {
+    var links = document.getElementsByTagName('a');
+    var query = '?';
+    for(var i = 0; i < links.length; i++) {
+    if(links[i].href.indexOf('#disqus_thread') >= 0) {
+        query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
+    }
+    }
+    document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/blogpaulcraciunoiu/get_num_replies.js' + query + '"></' + 'script>');
+})();
+//]]>
+</script>
+
+    </div>
+
+    <div id="footer" role="contentinfo">
+        <div class="about">
+        <p>I work as a web developer for <a href="http://mozilla.com">Mozilla</a>, with main focus on <a href="http://www.djangoproject.com/">Django</a>, Python, and PHP. Occasionally, I write tutorials or post other information I find interesting.</p>
+        <p>I enjoy doing freelance work for other websites, mostly non-profits. If you're interested in my services, contact me through one of the links below.</p>
+        </p>
+        </div>
+        <div class="contact">
+            <a href="http://twitter.com/embrangler/">Follow me</a> -- 
+            <a href="http://craciunoiu.net/contact/paul">Email me</a> -- 
+            <a href="http://github.com/pcraciunoiu/">My GitHub</a>
+        </div>
+        <div class="quote">
+        <p>
+            Success is a journey, not a destination. The doing is often more important than the outcome. &mdash; <a href="http://quoteden.net/author/id/337">Arthur Robert Ashe, Jr</a>
+        </p>
+        <p>&copy; Paul Craciunoiu. Some rights reserved. Brought to you by <a href="http://wiki.github.com/mojombo/jekyll/">Jekyll</a></p>
+        </div>
+    </div>
+</div><!-- site -->
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-15382775-1");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+<!-- /Google Analytics -->
+
+</body>
+</html>
