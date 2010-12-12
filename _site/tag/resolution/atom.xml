@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+ <title>Disembrangling Programming</title>
+ <link href="http://embrangler.com/tag/resolution/atom.xml" rel="self"/>
+ <link href="http://embrangler.com/tag/resolution"/>
+ <updated>2010-12-12T01:30:14-08:00</updated>
+ <id>http://embrangler.com/</id>
+ <author>
+   <name>Paul Craciunoiu</name>
+   <email>paul@craciunoiu.net</email>
+ </author>
+
+ 
+ <entry>
+   <title>Belated birthday resolutions</title>
+   <link href="http://embrangler.com/2010/12/belated-birthday-resolutions"/>
+   <updated>2010-12-11T00:00:00-08:00</updated>
+   <id>http://embrangler.com/2010/12/belated-birthday-resolutions</id>
+   <content type="html">&lt;p&gt;Table of contents:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href='#why'&gt;Why?&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;&lt;a href='#thanks_previous_year'&gt;Thanks, previous year!&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;&lt;a href='#what_now'&gt;What now?&lt;/a&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;a href='#understand_my_place_on_the_web'&gt;Understand my place on the web&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='#take_more_risks'&gt;Take more risks&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='#take_more_steps_back_think_ahead'&gt;Take more steps back, think ahead&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='#use_the_power_of_choice'&gt;Use the power of choice&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;&lt;a href='#onward_i_say'&gt;Onward, I say!&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id='why'&gt;Why?&lt;/h2&gt;
+
+&lt;p&gt;It was my birthday recently. And I&amp;#8217;ve always been a fan of resolutions. I look at them as an opportunity to learn, plan something great, and stick with it.&lt;/p&gt;
+
+&lt;p&gt;Also, posting them here is an incentive to follow through! By all means, remind me of what promised to achieve next year and make me feel bad if it doesn&amp;#8217;t happen :D&lt;/p&gt;
+
+&lt;h2 id='thanks_previous_year'&gt;Thanks, previous year!&lt;/h2&gt;
+
+&lt;p&gt;First, I&amp;#8217;ll take the opportunity to look back on my previous year and what has gone well. Be thankful, yada yada.&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Finished my undergraduate education while working an average of 25 hours per week (last two quarters). Thank you, &lt;a href='http://ucsc.edu'&gt;UC Santa Cruz&lt;/a&gt; for having a good CS program and gathering a bunch of smart engineers too. I am truly grateful of all the opportunities UCSC has offered me.&lt;/li&gt;
+
+&lt;li&gt;Learned a &lt;em&gt;ton&lt;/em&gt; about web development, the web in general. I&amp;#8217;m much more confident with the knowledge acquired about my field now. Thank you, Mozilla (mostly webdevs ;) for that. And also thank you, internet!&lt;/li&gt;
+
+&lt;li&gt;Became much more organized and productive. (This is something I look forward to growing even further in the next year.) Thanks to people I&amp;#8217;ve spoken with, a bunch of books I&amp;#8217;ve read and talks I&amp;#8217;ve listened to, as well as one, very interesting seminar at UC Santa Cruz entitled &amp;#8220;Transformative Action&amp;#8221;.&lt;/li&gt;
+
+&lt;li&gt;Traveled to a bunch of places (Romania, Hawaii, Puerto Rico, Miami, Yosemite, etc) which motivated me to make &lt;a href='/list/'&gt;a list&lt;/a&gt;. I am thankful to really good friends (one in particular) without whom I would not have done this!&lt;/li&gt;
+
+&lt;li&gt;Slowly but surely came to a decision about going back to school: will wait for at least one more year before applying to graduate schools. Maybe more.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id='what_now'&gt;What now?&lt;/h2&gt;
+
+&lt;p&gt;For this next year, I&amp;#8217;ve decided to keep it simple. Just &lt;strong&gt;4 concrete actions:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;a href='#understand_my_place_on_the_web'&gt;Understand my place on the web&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='#take_more_risks'&gt;Take more risks&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='#take_more_steps_back_think_ahead'&gt;Take more steps back, think ahead&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='#use_the_power_of_choice'&gt;Use the power of choice&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id='understand_my_place_on_the_web'&gt;Understand my place on the web&lt;/h3&gt;
+
+&lt;p&gt;Okay, I&amp;#8217;ll be honest - this one is a stretch. How about just understanding it better??&lt;/p&gt;
+
+&lt;p&gt;I know I want to be on the web. What exactly would my role be? What could &lt;strong&gt;&lt;em&gt;I&lt;/em&gt;&lt;/strong&gt; do that would make the most difference and at the same time coincide with my values. For this year, I will probably look at this more from a web developer&amp;#8217;s perspective than anything else.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Ultimate goal:&lt;/strong&gt; more confident about the purpose of my contributions to the world.&lt;/p&gt;
+
+&lt;h3 id='take_more_risks'&gt;Take more risks&lt;/h3&gt;
+
+&lt;p&gt;True - this year has had its risks (jumping from a plane, some crazy hikes, other social or work-related acts that were out of my comfort zone), but by and large, I haven&amp;#8217;t taken chances as much as I know I can. I also want to be more confident in my abilities and this will help.&lt;/p&gt;
+
+&lt;p&gt;I want to become more open to risk. Maybe I will try something like &lt;a href='http://sneakylittlefox.tumblr.com/post/2053967413/rejection-therapy-an-introduction'&gt;rejection therapy&lt;/a&gt;. The areas I want to focus on are:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;social skillzz - uh, need I say more? computer nerd + social skills = ???&lt;/li&gt;
+
+&lt;li&gt;webdev work - initiative, initiative, initiative&lt;/li&gt;
+
+&lt;li&gt;UX - sometimes I don&amp;#8217;t do as good of a job on UI/UX because I stick with the comfy&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Ultimate goal:&lt;/strong&gt; become much more comfortable with failure.&lt;/p&gt;
+
+&lt;h3 id='take_more_steps_back_think_ahead'&gt;Take more steps back, think ahead&lt;/h3&gt;
+
+&lt;p&gt;Getting over-involved in little things can make me forget about what&amp;#8217;s really important. I want to think about the future more and the past less. That&amp;#8217;s what my &lt;a href='http://www.thetimeparadox.com/surveys/ztpi/'&gt;ZTPI&lt;/a&gt; index indicates too ;)&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Decide on when I will go back to school&lt;/li&gt;
+
+&lt;li&gt;Elaborate on what I see happening for me in the next 2-5 years (I&amp;#8217;ll be happy with 2, but 5 would be an overachievement :)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Ultimate goal:&lt;/strong&gt; In the words of Brian Tracy and Philip Zimbardo, I want to &lt;em&gt;expand my time perspective&lt;/em&gt;.&lt;/p&gt;
+
+&lt;h3 id='use_the_power_of_choice'&gt;Use the power of choice&lt;/h3&gt;
+
+&lt;p&gt;Choice empowers us. Two things here:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;I want to make an active choice when the opportunity arises - instead of, say, passively deferring.&lt;/li&gt;
+
+&lt;li&gt;Say &lt;em&gt;no&lt;/em&gt; more. Much too often I try to be nice and say yes, but time does not permit me to do everything.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;strong&gt;Ultimate goal:&lt;/strong&gt; become more realistic about how much I can really do, and stop feeling like a victim sometimes.&lt;/p&gt;
+
+&lt;h2 id='onward_i_say'&gt;Onward, I say!&lt;/h2&gt;
+
+&lt;p&gt;12 months from now, &lt;strong&gt;I will&lt;/strong&gt; report back. Seriously.&lt;/p&gt;
+
+&lt;p&gt;Thanks to everyone who made this year of my life awesome!&lt;/p&gt;</content>
+ </entry>
+ 
+
+</feed>

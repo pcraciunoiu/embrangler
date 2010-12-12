@@ -1,0 +1,13 @@
+---
+layout: default
+title: Posts tagged "success"
+tag: success
+type: "Success"
+---
+    <h1 class="title" id="success">Posts tagged <em>success</em></h1>
+
+    <ul>
+      {% for post in site.tags['success'] %}
+      {% include item.html %}
+      {% endfor %}
+    </ul>

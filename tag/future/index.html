@@ -1,0 +1,13 @@
+---
+layout: default
+title: Posts tagged "future"
+tag: future
+type: "Future"
+---
+    <h1 class="title" id="future">Posts tagged <em>future</em></h1>
+
+    <ul>
+      {% for post in site.tags['future'] %}
+      {% include item.html %}
+      {% endfor %}
+    </ul>
