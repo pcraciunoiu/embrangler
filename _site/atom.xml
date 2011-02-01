@@ -4,13 +4,71 @@
  <title>Disembrangling Programming - Paul Craciunoiu</title>
  <link href="http://embrangler.com/atom.xml" rel="self"/>
  <link href="http://embrangler.com/"/>
- <updated>2010-12-12T01:30:14-08:00</updated>
+ <updated>2011-01-31T21:01:26-08:00</updated>
  <id>http://embrangler.com/</id>
  <author>
    <name>Paul Craciunoiu</name>
    <email>paul@craciunoiu.net</email>
  </author>
 
+ 
+ <entry>
+   <title>Python scoping: understading LEGB</title>
+   <link href="http://embrangler.com/2011/01/python-scoping-understading-legb"/>
+   <updated>2011-01-31T00:00:00-08:00</updated>
+   <id>http://embrangler.com/2011/01/python-scoping-understading-legb</id>
+   <content type="html">&lt;h2 id='summary'&gt;Summary&lt;/h2&gt;
+
+&lt;p&gt;Python scoping fun! &lt;a href='http://stackoverflow.com/questions/291978/short-description-of-python-scoping-rules'&gt;Read about LEGB&lt;/a&gt; to understand the basics of python scoping.&lt;/p&gt;
+
+&lt;h2 id='beef'&gt;Beef&lt;/h2&gt;
+
+&lt;p&gt;I never bothered to read about how python scoping works until I hit this. It&amp;#8217;s not exactly something to research until you have issues with it. :)&lt;/p&gt;
+
+&lt;p&gt;I had something like this going on:&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='python'&gt;&lt;span class='lineno'&gt; 1&lt;/span&gt; &lt;span class='k'&gt;def&lt;/span&gt; &lt;span class='nf'&gt;func1&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='n'&gt;param&lt;/span&gt;&lt;span class='o'&gt;=&lt;/span&gt;&lt;span class='bp'&gt;None&lt;/span&gt;&lt;span class='p'&gt;):&lt;/span&gt;
+&lt;span class='lineno'&gt; 2&lt;/span&gt;     &lt;span class='k'&gt;def&lt;/span&gt; &lt;span class='nf'&gt;func2&lt;/span&gt;&lt;span class='p'&gt;():&lt;/span&gt;
+&lt;span class='lineno'&gt; 3&lt;/span&gt;         &lt;span class='k'&gt;if&lt;/span&gt; &lt;span class='ow'&gt;not&lt;/span&gt; &lt;span class='n'&gt;param&lt;/span&gt;&lt;span class='p'&gt;:&lt;/span&gt;
+&lt;span class='lineno'&gt; 4&lt;/span&gt;             &lt;span class='n'&gt;param&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='s'&gt;&amp;#39;default&amp;#39;&lt;/span&gt;
+&lt;span class='lineno'&gt; 5&lt;/span&gt;         &lt;span class='k'&gt;print&lt;/span&gt; &lt;span class='n'&gt;param&lt;/span&gt;
+&lt;span class='lineno'&gt; 6&lt;/span&gt;     &lt;span class='c'&gt;# Just return func2.&lt;/span&gt;
+&lt;span class='lineno'&gt; 7&lt;/span&gt;     &lt;span class='k'&gt;return&lt;/span&gt; &lt;span class='n'&gt;func2&lt;/span&gt;
+&lt;span class='lineno'&gt; 8&lt;/span&gt; 
+&lt;span class='lineno'&gt; 9&lt;/span&gt; 
+&lt;span class='lineno'&gt;10&lt;/span&gt; &lt;span class='k'&gt;if&lt;/span&gt; &lt;span class='n'&gt;__name__&lt;/span&gt; &lt;span class='o'&gt;==&lt;/span&gt; &lt;span class='s'&gt;&amp;#39;__main__&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;:&lt;/span&gt;
+&lt;span class='lineno'&gt;11&lt;/span&gt;     &lt;span class='n'&gt;func1&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s'&gt;&amp;#39;test&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;)()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; Actual code was not as straightforward, &lt;code&gt;func2&lt;/code&gt; was actually a decorator. Admittedly, using the same parameter name is not a must, but it&amp;#8217;s still a curiosity. I just wanted to fall back to a default value on run-time.&lt;/p&gt;
+
+&lt;p&gt;If you try to run this in python, here&amp;#8217;s what you get:&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='python'&gt;&lt;span class='o'&gt;~&lt;/span&gt; &lt;span class='err'&gt;$&lt;/span&gt; &lt;span class='n'&gt;python&lt;/span&gt; &lt;span class='n'&gt;test&lt;/span&gt;&lt;span class='o'&gt;.&lt;/span&gt;&lt;span class='n'&gt;py&lt;/span&gt; 
+&lt;span class='n'&gt;Traceback&lt;/span&gt; &lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='n'&gt;most&lt;/span&gt; &lt;span class='n'&gt;recent&lt;/span&gt; &lt;span class='n'&gt;call&lt;/span&gt; &lt;span class='n'&gt;last&lt;/span&gt;&lt;span class='p'&gt;):&lt;/span&gt;
+  &lt;span class='n'&gt;File&lt;/span&gt; &lt;span class='s'&gt;&amp;quot;test.py&amp;quot;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='n'&gt;line&lt;/span&gt; &lt;span class='mi'&gt;11&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='ow'&gt;in&lt;/span&gt; &lt;span class='o'&gt;&amp;lt;&lt;/span&gt;&lt;span class='n'&gt;module&lt;/span&gt;&lt;span class='o'&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class='n'&gt;func1&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s'&gt;&amp;#39;test&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;)()&lt;/span&gt;
+  &lt;span class='n'&gt;File&lt;/span&gt; &lt;span class='s'&gt;&amp;quot;test.py&amp;quot;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='n'&gt;line&lt;/span&gt; &lt;span class='mi'&gt;3&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='ow'&gt;in&lt;/span&gt; &lt;span class='n'&gt;func2&lt;/span&gt;
+    &lt;span class='k'&gt;if&lt;/span&gt; &lt;span class='ow'&gt;not&lt;/span&gt; &lt;span class='n'&gt;param&lt;/span&gt;&lt;span class='p'&gt;:&lt;/span&gt;
+&lt;span class='ne'&gt;UnboundLocalError&lt;/span&gt;&lt;span class='p'&gt;:&lt;/span&gt; &lt;span class='n'&gt;local&lt;/span&gt; &lt;span class='n'&gt;variable&lt;/span&gt; &lt;span class='s'&gt;&amp;#39;param&amp;#39;&lt;/span&gt; &lt;span class='n'&gt;referenced&lt;/span&gt; &lt;span class='n'&gt;before&lt;/span&gt; &lt;span class='n'&gt;assignment&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;If you&amp;#8217;re curious, you can &lt;a href='http://stackoverflow.com/questions/291978/short-description-of-python-scoping-rules'&gt;read about the principles of LEGB.&lt;/a&gt; You have to understand a bit about compilers and &lt;a href='http://en.wikipedia.org/wiki/Abstract_syntax_tree'&gt;the AST&lt;/a&gt; to get what&amp;#8217;s going on behind the scenes. You might thing that replacing lines 3-4 with:&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='python'&gt;&lt;span class='n'&gt;param&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='n'&gt;param&lt;/span&gt; &lt;span class='ow'&gt;or&lt;/span&gt; &lt;span class='s'&gt;&amp;#39;default&amp;#39;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Might work. But no. You can&amp;#8217;t assign the same parameter at the local level if the enclosing level defines it. Even this fails:&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='python'&gt;&lt;span class='n'&gt;param&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='n'&gt;param&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Fun, no?&lt;/p&gt;
+
+&lt;h2 id='read_more'&gt;Read more&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href='http://stackoverflow.com/questions/291978/short-description-of-python-scoping-rules'&gt;LEGB (stackoverflow)&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='http://docs.python.org/tutorial/classes.html#python-scopes-and-namespaces'&gt;Python docs on scope and namespaces.&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content>
+ </entry>
  
  <entry>
    <title>Belated birthday resolutions</title>
@@ -1084,98 +1142,6 @@
 &lt;li&gt;
 &lt;p&gt;team goal: handle all anonymous-access forums actions and views&lt;/p&gt;
 &lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;</content>
- </entry>
- 
- <entry>
-   <title>April 19-25 status</title>
-   <link href="http://embrangler.com/2010/04/weekly-update-apr-19-25"/>
-   <updated>2010-04-25T00:00:00-07:00</updated>
-   <id>http://embrangler.com/2010/04/weekly-update-apr-19-25</id>
-   <content type="html">&lt;h2 id='last_week_april_1925'&gt;Last week (April 19-25)&lt;/h2&gt;
-
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;kitsune&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;r?d &lt;a href='http://github.com/jsocol/kitsune/commit/03b9b540b96968dda4bffacb0f6abdee351e9b12'&gt;adding sumo-dev to receive useful stack traces from kitsune&lt;/a&gt;&lt;/li&gt;
-
-&lt;li&gt;r?d &lt;a href='http://github.com/jsocol/kitsune/commit/a5ceb6974a03a8f0487c58a56baf9ed88c1a3701'&gt;improved maintenance of locales&lt;/a&gt;, go James!&lt;/li&gt;
-
-&lt;li&gt;r?d &lt;a href='http://github.com/jsocol/kitsune/commit/79847afa23ee9a3ff3200949824463e6d50e9bf2'&gt;kitsune documentation&lt;/a&gt;&lt;/li&gt;
-
-&lt;li&gt;r?d &lt;a href='http://github.com/jsocol/kitsune/commit/97fe787bae6592360e7603dc6440b4db729126de'&gt;better handling of timeouts for excerpts&lt;/a&gt; and &lt;a href='http://github.com/jsocol/kitsune/commit/29d2134f6d0d5ca22e0bbdcf6832c21aea9ee00a'&gt;merged&lt;/a&gt;&lt;/li&gt;
-
-&lt;li&gt;r?d &lt;a href='http://github.com/jsocol/kitsune/commit/32be0335fd22876379e9716e0df88ffc953fc151'&gt;unicode improvements, adding sumo.utils.urlencode&lt;/a&gt; and &lt;a href='http://github.com/jsocol/kitsune/commit/633d0166c9bf65fc35886ad05c038f5f74058448'&gt;merged&lt;/a&gt;&lt;/li&gt;
-
-&lt;li&gt;r?d &lt;a href='http://github.com/jsocol/kitsune/commit/23f586b285d3c63b842dd643623ce2491f1a3b87'&gt;fixing an IE6/7 bug&lt;/a&gt;&lt;/li&gt;
-
-&lt;li&gt;r?d &lt;a href='http://github.com/jsocol/kitsune/commit/e9aa5d2f87e163917ad339c0d6c06fc0b58625c2'&gt;case insensitive Accept-Language for Opera, Chrome, Safari&lt;/a&gt;&lt;/li&gt;
-
-&lt;li&gt;r?d &lt;a href='http://github.com/jsocol/kitsune/commit/4464b2033a4c5ce079034dabdafed808e0bcfc51'&gt;adding a search plugin&lt;/a&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;a href='http://github.com/jsocol/kitsune/commit/633d0166c9bf65fc35886ad05c038f5f74058448'&gt;fix pagination on IE6&lt;/a&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;a href='http://github.com/jsocol/kitsune/commit/b2563c4dffcf2515d23f7f861600fc01cb0578da'&gt;adding two new supported locales&lt;/a&gt;&lt;/li&gt;
-
-&lt;li&gt;finished &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=555251'&gt;lots of tests for search filters and JSON for all&lt;/a&gt;&lt;/li&gt;
-
-&lt;li&gt;finished &lt;a href='https://bugzilla.mozilla.org/buglist.cgi?quicksearch=ALL+product%3Asupport+milestone%3A2.0'&gt;the remaining 2.0 bugs&lt;/a&gt; with the rest of the SUMOdev team&lt;/li&gt;
-
-&lt;li&gt;installed mod_wsgi locally with help of &lt;a href='http://github.com/jsocol/kitsune/blob/development/docs/wsgi.rst'&gt;James&amp;#8217; docs&lt;/a&gt;&lt;/li&gt;
-
-&lt;li&gt;assisted with IT bugs to &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=559997'&gt;convert the database to UTF8&lt;/a&gt; according to &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=554210'&gt;this bug&lt;/a&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=559109'&gt;debugging server issues for kitsune stage&lt;/a&gt;&lt;/li&gt;
-
-&lt;li&gt;begin work on milestone 2.1&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-
-&lt;li&gt;
-&lt;p&gt;tiki&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;r?d &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=556672'&gt;using kitsune for search&lt;/a&gt; on &lt;a href='http://support-stage-new.mozilla.com/'&gt;stage-new&lt;/a&gt;&lt;/li&gt;
-
-&lt;li&gt;filed patch for &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=558105'&gt;adding WebTrends to SUMO for tracking&lt;/a&gt;&lt;/li&gt;
-
-&lt;li&gt;revert &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=558828'&gt;a notifications bug for articles&lt;/a&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=519927'&gt;add .htaccess rewrites for Fx3.7 help topic: keyboard shortcuts&lt;/a&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=554781'&gt;debugging screencast bug on mobile&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id='this_week_april_2630'&gt;This week (April 26-30)&lt;/h2&gt;
-
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;WebDev onsite! Excited to hang out with the team.&lt;/p&gt;
-&lt;/li&gt;
-
-&lt;li&gt;
-&lt;p&gt;kitsune&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;work on &lt;a href='https://bugzilla.mozilla.org/buglist.cgi?type1-0-0=substring&amp;amp;query_format=advanced&amp;amp;field0-0-0=product&amp;amp;value1-0-0=2.1&amp;amp;type0-0-0=substring&amp;amp;value0-0-0=support&amp;amp;field1-0-0=target_milestone&amp;amp;target_milestone=2.1&amp;amp;product=support.mozilla.com'&gt;forums and other 2.1 stuff&lt;/a&gt;&lt;/li&gt;
-
-&lt;li&gt;prepare for kitsune push, potential QA bugs&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-
-&lt;li&gt;
-&lt;p&gt;tiki&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;prepare for 1.5.4 push, potential QA bugs&lt;/li&gt;
-
-&lt;li&gt;figure out &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=554781'&gt;screencast bug&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;</content>

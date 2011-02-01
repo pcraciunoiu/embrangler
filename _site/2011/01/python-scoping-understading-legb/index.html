@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Python scoping: understading LEGB</title>
+    <meta name="author" content="Paul Craciunoiu" />
+    <link href="http://feeds.feedburner.com/embrangler" rel="alternate" title="Disembrangling Programming" type="application/atom+xml" />
+    
+    <link type="image/x-icon" href="/favicon.ico" rel="shortcut icon">
+
+    <!-- syntax highlighting CSS -->
+    <link rel="stylesheet" href="/css/syntax.css" type="text/css" />
+
+    <!-- Homepage CSS -->
+    <link rel="stylesheet" href="/css/main.css" type="text/css" media="screen, projection" />
+
+    
+      <!-- Tag feed -->
+      
+        <link href="/tag/python/atom.xml"
+	      rel="alternate"
+              type="application/atom+xml"
+              title="Disembrangling Programming (tag: python)" />
+      
+        <link href="/tag/beginner/atom.xml"
+	      rel="alternate"
+              type="application/atom+xml"
+              title="Disembrangling Programming (tag: beginner)" />
+      
+        <link href="/tag/scoping/atom.xml"
+	      rel="alternate"
+              type="application/atom+xml"
+              title="Disembrangling Programming (tag: scoping)" />
+      
+        <link href="/tag/mozilla/atom.xml"
+	      rel="alternate"
+              type="application/atom+xml"
+              title="Disembrangling Programming (tag: mozilla)" />
+      
+    
+</head>
+<body>
+
+<div class="site">
+
+    <div id="header" role="banner">
+        <h1 class="title">
+            <a href="/">Disembrangling Programming</a>
+        </h1>
+        <h2 class="subtitle">
+            <a href="/about" title="About Paul Craciunoiu">The simple life of a web developer &mdash; by Paul Craciunoiu<span> (About)</span></a>
+            <a class="the-list" href="/list">(The List)</a>
+        </h2>
+    </div>
+    <div id="content" role="main">    
+    <div id="post">
+  <h1>Python scoping: understading LEGB</h1>
+  <div class="meta">
+    
+    <div class="tags">Tags:
+      
+        <a href="/tag/python/">python</a>,
+        
+      
+        <a href="/tag/beginner/">beginner</a>,
+        
+      
+        <a href="/tag/scoping/">scoping</a>,
+        
+      
+        <a href="/tag/mozilla/">mozilla</a>
+      
+    </div>
+    
+    <time>31 Jan 2011</time>
+  </div>
+  <h2 id='summary'>Summary</h2>
+
+<p>Python scoping fun! <a href='http://stackoverflow.com/questions/291978/short-description-of-python-scoping-rules'>Read about LEGB</a> to understand the basics of python scoping.</p>
+
+<h2 id='beef'>Beef</h2>
+
+<p>I never bothered to read about how python scoping works until I hit this. It&#8217;s not exactly something to research until you have issues with it. :)</p>
+
+<p>I had something like this going on:</p>
+<div class='highlight'><pre><code class='python'><span class='lineno'> 1</span> <span class='k'>def</span> <span class='nf'>func1</span><span class='p'>(</span><span class='n'>param</span><span class='o'>=</span><span class='bp'>None</span><span class='p'>):</span>
+<span class='lineno'> 2</span>     <span class='k'>def</span> <span class='nf'>func2</span><span class='p'>():</span>
+<span class='lineno'> 3</span>         <span class='k'>if</span> <span class='ow'>not</span> <span class='n'>param</span><span class='p'>:</span>
+<span class='lineno'> 4</span>             <span class='n'>param</span> <span class='o'>=</span> <span class='s'>&#39;default&#39;</span>
+<span class='lineno'> 5</span>         <span class='k'>print</span> <span class='n'>param</span>
+<span class='lineno'> 6</span>     <span class='c'># Just return func2.</span>
+<span class='lineno'> 7</span>     <span class='k'>return</span> <span class='n'>func2</span>
+<span class='lineno'> 8</span> 
+<span class='lineno'> 9</span> 
+<span class='lineno'>10</span> <span class='k'>if</span> <span class='n'>__name__</span> <span class='o'>==</span> <span class='s'>&#39;__main__&#39;</span><span class='p'>:</span>
+<span class='lineno'>11</span>     <span class='n'>func1</span><span class='p'>(</span><span class='s'>&#39;test&#39;</span><span class='p'>)()</span>
+</code></pre>
+</div>
+<p><strong>Note:</strong> Actual code was not as straightforward, <code>func2</code> was actually a decorator. Admittedly, using the same parameter name is not a must, but it&#8217;s still a curiosity. I just wanted to fall back to a default value on run-time.</p>
+
+<p>If you try to run this in python, here&#8217;s what you get:</p>
+<div class='highlight'><pre><code class='python'><span class='o'>~</span> <span class='err'>$</span> <span class='n'>python</span> <span class='n'>test</span><span class='o'>.</span><span class='n'>py</span> 
+<span class='n'>Traceback</span> <span class='p'>(</span><span class='n'>most</span> <span class='n'>recent</span> <span class='n'>call</span> <span class='n'>last</span><span class='p'>):</span>
+  <span class='n'>File</span> <span class='s'>&quot;test.py&quot;</span><span class='p'>,</span> <span class='n'>line</span> <span class='mi'>11</span><span class='p'>,</span> <span class='ow'>in</span> <span class='o'>&lt;</span><span class='n'>module</span><span class='o'>&gt;</span>
+    <span class='n'>func1</span><span class='p'>(</span><span class='s'>&#39;test&#39;</span><span class='p'>)()</span>
+  <span class='n'>File</span> <span class='s'>&quot;test.py&quot;</span><span class='p'>,</span> <span class='n'>line</span> <span class='mi'>3</span><span class='p'>,</span> <span class='ow'>in</span> <span class='n'>func2</span>
+    <span class='k'>if</span> <span class='ow'>not</span> <span class='n'>param</span><span class='p'>:</span>
+<span class='ne'>UnboundLocalError</span><span class='p'>:</span> <span class='n'>local</span> <span class='n'>variable</span> <span class='s'>&#39;param&#39;</span> <span class='n'>referenced</span> <span class='n'>before</span> <span class='n'>assignment</span>
+</code></pre>
+</div>
+<p>If you&#8217;re curious, you can <a href='http://stackoverflow.com/questions/291978/short-description-of-python-scoping-rules'>read about the principles of LEGB.</a> You have to understand a bit about compilers and <a href='http://en.wikipedia.org/wiki/Abstract_syntax_tree'>the AST</a> to get what&#8217;s going on behind the scenes. You might thing that replacing lines 3-4 with:</p>
+<div class='highlight'><pre><code class='python'><span class='n'>param</span> <span class='o'>=</span> <span class='n'>param</span> <span class='ow'>or</span> <span class='s'>&#39;default&#39;</span>
+</code></pre>
+</div>
+<p>Might work. But no. You can&#8217;t assign the same parameter at the local level if the enclosing level defines it. Even this fails:</p>
+<div class='highlight'><pre><code class='python'><span class='n'>param</span> <span class='o'>=</span> <span class='n'>param</span>
+</code></pre>
+</div>
+<p>Fun, no?</p>
+
+<h2 id='read_more'>Read more</h2>
+
+<ul>
+<li><a href='http://stackoverflow.com/questions/291978/short-description-of-python-scoping-rules'>LEGB (stackoverflow)</a></li>
+
+<li><a href='http://docs.python.org/tutorial/classes.html#python-scopes-and-namespaces'>Python docs on scope and namespaces.</a></li>
+</ul>
+</div>
+
+<div id="related">
+  <h2>Related Posts</h2>
+  <ul>
+    
+      <li><a href="/2010/03/quoteden-moving-to-kohana-3">Quoteden: Moving to Kohana 3</a> &mdash; 12 Mar 2010</li>
+    
+      <li><a href="/2010/03/embrangler-moving-to-jekyll">Embrangler: Moving to Jekyll</a> &mdash; 21 Mar 2010</li>
+    
+      <li><a href="/2010/04/testing-in-kohana-3">Introduction to testing in Kohana 3</a> &mdash; 25 Apr 2010</li>
+    
+  </ul>
+</div>
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  (function() {
+   var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+   dsq.src = 'http://blogpaulcraciunoiu.disqus.com/embed.js';
+   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript=blogpaulcraciunoiu">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+<script type="text/javascript">
+//<![CDATA[
+(function() {
+    var links = document.getElementsByTagName('a');
+    var query = '?';
+    for(var i = 0; i < links.length; i++) {
+    if(links[i].href.indexOf('#disqus_thread') >= 0) {
+        query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
+    }
+    }
+    document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/blogpaulcraciunoiu/get_num_replies.js' + query + '"></' + 'script>');
+})();
+//]]>
+</script>
+
+    </div>
+
+    <div id="footer" role="contentinfo">
+        <div class="about">
+        <p>I work as a web developer for <a href="http://mozilla.com">Mozilla</a>, with main focus on <a href="http://www.djangoproject.com/">Django</a>, Python, and PHP. Occasionally, I write tutorials or post other information I find interesting.</p>
+        <p>I enjoy doing freelance work for other websites, mostly non-profits. If you're interested in my services, contact me through one of the links below.</p>
+        </p>
+        </div>
+        <div class="contact">
+            <a href="http://twitter.com/embrangler/">Follow me</a> -- 
+            <a href="http://craciunoiu.net/contact/paul">Email me</a> -- 
+            <a href="http://github.com/pcraciunoiu/">My GitHub</a>
+        </div>
+        <div class="quote">
+        <p>
+            Success is a journey, not a destination. The doing is often more important than the outcome. &mdash; <a href="http://quoteden.net/author/id/337">Arthur Robert Ashe, Jr</a>
+        </p>
+        <p>&copy; Paul Craciunoiu. Some rights reserved. Brought to you by <a href="http://wiki.github.com/mojombo/jekyll/">Jekyll</a></p>
+        </div>
+    </div>
+</div><!-- site -->
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-15382775-1");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+<!-- /Google Analytics -->
+
+</body>
+</html>
