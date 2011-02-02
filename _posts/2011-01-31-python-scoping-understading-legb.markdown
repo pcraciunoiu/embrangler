@@ -41,7 +41,7 @@ Traceback (most recent call last):
 UnboundLocalError: local variable 'param' referenced before assignment
 {% endhighlight %}
 
-If you're curious, you can [read about the principles of LEGB.](http://stackoverflow.com/questions/291978/short-description-of-python-scoping-rules) You have to understand a bit about compilers and [the AST](http://en.wikipedia.org/wiki/Abstract_syntax_tree) to get what's going on behind the scenes. You might thing that replacing lines 3-4 with:
+If you're curious, you can [read about the principles of LEGB.](http://stackoverflow.com/questions/291978/short-description-of-python-scoping-rules) You have to understand a bit about compilers and [the AST](http://en.wikipedia.org/wiki/Abstract_syntax_tree) to get what's going on behind the scenes. You might think that replacing lines 3-4 with:
 {% highlight python %}
 param = param or 'default'
 {% endhighlight %}
