@@ -6,6 +6,9 @@ tags: [python, beginner, scoping, mozilla]
 time: 8:11PM
 ---
 
+__Update:__ Thanks to Avazu for [a clean suggestion](#what_to_do) and Fred for pointing out I should have indicated a good way to get around this.
+
+
 ## Summary
 
 Python scoping fun! [Read about LEGB](http://stackoverflow.com/questions/291978/short-description-of-python-scoping-rules) to understand the basics of python scoping.
@@ -51,6 +54,25 @@ param = param
 {% endhighlight %}
 
 Fun, no?
+
+## What to do?
+
+There are a few ways to get around this.
+
+* Assign <code>param</code> outside of func2. This doesn't work if you need the default value to be dependent on what params func2 receives.
+* Use a second variable, <code>param2</code> inside of func2 (posted below).
+
+Here is the solution suggested by our commenter Avazu (over on [the mozilla webdev blog](http://blog.mozilla.com/webdev/2011/01/31/python-scoping-understanding-legb/#comments)):
+{% highlight python %}
+def func1(param=None):
+    def func2(param2=param):
+        if not param2:
+            param2 = 'default'
+        print param2
+    # Just return func2.
+    return func2
+{% endhighlight %}
+
 
 ## Read more
 

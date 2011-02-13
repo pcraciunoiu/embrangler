@@ -4,7 +4,7 @@
  <title>Disembrangling Programming</title>
  <link href="http://embrangler.com/tag/python/atom.xml" rel="self"/>
  <link href="http://embrangler.com/tag/python"/>
- <updated>2011-01-31T21:01:26-08:00</updated>
+ <updated>2011-02-12T23:01:32-08:00</updated>
  <id>http://embrangler.com/</id>
  <author>
    <name>Paul Craciunoiu</name>
@@ -17,7 +17,9 @@
    <link href="http://embrangler.com/2011/01/python-scoping-understading-legb"/>
    <updated>2011-01-31T00:00:00-08:00</updated>
    <id>http://embrangler.com/2011/01/python-scoping-understading-legb</id>
-   <content type="html">&lt;h2 id='summary'&gt;Summary&lt;/h2&gt;
+   <content type="html">&lt;p&gt;&lt;strong&gt;Update:&lt;/strong&gt; Thanks to Avazu for &lt;a href='#what_to_do'&gt;a clean suggestion&lt;/a&gt; and Fred for pointing out I should have indicated a good way to get around this.&lt;/p&gt;
+
+&lt;h2 id='summary'&gt;Summary&lt;/h2&gt;
 
 &lt;p&gt;Python scoping fun! &lt;a href='http://stackoverflow.com/questions/291978/short-description-of-python-scoping-rules'&gt;Read about LEGB&lt;/a&gt; to understand the basics of python scoping.&lt;/p&gt;
 
@@ -51,7 +53,7 @@
 &lt;span class='ne'&gt;UnboundLocalError&lt;/span&gt;&lt;span class='p'&gt;:&lt;/span&gt; &lt;span class='n'&gt;local&lt;/span&gt; &lt;span class='n'&gt;variable&lt;/span&gt; &lt;span class='s'&gt;&amp;#39;param&amp;#39;&lt;/span&gt; &lt;span class='n'&gt;referenced&lt;/span&gt; &lt;span class='n'&gt;before&lt;/span&gt; &lt;span class='n'&gt;assignment&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
-&lt;p&gt;If you&amp;#8217;re curious, you can &lt;a href='http://stackoverflow.com/questions/291978/short-description-of-python-scoping-rules'&gt;read about the principles of LEGB.&lt;/a&gt; You have to understand a bit about compilers and &lt;a href='http://en.wikipedia.org/wiki/Abstract_syntax_tree'&gt;the AST&lt;/a&gt; to get what&amp;#8217;s going on behind the scenes. You might thing that replacing lines 3-4 with:&lt;/p&gt;
+&lt;p&gt;If you&amp;#8217;re curious, you can &lt;a href='http://stackoverflow.com/questions/291978/short-description-of-python-scoping-rules'&gt;read about the principles of LEGB.&lt;/a&gt; You have to understand a bit about compilers and &lt;a href='http://en.wikipedia.org/wiki/Abstract_syntax_tree'&gt;the AST&lt;/a&gt; to get what&amp;#8217;s going on behind the scenes. You might think that replacing lines 3-4 with:&lt;/p&gt;
 &lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='python'&gt;&lt;span class='n'&gt;param&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='n'&gt;param&lt;/span&gt; &lt;span class='ow'&gt;or&lt;/span&gt; &lt;span class='s'&gt;&amp;#39;default&amp;#39;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
@@ -61,6 +63,26 @@
 &lt;/div&gt;
 &lt;p&gt;Fun, no?&lt;/p&gt;
 
+&lt;h2 id='what_to_do'&gt;What to do?&lt;/h2&gt;
+
+&lt;p&gt;There are a few ways to get around this.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Assign &lt;code&gt;param&lt;/code&gt; outside of func2. This doesn&amp;#8217;t work if you need the default value to be dependent on what params func2 receives.&lt;/li&gt;
+
+&lt;li&gt;Use a second variable, &lt;code&gt;param2&lt;/code&gt; inside of func2 (posted below).&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Here is the solution suggested by our commenter Avazu (over on &lt;a href='http://blog.mozilla.com/webdev/2011/01/31/python-scoping-understanding-legb/#comments'&gt;the mozilla webdev blog&lt;/a&gt;):&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='python'&gt;&lt;span class='k'&gt;def&lt;/span&gt; &lt;span class='nf'&gt;func1&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='n'&gt;param&lt;/span&gt;&lt;span class='o'&gt;=&lt;/span&gt;&lt;span class='bp'&gt;None&lt;/span&gt;&lt;span class='p'&gt;):&lt;/span&gt;
+    &lt;span class='k'&gt;def&lt;/span&gt; &lt;span class='nf'&gt;func2&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='n'&gt;param2&lt;/span&gt;&lt;span class='o'&gt;=&lt;/span&gt;&lt;span class='n'&gt;param&lt;/span&gt;&lt;span class='p'&gt;):&lt;/span&gt;
+        &lt;span class='k'&gt;if&lt;/span&gt; &lt;span class='ow'&gt;not&lt;/span&gt; &lt;span class='n'&gt;param2&lt;/span&gt;&lt;span class='p'&gt;:&lt;/span&gt;
+            &lt;span class='n'&gt;param2&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='s'&gt;&amp;#39;default&amp;#39;&lt;/span&gt;
+        &lt;span class='k'&gt;print&lt;/span&gt; &lt;span class='n'&gt;param2&lt;/span&gt;
+    &lt;span class='c'&gt;# Just return func2.&lt;/span&gt;
+    &lt;span class='k'&gt;return&lt;/span&gt; &lt;span class='n'&gt;func2&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;h2 id='read_more'&gt;Read more&lt;/h2&gt;
 
 &lt;ul&gt;
