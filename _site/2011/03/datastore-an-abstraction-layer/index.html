@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>DataStore - an abstraction layer for storing data and processing requests</title>
+    <meta name="author" content="Paul Craciunoiu" />
+    <link href="http://feeds.feedburner.com/embrangler" rel="alternate" title="Disembrangling Programming" type="application/atom+xml" />
+    
+    <link type="image/x-icon" href="/favicon.ico" rel="shortcut icon">
+
+    <!-- syntax highlighting CSS -->
+    <link rel="stylesheet" href="/css/syntax.css" type="text/css" />
+
+    <!-- Homepage CSS -->
+    <link rel="stylesheet" href="/css/main.css" type="text/css" media="screen, projection" />
+
+    
+      <!-- Tag feed -->
+      
+        <link href="/tag/javascript/atom.xml"
+	      rel="alternate"
+              type="application/atom+xml"
+              title="Disembrangling Programming (tag: javascript)" />
+      
+        <link href="/tag/data/atom.xml"
+	      rel="alternate"
+              type="application/atom+xml"
+              title="Disembrangling Programming (tag: data)" />
+      
+        <link href="/tag/offline-storage/atom.xml"
+	      rel="alternate"
+              type="application/atom+xml"
+              title="Disembrangling Programming (tag: offline storage)" />
+      
+        <link href="/tag/mozilla/atom.xml"
+	      rel="alternate"
+              type="application/atom+xml"
+              title="Disembrangling Programming (tag: mozilla)" />
+      
+    
+</head>
+<body>
+
+<div class="site">
+
+    <div id="header" role="banner">
+        <h1 class="title">
+            <a href="/">Disembrangling Programming</a>
+        </h1>
+        <h2 class="subtitle">
+            <a href="/about" title="About Paul Craciunoiu">The simple life of a web developer &mdash; by Paul Craciunoiu<span> (About)</span></a>
+            <a class="the-list" href="/list">(The List)</a>
+        </h2>
+    </div>
+    <div id="content" role="main">    
+    <div id="post">
+  <h1>DataStore - an abstraction layer for storing data and processing requests</h1>
+  <div class="meta">
+    
+    <div class="tags">Tags:
+      
+        <a href="/tag/javascript/">javascript</a>,
+        
+      
+        <a href="/tag/data/">data</a>,
+        
+      
+        <a href="/tag/offline-storage/">offline storage</a>,
+        
+      
+        <a href="/tag/mozilla/">mozilla</a>
+      
+    </div>
+    
+    <time>01 Mar 2011</time>
+  </div>
+  <h2 id='table_of_contents'>Table of contents</h2>
+
+<ol>
+<li><a href='#idea'>Idea</a></li>
+
+<li><a href='#from_past_to_present_what_now'>From past to present, what now?</a></li>
+
+<li><a href='#what_does_better_mean'>What does better mean?</a></li>
+
+<li><a href='#why_should_you_care'>Why should you care?</a></li>
+
+<li><a href='#my_scenario'>My scenario</a></li>
+
+<li><a href='#what_worked_for_me'>What worked for me</a></li>
+
+<li><a href='#proposed_features'>Proposed features</a></li>
+
+<li><a href='#help'>Help!</a></li>
+</ol>
+
+<h2 id='idea'>Idea</h2>
+
+<p>A library to unify all the different data storage/retrieval/sending/receiving API&#8217;s such as XMLHttpRequest, WebSockets, localStorage, IndexedDB, and make it easier to use any number of them at once.</p>
+
+<h2 id='from_past_to_present_what_now'>From past to present, what now?</h2>
+
+<p><strong>Past:</strong> Before, all we had was AJAX requests. Really.</p>
+
+<p><strong>To present:</strong> With the new technologies coming up in the HTML5 era, we&#8217;ve got localStorage and IndexedDB, WebSockets, node.js, and more. Hectic.</p>
+
+<p><strong>What now?</strong> Don&#8217;t you wish there was a <em>better way</em> to send and receive data in the browser?</p>
+
+<h2 id='what_does_better_mean'>What does better mean?</h2>
+
+<p>My general goals for this are:</p>
+
+<ol>
+<li>Simple key/value store common abstraction.</li>
+
+<li>Pluggable handlers for each type of send/receive.</li>
+
+<li>Use other abstractions specified in each handler (library surfaces your API as well).</li>
+
+<li>Straightforward way to define flow of data. <a href='#flow_of_data'>More on this later.</a></li>
+</ol>
+
+<p>Anything else you wish it could do?</p>
+
+<h2 id='why_should_you_care'>Why should you care?</h2>
+
+<p>Short answer: <strong>maintenance, scalability, flexibility.</strong></p>
+
+<p>As these technologies become widely supported, you will start seeing a common problem for websites heavily relying on AJAX (or any kind of data transfer without page reloads): <em>how do you take advantage of them without rewriting your entire codebase every time there&#8217;s a new technology (API/storage engine/etc) coming out?</em></p>
+
+<h2 id='my_scenario'>My scenario</h2>
+
+<p>The whole reason I got thinking about this was because it happened to me. And it was frustrating.</p>
+
+<p>I had this client-side application using <a href='http://api.jquery.com/jQuery.ajax/'>jQuery.ajax requests</a>, and I wanted to take advantage of localStorage for some of them, for data that I didn&#8217;t need to get from the server on every page load.</p>
+
+<p>I considered:</p>
+
+<ul>
+<li>Quick&#8217;n&#8217;dirty: Rewrite these pieces of the application to do both localStorage and ajax requests as fallback.</li>
+
+<li><strong><a href='#what_worked_for_me'>Slightly better:</a></strong> A library that&#8217;s flexible enough for my purposes.</li>
+
+<li><a href='#proposed_features'>Ideal:</a> A library that would allow me to enable/disable localStorage as an intermediary step on a per-request basis, make it easy to add IndexedDB support later, etc.</li>
+</ul>
+
+<h2 id='what_worked_for_me'>What worked for me</h2>
+
+<p>The simpler thing I went with was a Data object with a couple of functions.</p>
+
+<p>Example usage:</p>
+<div class='highlight'><pre><code class='javascript'><span class='lineno'> 1</span> <span class='c1'>// main.js</span>
+<span class='lineno'> 2</span> <span class='nb'>window</span><span class='p'>.</span><span class='nx'>data</span> <span class='o'>=</span> <span class='k'>new</span> <span class='nx'>DataStore</span><span class='p'>({</span>
+<span class='lineno'> 3</span>     <span class='nx'>url</span><span class='o'>:</span> <span class='s1'>&#39;/fetch_new_data&#39;</span><span class='p'>,</span>
+<span class='lineno'> 4</span>     <span class='c1'>// show a spinny tangy</span>
+<span class='lineno'> 5</span>     <span class='nx'>sync_before</span><span class='o'>:</span> <span class='kd'>function</span> <span class='nx'>showSyncInProgress</span><span class='p'>()</span> <span class='p'>{</span> <span class='p'>...</span> <span class='p'>},</span>
+<span class='lineno'> 6</span>     <span class='c1'>// hide the spinny thingy, maybe show a fading notification</span>
+<span class='lineno'> 7</span>     <span class='nx'>sync_success</span><span class='o'>:</span> <span class='kd'>function</span> <span class='nx'>showSyncDone</span><span class='p'>()</span> <span class='p'>{</span> <span class='p'>...</span> <span class='p'>},</span>
+<span class='lineno'> 8</span>     <span class='c1'>// hide the spinny thingy, definitely show some message</span>
+<span class='lineno'> 9</span>     <span class='nx'>sync_error</span><span class='o'>:</span> <span class='kd'>function</span> <span class='nx'>showSyncFailed</span><span class='p'>()</span> <span class='p'>{</span> <span class='p'>...</span> <span class='p'>}</span>
+<span class='lineno'>10</span> <span class='p'>}</span>
+<span class='lineno'>11</span> 
+<span class='lineno'>12</span> <span class='c1'>// example request</span>
+<span class='lineno'>13</span> <span class='kd'>var</span> <span class='nx'>i</span> <span class='o'>=</span> <span class='mi'>0</span><span class='p'>;</span>
+<span class='lineno'>14</span> <span class='nb'>window</span><span class='p'>.</span><span class='nx'>data</span><span class='p'>.</span><span class='nx'>process_request</span><span class='p'>({</span>
+<span class='lineno'>15</span>     <span class='nx'>ajax</span><span class='o'>:</span> <span class='p'>{</span><span class='nx'>url</span><span class='o'>:</span> <span class='s1'>&#39;/new_comment&#39;</span><span class='p'>,</span> <span class='nx'>type</span><span class='o'>:</span> <span class='s1'>&#39;POST&#39;</span><span class='p'>,</span>
+<span class='lineno'>16</span>            <span class='nx'>data</span><span class='o'>:</span> <span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#comment-form&#39;</span><span class='p'>).</span><span class='nx'>serialize</span><span class='p'>()},</span>
+<span class='lineno'>17</span>     <span class='nx'>key</span><span class='o'>:</span> <span class='s1'>&#39;comment_&#39;</span> <span class='o'>+</span> <span class='p'>(</span><span class='nx'>i</span><span class='o'>++</span><span class='p'>),</span>
+<span class='lineno'>18</span>     <span class='nx'>value</span><span class='o'>:</span> <span class='p'>{</span><span class='s1'>&#39;author&#39;</span><span class='o'>:</span> <span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#comment-form .author&#39;</span><span class='p'>).</span><span class='nx'>val</span><span class='p'>(),</span>
+<span class='lineno'>19</span>             <span class='s1'>&#39;text&#39;</span><span class='o'>:</span> <span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#comment-form .text&#39;</span><span class='p'>).</span><span class='nx'>val</span><span class='p'>()}</span>
+<span class='lineno'>20</span> <span class='p'>});</span>
+</code></pre>
+</div>
+<p><code>ajax.data</code> and <code>value</code> are actually very similar, with an important exception in most applications (e.g. Django): the csrftoken. We don&#8217;t need to store that in localStorage for every request. So I chose to keep the two completely separate. You could subclass DataStore and make it save you this extra work per request.</p>
+
+<p>Below is an example implementation (<a href='/files/code/datastore/datastore.js'>raw file</a>):</p>
+<div class='highlight'><pre><code class='javascript'><span class='lineno'>  1</span> <span class='cm'>/* This depends on Crockford&#39;s json2.js</span>
+<span class='lineno'>  2</span> <span class='cm'> * from https://github.com/douglascrockford/JSON-js</span>
+<span class='lineno'>  3</span> <span class='cm'> * Options:</span>
+<span class='lineno'>  4</span> <span class='cm'> *     - url: function()</span>
+<span class='lineno'>  5</span> <span class='cm'> *     - sync_before: function()</span>
+<span class='lineno'>  6</span> <span class='cm'> *     - sync_success: function()</span>
+<span class='lineno'>  7</span> <span class='cm'> *     - sync_error: function()</span>
+<span class='lineno'>  8</span> <span class='cm'> */</span>
+<span class='lineno'>  9</span> <span class='kd'>function</span> <span class='nx'>DataStore</span><span class='p'>(</span><span class='nx'>options</span><span class='p'>)</span> <span class='p'>{</span>
+<span class='lineno'> 10</span>     <span class='nb'>window</span><span class='p'>.</span><span class='nx'>data</span> <span class='o'>=</span> <span class='k'>this</span><span class='p'>;</span>
+<span class='lineno'> 11</span>     <span class='k'>this</span><span class='p'>.</span><span class='nx'>storage</span> <span class='o'>=</span> <span class='nb'>window</span><span class='p'>.</span><span class='nx'>localStorage</span><span class='p'>;</span>
+<span class='lineno'> 12</span>     <span class='c1'>// date of last time we synced</span>
+<span class='lineno'> 13</span>     <span class='k'>this</span><span class='p'>.</span><span class='nx'>last_sync</span> <span class='o'>=</span> <span class='kc'>null</span><span class='p'>;</span>
+<span class='lineno'> 14</span>     <span class='c1'>// queue of requests, populated if offline</span>
+<span class='lineno'> 15</span>     <span class='k'>this</span><span class='p'>.</span><span class='nx'>queue</span> <span class='o'>=</span> <span class='p'>[];</span>
+<span class='lineno'> 16</span> 
+<span class='lineno'> 17</span>     <span class='cm'>/**</span>
+<span class='lineno'> 18</span> <span class='cm'>     * Gets data stored at `key`; `key` is a string</span>
+<span class='lineno'> 19</span> <span class='cm'>     */</span>
+<span class='lineno'> 20</span>     <span class='k'>this</span><span class='p'>.</span><span class='nx'>get_data</span> <span class='o'>=</span> <span class='kd'>function</span> <span class='p'>(</span><span class='nx'>key</span><span class='p'>)</span> <span class='p'>{</span>
+<span class='lineno'> 21</span>         <span class='kd'>var</span> <span class='nx'>str_data</span> <span class='o'>=</span> <span class='k'>this</span><span class='p'>.</span><span class='nx'>storage</span><span class='p'>.</span><span class='nx'>getItem</span><span class='p'>(</span><span class='nx'>key</span><span class='p'>);</span>
+<span class='lineno'> 22</span>         <span class='k'>return</span> <span class='nx'>JSON</span><span class='p'>.</span><span class='nx'>parse</span><span class='p'>(</span><span class='nx'>str_data</span><span class='p'>);</span>
+<span class='lineno'> 23</span>     <span class='p'>}</span>
+<span class='lineno'> 24</span> 
+<span class='lineno'> 25</span>     <span class='cm'>/**</span>
+<span class='lineno'> 26</span> <span class='cm'>     * Sets data at `key`; `key` is a string</span>
+<span class='lineno'> 27</span> <span class='cm'>     */</span>
+<span class='lineno'> 28</span>     <span class='k'>this</span><span class='p'>.</span><span class='nx'>set_data</span> <span class='o'>=</span> <span class='kd'>function</span> <span class='p'>(</span><span class='nx'>key</span><span class='p'>,</span> <span class='nx'>data</span><span class='p'>)</span> <span class='p'>{</span>
+<span class='lineno'> 29</span>         <span class='kd'>var</span> <span class='nx'>str_data</span> <span class='o'>=</span> <span class='nx'>JSON</span><span class='p'>.</span><span class='nx'>stringify</span><span class='p'>(</span><span class='nx'>data</span><span class='p'>);</span>
+<span class='lineno'> 30</span>         <span class='k'>this</span><span class='p'>.</span><span class='nx'>storage</span><span class='p'>.</span><span class='nx'>setItem</span><span class='p'>(</span><span class='nx'>key</span><span class='p'>,</span> <span class='nx'>str_data</span><span class='p'>);</span>
+<span class='lineno'> 31</span>     <span class='p'>}</span>
+<span class='lineno'> 32</span> 
+<span class='lineno'> 33</span>     <span class='cm'>/**</span>
+<span class='lineno'> 34</span> <span class='cm'>     * Syncs data between local storage and server, depending on</span>
+<span class='lineno'> 35</span> <span class='cm'>     * modifications and online status.</span>
+<span class='lineno'> 36</span> <span class='cm'>     */</span>
+<span class='lineno'> 37</span>     <span class='k'>this</span><span class='p'>.</span><span class='nx'>sync_data</span> <span class='o'>=</span> <span class='kd'>function</span> <span class='p'>()</span> <span class='p'>{</span>
+<span class='lineno'> 38</span>         <span class='c1'>// must be online to sync</span>
+<span class='lineno'> 39</span>         <span class='k'>if</span> <span class='p'>(</span><span class='o'>!</span><span class='k'>this</span><span class='p'>.</span><span class='nx'>is_online</span><span class='p'>())</span> <span class='p'>{</span>
+<span class='lineno'> 40</span>             <span class='k'>return</span> <span class='kc'>false</span><span class='p'>;</span>
+<span class='lineno'> 41</span>         <span class='p'>}</span>
+<span class='lineno'> 42</span> 
+<span class='lineno'> 43</span>         <span class='k'>this</span><span class='p'>.</span><span class='nx'>last_sync</span> <span class='o'>=</span> <span class='k'>this</span><span class='p'>.</span><span class='nx'>get_data</span><span class='p'>(</span><span class='s1'>&#39;last_sync&#39;</span><span class='p'>);</span>
+<span class='lineno'> 44</span> 
+<span class='lineno'> 45</span>         <span class='c1'>// have we never synced before in this browser?</span>
+<span class='lineno'> 46</span>         <span class='k'>if</span> <span class='p'>(</span><span class='o'>!</span><span class='k'>this</span><span class='p'>.</span><span class='nx'>last_sync</span><span class='p'>)</span> <span class='p'>{</span>
+<span class='lineno'> 47</span>             <span class='c1'>// first-time setup</span>
+<span class='lineno'> 48</span>             <span class='c1'>// ...</span>
+<span class='lineno'> 49</span>             <span class='k'>this</span><span class='p'>.</span><span class='nx'>last_sync</span> <span class='o'>=</span> <span class='p'>{};</span>
+<span class='lineno'> 50</span>             <span class='k'>this</span><span class='p'>.</span><span class='nx'>last_sync</span><span class='p'>.</span><span class='nx'>when</span> <span class='o'>=</span> <span class='k'>new</span> <span class='nb'>Date</span><span class='p'>().</span><span class='nx'>getTime</span><span class='p'>();</span>
+<span class='lineno'> 51</span>             <span class='k'>this</span><span class='p'>.</span><span class='nx'>last_sync</span><span class='p'>.</span><span class='nx'>is_modified</span> <span class='o'>=</span> <span class='kc'>false</span><span class='p'>;</span>
+<span class='lineno'> 52</span>         <span class='p'>}</span>
+<span class='lineno'> 53</span> 
+<span class='lineno'> 54</span>         <span class='k'>if</span> <span class='p'>(</span><span class='k'>this</span><span class='p'>.</span><span class='nx'>last_sync</span><span class='p'>.</span><span class='nx'>is_modified</span><span class='p'>)</span> <span class='p'>{</span>
+<span class='lineno'> 55</span>             <span class='kd'>var</span> <span class='nx'>request_options</span><span class='p'>;</span>
+<span class='lineno'> 56</span>             <span class='c1'>// sync modified data</span>
+<span class='lineno'> 57</span>             <span class='c1'>// you can pass callbacks here too</span>
+<span class='lineno'> 58</span>             <span class='k'>while</span> <span class='p'>(</span><span class='k'>this</span><span class='p'>.</span><span class='nx'>queue</span><span class='p'>.</span><span class='nx'>length</span> <span class='o'>&gt;</span> <span class='mi'>0</span><span class='p'>)</span> <span class='p'>{</span>
+<span class='lineno'> 59</span>                 <span class='nx'>request_options</span> <span class='o'>=</span> <span class='k'>this</span><span class='p'>.</span><span class='nx'>queue</span><span class='p'>.</span><span class='nx'>pop</span><span class='p'>();</span>
+<span class='lineno'> 60</span>                 <span class='nx'>$</span><span class='p'>.</span><span class='nx'>ajax</span><span class='p'>(</span><span class='nx'>request_options</span><span class='p'>.</span><span class='nx'>ajax</span><span class='p'>);</span>
+<span class='lineno'> 61</span>             <span class='p'>}</span>
+<span class='lineno'> 62</span>             <span class='k'>this</span><span class='p'>.</span><span class='nx'>set_data</span><span class='p'>(</span><span class='s1'>&#39;queue&#39;</span><span class='p'>,</span> <span class='p'>[]);</span>
+<span class='lineno'> 63</span>             <span class='k'>this</span><span class='p'>.</span><span class='nx'>last_sync</span><span class='p'>.</span><span class='nx'>is_modified</span> <span class='o'>=</span> <span class='kc'>false</span><span class='p'>;</span>
+<span class='lineno'> 64</span>         <span class='p'>}</span>
+<span class='lineno'> 65</span>         <span class='c1'>// data is synced, update sync time</span>
+<span class='lineno'> 66</span>         <span class='k'>this</span><span class='p'>.</span><span class='nx'>set_data</span><span class='p'>(</span><span class='s1'>&#39;last_sync&#39;</span><span class='p'>,</span> <span class='k'>this</span><span class='p'>.</span><span class='nx'>last_sync</span><span class='p'>);</span>
+<span class='lineno'> 67</span> 
+<span class='lineno'> 68</span>         <span class='c1'>// get modified data from the server here</span>
+<span class='lineno'> 69</span>        <span class='nx'>$</span><span class='p'>.</span><span class='nx'>ajax</span><span class='p'>({</span>
+<span class='lineno'> 70</span>             <span class='nx'>type</span><span class='o'>:</span> <span class='s1'>&#39;POST&#39;</span><span class='p'>,</span>
+<span class='lineno'> 71</span>             <span class='nx'>url</span><span class='o'>:</span> <span class='nx'>options</span><span class='p'>.</span><span class='nx'>url</span><span class='p'>,</span>
+<span class='lineno'> 72</span>             <span class='nx'>dataType</span><span class='o'>:</span> <span class='s1'>&#39;json&#39;</span><span class='p'>,</span>
+<span class='lineno'> 73</span>             <span class='nx'>data</span><span class='o'>:</span> <span class='p'>{</span><span class='s1'>&#39;last_sync&#39;</span><span class='o'>:</span> <span class='k'>this</span><span class='p'>.</span><span class='nx'>last_sync</span><span class='p'>.</span><span class='nx'>sync_date</span><span class='p'>},</span>
+<span class='lineno'> 74</span>             <span class='nx'>beforeSend</span><span class='o'>:</span>
+<span class='lineno'> 75</span>                 <span class='c1'>// here you can show some &quot;sync in progress&quot; icon</span>
+<span class='lineno'> 76</span>                 <span class='nx'>options</span><span class='p'>.</span><span class='nx'>sync_before</span><span class='p'>,</span>
+<span class='lineno'> 77</span>             <span class='nx'>error</span><span class='o'>:</span>
+<span class='lineno'> 78</span>                 <span class='c1'>// an error callback should be passed in to this Data</span>
+<span class='lineno'> 79</span>                 <span class='c1'>// object and would be called here</span>
+<span class='lineno'> 80</span>                 <span class='nx'>options</span><span class='p'>.</span><span class='nx'>sync_error</span><span class='p'>,</span>
+<span class='lineno'> 81</span>             <span class='nx'>success</span><span class='o'>:</span> <span class='kd'>function</span> <span class='p'>(</span><span class='nx'>response</span><span class='p'>,</span> <span class='nx'>textStatus</span><span class='p'>,</span> <span class='nx'>request</span><span class='p'>)</span> <span class='p'>{</span>
+<span class='lineno'> 82</span>                 <span class='c1'>// callback for success</span>
+<span class='lineno'> 83</span>                 <span class='nx'>options</span><span class='p'>.</span><span class='nx'>sync_success</span><span class='p'>(</span>
+<span class='lineno'> 84</span>                     <span class='nx'>response</span><span class='p'>,</span> <span class='nx'>textStatus</span><span class='p'>,</span> <span class='nx'>request</span><span class='p'>);</span>
+<span class='lineno'> 85</span>             <span class='p'>}</span>
+<span class='lineno'> 86</span>         <span class='p'>});</span>
+<span class='lineno'> 87</span> 
+<span class='lineno'> 88</span> 
+<span class='lineno'> 89</span>     <span class='cm'>/**</span>
+<span class='lineno'> 90</span> <span class='cm'>     * Process a request. This is where all the magic happens.</span>
+<span class='lineno'> 91</span> <span class='cm'>     */</span>
+<span class='lineno'> 92</span>     <span class='k'>this</span><span class='p'>.</span><span class='nx'>process_request</span> <span class='o'>=</span> <span class='kd'>function</span><span class='p'>(</span><span class='nx'>request_options</span><span class='p'>)</span> <span class='p'>{</span>
+<span class='lineno'> 93</span>         <span class='nx'>request_options</span><span class='p'>.</span><span class='nx'>beforeSend</span><span class='p'>();</span>
+<span class='lineno'> 94</span>         <span class='k'>this</span><span class='p'>.</span><span class='nx'>set_data</span><span class='p'>(</span><span class='nx'>request_options</span><span class='p'>.</span><span class='nx'>key</span><span class='p'>,</span> <span class='nx'>request_options</span><span class='p'>.</span><span class='nx'>value</span><span class='p'>);</span>
+<span class='lineno'> 95</span> 
+<span class='lineno'> 96</span>         <span class='k'>if</span> <span class='p'>(</span><span class='k'>this</span><span class='p'>.</span><span class='nx'>is_online</span><span class='p'>())</span> <span class='p'>{</span>
+<span class='lineno'> 97</span>             <span class='nx'>$</span><span class='p'>.</span><span class='nx'>ajax</span><span class='p'>(</span><span class='nx'>request_options</span><span class='p'>.</span><span class='nx'>ajax</span><span class='p'>);</span>
+<span class='lineno'> 98</span>         <span class='p'>}</span> <span class='k'>else</span> <span class='p'>{</span>
+<span class='lineno'> 99</span>             <span class='k'>this</span><span class='p'>.</span><span class='nx'>queue</span><span class='p'>.</span><span class='nx'>push</span><span class='p'>(</span><span class='nx'>request_options</span><span class='p'>);</span>
+<span class='lineno'>100</span>             <span class='k'>this</span><span class='p'>.</span><span class='nx'>last_sync</span><span class='p'>.</span><span class='nx'>is_modified</span> <span class='o'>=</span> <span class='kc'>true</span><span class='p'>;</span>
+<span class='lineno'>101</span>             <span class='k'>this</span><span class='p'>.</span><span class='nx'>set_data</span><span class='p'>(</span><span class='s1'>&#39;last_sync&#39;</span><span class='p'>,</span> <span class='k'>this</span><span class='p'>.</span><span class='nx'>last_sync</span><span class='p'>);</span>
+<span class='lineno'>102</span>             <span class='c1'>// there are issues with this, storing functions as</span>
+<span class='lineno'>103</span>             <span class='c1'>// strings is not a good idea :)</span>
+<span class='lineno'>104</span>             <span class='k'>this</span><span class='p'>.</span><span class='nx'>set_data</span><span class='p'>(</span><span class='s1'>&#39;queue&#39;</span><span class='p'>,</span> <span class='k'>this</span><span class='p'>.</span><span class='nx'>queue</span><span class='p'>);</span>
+<span class='lineno'>105</span>         <span class='p'>}</span>
+<span class='lineno'>106</span> 
+<span class='lineno'>107</span>         <span class='nx'>request_options</span><span class='p'>.</span><span class='nx'>processed</span><span class='p'>();</span>
+<span class='lineno'>108</span>     <span class='p'>}</span>
+<span class='lineno'>109</span> 
+<span class='lineno'>110</span>     <span class='cm'>/**</span>
+<span class='lineno'>111</span> <span class='cm'>     * Return true if online, false otherwise.</span>
+<span class='lineno'>112</span> <span class='cm'>     */</span>
+<span class='lineno'>113</span>     <span class='k'>this</span><span class='p'>.</span><span class='nx'>is_online</span> <span class='o'>=</span> <span class='kd'>function</span> <span class='p'>()</span> <span class='p'>{</span>
+<span class='lineno'>114</span>         <span class='k'>if</span> <span class='p'>(</span><span class='nx'>navigator</span> <span class='o'>&amp;&amp;</span> <span class='nx'>navigator</span><span class='p'>.</span><span class='nx'>onLine</span> <span class='o'>!==</span> <span class='kc'>undefined</span><span class='p'>)</span> <span class='p'>{</span>
+<span class='lineno'>115</span>             <span class='k'>return</span> <span class='nx'>navigator</span><span class='p'>.</span><span class='nx'>onLine</span><span class='p'>;</span>
+<span class='lineno'>116</span>         <span class='p'>}</span>
+<span class='lineno'>117</span>         <span class='k'>try</span> <span class='p'>{</span>
+<span class='lineno'>118</span>             <span class='kd'>var</span> <span class='nx'>request</span> <span class='o'>=</span> <span class='k'>new</span> <span class='nx'>XMLHttpRequest</span><span class='p'>();</span>
+<span class='lineno'>119</span>             <span class='nx'>request</span><span class='p'>.</span><span class='nx'>open</span><span class='p'>(</span><span class='s1'>&#39;GET&#39;</span><span class='p'>,</span> <span class='s1'>&#39;/&#39;</span><span class='p'>,</span> <span class='kc'>false</span><span class='p'>);</span>
+<span class='lineno'>120</span>             <span class='nx'>request</span><span class='p'>.</span><span class='nx'>send</span><span class='p'>(</span><span class='kc'>null</span><span class='p'>);</span>
+<span class='lineno'>121</span>             <span class='k'>return</span> <span class='p'>(</span><span class='nx'>request</span><span class='p'>.</span><span class='nx'>status</span> <span class='o'>===</span> <span class='mi'>200</span><span class='p'>);</span>
+<span class='lineno'>122</span>         <span class='p'>}</span>
+<span class='lineno'>123</span>         <span class='k'>catch</span><span class='p'>(</span><span class='nx'>e</span><span class='p'>)</span> <span class='p'>{</span>
+<span class='lineno'>124</span>             <span class='k'>return</span> <span class='kc'>false</span><span class='p'>;</span>
+<span class='lineno'>125</span>         <span class='p'>}</span>
+<span class='lineno'>126</span>     <span class='p'>}</span>
+<span class='lineno'>127</span> <span class='p'>}</span>
+</code></pre>
+</div>
+<h2 id='proposed_features'>Proposed Features</h2>
+
+<p>The example API isn&#8217;t bad, but I think it could be better. Perhaps something along the lines of <a href='http://westcoastlogic.com/lawnchair/'>Lawnchair</a>. As I&#8217;m writing this, I realize that writing an API is going to take longer than I&#8217;d like - therefore, this will serve as a teaser and food for thought. Feedback is welcome.</p>
+
+<ul>
+<li>Add an <em>.each</em> method for iterating over retrieved objects (inspired by Lawnchair)</li>
+
+<li>Standard <code>DataStore.save, .get, .remove, etc.</code></li>
+
+<li>Support for these &#8220;storage engines&#8221;: localStorage, IndexedDB, send-to-server.</li>
+
+<li>Support for these request types: XMLHttpRequest, <a href='http://en.wikipedia.org/wiki/WebSockets'>WebSockets</a>.</li>
+
+<li>Store, at the very least, primitive values and JSON.</li>
+
+<li>Include callbacks for various stages in the process of a request, similar to jQuery.ajax, e.g. <code>beforeSend, complete, success, error</code>. Figure out a good way to do this at each layer (minimize confusion).</li>
+
+<li>For each request, specify which layers and in what order to go through. For example, if you want to store something in localStorage, IndexedDB, and send it to the server, you could do it in that order or the reverse.</li>
+
+<li>Control whether to go to the next layer type depending on whether the previous succeeded or failed. Say, if you want to send the request to server but that fails, try localStorage as a fallback. Or the opposite.</li>
+
+<li>Include a <code>.get_then_store</code> shortcut for getting the data from layer A and storing it in layer B?</li>
+
+<li>Extensible: as easy as <code>DataStore.addLayer(layerName, layerHandler)</code>, where layerHandler (obviously) implements some common API along with exposing some of its own, if necessary (e.g. ability to query or find, for IndexedDB).</li>
+</ul>
+
+<h2 id='help'>Help!</h2>
+
+<p>Hopefully my rant has gotten you thinking about the right approach. What would you like to see? What would make this something you would use and be happy with?</p>
+
+<p>If you are interested in getting involved with coding this, contact me at paulc at mozilla.com.</p>
+</div>
+
+<div id="related">
+  <h2>Related Posts</h2>
+  <ul>
+    
+      <li><a href="/2010/03/quoteden-moving-to-kohana-3">Quoteden: Moving to Kohana 3</a> &mdash; 12 Mar 2010</li>
+    
+      <li><a href="/2010/12/migrating-large-amounts-of-data">SUMO and migrating large amounts of data</a> &mdash; 03 Dec 2010</li>
+    
+      <li><a href="/2009/11/hacking-wordpress-check-contact-messages-for-spam-using-wordpress-built-in-akismet-spam-for-comments">Hacking Wordpress: check contact messages for spam using Wordpress' built-in Akismet spam for comments</a> &mdash; 14 Nov 2009</li>
+    
+  </ul>
+</div>
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  (function() {
+   var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+   dsq.src = 'http://blogpaulcraciunoiu.disqus.com/embed.js';
+   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript=blogpaulcraciunoiu">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+<script type="text/javascript">
+//<![CDATA[
+(function() {
+    var links = document.getElementsByTagName('a');
+    var query = '?';
+    for(var i = 0; i < links.length; i++) {
+    if(links[i].href.indexOf('#disqus_thread') >= 0) {
+        query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
+    }
+    }
+    document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/blogpaulcraciunoiu/get_num_replies.js' + query + '"></' + 'script>');
+})();
+//]]>
+</script>
+
+    </div>
+
+    <div id="footer" role="contentinfo">
+        <div class="about">
+        <p>I work as a web developer for <a href="http://mozilla.com">Mozilla</a>, with main focus on <a href="http://www.djangoproject.com/">Django</a>, Python, and PHP. Occasionally, I write tutorials or post other information I find interesting.</p>
+        <p>I enjoy doing freelance work for other websites, mostly non-profits. If you're interested in my services, contact me through one of the links below.</p>
+        </p>
+        </div>
+        <div class="contact">
+            <a href="http://twitter.com/embrangler/">Follow me</a> -- 
+            <a href="http://craciunoiu.net/contact/paul">Email me</a> -- 
+            <a href="http://github.com/pcraciunoiu/">My GitHub</a>
+        </div>
+        <div class="quote">
+        <p>
+            Success is a journey, not a destination. The doing is often more important than the outcome. &mdash; <a href="http://quoteden.net/author/id/337">Arthur Robert Ashe, Jr</a>
+        </p>
+        <p>&copy; Paul Craciunoiu. Some rights reserved. Brought to you by <a href="http://wiki.github.com/mojombo/jekyll/">Jekyll</a></p>
+        </div>
+    </div>
+</div><!-- site -->
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-15382775-1");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+<!-- /Google Analytics -->
+
+</body>
+</html>

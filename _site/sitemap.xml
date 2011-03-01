@@ -2,175 +2,182 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
    <url>
       <loc>http://embrangler.com/</loc>
-      <lastmod>2011-02-12</lastmod>
+      <lastmod>2011-03-01</lastmod>
       <changefreq>daily</changefreq>
       <priority>1</priority>
    </url>
 
    <url>
+      <loc>http://embrangler.com/2011/03/datastore-an-abstraction-layer</loc>
+      <lastmod>2011-03-01</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>0.8</priority>
+   </url>
+
+   <url>
       <loc>http://embrangler.com/2011/01/python-scoping-understading-legb</loc>
-      <lastmod>2011-02-12</lastmod>
+      <lastmod>2011-03-01</lastmod>
       <changefreq>weekly</changefreq>
       <priority>0.8</priority>
    </url>
 
    <url>
       <loc>http://embrangler.com/2010/12/belated-birthday-resolutions</loc>
-      <lastmod>2011-02-12</lastmod>
+      <lastmod>2011-03-01</lastmod>
       <changefreq>weekly</changefreq>
       <priority>0.8</priority>
    </url>
 
    <url>
       <loc>http://embrangler.com/2010/12/migrating-large-amounts-of-data</loc>
-      <lastmod>2011-02-12</lastmod>
+      <lastmod>2011-03-01</lastmod>
       <changefreq>weekly</changefreq>
       <priority>0.8</priority>
    </url>
 
    <url>
       <loc>http://embrangler.com/2010/09/python-debugging-pdb---quick-tip</loc>
-      <lastmod>2011-02-12</lastmod>
+      <lastmod>2011-03-01</lastmod>
       <changefreq>weekly</changefreq>
       <priority>0.8</priority>
    </url>
 
    <url>
       <loc>http://embrangler.com/2010/08/ajax-uploads-images-in-django</loc>
-      <lastmod>2011-02-12</lastmod>
+      <lastmod>2011-03-01</lastmod>
       <changefreq>weekly</changefreq>
       <priority>0.8</priority>
    </url>
 
    <url>
       <loc>http://embrangler.com/2010/08/full-time-at-mozilla</loc>
-      <lastmod>2011-02-12</lastmod>
+      <lastmod>2011-03-01</lastmod>
       <changefreq>weekly</changefreq>
       <priority>0.8</priority>
    </url>
 
    <url>
       <loc>http://embrangler.com/2010/05/weekly-update-may-17-21</loc>
-      <lastmod>2011-02-12</lastmod>
+      <lastmod>2011-03-01</lastmod>
       <changefreq>weekly</changefreq>
       <priority>0.8</priority>
    </url>
 
    <url>
       <loc>http://embrangler.com/2010/05/access-control-django</loc>
-      <lastmod>2011-02-12</lastmod>
+      <lastmod>2011-03-01</lastmod>
       <changefreq>weekly</changefreq>
       <priority>0.8</priority>
    </url>
 
    <url>
       <loc>http://embrangler.com/2010/05/weekly-update-may-10-14</loc>
-      <lastmod>2011-02-12</lastmod>
+      <lastmod>2011-03-01</lastmod>
       <changefreq>weekly</changefreq>
       <priority>0.8</priority>
    </url>
 
    <url>
       <loc>http://embrangler.com/2010/05/weekly-update-apr-26-30</loc>
-      <lastmod>2011-02-12</lastmod>
+      <lastmod>2011-03-01</lastmod>
       <changefreq>weekly</changefreq>
       <priority>0.8</priority>
    </url>
 
    <url>
       <loc>http://embrangler.com/2010/04/weekly-update-apr-19-25</loc>
-      <lastmod>2011-02-12</lastmod>
+      <lastmod>2011-03-01</lastmod>
       <changefreq>weekly</changefreq>
       <priority>0.8</priority>
    </url>
 
    <url>
       <loc>http://embrangler.com/2010/04/testing-in-kohana-3</loc>
-      <lastmod>2011-02-12</lastmod>
+      <lastmod>2011-03-01</lastmod>
       <changefreq>weekly</changefreq>
       <priority>0.8</priority>
    </url>
 
    <url>
       <loc>http://embrangler.com/2010/04/weekly-update-apr-12-16</loc>
-      <lastmod>2011-02-12</lastmod>
+      <lastmod>2011-03-01</lastmod>
       <changefreq>weekly</changefreq>
       <priority>0.8</priority>
    </url>
 
    <url>
       <loc>http://embrangler.com/2010/04/weekly-update-apr-5-9</loc>
-      <lastmod>2011-02-12</lastmod>
+      <lastmod>2011-03-01</lastmod>
       <changefreq>weekly</changefreq>
       <priority>0.8</priority>
    </url>
 
    <url>
       <loc>http://embrangler.com/2010/03/embrangler-moving-to-jekyll</loc>
-      <lastmod>2011-02-12</lastmod>
+      <lastmod>2011-03-01</lastmod>
       <changefreq>weekly</changefreq>
       <priority>0.8</priority>
    </url>
 
    <url>
       <loc>http://embrangler.com/2010/03/quoteden-moving-to-kohana-3</loc>
-      <lastmod>2011-02-12</lastmod>
+      <lastmod>2011-03-01</lastmod>
       <changefreq>weekly</changefreq>
       <priority>0.8</priority>
    </url>
 
    <url>
       <loc>http://embrangler.com/2010/02/upgrading-windows-vista-or-7rc-to-windows-7-on-dual-boot-with-linux-ubuntu</loc>
-      <lastmod>2011-02-12</lastmod>
+      <lastmod>2011-03-01</lastmod>
       <changefreq>weekly</changefreq>
       <priority>0.8</priority>
    </url>
 
    <url>
       <loc>http://embrangler.com/2010/01/my-sumo-local-development-environment</loc>
-      <lastmod>2011-02-12</lastmod>
+      <lastmod>2011-03-01</lastmod>
       <changefreq>weekly</changefreq>
       <priority>0.8</priority>
    </url>
 
    <url>
       <loc>http://embrangler.com/2009/11/my-list-of-firefox-add-ons</loc>
-      <lastmod>2011-02-12</lastmod>
+      <lastmod>2011-03-01</lastmod>
       <changefreq>weekly</changefreq>
       <priority>0.8</priority>
    </url>
 
    <url>
       <loc>http://embrangler.com/2009/11/hacking-wordpress-check-contact-messages-for-spam-using-wordpress-built-in-akismet-spam-for-comments</loc>
-      <lastmod>2011-02-12</lastmod>
+      <lastmod>2011-03-01</lastmod>
       <changefreq>weekly</changefreq>
       <priority>0.8</priority>
    </url>
 
    <url>
       <loc>http://embrangler.com/2009/11/educ60-nov-2-lecture-notes</loc>
-      <lastmod>2011-02-12</lastmod>
+      <lastmod>2011-03-01</lastmod>
       <changefreq>weekly</changefreq>
       <priority>0.8</priority>
    </url>
 
    <url>
       <loc>http://embrangler.com/2009/10/ed60-how-people-learn-ch1</loc>
-      <lastmod>2011-02-12</lastmod>
+      <lastmod>2011-03-01</lastmod>
       <changefreq>weekly</changefreq>
       <priority>0.8</priority>
    </url>
 
    <url>
       <loc>http://embrangler.com/2009/10/ed60-labaree</loc>
-      <lastmod>2011-02-12</lastmod>
+      <lastmod>2011-03-01</lastmod>
       <changefreq>weekly</changefreq>
       <priority>0.8</priority>
    </url>
 
    <url>
       <loc>http://embrangler.com/2009/09/installing-opengl-glut-kubuntu-904</loc>
-      <lastmod>2011-02-12</lastmod>
+      <lastmod>2011-03-01</lastmod>
       <changefreq>weekly</changefreq>
       <priority>0.8</priority>
    </url>

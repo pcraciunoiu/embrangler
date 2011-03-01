@@ -4,13 +4,280 @@
  <title>Disembrangling Programming - Paul Craciunoiu</title>
  <link href="http://embrangler.com/atom.xml" rel="self"/>
  <link href="http://embrangler.com/"/>
- <updated>2011-02-12T23:01:32-08:00</updated>
+ <updated>2011-03-01T08:33:45-08:00</updated>
  <id>http://embrangler.com/</id>
  <author>
    <name>Paul Craciunoiu</name>
    <email>paul@craciunoiu.net</email>
  </author>
 
+ 
+ <entry>
+   <title>DataStore - an abstraction layer for storing data and processing requests</title>
+   <link href="http://embrangler.com/2011/03/datastore-an-abstraction-layer"/>
+   <updated>2011-03-01T00:00:00-08:00</updated>
+   <id>http://embrangler.com/2011/03/datastore-an-abstraction-layer</id>
+   <content type="html">&lt;h2 id='table_of_contents'&gt;Table of contents&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;a href='#idea'&gt;Idea&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='#from_past_to_present_what_now'&gt;From past to present, what now?&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='#what_does_better_mean'&gt;What does better mean?&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='#why_should_you_care'&gt;Why should you care?&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='#my_scenario'&gt;My scenario&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='#what_worked_for_me'&gt;What worked for me&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='#proposed_features'&gt;Proposed features&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='#help'&gt;Help!&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id='idea'&gt;Idea&lt;/h2&gt;
+
+&lt;p&gt;A library to unify all the different data storage/retrieval/sending/receiving API&amp;#8217;s such as XMLHttpRequest, WebSockets, localStorage, IndexedDB, and make it easier to use any number of them at once.&lt;/p&gt;
+
+&lt;h2 id='from_past_to_present_what_now'&gt;From past to present, what now?&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;Past:&lt;/strong&gt; Before, all we had was AJAX requests. Really.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;To present:&lt;/strong&gt; With the new technologies coming up in the HTML5 era, we&amp;#8217;ve got localStorage and IndexedDB, WebSockets, node.js, and more. Hectic.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;What now?&lt;/strong&gt; Don&amp;#8217;t you wish there was a &lt;em&gt;better way&lt;/em&gt; to send and receive data in the browser?&lt;/p&gt;
+
+&lt;h2 id='what_does_better_mean'&gt;What does better mean?&lt;/h2&gt;
+
+&lt;p&gt;My general goals for this are:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Simple key/value store common abstraction.&lt;/li&gt;
+
+&lt;li&gt;Pluggable handlers for each type of send/receive.&lt;/li&gt;
+
+&lt;li&gt;Use other abstractions specified in each handler (library surfaces your API as well).&lt;/li&gt;
+
+&lt;li&gt;Straightforward way to define flow of data. &lt;a href='#flow_of_data'&gt;More on this later.&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Anything else you wish it could do?&lt;/p&gt;
+
+&lt;h2 id='why_should_you_care'&gt;Why should you care?&lt;/h2&gt;
+
+&lt;p&gt;Short answer: &lt;strong&gt;maintenance, scalability, flexibility.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;As these technologies become widely supported, you will start seeing a common problem for websites heavily relying on AJAX (or any kind of data transfer without page reloads): &lt;em&gt;how do you take advantage of them without rewriting your entire codebase every time there&amp;#8217;s a new technology (API/storage engine/etc) coming out?&lt;/em&gt;&lt;/p&gt;
+
+&lt;h2 id='my_scenario'&gt;My scenario&lt;/h2&gt;
+
+&lt;p&gt;The whole reason I got thinking about this was because it happened to me. And it was frustrating.&lt;/p&gt;
+
+&lt;p&gt;I had this client-side application using &lt;a href='http://api.jquery.com/jQuery.ajax/'&gt;jQuery.ajax requests&lt;/a&gt;, and I wanted to take advantage of localStorage for some of them, for data that I didn&amp;#8217;t need to get from the server on every page load.&lt;/p&gt;
+
+&lt;p&gt;I considered:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Quick&amp;#8217;n&amp;#8217;dirty: Rewrite these pieces of the application to do both localStorage and ajax requests as fallback.&lt;/li&gt;
+
+&lt;li&gt;&lt;strong&gt;&lt;a href='#what_worked_for_me'&gt;Slightly better:&lt;/a&gt;&lt;/strong&gt; A library that&amp;#8217;s flexible enough for my purposes.&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='#proposed_features'&gt;Ideal:&lt;/a&gt; A library that would allow me to enable/disable localStorage as an intermediary step on a per-request basis, make it easy to add IndexedDB support later, etc.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id='what_worked_for_me'&gt;What worked for me&lt;/h2&gt;
+
+&lt;p&gt;The simpler thing I went with was a Data object with a couple of functions.&lt;/p&gt;
+
+&lt;p&gt;Example usage:&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='javascript'&gt;&lt;span class='lineno'&gt; 1&lt;/span&gt; &lt;span class='c1'&gt;// main.js&lt;/span&gt;
+&lt;span class='lineno'&gt; 2&lt;/span&gt; &lt;span class='nb'&gt;window&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;data&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='k'&gt;new&lt;/span&gt; &lt;span class='nx'&gt;DataStore&lt;/span&gt;&lt;span class='p'&gt;({&lt;/span&gt;
+&lt;span class='lineno'&gt; 3&lt;/span&gt;     &lt;span class='nx'&gt;url&lt;/span&gt;&lt;span class='o'&gt;:&lt;/span&gt; &lt;span class='s1'&gt;&amp;#39;/fetch_new_data&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt;
+&lt;span class='lineno'&gt; 4&lt;/span&gt;     &lt;span class='c1'&gt;// show a spinny tangy&lt;/span&gt;
+&lt;span class='lineno'&gt; 5&lt;/span&gt;     &lt;span class='nx'&gt;sync_before&lt;/span&gt;&lt;span class='o'&gt;:&lt;/span&gt; &lt;span class='kd'&gt;function&lt;/span&gt; &lt;span class='nx'&gt;showSyncInProgress&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt; &lt;span class='p'&gt;...&lt;/span&gt; &lt;span class='p'&gt;},&lt;/span&gt;
+&lt;span class='lineno'&gt; 6&lt;/span&gt;     &lt;span class='c1'&gt;// hide the spinny thingy, maybe show a fading notification&lt;/span&gt;
+&lt;span class='lineno'&gt; 7&lt;/span&gt;     &lt;span class='nx'&gt;sync_success&lt;/span&gt;&lt;span class='o'&gt;:&lt;/span&gt; &lt;span class='kd'&gt;function&lt;/span&gt; &lt;span class='nx'&gt;showSyncDone&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt; &lt;span class='p'&gt;...&lt;/span&gt; &lt;span class='p'&gt;},&lt;/span&gt;
+&lt;span class='lineno'&gt; 8&lt;/span&gt;     &lt;span class='c1'&gt;// hide the spinny thingy, definitely show some message&lt;/span&gt;
+&lt;span class='lineno'&gt; 9&lt;/span&gt;     &lt;span class='nx'&gt;sync_error&lt;/span&gt;&lt;span class='o'&gt;:&lt;/span&gt; &lt;span class='kd'&gt;function&lt;/span&gt; &lt;span class='nx'&gt;showSyncFailed&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt; &lt;span class='p'&gt;...&lt;/span&gt; &lt;span class='p'&gt;}&lt;/span&gt;
+&lt;span class='lineno'&gt;10&lt;/span&gt; &lt;span class='p'&gt;}&lt;/span&gt;
+&lt;span class='lineno'&gt;11&lt;/span&gt; 
+&lt;span class='lineno'&gt;12&lt;/span&gt; &lt;span class='c1'&gt;// example request&lt;/span&gt;
+&lt;span class='lineno'&gt;13&lt;/span&gt; &lt;span class='kd'&gt;var&lt;/span&gt; &lt;span class='nx'&gt;i&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='mi'&gt;0&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt;
+&lt;span class='lineno'&gt;14&lt;/span&gt; &lt;span class='nb'&gt;window&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;data&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;process_request&lt;/span&gt;&lt;span class='p'&gt;({&lt;/span&gt;
+&lt;span class='lineno'&gt;15&lt;/span&gt;     &lt;span class='nx'&gt;ajax&lt;/span&gt;&lt;span class='o'&gt;:&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;&lt;span class='nx'&gt;url&lt;/span&gt;&lt;span class='o'&gt;:&lt;/span&gt; &lt;span class='s1'&gt;&amp;#39;/new_comment&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='nx'&gt;type&lt;/span&gt;&lt;span class='o'&gt;:&lt;/span&gt; &lt;span class='s1'&gt;&amp;#39;POST&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt;
+&lt;span class='lineno'&gt;16&lt;/span&gt;            &lt;span class='nx'&gt;data&lt;/span&gt;&lt;span class='o'&gt;:&lt;/span&gt; &lt;span class='nx'&gt;$&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;#comment-form&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;).&lt;/span&gt;&lt;span class='nx'&gt;serialize&lt;/span&gt;&lt;span class='p'&gt;()},&lt;/span&gt;
+&lt;span class='lineno'&gt;17&lt;/span&gt;     &lt;span class='nx'&gt;key&lt;/span&gt;&lt;span class='o'&gt;:&lt;/span&gt; &lt;span class='s1'&gt;&amp;#39;comment_&amp;#39;&lt;/span&gt; &lt;span class='o'&gt;+&lt;/span&gt; &lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nx'&gt;i&lt;/span&gt;&lt;span class='o'&gt;++&lt;/span&gt;&lt;span class='p'&gt;),&lt;/span&gt;
+&lt;span class='lineno'&gt;18&lt;/span&gt;     &lt;span class='nx'&gt;value&lt;/span&gt;&lt;span class='o'&gt;:&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;author&amp;#39;&lt;/span&gt;&lt;span class='o'&gt;:&lt;/span&gt; &lt;span class='nx'&gt;$&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;#comment-form .author&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;).&lt;/span&gt;&lt;span class='nx'&gt;val&lt;/span&gt;&lt;span class='p'&gt;(),&lt;/span&gt;
+&lt;span class='lineno'&gt;19&lt;/span&gt;             &lt;span class='s1'&gt;&amp;#39;text&amp;#39;&lt;/span&gt;&lt;span class='o'&gt;:&lt;/span&gt; &lt;span class='nx'&gt;$&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;#comment-form .text&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;).&lt;/span&gt;&lt;span class='nx'&gt;val&lt;/span&gt;&lt;span class='p'&gt;()}&lt;/span&gt;
+&lt;span class='lineno'&gt;20&lt;/span&gt; &lt;span class='p'&gt;});&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;ajax.data&lt;/code&gt; and &lt;code&gt;value&lt;/code&gt; are actually very similar, with an important exception in most applications (e.g. Django): the csrftoken. We don&amp;#8217;t need to store that in localStorage for every request. So I chose to keep the two completely separate. You could subclass DataStore and make it save you this extra work per request.&lt;/p&gt;
+
+&lt;p&gt;Below is an example implementation (&lt;a href='/files/code/datastore/datastore.js'&gt;raw file&lt;/a&gt;):&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='javascript'&gt;&lt;span class='lineno'&gt;  1&lt;/span&gt; &lt;span class='cm'&gt;/* This depends on Crockford&amp;#39;s json2.js&lt;/span&gt;
+&lt;span class='lineno'&gt;  2&lt;/span&gt; &lt;span class='cm'&gt; * from https://github.com/douglascrockford/JSON-js&lt;/span&gt;
+&lt;span class='lineno'&gt;  3&lt;/span&gt; &lt;span class='cm'&gt; * Options:&lt;/span&gt;
+&lt;span class='lineno'&gt;  4&lt;/span&gt; &lt;span class='cm'&gt; *     - url: function()&lt;/span&gt;
+&lt;span class='lineno'&gt;  5&lt;/span&gt; &lt;span class='cm'&gt; *     - sync_before: function()&lt;/span&gt;
+&lt;span class='lineno'&gt;  6&lt;/span&gt; &lt;span class='cm'&gt; *     - sync_success: function()&lt;/span&gt;
+&lt;span class='lineno'&gt;  7&lt;/span&gt; &lt;span class='cm'&gt; *     - sync_error: function()&lt;/span&gt;
+&lt;span class='lineno'&gt;  8&lt;/span&gt; &lt;span class='cm'&gt; */&lt;/span&gt;
+&lt;span class='lineno'&gt;  9&lt;/span&gt; &lt;span class='kd'&gt;function&lt;/span&gt; &lt;span class='nx'&gt;DataStore&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nx'&gt;options&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+&lt;span class='lineno'&gt; 10&lt;/span&gt;     &lt;span class='nb'&gt;window&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;data&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='k'&gt;this&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt;
+&lt;span class='lineno'&gt; 11&lt;/span&gt;     &lt;span class='k'&gt;this&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;storage&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='nb'&gt;window&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;localStorage&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt;
+&lt;span class='lineno'&gt; 12&lt;/span&gt;     &lt;span class='c1'&gt;// date of last time we synced&lt;/span&gt;
+&lt;span class='lineno'&gt; 13&lt;/span&gt;     &lt;span class='k'&gt;this&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;last_sync&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='kc'&gt;null&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt;
+&lt;span class='lineno'&gt; 14&lt;/span&gt;     &lt;span class='c1'&gt;// queue of requests, populated if offline&lt;/span&gt;
+&lt;span class='lineno'&gt; 15&lt;/span&gt;     &lt;span class='k'&gt;this&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;queue&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='p'&gt;[];&lt;/span&gt;
+&lt;span class='lineno'&gt; 16&lt;/span&gt; 
+&lt;span class='lineno'&gt; 17&lt;/span&gt;     &lt;span class='cm'&gt;/**&lt;/span&gt;
+&lt;span class='lineno'&gt; 18&lt;/span&gt; &lt;span class='cm'&gt;     * Gets data stored at `key`; `key` is a string&lt;/span&gt;
+&lt;span class='lineno'&gt; 19&lt;/span&gt; &lt;span class='cm'&gt;     */&lt;/span&gt;
+&lt;span class='lineno'&gt; 20&lt;/span&gt;     &lt;span class='k'&gt;this&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;get_data&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='kd'&gt;function&lt;/span&gt; &lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nx'&gt;key&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+&lt;span class='lineno'&gt; 21&lt;/span&gt;         &lt;span class='kd'&gt;var&lt;/span&gt; &lt;span class='nx'&gt;str_data&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='k'&gt;this&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;storage&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;getItem&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nx'&gt;key&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+&lt;span class='lineno'&gt; 22&lt;/span&gt;         &lt;span class='k'&gt;return&lt;/span&gt; &lt;span class='nx'&gt;JSON&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;parse&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nx'&gt;str_data&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+&lt;span class='lineno'&gt; 23&lt;/span&gt;     &lt;span class='p'&gt;}&lt;/span&gt;
+&lt;span class='lineno'&gt; 24&lt;/span&gt; 
+&lt;span class='lineno'&gt; 25&lt;/span&gt;     &lt;span class='cm'&gt;/**&lt;/span&gt;
+&lt;span class='lineno'&gt; 26&lt;/span&gt; &lt;span class='cm'&gt;     * Sets data at `key`; `key` is a string&lt;/span&gt;
+&lt;span class='lineno'&gt; 27&lt;/span&gt; &lt;span class='cm'&gt;     */&lt;/span&gt;
+&lt;span class='lineno'&gt; 28&lt;/span&gt;     &lt;span class='k'&gt;this&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;set_data&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='kd'&gt;function&lt;/span&gt; &lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nx'&gt;key&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='nx'&gt;data&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+&lt;span class='lineno'&gt; 29&lt;/span&gt;         &lt;span class='kd'&gt;var&lt;/span&gt; &lt;span class='nx'&gt;str_data&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='nx'&gt;JSON&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;stringify&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nx'&gt;data&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+&lt;span class='lineno'&gt; 30&lt;/span&gt;         &lt;span class='k'&gt;this&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;storage&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;setItem&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nx'&gt;key&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='nx'&gt;str_data&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+&lt;span class='lineno'&gt; 31&lt;/span&gt;     &lt;span class='p'&gt;}&lt;/span&gt;
+&lt;span class='lineno'&gt; 32&lt;/span&gt; 
+&lt;span class='lineno'&gt; 33&lt;/span&gt;     &lt;span class='cm'&gt;/**&lt;/span&gt;
+&lt;span class='lineno'&gt; 34&lt;/span&gt; &lt;span class='cm'&gt;     * Syncs data between local storage and server, depending on&lt;/span&gt;
+&lt;span class='lineno'&gt; 35&lt;/span&gt; &lt;span class='cm'&gt;     * modifications and online status.&lt;/span&gt;
+&lt;span class='lineno'&gt; 36&lt;/span&gt; &lt;span class='cm'&gt;     */&lt;/span&gt;
+&lt;span class='lineno'&gt; 37&lt;/span&gt;     &lt;span class='k'&gt;this&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;sync_data&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='kd'&gt;function&lt;/span&gt; &lt;span class='p'&gt;()&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+&lt;span class='lineno'&gt; 38&lt;/span&gt;         &lt;span class='c1'&gt;// must be online to sync&lt;/span&gt;
+&lt;span class='lineno'&gt; 39&lt;/span&gt;         &lt;span class='k'&gt;if&lt;/span&gt; &lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='o'&gt;!&lt;/span&gt;&lt;span class='k'&gt;this&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;is_online&lt;/span&gt;&lt;span class='p'&gt;())&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+&lt;span class='lineno'&gt; 40&lt;/span&gt;             &lt;span class='k'&gt;return&lt;/span&gt; &lt;span class='kc'&gt;false&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt;
+&lt;span class='lineno'&gt; 41&lt;/span&gt;         &lt;span class='p'&gt;}&lt;/span&gt;
+&lt;span class='lineno'&gt; 42&lt;/span&gt; 
+&lt;span class='lineno'&gt; 43&lt;/span&gt;         &lt;span class='k'&gt;this&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;last_sync&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='k'&gt;this&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;get_data&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;last_sync&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+&lt;span class='lineno'&gt; 44&lt;/span&gt; 
+&lt;span class='lineno'&gt; 45&lt;/span&gt;         &lt;span class='c1'&gt;// have we never synced before in this browser?&lt;/span&gt;
+&lt;span class='lineno'&gt; 46&lt;/span&gt;         &lt;span class='k'&gt;if&lt;/span&gt; &lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='o'&gt;!&lt;/span&gt;&lt;span class='k'&gt;this&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;last_sync&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+&lt;span class='lineno'&gt; 47&lt;/span&gt;             &lt;span class='c1'&gt;// first-time setup&lt;/span&gt;
+&lt;span class='lineno'&gt; 48&lt;/span&gt;             &lt;span class='c1'&gt;// ...&lt;/span&gt;
+&lt;span class='lineno'&gt; 49&lt;/span&gt;             &lt;span class='k'&gt;this&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;last_sync&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='p'&gt;{};&lt;/span&gt;
+&lt;span class='lineno'&gt; 50&lt;/span&gt;             &lt;span class='k'&gt;this&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;last_sync&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;when&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='k'&gt;new&lt;/span&gt; &lt;span class='nb'&gt;Date&lt;/span&gt;&lt;span class='p'&gt;().&lt;/span&gt;&lt;span class='nx'&gt;getTime&lt;/span&gt;&lt;span class='p'&gt;();&lt;/span&gt;
+&lt;span class='lineno'&gt; 51&lt;/span&gt;             &lt;span class='k'&gt;this&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;last_sync&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;is_modified&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='kc'&gt;false&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt;
+&lt;span class='lineno'&gt; 52&lt;/span&gt;         &lt;span class='p'&gt;}&lt;/span&gt;
+&lt;span class='lineno'&gt; 53&lt;/span&gt; 
+&lt;span class='lineno'&gt; 54&lt;/span&gt;         &lt;span class='k'&gt;if&lt;/span&gt; &lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='k'&gt;this&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;last_sync&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;is_modified&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+&lt;span class='lineno'&gt; 55&lt;/span&gt;             &lt;span class='kd'&gt;var&lt;/span&gt; &lt;span class='nx'&gt;request_options&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt;
+&lt;span class='lineno'&gt; 56&lt;/span&gt;             &lt;span class='c1'&gt;// sync modified data&lt;/span&gt;
+&lt;span class='lineno'&gt; 57&lt;/span&gt;             &lt;span class='c1'&gt;// you can pass callbacks here too&lt;/span&gt;
+&lt;span class='lineno'&gt; 58&lt;/span&gt;             &lt;span class='k'&gt;while&lt;/span&gt; &lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='k'&gt;this&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;queue&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;length&lt;/span&gt; &lt;span class='o'&gt;&amp;gt;&lt;/span&gt; &lt;span class='mi'&gt;0&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+&lt;span class='lineno'&gt; 59&lt;/span&gt;                 &lt;span class='nx'&gt;request_options&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='k'&gt;this&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;queue&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;pop&lt;/span&gt;&lt;span class='p'&gt;();&lt;/span&gt;
+&lt;span class='lineno'&gt; 60&lt;/span&gt;                 &lt;span class='nx'&gt;$&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;ajax&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nx'&gt;request_options&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;ajax&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+&lt;span class='lineno'&gt; 61&lt;/span&gt;             &lt;span class='p'&gt;}&lt;/span&gt;
+&lt;span class='lineno'&gt; 62&lt;/span&gt;             &lt;span class='k'&gt;this&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;set_data&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;queue&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='p'&gt;[]);&lt;/span&gt;
+&lt;span class='lineno'&gt; 63&lt;/span&gt;             &lt;span class='k'&gt;this&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;last_sync&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;is_modified&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='kc'&gt;false&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt;
+&lt;span class='lineno'&gt; 64&lt;/span&gt;         &lt;span class='p'&gt;}&lt;/span&gt;
+&lt;span class='lineno'&gt; 65&lt;/span&gt;         &lt;span class='c1'&gt;// data is synced, update sync time&lt;/span&gt;
+&lt;span class='lineno'&gt; 66&lt;/span&gt;         &lt;span class='k'&gt;this&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;set_data&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;last_sync&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='k'&gt;this&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;last_sync&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+&lt;span class='lineno'&gt; 67&lt;/span&gt; 
+&lt;span class='lineno'&gt; 68&lt;/span&gt;         &lt;span class='c1'&gt;// get modified data from the server here&lt;/span&gt;
+&lt;span class='lineno'&gt; 69&lt;/span&gt;        &lt;span class='nx'&gt;$&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;ajax&lt;/span&gt;&lt;span class='p'&gt;({&lt;/span&gt;
+&lt;span class='lineno'&gt; 70&lt;/span&gt;             &lt;span class='nx'&gt;type&lt;/span&gt;&lt;span class='o'&gt;:&lt;/span&gt; &lt;span class='s1'&gt;&amp;#39;POST&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt;
+&lt;span class='lineno'&gt; 71&lt;/span&gt;             &lt;span class='nx'&gt;url&lt;/span&gt;&lt;span class='o'&gt;:&lt;/span&gt; &lt;span class='nx'&gt;options&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;url&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt;
+&lt;span class='lineno'&gt; 72&lt;/span&gt;             &lt;span class='nx'&gt;dataType&lt;/span&gt;&lt;span class='o'&gt;:&lt;/span&gt; &lt;span class='s1'&gt;&amp;#39;json&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt;
+&lt;span class='lineno'&gt; 73&lt;/span&gt;             &lt;span class='nx'&gt;data&lt;/span&gt;&lt;span class='o'&gt;:&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;last_sync&amp;#39;&lt;/span&gt;&lt;span class='o'&gt;:&lt;/span&gt; &lt;span class='k'&gt;this&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;last_sync&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;sync_date&lt;/span&gt;&lt;span class='p'&gt;},&lt;/span&gt;
+&lt;span class='lineno'&gt; 74&lt;/span&gt;             &lt;span class='nx'&gt;beforeSend&lt;/span&gt;&lt;span class='o'&gt;:&lt;/span&gt;
+&lt;span class='lineno'&gt; 75&lt;/span&gt;                 &lt;span class='c1'&gt;// here you can show some &amp;quot;sync in progress&amp;quot; icon&lt;/span&gt;
+&lt;span class='lineno'&gt; 76&lt;/span&gt;                 &lt;span class='nx'&gt;options&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;sync_before&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt;
+&lt;span class='lineno'&gt; 77&lt;/span&gt;             &lt;span class='nx'&gt;error&lt;/span&gt;&lt;span class='o'&gt;:&lt;/span&gt;
+&lt;span class='lineno'&gt; 78&lt;/span&gt;                 &lt;span class='c1'&gt;// an error callback should be passed in to this Data&lt;/span&gt;
+&lt;span class='lineno'&gt; 79&lt;/span&gt;                 &lt;span class='c1'&gt;// object and would be called here&lt;/span&gt;
+&lt;span class='lineno'&gt; 80&lt;/span&gt;                 &lt;span class='nx'&gt;options&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;sync_error&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt;
+&lt;span class='lineno'&gt; 81&lt;/span&gt;             &lt;span class='nx'&gt;success&lt;/span&gt;&lt;span class='o'&gt;:&lt;/span&gt; &lt;span class='kd'&gt;function&lt;/span&gt; &lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nx'&gt;response&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='nx'&gt;textStatus&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='nx'&gt;request&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+&lt;span class='lineno'&gt; 82&lt;/span&gt;                 &lt;span class='c1'&gt;// callback for success&lt;/span&gt;
+&lt;span class='lineno'&gt; 83&lt;/span&gt;                 &lt;span class='nx'&gt;options&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;sync_success&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;
+&lt;span class='lineno'&gt; 84&lt;/span&gt;                     &lt;span class='nx'&gt;response&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='nx'&gt;textStatus&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='nx'&gt;request&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+&lt;span class='lineno'&gt; 85&lt;/span&gt;             &lt;span class='p'&gt;}&lt;/span&gt;
+&lt;span class='lineno'&gt; 86&lt;/span&gt;         &lt;span class='p'&gt;});&lt;/span&gt;
+&lt;span class='lineno'&gt; 87&lt;/span&gt; 
+&lt;span class='lineno'&gt; 88&lt;/span&gt; 
+&lt;span class='lineno'&gt; 89&lt;/span&gt;     &lt;span class='cm'&gt;/**&lt;/span&gt;
+&lt;span class='lineno'&gt; 90&lt;/span&gt; &lt;span class='cm'&gt;     * Process a request. This is where all the magic happens.&lt;/span&gt;
+&lt;span class='lineno'&gt; 91&lt;/span&gt; &lt;span class='cm'&gt;     */&lt;/span&gt;
+&lt;span class='lineno'&gt; 92&lt;/span&gt;     &lt;span class='k'&gt;this&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;process_request&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='kd'&gt;function&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nx'&gt;request_options&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+&lt;span class='lineno'&gt; 93&lt;/span&gt;         &lt;span class='nx'&gt;request_options&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;beforeSend&lt;/span&gt;&lt;span class='p'&gt;();&lt;/span&gt;
+&lt;span class='lineno'&gt; 94&lt;/span&gt;         &lt;span class='k'&gt;this&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;set_data&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nx'&gt;request_options&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;key&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='nx'&gt;request_options&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;value&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+&lt;span class='lineno'&gt; 95&lt;/span&gt; 
+&lt;span class='lineno'&gt; 96&lt;/span&gt;         &lt;span class='k'&gt;if&lt;/span&gt; &lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='k'&gt;this&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;is_online&lt;/span&gt;&lt;span class='p'&gt;())&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+&lt;span class='lineno'&gt; 97&lt;/span&gt;             &lt;span class='nx'&gt;$&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;ajax&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nx'&gt;request_options&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;ajax&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+&lt;span class='lineno'&gt; 98&lt;/span&gt;         &lt;span class='p'&gt;}&lt;/span&gt; &lt;span class='k'&gt;else&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+&lt;span class='lineno'&gt; 99&lt;/span&gt;             &lt;span class='k'&gt;this&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;queue&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;push&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nx'&gt;request_options&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+&lt;span class='lineno'&gt;100&lt;/span&gt;             &lt;span class='k'&gt;this&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;last_sync&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;is_modified&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='kc'&gt;true&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt;
+&lt;span class='lineno'&gt;101&lt;/span&gt;             &lt;span class='k'&gt;this&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;set_data&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;last_sync&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='k'&gt;this&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;last_sync&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+&lt;span class='lineno'&gt;102&lt;/span&gt;             &lt;span class='c1'&gt;// there are issues with this, storing functions as&lt;/span&gt;
+&lt;span class='lineno'&gt;103&lt;/span&gt;             &lt;span class='c1'&gt;// strings is not a good idea :)&lt;/span&gt;
+&lt;span class='lineno'&gt;104&lt;/span&gt;             &lt;span class='k'&gt;this&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;set_data&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;queue&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='k'&gt;this&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;queue&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+&lt;span class='lineno'&gt;105&lt;/span&gt;         &lt;span class='p'&gt;}&lt;/span&gt;
+&lt;span class='lineno'&gt;106&lt;/span&gt; 
+&lt;span class='lineno'&gt;107&lt;/span&gt;         &lt;span class='nx'&gt;request_options&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;processed&lt;/span&gt;&lt;span class='p'&gt;();&lt;/span&gt;
+&lt;span class='lineno'&gt;108&lt;/span&gt;     &lt;span class='p'&gt;}&lt;/span&gt;
+&lt;span class='lineno'&gt;109&lt;/span&gt; 
+&lt;span class='lineno'&gt;110&lt;/span&gt;     &lt;span class='cm'&gt;/**&lt;/span&gt;
+&lt;span class='lineno'&gt;111&lt;/span&gt; &lt;span class='cm'&gt;     * Return true if online, false otherwise.&lt;/span&gt;
+&lt;span class='lineno'&gt;112&lt;/span&gt; &lt;span class='cm'&gt;     */&lt;/span&gt;
+&lt;span class='lineno'&gt;113&lt;/span&gt;     &lt;span class='k'&gt;this&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;is_online&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='kd'&gt;function&lt;/span&gt; &lt;span class='p'&gt;()&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+&lt;span class='lineno'&gt;114&lt;/span&gt;         &lt;span class='k'&gt;if&lt;/span&gt; &lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nx'&gt;navigator&lt;/span&gt; &lt;span class='o'&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class='nx'&gt;navigator&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;onLine&lt;/span&gt; &lt;span class='o'&gt;!==&lt;/span&gt; &lt;span class='kc'&gt;undefined&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+&lt;span class='lineno'&gt;115&lt;/span&gt;             &lt;span class='k'&gt;return&lt;/span&gt; &lt;span class='nx'&gt;navigator&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;onLine&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt;
+&lt;span class='lineno'&gt;116&lt;/span&gt;         &lt;span class='p'&gt;}&lt;/span&gt;
+&lt;span class='lineno'&gt;117&lt;/span&gt;         &lt;span class='k'&gt;try&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+&lt;span class='lineno'&gt;118&lt;/span&gt;             &lt;span class='kd'&gt;var&lt;/span&gt; &lt;span class='nx'&gt;request&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='k'&gt;new&lt;/span&gt; &lt;span class='nx'&gt;XMLHttpRequest&lt;/span&gt;&lt;span class='p'&gt;();&lt;/span&gt;
+&lt;span class='lineno'&gt;119&lt;/span&gt;             &lt;span class='nx'&gt;request&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;open&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;GET&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='s1'&gt;&amp;#39;/&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='kc'&gt;false&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+&lt;span class='lineno'&gt;120&lt;/span&gt;             &lt;span class='nx'&gt;request&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;send&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='kc'&gt;null&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+&lt;span class='lineno'&gt;121&lt;/span&gt;             &lt;span class='k'&gt;return&lt;/span&gt; &lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nx'&gt;request&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;status&lt;/span&gt; &lt;span class='o'&gt;===&lt;/span&gt; &lt;span class='mi'&gt;200&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+&lt;span class='lineno'&gt;122&lt;/span&gt;         &lt;span class='p'&gt;}&lt;/span&gt;
+&lt;span class='lineno'&gt;123&lt;/span&gt;         &lt;span class='k'&gt;catch&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nx'&gt;e&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+&lt;span class='lineno'&gt;124&lt;/span&gt;             &lt;span class='k'&gt;return&lt;/span&gt; &lt;span class='kc'&gt;false&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt;
+&lt;span class='lineno'&gt;125&lt;/span&gt;         &lt;span class='p'&gt;}&lt;/span&gt;
+&lt;span class='lineno'&gt;126&lt;/span&gt;     &lt;span class='p'&gt;}&lt;/span&gt;
+&lt;span class='lineno'&gt;127&lt;/span&gt; &lt;span class='p'&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;h2 id='proposed_features'&gt;Proposed Features&lt;/h2&gt;
+
+&lt;p&gt;The example API isn&amp;#8217;t bad, but I think it could be better. Perhaps something along the lines of &lt;a href='http://westcoastlogic.com/lawnchair/'&gt;Lawnchair&lt;/a&gt;. As I&amp;#8217;m writing this, I realize that writing an API is going to take longer than I&amp;#8217;d like - therefore, this will serve as a teaser and food for thought. Feedback is welcome.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Add an &lt;em&gt;.each&lt;/em&gt; method for iterating over retrieved objects (inspired by Lawnchair)&lt;/li&gt;
+
+&lt;li&gt;Standard &lt;code&gt;DataStore.save, .get, .remove, etc.&lt;/code&gt;&lt;/li&gt;
+
+&lt;li&gt;Support for these &amp;#8220;storage engines&amp;#8221;: localStorage, IndexedDB, send-to-server.&lt;/li&gt;
+
+&lt;li&gt;Support for these request types: XMLHttpRequest, &lt;a href='http://en.wikipedia.org/wiki/WebSockets'&gt;WebSockets&lt;/a&gt;.&lt;/li&gt;
+
+&lt;li&gt;Store, at the very least, primitive values and JSON.&lt;/li&gt;
+
+&lt;li&gt;Include callbacks for various stages in the process of a request, similar to jQuery.ajax, e.g. &lt;code&gt;beforeSend, complete, success, error&lt;/code&gt;. Figure out a good way to do this at each layer (minimize confusion).&lt;/li&gt;
+
+&lt;li&gt;For each request, specify which layers and in what order to go through. For example, if you want to store something in localStorage, IndexedDB, and send it to the server, you could do it in that order or the reverse.&lt;/li&gt;
+
+&lt;li&gt;Control whether to go to the next layer type depending on whether the previous succeeded or failed. Say, if you want to send the request to server but that fails, try localStorage as a fallback. Or the opposite.&lt;/li&gt;
+
+&lt;li&gt;Include a &lt;code&gt;.get_then_store&lt;/code&gt; shortcut for getting the data from layer A and storing it in layer B?&lt;/li&gt;
+
+&lt;li&gt;Extensible: as easy as &lt;code&gt;DataStore.addLayer(layerName, layerHandler)&lt;/code&gt;, where layerHandler (obviously) implements some common API along with exposing some of its own, if necessary (e.g. ability to query or find, for IndexedDB).&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id='help'&gt;Help!&lt;/h2&gt;
+
+&lt;p&gt;Hopefully my rant has gotten you thinking about the right approach. What would you like to see? What would make this something you would use and be happy with?&lt;/p&gt;
+
+&lt;p&gt;If you are interested in getting involved with coding this, contact me at paulc at mozilla.com.&lt;/p&gt;</content>
+ </entry>
  
  <entry>
    <title>Python scoping: understading LEGB</title>
@@ -1080,92 +1347,6 @@
 &lt;li&gt;help out new team members&lt;/li&gt;
 
 &lt;li&gt;fix up &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=565801'&gt;some&lt;/a&gt; &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=566102'&gt;of the&lt;/a&gt; wiki parser bugs&lt;/li&gt;
-&lt;/ul&gt;</content>
- </entry>
- 
- <entry>
-   <title>April 26-30 status</title>
-   <link href="http://embrangler.com/2010/05/weekly-update-apr-26-30"/>
-   <updated>2010-05-03T00:00:00-07:00</updated>
-   <id>http://embrangler.com/2010/05/weekly-update-apr-26-30</id>
-   <content type="html">&lt;h2 id='last_week_april_2630'&gt;Last week (April 26-30)&lt;/h2&gt;
-
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;awesome webdev onsite&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;learned about localization, the mass of krill, and cooking indian food, among other things&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-
-&lt;li&gt;
-&lt;p&gt;kitsune&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;r?d &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=561487'&gt;use bleach to clean up sphinx results&lt;/a&gt;&lt;/li&gt;
-
-&lt;li&gt;r?d &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=561931'&gt;remove didyoumean&lt;/a&gt;&lt;/li&gt;
-
-&lt;li&gt;r?d &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=560702'&gt;htaccess fix for trailing slash in search url&lt;/a&gt;&lt;/li&gt;
-
-&lt;li&gt;finish up &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=561266'&gt;minor&lt;/a&gt; &lt;a href=''&gt;bugs&lt;/a&gt; for &lt;a href='https://bugzilla.mozilla.org/buglist.cgi?quicksearch=OPEN+product%3Asupport+milestone%3A2.0'&gt;2.0&lt;/a&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=562259'&gt;some&lt;/a&gt; &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=561522'&gt;work&lt;/a&gt; on &lt;a href='https://bugzilla.mozilla.org/buglist.cgi?field1-0-0=target_milestone&amp;amp;target_milestone=2.1&amp;amp;product=support.mozilla.com'&gt;2.1 bugs&lt;/a&gt;&lt;/li&gt;
-
-&lt;li&gt;started &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=562217'&gt;converting the staging database to UTF8 with outage page&lt;/a&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=562259'&gt;remove YUI dependency from kitsune&lt;/a&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=558105'&gt;add WebTrends tracking&lt;/a&gt;&lt;/li&gt;
-
-&lt;li&gt;investigating &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=561124'&gt;missing excerpts&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-
-&lt;li&gt;
-&lt;p&gt;tiki&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;r?d &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=556672'&gt;using kitsune for search&lt;/a&gt; on &lt;a href='http://support-stage-new.mozilla.com/'&gt;stage-new&lt;/a&gt;&lt;/li&gt;
-
-&lt;li&gt;verified &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=560759'&gt;duplicates have been renamed on prod&lt;/a&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=66514'&gt;add a few locales&lt;/a&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=561857'&gt;searching from tiki remembers locale&lt;/a&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=554781'&gt;screencast bug&lt;/a&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=558105'&gt;add WebTrends tracking&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id='this_week_may_37'&gt;This week (May 3-7)&lt;/h2&gt;
-
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;kitsune&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;pick up &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=563586'&gt;some&lt;/a&gt; &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=563577'&gt;of&lt;/a&gt; &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=563578'&gt;the bugs&lt;/a&gt; &lt;a href='https://bugzilla.mozilla.org/show_bug.cgi?id=563581'&gt;filed by&lt;/a&gt; James&lt;/p&gt;
-&lt;/li&gt;
-
-&lt;li&gt;
-&lt;p&gt;push 2.0/1.5.4 with rest of SUMOdev&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;in particular: ensure UTF8 conversion of database goes well&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-
-&lt;li&gt;
-&lt;p&gt;team goal: handle all anonymous-access forums actions and views&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
 &lt;/ul&gt;</content>
  </entry>
  
