@@ -1,0 +1,13 @@
+---
+layout: default
+title: Posts tagged "javascript"
+tag: javascript
+type: "Javascript"
+---
+    <h1 class="title" id="javascript">Posts tagged <em>javascript</em></h1>
+
+    <ul>
+      {% for post in site.tags['javascript'] %}
+      {% include item.html %}
+      {% endfor %}
+    </ul>

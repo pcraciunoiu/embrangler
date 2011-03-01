@@ -77,6 +77,8 @@
   <h2 id='table_of_contents'>Table of contents</h2>
 
 <ol>
+<li><a href='#motivation'>Motivation</a></li>
+
 <li><a href='#idea'>Idea</a></li>
 
 <li><a href='#from_past_to_present_what_now'>From past to present, what now?</a></li>
@@ -93,6 +95,14 @@
 
 <li><a href='#help'>Help!</a></li>
 </ol>
+
+<h2 id='motivation'>Motivation</h2>
+
+<p>I wrote an application which extensively used Ajax requests to communicate with the server. After a while I wanted to add <a href='http://developer.mozilla.org/en/dom/storage#localStorage'>localStorage</a>. Though most actions were grouped together, there were still more than just a handful of Ajax requests that had to be changed. Then I thought what if I want to add IndexedDB later on&#8230;</p>
+
+<p>&#8230; you can see where this is going: <a href='http://www.brainstuck.com/2009/09/30/cartel/'>maintenance hell.</a></p>
+
+<p>Then I thought: other people must be having similar problems. Hence&#8230;</p>
 
 <h2 id='idea'>Idea</h2>
 
@@ -327,6 +337,8 @@
 <li>Include a <code>.get_then_store</code> shortcut for getting the data from layer A and storing it in layer B?</li>
 
 <li>Extensible: as easy as <code>DataStore.addLayer(layerName, layerHandler)</code>, where layerHandler (obviously) implements some common API along with exposing some of its own, if necessary (e.g. ability to query or find, for IndexedDB).</li>
+
+<li>As sending and getting data from the server means keeping <em>two or more</em> databases in sync, collisions may arise. Provide a collision callback or some smart defaults for handling collision. E.g. sometimes server data is always right (trusted more than user data), other times local data is king.</li>
 </ul>
 
 <h2 id='help'>Help!</h2>

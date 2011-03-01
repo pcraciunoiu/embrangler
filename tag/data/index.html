@@ -1,0 +1,13 @@
+---
+layout: default
+title: Posts tagged "data"
+tag: data
+type: "Data"
+---
+    <h1 class="title" id="data">Posts tagged <em>data</em></h1>
+
+    <ul>
+      {% for post in site.tags['data'] %}
+      {% include item.html %}
+      {% endfor %}
+    </ul>

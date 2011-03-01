@@ -4,7 +4,7 @@
  <title>Disembrangling Programming - Paul Craciunoiu</title>
  <link href="http://embrangler.com/atom.xml" rel="self"/>
  <link href="http://embrangler.com/"/>
- <updated>2011-03-01T08:33:45-08:00</updated>
+ <updated>2011-03-01T13:52:42-08:00</updated>
  <id>http://embrangler.com/</id>
  <author>
    <name>Paul Craciunoiu</name>
@@ -20,6 +20,8 @@
    <content type="html">&lt;h2 id='table_of_contents'&gt;Table of contents&lt;/h2&gt;
 
 &lt;ol&gt;
+&lt;li&gt;&lt;a href='#motivation'&gt;Motivation&lt;/a&gt;&lt;/li&gt;
+
 &lt;li&gt;&lt;a href='#idea'&gt;Idea&lt;/a&gt;&lt;/li&gt;
 
 &lt;li&gt;&lt;a href='#from_past_to_present_what_now'&gt;From past to present, what now?&lt;/a&gt;&lt;/li&gt;
@@ -36,6 +38,14 @@
 
 &lt;li&gt;&lt;a href='#help'&gt;Help!&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
+
+&lt;h2 id='motivation'&gt;Motivation&lt;/h2&gt;
+
+&lt;p&gt;I wrote an application which extensively used Ajax requests to communicate with the server. After a while I wanted to add &lt;a href='http://developer.mozilla.org/en/dom/storage#localStorage'&gt;localStorage&lt;/a&gt;. Though most actions were grouped together, there were still more than just a handful of Ajax requests that had to be changed. Then I thought what if I want to add IndexedDB later on&amp;#8230;&lt;/p&gt;
+
+&lt;p&gt;&amp;#8230; you can see where this is going: &lt;a href='http://www.brainstuck.com/2009/09/30/cartel/'&gt;maintenance hell.&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Then I thought: other people must be having similar problems. Hence&amp;#8230;&lt;/p&gt;
 
 &lt;h2 id='idea'&gt;Idea&lt;/h2&gt;
 
@@ -270,6 +280,8 @@
 &lt;li&gt;Include a &lt;code&gt;.get_then_store&lt;/code&gt; shortcut for getting the data from layer A and storing it in layer B?&lt;/li&gt;
 
 &lt;li&gt;Extensible: as easy as &lt;code&gt;DataStore.addLayer(layerName, layerHandler)&lt;/code&gt;, where layerHandler (obviously) implements some common API along with exposing some of its own, if necessary (e.g. ability to query or find, for IndexedDB).&lt;/li&gt;
+
+&lt;li&gt;As sending and getting data from the server means keeping &lt;em&gt;two or more&lt;/em&gt; databases in sync, collisions may arise. Provide a collision callback or some smart defaults for handling collision. E.g. sometimes server data is always right (trusted more than user data), other times local data is king.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h2 id='help'&gt;Help!&lt;/h2&gt;
