@@ -8,6 +8,7 @@ time: 8:11PM
 
 ## Table of contents
 
+1. [Motivation](#motivation)
 1. [Idea](#idea)
 1. [From past to present, what now?](#from_past_to_present_what_now)
 1. [What does better mean?](#what_does_better_mean)
@@ -16,6 +17,14 @@ time: 8:11PM
 1. [What worked for me](#what_worked_for_me)
 1. [Proposed features](#proposed_features)
 1. [Help!](#help)
+
+
+## Motivation
+I wrote an application which extensively used Ajax requests to communicate with the server. After a while I wanted to add [localStorage](http://developer.mozilla.org/en/dom/storage#localStorage). Though most actions were grouped together, there were still more than just a handful of Ajax requests that had to be changed. Then I thought what if I want to add IndexedDB later on...
+
+... you can see where this is going: [maintenance hell.](http://www.brainstuck.com/2009/09/30/cartel/)
+
+Then I thought: other people must be having similar problems. Hence...
 
 ## Idea
 A library to unify all the different data storage/retrieval/sending/receiving API's such as XMLHttpRequest, WebSockets, localStorage, IndexedDB, and make it easier to use any number of them at once.
@@ -228,6 +237,7 @@ The example API isn't bad, but I think it could be better. Perhaps something alo
 * Control whether to go to the next layer type depending on whether the previous succeeded or failed. Say, if you want to send the request to server but that fails, try localStorage as a fallback. Or the opposite.
 * Include a <code>.get_then_store</code> shortcut for getting the data from layer A and storing it in layer B?
 * Extensible: as easy as <code>DataStore.addLayer(layerName, layerHandler)</code>, where layerHandler (obviously) implements some common API along with exposing some of its own, if necessary (e.g. ability to query or find, for IndexedDB).
+* As sending and getting data from the server means keeping _two or more_ databases in sync, collisions may arise. Provide a collision callback or some smart defaults for handling collision. E.g. sometimes server data is always right (trusted more than user data), other times local data is king.
 
 ## Help!
 Hopefully my rant has gotten you thinking about the right approach. What would you like to see? What would make this something you would use and be happy with?
