@@ -1,0 +1,12 @@
+<script type="text/javascript">
+    window.onscroll = scrollEvent;
+
+    function scrollEvent() {
+        var $p = document.getElementById('promo');
+        if (window && window.pageYOffset !== 0) {
+            $p.className = 'notop';
+        } else {
+            $p.className = '';
+        }
+    }
+</script>
