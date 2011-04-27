@@ -125,6 +125,7 @@ hr {
 /* Promo box, temporary */
 #promo {
     background: #fcc557;
+    padding-top: 2px;
     position: fixed;
     left: 0;
     text-align: center;
