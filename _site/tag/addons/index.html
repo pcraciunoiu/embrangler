@@ -34,6 +34,9 @@
             <a class="the-list" href="/list">(The List)</a>
         </h2>
     </div>
+    <div id="promo">
+        <a href="http://sowink.com">Web developer? Want to join a very exciting small company? SoWink is hiring! &raquo;</a></p>
+    </div>
     <div id="content" role="main">    
         <h1 class="title" id="addons">Posts tagged <em>addons</em></h1>
 
@@ -81,6 +84,19 @@ var pageTracker = _gat._getTracker("UA-15382775-1");
 pageTracker._trackPageview();
 } catch(err) {}</script>
 <!-- /Google Analytics -->
+
+<script type="text/javascript">
+    window.onscroll = scrollEvent;
+
+    function scrollEvent() {
+        var $p = document.getElementById('promo');
+        if (window && window.pageYOffset !== 0) {
+            $p.className = 'notop';
+        } else {
+            $p.className = '';
+        }
+    }
+</script>
 
 </body>
 </html>
