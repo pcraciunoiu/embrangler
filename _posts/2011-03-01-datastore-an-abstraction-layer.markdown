@@ -6,6 +6,8 @@ tags: [javascript, data, offline storage, mozilla]
 time: 8:11PM
 ---
 
+__Update 2012/01:__ I still haven't started working on this project and I've heard much interest from others. Some have offered to pick up the project. I will update this post once the project finds a home.
+
 ## Table of contents
 
 1. [Motivation](#motivation)

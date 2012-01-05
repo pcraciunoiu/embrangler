@@ -4,7 +4,7 @@
  <title>Disembrangling Programming</title>
  <link href="http://embrangler.com/tag/kohana/atom.xml" rel="self"/>
  <link href="http://embrangler.com/tag/kohana"/>
- <updated>2011-05-31T00:02:29-07:00</updated>
+ <updated>2012-01-04T20:48:51-08:00</updated>
  <id>http://embrangler.com/</id>
  <author>
    <name>Paul Craciunoiu</name>
@@ -139,7 +139,7 @@
         &lt;span class='nv'&gt;$response&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='nv'&gt;$fastask&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;request&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt;
         &lt;span class='nv'&gt;$this&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;assertSame&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nv'&gt;$response&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;headers&lt;/span&gt;&lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;Content-Type&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;],&lt;/span&gt;
                           &lt;span class='s1'&gt;&amp;#39;application/json&amp;#39;&lt;/span&gt; &lt;span class='p'&gt;);&lt;/span&gt;
-        &lt;span class='nv'&gt;$this&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;assertSame&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nv'&gt;$response&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;status&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='m'&gt;403&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+        &lt;span class='nv'&gt;$this&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;assertSame&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nv'&gt;$response&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;status&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='mi'&gt;403&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
     &lt;span class='p'&gt;}&lt;/span&gt;
 
     &lt;span class='c1'&gt;// ... more tests here ...&lt;/span&gt;
@@ -205,7 +205,7 @@
     &lt;span class='p'&gt;{&lt;/span&gt;
         &lt;span class='c1'&gt;// Reset logins and log out the user&lt;/span&gt;
         &lt;span class='nv'&gt;$test_user&lt;/span&gt;         &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='nx'&gt;Auth&lt;/span&gt;&lt;span class='o'&gt;::&lt;/span&gt;&lt;span class='na'&gt;instance&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;get_user&lt;/span&gt;&lt;span class='p'&gt;();&lt;/span&gt;
-        &lt;span class='nv'&gt;$test_user&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;logins&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='m'&gt;1&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt;
+        &lt;span class='nv'&gt;$test_user&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;logins&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='mi'&gt;1&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt;
         &lt;span class='nv'&gt;$test_user&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;save&lt;/span&gt;&lt;span class='p'&gt;();&lt;/span&gt;
         &lt;span class='nx'&gt;Auth&lt;/span&gt;&lt;span class='o'&gt;::&lt;/span&gt;&lt;span class='na'&gt;instance&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;logout&lt;/span&gt;&lt;span class='p'&gt;();&lt;/span&gt;
 
@@ -248,9 +248,9 @@
 &lt;span class='cm'&gt;                status code to expect&lt;/span&gt;
 &lt;span class='cm'&gt;        */&lt;/span&gt;
         &lt;span class='k'&gt;return&lt;/span&gt; &lt;span class='k'&gt;array&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;
-            &lt;span class='k'&gt;array&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;s&amp;#39;&lt;/span&gt; &lt;span class='o'&gt;=&amp;gt;&lt;/span&gt; &lt;span class='s1'&gt;&amp;#39;asdfgh&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='m'&gt;404&lt;/span&gt;&lt;span class='p'&gt;),&lt;/span&gt;
-            &lt;span class='k'&gt;array&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;s&amp;#39;&lt;/span&gt; &lt;span class='o'&gt;=&amp;gt;&lt;/span&gt; &lt;span class='s1'&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='m'&gt;404&lt;/span&gt;&lt;span class='p'&gt;),&lt;/span&gt;
-            &lt;span class='k'&gt;array&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;s&amp;#39;&lt;/span&gt; &lt;span class='o'&gt;=&amp;gt;&lt;/span&gt; &lt;span class='s1'&gt;&amp;#39;nulla&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='m'&gt;200&lt;/span&gt;&lt;span class='p'&gt;),&lt;/span&gt;  &lt;span class='c1'&gt;// One of those lorem-ipsum results&lt;/span&gt;
+            &lt;span class='k'&gt;array&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;s&amp;#39;&lt;/span&gt; &lt;span class='o'&gt;=&amp;gt;&lt;/span&gt; &lt;span class='s1'&gt;&amp;#39;asdfgh&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='mi'&gt;404&lt;/span&gt;&lt;span class='p'&gt;),&lt;/span&gt;
+            &lt;span class='k'&gt;array&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;s&amp;#39;&lt;/span&gt; &lt;span class='o'&gt;=&amp;gt;&lt;/span&gt; &lt;span class='s1'&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='mi'&gt;404&lt;/span&gt;&lt;span class='p'&gt;),&lt;/span&gt;
+            &lt;span class='k'&gt;array&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;s&amp;#39;&lt;/span&gt; &lt;span class='o'&gt;=&amp;gt;&lt;/span&gt; &lt;span class='s1'&gt;&amp;#39;nulla&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='mi'&gt;200&lt;/span&gt;&lt;span class='p'&gt;),&lt;/span&gt;  &lt;span class='c1'&gt;// One of those lorem-ipsum results&lt;/span&gt;
         &lt;span class='p'&gt;);&lt;/span&gt;
     &lt;span class='p'&gt;}&lt;/span&gt;
 
@@ -261,7 +261,7 @@
     &lt;span class='k'&gt;function&lt;/span&gt; &lt;span class='nf'&gt;testSearch&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nv'&gt;$search&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='nv'&gt;$status&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt;
     &lt;span class='p'&gt;{&lt;/span&gt;
         &lt;span class='nv'&gt;$_GET&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='k'&gt;array&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;
-            &lt;span class='s1'&gt;&amp;#39;ep&amp;#39;&lt;/span&gt; &lt;span class='o'&gt;=&amp;gt;&lt;/span&gt; &lt;span class='m'&gt;1&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt;
+            &lt;span class='s1'&gt;&amp;#39;ep&amp;#39;&lt;/span&gt; &lt;span class='o'&gt;=&amp;gt;&lt;/span&gt; &lt;span class='mi'&gt;1&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt;
             &lt;span class='s1'&gt;&amp;#39;s&amp;#39;&lt;/span&gt;  &lt;span class='o'&gt;=&amp;gt;&lt;/span&gt; &lt;span class='nv'&gt;$search&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt;
         &lt;span class='p'&gt;);&lt;/span&gt;
         &lt;span class='nv'&gt;$fastask&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='k'&gt;new&lt;/span&gt; &lt;span class='nx'&gt;Controller_Fastask&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='k'&gt;new&lt;/span&gt; &lt;span class='nx'&gt;Request&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;in/t&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;));&lt;/span&gt;
@@ -275,7 +275,7 @@
 
         &lt;span class='nv'&gt;$json&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='nx'&gt;json_decode&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nv'&gt;$response&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;response&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
         &lt;span class='nv'&gt;$count&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='nb'&gt;count&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nv'&gt;$json&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;tasks&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
-        &lt;span class='k'&gt;if&lt;/span&gt; &lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nv'&gt;$count&lt;/span&gt; &lt;span class='o'&gt;&amp;gt;&lt;/span&gt; &lt;span class='m'&gt;0&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+        &lt;span class='k'&gt;if&lt;/span&gt; &lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nv'&gt;$count&lt;/span&gt; &lt;span class='o'&gt;&amp;gt;&lt;/span&gt; &lt;span class='mi'&gt;0&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
             &lt;span class='k'&gt;foreach&lt;/span&gt; &lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nv'&gt;$json&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;tasks&lt;/span&gt; &lt;span class='k'&gt;as&lt;/span&gt; &lt;span class='nv'&gt;$task&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
                 &lt;span class='nv'&gt;$follower_ids&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='k'&gt;array&lt;/span&gt;&lt;span class='p'&gt;();&lt;/span&gt;
                 &lt;span class='k'&gt;foreach&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nv'&gt;$task&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;followers&lt;/span&gt; &lt;span class='k'&gt;as&lt;/span&gt; &lt;span class='nv'&gt;$follower&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;

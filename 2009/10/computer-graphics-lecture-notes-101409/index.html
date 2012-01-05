@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Computer graphics - lecture notes - 10/14/09</title>
+    <meta name="author" content="Paul Craciunoiu" />
+    <link href="http://feeds.feedburner.com/embrangler" rel="alternate" title="Paul Craciunoiu" type="application/atom+xml" />
+    <link type="image/x-icon" href="/favicon.ico" rel="shortcut icon">
+
+    <!-- syntax highlighting CSS -->
+    <link rel="stylesheet" href="/css/syntax.css" type="text/css" />
+
+    <!-- Homepage CSS -->
+    <link rel="stylesheet" href="/css/main.css" type="text/css" media="screen, projection" />
+</head>
+<body>
+
+<div class="site">
+
+    <div id="header" role="banner">
+        <h1 class="title">
+            <a href="/">Disembrangling Programming</a>
+        </h1>
+        <h2 class="subtitle">
+            <a href="/about" title="About Paul Craciunoiu">The simple life of a web developer &mdash; by Paul Craciunoiu<span> (About)</span></a>
+        </h2>
+    </div>
+    <div id="content" role="main">    
+    <div id="post">
+<h1>Computer graphics - lecture notes - 10/14/09</h1>
+
+<p>Reflection:</p>
+
+<p><span class='maruku-inline'><img class='maruku-png' src='/images/latex/b1196153d73660ab5c9f8bc63383c8dc.png' alt='$Rf_{xy} =$' style='vertical-align: -0.666666666666667ex;height: 2.22222222222222ex;' /></span></p>
+<div class='maruku-equation'><img class='maruku-png' src='/images/latex/c7735fbe2fb66b01b48dda3316d6306b.png' alt='$1xxx$' style='height: 1.66666666666667ex;' /><span class='maruku-eq-tex'><code style='display: none'>1xxx</code></span></div><div class='maruku-equation'><img class='maruku-png' src='/images/latex/5361bd852d6480ca83d728ad30f07349.png' alt='$x1xx$' style='height: 1.66666666666667ex;' /><span class='maruku-eq-tex'><code style='display: none'>x1xx</code></span></div><div class='maruku-equation'><img class='maruku-png' src='/images/latex/387fba8edf948667c15fa1718128d47c.png' alt='$xx-1x$' style='height: 1.66666666666667ex;' /><span class='maruku-eq-tex'><code style='display: none'>xx-1x</code></span></div><div class='maruku-equation'><img class='maruku-png' src='/images/latex/4d596082dc9b2101beb29ea163a48e50.png' alt='$xxx1$' style='height: 1.66666666666667ex;' /><span class='maruku-eq-tex'><code style='display: none'>xxx1</code></span></div>
+<p>For yz, -1 is at 1,1. For xz, -1 is at 2, 2 <span class='maruku-inline'><img class='maruku-png' src='/images/latex/282749c17ba448bdd73b1e91245385e0.png' alt='$Rf_{z=5} = T(0, 0, -5) Rf_{xy}(0, 0, 5)$' style='vertical-align: -0.666666666666667ex;height: 2.44444444444444ex;' /></span></p>
+
+<p>3D Shear <span class='maruku-inline'><img class='maruku-png' src='/images/latex/c29e14cd7a4c8b169a919ccd0573369b.png' alt='$SH_{xy} =$' style='vertical-align: -0.666666666666667ex;height: 2.22222222222222ex;' /></span></p>
+<div class='maruku-equation'><img class='maruku-png' src='/images/latex/c7735fbe2fb66b01b48dda3316d6306b.png' alt='$1xxx$' style='height: 1.66666666666667ex;' /><span class='maruku-eq-tex'><code style='display: none'>1xxx</code></span></div><div class='maruku-equation'><img class='maruku-png' src='/images/latex/5361bd852d6480ca83d728ad30f07349.png' alt='$x1xx$' style='height: 1.66666666666667ex;' /><span class='maruku-eq-tex'><code style='display: none'>x1xx</code></span></div><div class='maruku-equation'><img class='maruku-png' src='/images/latex/da5086ee5076f8a4489fcd8da793b259.png' alt='$sh_x sh_y xx$' style='height: 2.22222222222222ex;' /><span class='maruku-eq-tex'><code style='display: none'>sh_x sh_y xx</code></span></div><div class='maruku-equation'><img class='maruku-png' src='/images/latex/4d596082dc9b2101beb29ea163a48e50.png' alt='$xxx1$' style='height: 1.66666666666667ex;' /><span class='maruku-eq-tex'><code style='display: none'>xxx1</code></span></div>
+<p><span class='maruku-inline'><img class='maruku-png' src='/images/latex/5bc2064a7bae2fd4f6140fa395a478cc.png' alt='$SH_{xz} =$' style='vertical-align: -0.333333333333333ex;height: 1.88888888888889ex;' /></span></p>
+<div class='maruku-equation'><img class='maruku-png' src='/images/latex/c7735fbe2fb66b01b48dda3316d6306b.png' alt='$1xxx$' style='height: 1.66666666666667ex;' /><span class='maruku-eq-tex'><code style='display: none'>1xxx</code></span></div><div class='maruku-equation'><img class='maruku-png' src='/images/latex/5b36d9862b7f438240f07b12fbd95410.png' alt='$sh_x 1 sh_z x$' style='height: 1.88888888888889ex;' /><span class='maruku-eq-tex'><code style='display: none'>sh_x 1 sh_z x</code></span></div><div class='maruku-equation'><img class='maruku-png' src='/images/latex/81570e6fd5966308c06219cd1425e9ac.png' alt='$xx1x$' style='height: 1.66666666666667ex;' /><span class='maruku-eq-tex'><code style='display: none'>xx1x</code></span></div><div class='maruku-equation'><img class='maruku-png' src='/images/latex/4d596082dc9b2101beb29ea163a48e50.png' alt='$xxx1$' style='height: 1.66666666666667ex;' /><span class='maruku-eq-tex'><code style='display: none'>xxx1</code></span></div>
+<p><span class='maruku-inline'><img class='maruku-png' src='/images/latex/410abfb2dd2ae1bcf39149f0c57ede52.png' alt='$SH_{yz} =$' style='vertical-align: -0.666666666666667ex;height: 2.22222222222222ex;' /></span></p>
+<div class='maruku-equation'><img class='maruku-png' src='/images/latex/890a6962ae592ad784f08ace27d85e29.png' alt='$1 sh_y sh_z 0$' style='height: 2.22222222222222ex;' /><span class='maruku-eq-tex'><code style='display: none'>1 sh_y sh_z 0</code></span></div><div class='maruku-equation'><img class='maruku-png' src='/images/latex/5361bd852d6480ca83d728ad30f07349.png' alt='$x1xx$' style='height: 1.66666666666667ex;' /><span class='maruku-eq-tex'><code style='display: none'>x1xx</code></span></div><div class='maruku-equation'><img class='maruku-png' src='/images/latex/81570e6fd5966308c06219cd1425e9ac.png' alt='$xx1x$' style='height: 1.66666666666667ex;' /><span class='maruku-eq-tex'><code style='display: none'>xx1x</code></span></div><div class='maruku-equation'><img class='maruku-png' src='/images/latex/4d596082dc9b2101beb29ea163a48e50.png' alt='$xxx1$' style='height: 1.66666666666667ex;' /><span class='maruku-eq-tex'><code style='display: none'>xxx1</code></span></div>
+<p>Rotate a line around its akis by <span class='maruku-inline'><img class='maruku-png' src='/images/latex/a0bc656087ff7de7e3c4e2a07470130c.png' alt='$\beta$' style='vertical-align: -0.444444444444444ex;height: 2.0ex;' /></span> degrees: <span class='maruku-inline'><img class='maruku-png' src='/images/latex/957ba8014d5e5c7b8dbb20c9701cd2c6.png' alt='$M = R_x^{90 - \theta} R_z^\beta R_x^{-90+\theta}$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /></span></p>
+
+<p>Given <span class='maruku-inline'><img class='maruku-png' src='/images/latex/b2765f795b1355ed41b6309439b7bd16.png' alt='$P_1 (x_1, y_1, z_1), P_2(x_2, y_2, z_2), \theta = 30$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /></span>. Find: M to rotate <span class='maruku-inline'><img class='maruku-png' src='/images/latex/5b11e05f05dbbee9ab42e5ffa80feff6.png' alt='$\theta$' style='vertical-align: -0.0ex;height: 1.55555555555556ex;' /></span> around <span class='maruku-inline'><img class='maruku-png' src='/images/latex/c52313fcded09ef68627704bb14ff937.png' alt='$P_1P_2$' style='vertical-align: -0.444444444444444ex;height: 2.0ex;' /></span> <span class='maruku-inline'><img class='maruku-png' src='/images/latex/e31304df240fc2402a200aecb0cf39b4.png' alt='$M = T_{orig} R_x^{\alpha} R_y^{\beta} R_z^{\theta} R_y^{-\beta} R_x^{-\alpha} T_{-orig}$' style='vertical-align: -0.888888888888889ex;height: 2.66666666666667ex;' /></span></p>
+
+<p>2D: (S - scale, T - translate, R - rotate, SH - shear) <span class='maruku-inline'><img class='maruku-png' src='/images/latex/e5993473982fecbc658467a19de10594.png' alt='$T_1 T_2 = T_2 T_1 YES$' style='vertical-align: -0.444444444444444ex;height: 2.0ex;' /></span> <span class='maruku-inline'><img class='maruku-png' src='/images/latex/0f5fe45bf3b61ece6db1558569f7dc2e.png' alt='$S_1 S_2 = S_2 S_1 YES$' style='vertical-align: -0.444444444444444ex;height: 2.0ex;' /></span> <span class='maruku-inline'><img class='maruku-png' src='/images/latex/eba532053c1784c5926888c11899df10.png' alt='$R_1 R_2 = R_2 R_1 NO$' style='vertical-align: -0.444444444444444ex;height: 2.0ex;' /></span> <span class='maruku-inline'><img class='maruku-png' src='/images/latex/1a8134b5d25b713dd6de19944451ec57.png' alt='$SH_{x1} SH_{x2} = SH_{x2} SH_{x1} YES$' style='vertical-align: -0.444444444444444ex;height: 2.0ex;' /></span></p>
+</div>
+
+<div id="related">
+  <h2>Related Posts</h2>
+  <ul>
+    
+      <li><a href="/2009/10/ed60-labaree">ED60 - David Labaree - Public goods, private goods, the American struggle over educational goals</a> &mdash; 05 Oct 2009</li>
+    
+      <li><a href="/2010/03/quoteden-moving-to-kohana-3">Quoteden: Moving to Kohana 3</a> &mdash; 12 Mar 2010</li>
+    
+      <li><a href="/2010/03/embrangler-moving-to-jekyll">Embrangler: Moving to Jekyll</a> &mdash; 21 Mar 2010</li>
+    
+  </ul>
+</div>
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  (function() {
+   var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+   dsq.src = 'http://blogpaulcraciunoiu.disqus.com/embed.js';
+   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript=blogpaulcraciunoiu">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+<script type="text/javascript">
+//<![CDATA[
+(function() {
+    var links = document.getElementsByTagName('a');
+    var query = '?';
+    for(var i = 0; i < links.length; i++) {
+    if(links[i].href.indexOf('#disqus_thread') >= 0) {
+        query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
+    }
+    }
+    document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/blogpaulcraciunoiu/get_num_replies.js' + query + '"></' + 'script>');
+})();
+//]]>
+</script>
+    </div>
+
+    <div id="footer" role="contentinfo">
+        <div class="about">
+        <p>I work as a web developer for <a href="http://mozilla.com">Mozilla</a>, with main focus on <a href="http://www.djangoproject.com/">Django</a>, Python, and PHP. Occasionally, I write tutorials or post other information I find interesting.</p>
+        <p>I enjoy doing freelance work for other websites, mostly non-profits. If you're interested in my services, contact me through one of the links below.</p>
+        </p>
+        </div>
+        <div class="contact">
+            <a href="http://twitter.com/embrangler/">Follow me</a> -- 
+            <a href="http://craciunoiu.net/contact/paul">Email me</a> -- 
+            <a href="http://github.com/pcraciunoiu/">My GitHub</a>
+        </div>
+        <div class="quote">
+        <p>
+            Success is a journey, not a destination. The doing is often more important than the outcome. &mdash; <a href="http://quoteden.net/author/id/337">Arthur Robert Ashe, Jr</a>
+        </p>
+        <p>&copy; Paul Craciunoiu. Some rights reserved. Brought to you by <a href="http://wiki.github.com/mojombo/jekyll/">Jekyll</a></p>
+        </div>
+    </div>
+</div><!-- site -->
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-15382775-1");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+<!-- /Google Analytics -->
+</body>
+</html>

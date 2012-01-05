@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>CS107 hw2</title>
+    <meta name="author" content="Paul Craciunoiu" />
+    <link href="http://feeds.feedburner.com/embrangler" rel="alternate" title="Paul Craciunoiu" type="application/atom+xml" />
+    <link type="image/x-icon" href="/favicon.ico" rel="shortcut icon">
+
+    <!-- syntax highlighting CSS -->
+    <link rel="stylesheet" href="/css/syntax.css" type="text/css" />
+
+    <!-- Homepage CSS -->
+    <link rel="stylesheet" href="/css/main.css" type="text/css" media="screen, projection" />
+</head>
+<body>
+
+<div class="site">
+
+    <div id="header" role="banner">
+        <h1 class="title">
+            <a href="/">Disembrangling Programming</a>
+        </h1>
+        <h2 class="subtitle">
+            <a href="/about" title="About Paul Craciunoiu">The simple life of a web developer &mdash; by Paul Craciunoiu<span> (About)</span></a>
+        </h2>
+    </div>
+    <div id="content" role="main">    
+    <div id="post">
+<h1>CS107 hw2</h1>
+
+<p>Homework 2</p>
+
+<p>page 44. 1) Counting from 0 to 999,999 yields 1,000,000 numbers.</p>
+
+<p>Those which contain the digit 5 occur every 5th number: 0, 5, 10&#8230; Hence: <span class='maruku-inline'><img class='maruku-png' src='/images/latex/4582f1ae0d54e29324502330dba9c886.png' alt='$\frac{1,000,000}{5} = 200,000$' style='vertical-align: -0.777777777777778ex;height: 2.77777777777778ex;' /></span> 6 digit numbers contain the digit 5.</p>
+
+<p>3) Yes.</p>
+
+<p>To decide this, we need to find the total number of possible initials. There are 26 letters in the English alphabet, hence, the number of possible initials (<span class='maruku-inline'><img class='maruku-png' src='/images/latex/fba01e94f33c55af5e1ca9ef426e732b.png' alt='$n$' style='vertical-align: -0.0ex;height: 1.0ex;' /></span>) is: <span class='maruku-inline'><img class='maruku-png' src='/images/latex/72180eed49a3bc13a146ccf9bb0b8acc.png' alt='$n = 26^3 = 17,576$' style='vertical-align: -0.444444444444444ex;height: 2.22222222222222ex;' /></span></p>
+
+<p>Since there are only 17,576 possible sets of 3 initials, and 20,000 people live in the town, there must be at least two people with the same initials.</p>
+
+<p>page 45.</p>
+
+<p>18) The problem is asking for:</p>
+
+<p>The count of different numbers of 4 digits, with no repeating digits. This is equal to:</p>
+
+<p><span class='maruku-inline'><img class='maruku-png' src='/images/latex/48af06bbaea5ab536f77542aa1eb6d6d.png' alt='$_{10} P_{4} = \frac{10!}{6!}  =  5040$' style='vertical-align: -0.777777777777778ex;height: 2.66666666666667ex;' /></span>. Of those:</p>
+
+<p>a) which do <strong>not</strong> start with a 0. This is equal to: <span class='maruku-inline'><img class='maruku-png' src='/images/latex/93f41799e3d54257d5c5b2aaf42b5fcb.png' alt='$_{10} P_{4} - _{10} P_{3}= 5040 - 720 = 4320$' style='vertical-align: -0.444444444444444ex;height: 2.0ex;' /></span></p>
+
+<p>b) how many do not start with 01. This is equal to: <span class='maruku-inline'><img class='maruku-png' src='/images/latex/438c6ca64a6168e6da278ea0f7a74ab5.png' alt='$_{10} P_{4} - _{10} P_{2} = 5040 - 90 = 4950$' style='vertical-align: -0.444444444444444ex;height: 2.0ex;' /></span></p>
+
+<p>page 52.</p>
+
+<p>16) The probability that a boy is sitting on a given chair (does not matter which one) is equal to:</p>
+
+<p><span class='maruku-inline'><img class='maruku-png' src='/images/latex/dc4f0a50f9a7fc314fcfc71ab94cfa17.png' alt='$\frac{boys}{chairs} = \frac{12}{20} = \frac{3}{5}$' style='vertical-align: -0.777777777777778ex;height: 2.77777777777778ex;' /></span></p>
+
+<p>Where boys = number of boys, chairs = total number of chairs Note that this solution assumes the 20 individuals are all occupying chairs at the same time and thus the events of occupying a chair are mutually exclusive.</p>
+
+<p>page 82.</p>
+
+<p>2) We call event <span class='maruku-inline'><img class='maruku-png' src='/images/latex/4ab6c518f28e823de46bb7f7bc3d139a.png' alt='$E_1$' style='vertical-align: -0.444444444444444ex;height: 2.0ex;' /></span> = soldier has antigen A, and event <span class='maruku-inline'><img class='maruku-png' src='/images/latex/ec04f6475178172fa5b878976f39ddfa.png' alt='$E_2$' style='vertical-align: -0.333333333333333ex;height: 1.88888888888889ex;' /></span> = soldier has blood type A. Then: <span class='maruku-inline'><img class='maruku-png' src='/images/latex/4b2ffe0aa61ff90e6fa7f9a603638732.png' alt='$P(E_2 | E_1) =\frac{P(E_1 E_2)}{P(E_1)} = \frac{0.04}{0.04+0.41} = 0.0(8)$' style='vertical-align: -1.11111111111111ex;height: 3.33333333333333ex;' /></span></p>
+
+<p>page 87.</p>
+
+<p>1) We call event <span class='maruku-inline'><img class='maruku-png' src='/images/latex/4ab6c518f28e823de46bb7f7bc3d139a.png' alt='$E_1$' style='vertical-align: -0.444444444444444ex;height: 2.0ex;' /></span> = Robert commits perjury, and event <span class='maruku-inline'><img class='maruku-png' src='/images/latex/ec04f6475178172fa5b878976f39ddfa.png' alt='$E_2$' style='vertical-align: -0.333333333333333ex;height: 1.88888888888889ex;' /></span> = Susan has committed a crime. We want to calculate <span class='maruku-inline'><img class='maruku-png' src='/images/latex/04708a7565cf27f9699f4fb889fdc158.png' alt='$P(E_1 | E_2)$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /></span>: <span class='maruku-inline'><img class='maruku-png' src='/images/latex/dcd8f0a21a03b775ed1f33815d06d13d.png' alt='$P(E_1 | E_2) = \frac{P(E_1 \cdot E_2}{P(E_2)} = \frac{0.25 \cdot 0.65}{0.65} = 0.25$' style='vertical-align: -1.11111111111111ex;height: 3.33333333333333ex;' /></span></p>
+
+<p>4) 8 defective, 12 nondefective items are inspected without replacement. We call events <span class='maruku-inline'><img class='maruku-png' src='/images/latex/8ef0fecd4f942260b267159856e51a5d.png' alt='$A_i$' style='vertical-align: -0.333333333333333ex;height: 1.88888888888889ex;' /></span> = the i-th item inspected is defective, and events <span class='maruku-inline'><img class='maruku-png' src='/images/latex/50d6b65c3c55e4032541e4e4e8320adc.png' alt='$B_i$' style='vertical-align: -0.333333333333333ex;height: 1.88888888888889ex;' /></span> = the i-th item inspected is nondefective.</p>
+
+<p>a) event <span class='maruku-inline'><img class='maruku-png' src='/images/latex/4ab6c518f28e823de46bb7f7bc3d139a.png' alt='$E_1$' style='vertical-align: -0.444444444444444ex;height: 2.0ex;' /></span> = first four items inspected are defective. <span class='maruku-inline'><img class='maruku-png' src='/images/latex/c91acc33d6afce6e11b2235805224b9a.png' alt='$P(E_1) = P(A_1 A_2 A_3  A_4) = P(A_1) \cdot P(A_2|A_1) \cdot P(A_3|A_1 A_2) \cdot P(A_4 | A_1 A_2 A_3)$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /></span></p>
+
+<p>To calculate the above probability, it would help us to calculate <span class='maruku-inline'><img class='maruku-png' src='/images/latex/dcbd807fd7a32545dc7f7a0be8fafb7f.png' alt='$P(A_1 A_2), P(A_1 A_2 A_3)$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /></span>. We already know <span class='maruku-inline'><img class='maruku-png' src='/images/latex/df0d3583eabada22d7e3459eea1c9bc4.png' alt='$P(A_1)$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /></span>, so we can use that to calculate the others. Hence: <span class='maruku-inline'><img class='maruku-png' src='/images/latex/9676fac07498872f452fe0b595a02569.png' alt='$P(A_1 A_2) = P(A_1) \cdot P(A_2|A_1) = \frac{8}{20} \cdot \frac{7}{19} \approx 0.147$' style='vertical-align: -0.888888888888889ex;height: 2.77777777777778ex;' /></span> <span class='maruku-inline'><img class='maruku-png' src='/images/latex/f3c510c8cd7fcd00336f438c5baea8dd.png' alt='$P(A_1 A_2 A_3) = P(A_1) \cdot P(A_2 | A_1) \cdot P(A_3 | A_1 A_2) = \frac{8}{20} \cdot \frac{7}{19} \cdot \frac{6}{18} \approx 0.082$' style='vertical-align: -0.888888888888889ex;height: 2.77777777777778ex;' /></span></p>
+
+<p>The reasoning behind the result of <span class='maruku-inline'><img class='maruku-png' src='/images/latex/9eefc519674042bf22497168d8623f3f.png' alt='$P(A_i | A_1 .. A_{i-1})$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /></span> is this: &#8220;What is the probability of selecting a(nother) defective item, <strong>given</strong> that I have already selected <span class='maruku-inline'><img class='maruku-png' src='/images/latex/363e09da37bbbc290bd801c628b7a808.png' alt='$i-1$' style='vertical-align: -0.111111111111111ex;height: 1.66666666666667ex;' /></span> such items. Because of this dependency, we know the events that have to occur before this one, and what the numbers for defective and nondefective items are. Therefore: <span class='maruku-inline'><img class='maruku-png' src='/images/latex/5b9953ee8363d65501f9302f36c1687a.png' alt='$P(A_1 A_2 A_3 A_4) = P(A_1) \cdot P(A_2 | A_1) \cdot P(A_3 | A_1 A_2) \cdot P(A_4 | A_1 A_2 A_3)= \frac{8}{20} \cdot \frac{7}{19} \cdot \frac{6}{18} \cdot \frac{5}{17} = \approx 0.0241$' style='vertical-align: -0.888888888888889ex;height: 5.44444444444444ex;' /></span> Therefore, <span class='maruku-inline'><img class='maruku-png' src='/images/latex/d9cf513004e61bed346e6624495c1f85.png' alt='$P(E_1) \approx 0.0241$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /></span></p>
+
+<p>b) Event <span class='maruku-inline'><img class='maruku-png' src='/images/latex/ec04f6475178172fa5b878976f39ddfa.png' alt='$E_2$' style='vertical-align: -0.333333333333333ex;height: 1.88888888888889ex;' /></span> = from the first three items, at least two are defective. The possible results can be split into:</p>
+
+<ul>
+<li><span class='maruku-inline'><img class='maruku-png' src='/images/latex/31f654c8b4f4845b3d42f7145efb8614.png' alt='$E_{21}$' style='vertical-align: -0.444444444444444ex;height: 2.0ex;' /></span> = items 1 and 2 are defective <span class='maruku-inline'><img class='maruku-png' src='/images/latex/9676fac07498872f452fe0b595a02569.png' alt='$P(A_1 A_2) = P(A_1) \cdot P(A_2|A_1) = \frac{8}{20} \cdot \frac{7}{19} \approx 0.147$' style='vertical-align: -0.888888888888889ex;height: 2.77777777777778ex;' /></span></li>
+
+<li><span class='maruku-inline'><img class='maruku-png' src='/images/latex/660847e3c6eedd9dd9b9e2dcbe677ecc.png' alt='$E_{22}$' style='vertical-align: -0.333333333333333ex;height: 1.88888888888889ex;' /></span> = items 1 and 3 are defective, and item 2 is not (or we would have first case) <span class='maruku-inline'><img class='maruku-png' src='/images/latex/371d3b38d9bdc04eb000460f912d1da9.png' alt='$P(A_1 B_2 A_3) = P(A_1) \cdot P(B_2|A_1) \cdot P(A_3 | A_1 B_2) = \frac{8}{20} \cdot \frac{12}{19} \cdot \frac{7}{18} \approx 0.0982$' style='vertical-align: -0.888888888888889ex;height: 2.77777777777778ex;' /></span></li>
+
+<li><span class='maruku-inline'><img class='maruku-png' src='/images/latex/631473875bf467f528772de61fb258ad.png' alt='$E_{23}$' style='vertical-align: -0.333333333333333ex;height: 1.88888888888889ex;' /></span> = items 2 and 3 are defective, and item 1 is not (or we would have first case) <span class='maruku-inline'><img class='maruku-png' src='/images/latex/e5f853ca5a8297a298c60742c646b7ec.png' alt='$P(B_1 A_2 A_3) = P(B_1) \cdot P(A_2|B_1) \cdot P(A_3|B_1 A_2) = \frac{12}{20} \cdot \frac{8}{19} \cdot \frac{7}{18} \approx 0.0982$' style='vertical-align: -0.888888888888889ex;height: 2.77777777777778ex;' /></span></li>
+</ul>
+
+<p>Therefore, <span class='maruku-inline'><img class='maruku-png' src='/images/latex/57b445169b084c96e779066846b25ab0.png' alt='$P(E_2) \approx 0.3435$' style='vertical-align: -0.555555555555556ex;height: 2.33333333333333ex;' /></span></p>
+
+<p>7) It does not matter. Some simple calculations for the case of 3 instead of 200 guests show that the probability of drawing the &#8220;you lose&#8221; paper is the same, no matter which order you choose.</p>
+
+<p>For example, assume there are 3 guests, and 3 papers, one of which says &#8220;you lose.&#8221; The probability of drawing the &#8220;you lose&#8221; paper 1st, 2nd, or 3rd are:</p>
+
+<p><span class='maruku-inline'><img class='maruku-png' src='/images/latex/5117b7adf0038a37458b4f62f45014aa.png' alt='$P(E_1) = \frac{1}{3}$' style='vertical-align: -0.777777777777778ex;height: 2.66666666666667ex;' /></span> <span class='maruku-inline'><img class='maruku-png' src='/images/latex/5e437f8f09bc63dfbad395a1631312df.png' alt='$P(E_2) = \frac{2}{3} \cdot \frac{1}{2}$' style='vertical-align: -0.777777777777778ex;height: 2.66666666666667ex;' /></span>, which is the probability of first guest drawing blank and me drawing &#8220;you lose.&#8221; <span class='maruku-inline'><img class='maruku-png' src='/images/latex/c513351d7834d26a1d0c3cb3907dc294.png' alt='$P(E_1) = \frac{2}{3} \cdot \frac{1}{2} \cdot 1$' style='vertical-align: -0.777777777777778ex;height: 2.66666666666667ex;' /></span>, which is the probability of first two guests drawing blank and me drawing &#8220;you lose.&#8221; (since that is all that is left, we have a certainty)</p>
+
+<p>For the case of 200, clearly, drawing 1st yields a probability of losing of <span class='maruku-inline'><img class='maruku-png' src='/images/latex/83133d19342e36bfddce4c0500861cde.png' alt='$\frac{1}{200}$' style='vertical-align: -0.777777777777778ex;height: 2.66666666666667ex;' /></span>. Drawing 2nd: <span class='maruku-inline'><img class='maruku-png' src='/images/latex/6dfb6ff0724ede0fc5b18926b229bc4f.png' alt='$P(E_2) = \frac{199}{200} \cdot \frac{1}{199} = \frac{1}{200}$' style='vertical-align: -0.888888888888889ex;height: 2.77777777777778ex;' /></span>. By the following formula, we can show that the probability is the same for drawing &#8220;you lose&#8221; regardless of which order we choose:</p>
+
+<p><span class='maruku-inline'><img class='maruku-png' src='/images/latex/7a99aa7cd0c623e41f3199dc05457cdd.png' alt='$P(E_i) = (\prod_{j=1}^{i-1} \frac{200-j}{200-j+1}) \cdot \frac{1}{200-i+1}$' style='vertical-align: -1.11111111111111ex;height: 3.11111111111111ex;' /></span>. Expanding this product reduces the formula to: <span class='maruku-inline'><img class='maruku-png' src='/images/latex/18bff106acead68f414106c5b600222a.png' alt='$P(E_i) = \frac{1}{200}$' style='vertical-align: -0.777777777777778ex;height: 2.66666666666667ex;' /></span></p>
+
+<p>page 97.</p>
+
+<p>8) Let <span class='maruku-inline'><img class='maruku-png' src='/images/latex/c2b7650c81b26c9de16256c132ee1a99.png' alt='$G_i$' style='vertical-align: -0.333333333333333ex;height: 1.88888888888889ex;' /></span> be the probability of hitting the target with gun i (i goes from 1 to 6). The probability of hitting a target by selecting a gun at random is: <span class='maruku-inline'><img class='maruku-png' src='/images/latex/f5d7554699eb850e1495fd7b2787c400.png' alt='$P(E_1) = \sum_{i=1}^6 (\frac{1}{6} \cdot P(G_i)) = \frac{1}{6} \cdot (0.6 + 0.5 + 0.7 + 0.9 + 0.7 + 0.8) = 0.7$' style='vertical-align: -0.777777777777778ex;height: 2.66666666666667ex;' /></span></p>
+
+<p>11) Yes, the chances of getting a gold coin are equal for all participants. Intuitively, performing this experiment enough times yields equal probability for any person to receive a gold coin. More theoretically, we have shown in excercise 7 from page 87 (see above), that the order of drawing does not matter. This excercise is the same, except instead of drawing from 200 papers out of which 1 is distinct, we draw from 5 coins out of which 3 are distinct. Hence, the probability of each participant to get a gold coin is equal to 3/5.</p>
+
+<p>page 106.</p>
+
+<p>3) We will look at the probability that the suspect is guilty, given the new evidence that the criminal is (likely) left handed.</p>
+
+<p><span class='maruku-inline'><img class='maruku-png' src='/images/latex/5998a023b6a404a93b284e6782ea8518.png' alt='$P(G|L) = \frac{P(L|G) \cdot P(G)}{P(L|G) \cdot P(G) + P(L|I) \cdot P(I)}$' style='vertical-align: -1.11111111111111ex;height: 3.33333333333333ex;' /></span>, where L = criminal is left handed, G = suspect is guilty, I = suspect is innocent. Therefore:</p>
+
+<p><span class='maruku-inline'><img class='maruku-png' src='/images/latex/214f4e1e6d5d70c0c6e3dc8dc893ecc4.png' alt='$P(G|L) = \frac{0.23 \cdot 0.65}{0.23 \cdot 0.65 + 0.85 \cdot 0.35} = \frac{0.1495}{0.447} = 0.33$' style='vertical-align: -0.888888888888889ex;height: 2.77777777777778ex;' /></span></p>
+
+<p>As we suspect, since only 23% of people are left-handed and a witness claims criminal is likely (85%) left handed, our suspect is less likely to be guilty.</p>
+
+<p>7) We look at the probability that a person has the cancer, given a positive test result.</p>
+
+<p><span class='maruku-inline'><img class='maruku-png' src='/images/latex/b3e6f4a804484409659b1afb6ace9862.png' alt='$P(C|T) = \frac{P(T|C) \cdot P(C)}{P(T|C) \cdot P(C) + P(T|H) \cdot P(H)}$' style='vertical-align: -1.11111111111111ex;height: 3.33333333333333ex;' /></span>, where C = person has the cancer, T = test result is positive, H = the person is healthy (does not suffer from the cancer). Therefore:</p>
+
+<p><span class='maruku-inline'><img class='maruku-png' src='/images/latex/5298e9820cae792347ebc2350ef3c991.png' alt='$P(C|T) = \frac{0.92 \cdot 0.0002}{0.92 \cdot 0.0002 + 0.002 \cdot 0.9998} = \frac{0.000184}{0.0021836} = 0.0843$' style='vertical-align: -0.888888888888889ex;height: 2.77777777777778ex;' /></span></p>
+
+<p>9) We look at the probability that the collector buys a piece that she thinks is original, but she is mistaken; in other terms, the probability that the piece is not original, given that she thinks it is.</p>
+
+<p><span class='maruku-inline'><img class='maruku-png' src='/images/latex/e3a2454db9d42aaa244d9c7a22b0e0e9.png' alt='$P(F|T) = \frac{P(T|F) \cdot P(F)}{P(T|F) \cdot P(F) + P(T|O) \cdot P(O)}$' style='vertical-align: -1.11111111111111ex;height: 3.33333333333333ex;' /></span>, where O = the painting is an original, F = the painting is a fake, T = the collector thinks the painting is original</p>
+
+<p><span class='maruku-inline'><img class='maruku-png' src='/images/latex/cc69dad23ef7d0655ada0bfc219f5fbd.png' alt='$P(F|T) = \frac{0.15 \cdot 0.25}{0.15 \cdot 0.25 + 0.85 \cdot 0.75} = \frac{0.0375}{0.675} = 0.0(5)$' style='vertical-align: -0.888888888888889ex;height: 2.77777777777778ex;' /></span></p>
+
+<p>page 119.</p>
+
+<p>8) No, Cardano was not correct. Since the event A had probability <span class='maruku-inline'><img class='maruku-png' src='/images/latex/80a8d999651916de94bad8acf4752223.png' alt='$P(A) = \frac{3}{4}$' style='vertical-align: -0.777777777777778ex;height: 2.66666666666667ex;' /></span>, the occurence of that event in two <em>consecutive independent</em> experiments was <span class='maruku-inline'><img class='maruku-png' src='/images/latex/f4ed5d43d6fa0866de0defcdc12bbf0a.png' alt='$P(A A) = P(A) \cdot P(A) = \frac{3}{4} \cdot \frac{3}{4} = \frac{9}{16}$' style='vertical-align: -0.888888888888889ex;height: 2.77777777777778ex;' /></span>. So, the odds in favor were 9 to 7.</p>
+</div>
+
+<div id="related">
+  <h2>Related Posts</h2>
+  <ul>
+    
+      <li><a href="/2009/10/cs107-hw3">CS107 hw3</a> &mdash; 31 Oct 2009</li>
+    
+      <li><a href="/2010/03/quoteden-moving-to-kohana-3">Quoteden: Moving to Kohana 3</a> &mdash; 12 Mar 2010</li>
+    
+      <li><a href="/2009/10/ed60-labaree">ED60 - David Labaree - Public goods, private goods, the American struggle over educational goals</a> &mdash; 05 Oct 2009</li>
+    
+  </ul>
+</div>
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  (function() {
+   var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+   dsq.src = 'http://blogpaulcraciunoiu.disqus.com/embed.js';
+   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript=blogpaulcraciunoiu">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+<script type="text/javascript">
+//<![CDATA[
+(function() {
+    var links = document.getElementsByTagName('a');
+    var query = '?';
+    for(var i = 0; i < links.length; i++) {
+    if(links[i].href.indexOf('#disqus_thread') >= 0) {
+        query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
+    }
+    }
+    document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/blogpaulcraciunoiu/get_num_replies.js' + query + '"></' + 'script>');
+})();
+//]]>
+</script>
+    </div>
+
+    <div id="footer" role="contentinfo">
+        <div class="about">
+        <p>I work as a web developer for <a href="http://mozilla.com">Mozilla</a>, with main focus on <a href="http://www.djangoproject.com/">Django</a>, Python, and PHP. Occasionally, I write tutorials or post other information I find interesting.</p>
+        <p>I enjoy doing freelance work for other websites, mostly non-profits. If you're interested in my services, contact me through one of the links below.</p>
+        </p>
+        </div>
+        <div class="contact">
+            <a href="http://twitter.com/embrangler/">Follow me</a> -- 
+            <a href="http://craciunoiu.net/contact/paul">Email me</a> -- 
+            <a href="http://github.com/pcraciunoiu/">My GitHub</a>
+        </div>
+        <div class="quote">
+        <p>
+            Success is a journey, not a destination. The doing is often more important than the outcome. &mdash; <a href="http://quoteden.net/author/id/337">Arthur Robert Ashe, Jr</a>
+        </p>
+        <p>&copy; Paul Craciunoiu. Some rights reserved. Brought to you by <a href="http://wiki.github.com/mojombo/jekyll/">Jekyll</a></p>
+        </div>
+    </div>
+</div><!-- site -->
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-15382775-1");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+<!-- /Google Analytics -->
+</body>
+</html>

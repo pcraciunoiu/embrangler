@@ -191,7 +191,7 @@
         <span class='nv'>$response</span> <span class='o'>=</span> <span class='nv'>$fastask</span><span class='o'>-&gt;</span><span class='na'>request</span><span class='p'>;</span>
         <span class='nv'>$this</span><span class='o'>-&gt;</span><span class='na'>assertSame</span><span class='p'>(</span><span class='nv'>$response</span><span class='o'>-&gt;</span><span class='na'>headers</span><span class='p'>[</span><span class='s1'>&#39;Content-Type&#39;</span><span class='p'>],</span>
                           <span class='s1'>&#39;application/json&#39;</span> <span class='p'>);</span>
-        <span class='nv'>$this</span><span class='o'>-&gt;</span><span class='na'>assertSame</span><span class='p'>(</span><span class='nv'>$response</span><span class='o'>-&gt;</span><span class='na'>status</span><span class='p'>,</span> <span class='m'>403</span><span class='p'>);</span>
+        <span class='nv'>$this</span><span class='o'>-&gt;</span><span class='na'>assertSame</span><span class='p'>(</span><span class='nv'>$response</span><span class='o'>-&gt;</span><span class='na'>status</span><span class='p'>,</span> <span class='mi'>403</span><span class='p'>);</span>
     <span class='p'>}</span>
 
     <span class='c1'>// ... more tests here ...</span>
@@ -257,7 +257,7 @@
     <span class='p'>{</span>
         <span class='c1'>// Reset logins and log out the user</span>
         <span class='nv'>$test_user</span>         <span class='o'>=</span> <span class='nx'>Auth</span><span class='o'>::</span><span class='na'>instance</span><span class='p'>()</span><span class='o'>-&gt;</span><span class='na'>get_user</span><span class='p'>();</span>
-        <span class='nv'>$test_user</span><span class='o'>-&gt;</span><span class='na'>logins</span> <span class='o'>=</span> <span class='m'>1</span><span class='p'>;</span>
+        <span class='nv'>$test_user</span><span class='o'>-&gt;</span><span class='na'>logins</span> <span class='o'>=</span> <span class='mi'>1</span><span class='p'>;</span>
         <span class='nv'>$test_user</span><span class='o'>-&gt;</span><span class='na'>save</span><span class='p'>();</span>
         <span class='nx'>Auth</span><span class='o'>::</span><span class='na'>instance</span><span class='p'>()</span><span class='o'>-&gt;</span><span class='na'>logout</span><span class='p'>();</span>
 
@@ -300,9 +300,9 @@
 <span class='cm'>                status code to expect</span>
 <span class='cm'>        */</span>
         <span class='k'>return</span> <span class='k'>array</span><span class='p'>(</span>
-            <span class='k'>array</span><span class='p'>(</span><span class='s1'>&#39;s&#39;</span> <span class='o'>=&gt;</span> <span class='s1'>&#39;asdfgh&#39;</span><span class='p'>,</span> <span class='m'>404</span><span class='p'>),</span>
-            <span class='k'>array</span><span class='p'>(</span><span class='s1'>&#39;s&#39;</span> <span class='o'>=&gt;</span> <span class='s1'>&#39;&#39;</span><span class='p'>,</span> <span class='m'>404</span><span class='p'>),</span>
-            <span class='k'>array</span><span class='p'>(</span><span class='s1'>&#39;s&#39;</span> <span class='o'>=&gt;</span> <span class='s1'>&#39;nulla&#39;</span><span class='p'>,</span> <span class='m'>200</span><span class='p'>),</span>  <span class='c1'>// One of those lorem-ipsum results</span>
+            <span class='k'>array</span><span class='p'>(</span><span class='s1'>&#39;s&#39;</span> <span class='o'>=&gt;</span> <span class='s1'>&#39;asdfgh&#39;</span><span class='p'>,</span> <span class='mi'>404</span><span class='p'>),</span>
+            <span class='k'>array</span><span class='p'>(</span><span class='s1'>&#39;s&#39;</span> <span class='o'>=&gt;</span> <span class='s1'>&#39;&#39;</span><span class='p'>,</span> <span class='mi'>404</span><span class='p'>),</span>
+            <span class='k'>array</span><span class='p'>(</span><span class='s1'>&#39;s&#39;</span> <span class='o'>=&gt;</span> <span class='s1'>&#39;nulla&#39;</span><span class='p'>,</span> <span class='mi'>200</span><span class='p'>),</span>  <span class='c1'>// One of those lorem-ipsum results</span>
         <span class='p'>);</span>
     <span class='p'>}</span>
 
@@ -313,7 +313,7 @@
     <span class='k'>function</span> <span class='nf'>testSearch</span><span class='p'>(</span><span class='nv'>$search</span><span class='p'>,</span> <span class='nv'>$status</span><span class='p'>)</span>
     <span class='p'>{</span>
         <span class='nv'>$_GET</span> <span class='o'>=</span> <span class='k'>array</span><span class='p'>(</span>
-            <span class='s1'>&#39;ep&#39;</span> <span class='o'>=&gt;</span> <span class='m'>1</span><span class='p'>,</span>
+            <span class='s1'>&#39;ep&#39;</span> <span class='o'>=&gt;</span> <span class='mi'>1</span><span class='p'>,</span>
             <span class='s1'>&#39;s&#39;</span>  <span class='o'>=&gt;</span> <span class='nv'>$search</span><span class='p'>,</span>
         <span class='p'>);</span>
         <span class='nv'>$fastask</span> <span class='o'>=</span> <span class='k'>new</span> <span class='nx'>Controller_Fastask</span><span class='p'>(</span><span class='k'>new</span> <span class='nx'>Request</span><span class='p'>(</span><span class='s1'>&#39;in/t&#39;</span><span class='p'>));</span>
@@ -327,7 +327,7 @@
 
         <span class='nv'>$json</span> <span class='o'>=</span> <span class='nx'>json_decode</span><span class='p'>(</span><span class='nv'>$response</span><span class='o'>-&gt;</span><span class='na'>response</span><span class='p'>);</span>
         <span class='nv'>$count</span> <span class='o'>=</span> <span class='nb'>count</span><span class='p'>(</span><span class='nv'>$json</span><span class='o'>-&gt;</span><span class='na'>tasks</span><span class='p'>);</span>
-        <span class='k'>if</span> <span class='p'>(</span><span class='nv'>$count</span> <span class='o'>&gt;</span> <span class='m'>0</span><span class='p'>)</span> <span class='p'>{</span>
+        <span class='k'>if</span> <span class='p'>(</span><span class='nv'>$count</span> <span class='o'>&gt;</span> <span class='mi'>0</span><span class='p'>)</span> <span class='p'>{</span>
             <span class='k'>foreach</span> <span class='p'>(</span><span class='nv'>$json</span><span class='o'>-&gt;</span><span class='na'>tasks</span> <span class='k'>as</span> <span class='nv'>$task</span><span class='p'>)</span> <span class='p'>{</span>
                 <span class='nv'>$follower_ids</span> <span class='o'>=</span> <span class='k'>array</span><span class='p'>();</span>
                 <span class='k'>foreach</span><span class='p'>(</span><span class='nv'>$task</span><span class='o'>-&gt;</span><span class='na'>followers</span> <span class='k'>as</span> <span class='nv'>$follower</span><span class='p'>)</span> <span class='p'>{</span>
