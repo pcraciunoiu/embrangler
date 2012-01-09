@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Caching Django views with nginx and memcache</title>
+    <meta name="author" content="Paul Craciunoiu" />
+    <link href="http://feeds.feedburner.com/embrangler" rel="alternate" title="Disembrangling Programming" type="application/atom+xml" />
+    
+    <link type="image/x-icon" href="/favicon.ico" rel="shortcut icon">
+
+    <!-- syntax highlighting CSS -->
+    <link rel="stylesheet" href="/css/syntax.css" type="text/css" />
+
+    <!-- Homepage CSS -->
+    <link rel="stylesheet" href="/css/main.css" type="text/css" media="screen, projection" />
+
+    
+      <!-- Tag feed -->
+      
+        <link href="/tag/django/atom.xml"
+	      rel="alternate"
+              type="application/atom+xml"
+              title="Disembrangling Programming (tag: django)" />
+      
+        <link href="/tag/performance/atom.xml"
+	      rel="alternate"
+              type="application/atom+xml"
+              title="Disembrangling Programming (tag: performance)" />
+      
+        <link href="/tag/nginx/atom.xml"
+	      rel="alternate"
+              type="application/atom+xml"
+              title="Disembrangling Programming (tag: nginx)" />
+      
+        <link href="/tag/memcache/atom.xml"
+	      rel="alternate"
+              type="application/atom+xml"
+              title="Disembrangling Programming (tag: memcache)" />
+      
+        <link href="/tag/scaling/atom.xml"
+	      rel="alternate"
+              type="application/atom+xml"
+              title="Disembrangling Programming (tag: scaling)" />
+      
+    
+</head>
+<body>
+
+<div class="site">
+
+    <div id="header" role="banner">
+        <h1 class="title">
+            <a href="/">Disembrangling Programming</a>
+        </h1>
+        <h2 class="subtitle">
+            <a href="/about" title="About Paul Craciunoiu">The simple life of a web developer &mdash; by Paul Craciunoiu<span> (About)</span></a>
+            <a class="the-list" href="/list">(The List)</a>
+        </h2>
+    </div>
+    <!--<div id="promo">
+        <a href="http://sowink.com/jobs">Want to join a very exciting startup? SoWink is hiring! Check out our job descriptions &raquo;</a>
+    </div>-->
+    <div id="content" role="main">    
+    <div id="post">
+  <h1>Caching Django views with nginx and memcache</h1>
+  <div class="meta">
+    
+    <div class="tags">Tags:
+      
+        <a href="/tag/django/">django</a>,
+        
+      
+        <a href="/tag/performance/">performance</a>,
+        
+      
+        <a href="/tag/nginx/">nginx</a>,
+        
+      
+        <a href="/tag/memcache/">memcache</a>,
+        
+      
+        <a href="/tag/scaling/">scaling</a>
+      
+    </div>
+    
+    <time>08 Jan 2012</time>
+  </div>
+  <h2 id='table_of_contents'>Table of contents</h2>
+
+<ul>
+<li>
+<p><a href='#summary'>Summary</a></p>
+</li>
+
+<li>
+<p><a href='#motivation'>Motivation</a></p>
+</li>
+
+<li>
+<p><a href='#pros_and_cons'>Pros and cons</a></p>
+</li>
+
+<li>
+<p><a href='#results'>Results</a></p>
+</li>
+
+<li>
+<p><a href='#alternatives'>Alternatives</a></p>
+
+<ul>
+<li><a href='#research'>Research</a></li>
+</ul>
+</li>
+
+<li>
+<p><a href='#approach'>Approach</a></p>
+</li>
+
+<li>
+<p><a href='#conclusion'>Conclusion</a></p>
+</li>
+</ul>
+
+<h2 id='summary'>Summary</h2>
+
+<p>I wanted a way to increase performance for some of our static pages. One way to do this is to cache Django pages somewhere, and serve that content from earlier on the request pipe.</p>
+
+<p>A simple approach is having <a href='http://nginx.org/en/'>nginx</a> grab the page directly from memcache, without touching Django at all. Enter <a href='https://github.com/pcraciunoiu/django-nginx-memcache'>nginx_memcache</a>.</p>
+
+<h2 id='motivation'>Motivation</h2>
+
+<p>Performance increase. Avoiding database queries when they&#8217;re unnecessary. Make your static pages load faster.</p>
+
+<h2 id='pros_and_cons'>Pros and cons</h2>
+
+<p>What can you do or cannot do with this approach?</p>
+
+<p><em>Pros:</em></p>
+
+<ul>
+<li>Easy to set which views are cached from Django</li>
+
+<li>Flag for turning on and off</li>
+
+<li>Page versioning, so you can cache multiple contents for the same page, based on your own criteria</li>
+
+<li>User will see the same page version based on a cookie</li>
+
+<li>Significant speedup versus loading with Django (more below).</li>
+</ul>
+
+<p><em>Cons:</em></p>
+
+<ul>
+<li>Can only cache entire page at a time (though more research may show otherwise)</li>
+
+<li>No auto-invalidate from Django, until user visits some non-cached page (though possible to clear this cache when updating your codebase with a commit hook).</li>
+
+<li>Can no longer embed forms on that page unless CSRF is obtained through JS.</li>
+</ul>
+
+<h2 id='results'>Results</h2>
+
+<p>Our tests showed a <em>10x increase</em> in kbps transferred with ApacheBench tests against our landing page (run with <code>ab -k -c 20 -n 2000</code>, before and after).</p>
+
+<p>Deployment was very straightforward. You can <a href='https://github.com/pcraciunoiu/django-nginx-memcache'>read the docs</a> for details.</p>
+
+<h2 id='alternatives'>Alternatives</h2>
+
+<p><a href='https://www.varnish-cache.org/about'>Varnish</a> can also be placed in front of or behind nginx, and there are several articles showing how to do this.</p>
+
+<p>Here&#8217;s my 2 cents on django + varnish + nginx VS django + memcache + nginx:</p>
+
+<ul>
+<li>(+1 for memcache) Easier to configure nginx with memcache than Varnish. Configuring Varnish implied learning a whole new language (VCL), and adding one more piece of software to our technology stack.</li>
+
+<li>(+1 for varnish) <a href='http://codysoyland.com/2010/jan/17/evaluating-django-caching-options/'>Some perf tests</a> out there say Varnish can be quite a bit faster. However, the difference is not orders of magnitude, so I was not compelled.</li>
+
+<li>(+1 for memcache) Django and Memcache are very well integrated. By contrast, python-varnish and django-varnish are not actively developed and have several known issues. Didn&#8217;t seem a good idea for production.</li>
+</ul>
+
+<h3 id='research_links'>Research links</h3>
+
+<ul>
+<li><a href='https://github.com/pcraciunoiu/django-nginx-memcache'>django-nginx-memcache</a></li>
+
+<li><a href='https://github.com/shaunsephton/djanginxed'>djangonginxed</a>, an alternative to my project.</li>
+
+<li><a href='http://weichhold.com/2008/09/12/django-nginx-memcached-the-dynamic-trio/'>django + nginx + memcache</a> middleware example.</li>
+
+<li><a href='http://codysoyland.com/2010/jan/17/evaluating-django-caching-options/'>Evaluating Django caching options</a></li>
+
+<li><a href='http://ghughes.com/blog/2011/11/11/using-varnish-with-django-for-high-performance-caching/'>Using varnish with Django for high performance caching</a></li>
+
+<li><a href='http://www.quora.com/What-is-an-ideal-architecure-that-includes-nginx-and-Varnish?q=varnish+nginx'>What is an ideal architecture that includes nginx and Varnish?</a></li>
+
+<li><a href='http://www.linuxpinguin.de/2011/09/nva-setup-nginx-varnish-apache/'>Example set up for nginx in front of varnish</a></li>
+
+<li><a href='http://serverfault.com/questions/111678/how-to-setup-nginx-with-varnish'>Example set up for varnish in front of nginx</a></li>
+</ul>
+</div>
+
+<div id="related">
+  <h2>Related Posts</h2>
+  <ul>
+    
+      <li><a href="/2010/03/quoteden-moving-to-kohana-3">Quoteden: Moving to Kohana 3</a> &mdash; 12 Mar 2010</li>
+    
+      <li><a href="/2010/12/migrating-large-amounts-of-data">SUMO and migrating large amounts of data</a> &mdash; 03 Dec 2010</li>
+    
+      <li><a href="/2011/03/datastore-an-abstraction-layer">DataStore - an abstraction layer for storing data and processing requests</a> &mdash; 01 Mar 2011</li>
+    
+  </ul>
+</div>
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  (function() {
+   var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+   dsq.src = 'http://blogpaulcraciunoiu.disqus.com/embed.js';
+   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript=blogpaulcraciunoiu">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+<script type="text/javascript">
+//<![CDATA[
+(function() {
+    var links = document.getElementsByTagName('a');
+    var query = '?';
+    for(var i = 0; i < links.length; i++) {
+    if(links[i].href.indexOf('#disqus_thread') >= 0) {
+        query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
+    }
+    }
+    document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/blogpaulcraciunoiu/get_num_replies.js' + query + '"></' + 'script>');
+})();
+//]]>
+</script>
+
+    </div>
+
+    <div id="footer" role="contentinfo">
+        <div class="about">
+        <p>I am the Co-founder and CTO of <a href="http://sowink.com">SoWink Inc.</a>, a revolutionary social online network that helps you meet new people. Be sure to check out <a href="http://blog.sowink.com">our blog</a> for more about us.</p>
+        <p>Until April 2011, I worked as a web developer for <a href="http://mozilla.com">Mozilla</a>, with main focus on <a href="http://www.djangoproject.com/">Django</a>, Python, and PHP. Occasionally, I write tutorials or post other information I find interesting.</p>
+        <p>I enjoy doing freelance work for other websites, mostly non-profits. If you're interested in my services, contact me through one of the links below.</p>
+        </p>
+        </div>
+        <div class="contact">
+            <a href="http://twitter.com/embrangler/">Follow me</a> -- 
+            <a href="http://craciunoiu.net/contact/paul">Email me</a> -- 
+            <a href="http://github.com/pcraciunoiu/">My GitHub</a>
+        </div>
+        <div class="quote">
+        <p>
+            Success is a journey, not a destination. The doing is often more important than the outcome. &mdash; <a href="http://quoteden.net/author/id/337">Arthur Robert Ashe, Jr</a>
+        </p>
+        <p>&copy; Paul Craciunoiu. Some rights reserved. Brought to you by <a href="http://wiki.github.com/mojombo/jekyll/">Jekyll</a></p>
+        </div>
+    </div>
+</div><!-- site -->
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-15382775-1");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+<!-- /Google Analytics -->
+
+</body>
+</html>
