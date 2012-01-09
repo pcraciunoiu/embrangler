@@ -29,13 +29,23 @@
             <a class="the-list" href="/list">(The List)</a>
         </h2>
     </div>
-    <div id="promo">
-        <a href="http://blog.sowink.com/jobs">Want to join a very exciting startup? SoWink is hiring! Check out our job descriptions &raquo;</a>
-    </div>
+    <!--<div id="promo">
+        <a href="http://sowink.com/jobs">Want to join a very exciting startup? SoWink is hiring! Check out our job descriptions &raquo;</a>
+    </div>-->
     <div id="content" role="main">    
     <div id="home">
     
     <div class="post first">
+        <div class="post-meta">
+            <h2><a href="/2012/01/caching-django-views-with-nginx-and-memcache">Caching Django views with nginx and memcache</a></h2>
+            <span>08 Jan 2012</span>
+        </div>
+        <p>
+            Improve the performance of your static pages by serving them without hitting Django. <a class="more" href="/2012/01/caching-django-views-with-nginx-and-memcache" title="Read this post">Read it</a>
+        </p>
+    </div>
+    
+    <div class="post last">
         <div class="post-meta">
             <h2><a href="/2011/03/datastore-an-abstraction-layer">DataStore - an abstraction layer for storing data...</a></h2>
             <span>01 Mar 2011</span>
@@ -45,7 +55,7 @@
         </p>
     </div>
     
-    <div class="post last">
+    <div class="post first">
         <div class="post-meta">
             <h2><a href="/2011/01/python-scoping-understading-legb">Python scoping: understading LEGB</a></h2>
             <span>31 Jan 2011</span>
@@ -55,7 +65,7 @@
         </p>
     </div>
     
-    <div class="post first">
+    <div class="post last">
         <div class="post-meta">
             <h2><a href="/2010/12/belated-birthday-resolutions">Belated birthday resolutions</a></h2>
             <span>11 Dec 2010</span>
@@ -65,7 +75,7 @@
         </p>
     </div>
     
-    <div class="post last">
+    <div class="post first">
         <div class="post-meta">
             <h2><a href="/2010/12/migrating-large-amounts-of-data">SUMO and migrating large amounts of data</a></h2>
             <span>03 Dec 2010</span>
@@ -75,23 +85,13 @@
         </p>
     </div>
     
-    <div class="post first">
+    <div class="post last">
         <div class="post-meta">
             <h2><a href="/2010/09/python-debugging-pdb---quick-tip">Python debugging (pdb) - quick tip</a></h2>
             <span>30 Sep 2010</span>
         </div>
         <p>
             Quick tip to help you keep track when debugging. <a class="more" href="/2010/09/python-debugging-pdb---quick-tip" title="Read this post">Read it</a>
-        </p>
-    </div>
-    
-    <div class="post last">
-        <div class="post-meta">
-            <h2><a href="/2010/08/ajax-uploads-images-in-django">Django and AJAX image uploads</a></h2>
-            <span>20 Aug 2010</span>
-        </div>
-        <p>
-            How to upload images in django through AJAX, with graceful degradation and a smooth UI. <a class="more" href="/2010/08/ajax-uploads-images-in-django" title="Read this post">Read it</a>
         </p>
     </div>
     
@@ -137,7 +137,7 @@
 
     <div id="footer" role="contentinfo">
         <div class="about">
-        <p>I am the Co-founder and CTO of <a href="http://sowink.com">SoWink Inc.</a>, a revolutionary social online-dating service. Be sure to check out <a href="http://blog.sowink.com">our blog</a> for more about us.</p>
+        <p>I am the Co-founder and CTO of <a href="http://sowink.com">SoWink Inc.</a>, a revolutionary social online network that helps you meet new people. Be sure to check out <a href="http://blog.sowink.com">our blog</a> for more about us.</p>
         <p>Until April 2011, I worked as a web developer for <a href="http://mozilla.com">Mozilla</a>, with main focus on <a href="http://www.djangoproject.com/">Django</a>, Python, and PHP. Occasionally, I write tutorials or post other information I find interesting.</p>
         <p>I enjoy doing freelance work for other websites, mostly non-profits. If you're interested in my services, contact me through one of the links below.</p>
         </p>
@@ -167,19 +167,6 @@ var pageTracker = _gat._getTracker("UA-15382775-1");
 pageTracker._trackPageview();
 } catch(err) {}</script>
 <!-- /Google Analytics -->
-
-<script type="text/javascript">
-    window.onscroll = scrollEvent;
-
-    function scrollEvent() {
-        var $p = document.getElementById('promo');
-        if (window && window.pageYOffset !== 0) {
-            $p.className = 'notop';
-        } else {
-            $p.className = '';
-        }
-    }
-</script>
 
 </body>
 </html>
