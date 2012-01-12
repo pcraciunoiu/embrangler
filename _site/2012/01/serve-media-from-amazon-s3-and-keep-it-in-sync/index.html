@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Serve media from Amazon S3 and keep it in sync</title>
+    <meta name="author" content="Paul Craciunoiu" />
+    <link href="http://feeds.feedburner.com/embrangler" rel="alternate" title="Disembrangling Programming" type="application/atom+xml" />
+    
+    <link type="image/x-icon" href="/favicon.ico" rel="shortcut icon">
+
+    <!-- syntax highlighting CSS -->
+    <link rel="stylesheet" href="/css/syntax.css" type="text/css" />
+
+    <!-- Homepage CSS -->
+    <link rel="stylesheet" href="/css/main.css" type="text/css" media="screen, projection" />
+
+    
+      <!-- Tag feed -->
+      
+        <link href="/tag/django/atom.xml"
+	      rel="alternate"
+              type="application/atom+xml"
+              title="Disembrangling Programming (tag: django)" />
+      
+        <link href="/tag/performance/atom.xml"
+	      rel="alternate"
+              type="application/atom+xml"
+              title="Disembrangling Programming (tag: performance)" />
+      
+        <link href="/tag/scaling/atom.xml"
+	      rel="alternate"
+              type="application/atom+xml"
+              title="Disembrangling Programming (tag: scaling)" />
+      
+    
+</head>
+<body>
+
+<div class="site">
+
+    <div id="header" role="banner">
+        <h1 class="title">
+            <a href="/">Disembrangling Programming</a>
+        </h1>
+        <h2 class="subtitle">
+            <a href="/about" title="About Paul Craciunoiu">The simple life of a web developer &mdash; by Paul Craciunoiu<span> (About)</span></a>
+            <a class="the-list" href="/list">(The List)</a>
+        </h2>
+    </div>
+    <!--<div id="promo">
+        <a href="http://sowink.com/jobs">Want to join a very exciting startup? SoWink is hiring! Check out our job descriptions &raquo;</a>
+    </div>-->
+    <div id="content" role="main">    
+    <div id="post">
+  <h1>Serve media from Amazon S3 and keep it in sync</h1>
+  <div class="meta">
+    
+    <div class="tags">Tags:
+      
+        <a href="/tag/django/">django</a>,
+        
+      
+        <a href="/tag/performance/">performance</a>,
+        
+      
+        <a href="/tag/scaling/">scaling</a>
+      
+    </div>
+    
+    <time>12 Jan 2012</time>
+  </div>
+  <h2 id='table_of_contents'>Table of contents</h2>
+
+<ul>
+<li><a href='#summary'>Summary</a></li>
+
+<li><a href='#pros_and_cons'>Pros and cons</a></li>
+
+<li><a href='#get_started'>Get started</a></li>
+
+<li><a href='#results'>Results</a></li>
+
+<li><a href='#alternatives'>Alternatives</a></li>
+
+<li><a href='#approach'>Approach</a></li>
+
+<li><a href='#conclusion'>Conclusion</a></li>
+</ul>
+
+<h2 id='summary'>Summary</h2>
+
+<p>Amazon S3 is an affordable, web-scale storage. It has a well supported python API, thanks to <a href='https://github.com/boto/boto'>boto</a>, and it offers &#8220;99.999999999% durability, with 99.99% availability.&#8221; (<a href='http://aws.amazon.com/s3/#requirements'>quote</a>).</p>
+
+<p>To improve the performance of a site, it helps to offload media to a different machine - that way your web server doesn&#8217;t have to process additional requests for your assets. <a href='https://github.com/pcraciunoiu/django-s3sync'>django-s3sync</a> helps you serve media such as your static media (CSS, JS, images) and user-uploaded content easily and efficiently.</p>
+
+<h2 id='get_started'>Get started</h2>
+
+<p>Go to <a href='https://github.com/pcraciunoiu/django-s3sync'>the github page</a> and follow the installation instructions.</p>
+
+<h2 id='pros_and_cons'>Pros and cons</h2>
+
+<p><em>Pros:</em></p>
+
+<ul>
+<li>Easy to install and get running</li>
+
+<li>Fall back to local URLs if file is not on S3 yet</li>
+
+<li>Separate buckets for static media VS user-uploaded media</li>
+
+<li>Easy to set up cron jobs, management commands to keep your media in sync</li>
+
+<li>Efficient sync of pending uploaded and deleted files</li>
+
+<li>Automatically link to files on S3 when they have been uploaded</li>
+
+<li>Optionally deletes files from S3 once they have been deleted locally</li>
+</ul>
+
+<p><em>Cons:</em></p>
+
+<ul>
+<li>Currently only works using Django&#8217;s <pre>FileSystemStorage</pre> backend (*)</li>
+
+<li>Doesn&#8217;t work with symlinks as far as I know</li>
+</ul>
+
+<p>(*) Can be easily fixed, but I&#8217;ve kept it simple for my purposes.</p>
+
+<h2 id='alternatives'>Alternatives</h2>
+
+<ul>
+<li><a href='https://github.com/kylemacfarlane/django-cuddlybuddly-storage-s3'>django-cuddlybuddly-storage-s3</a>, a fork of <a href='https://github.com/iserko/django-storages'>django-storages</a>. Wasn&#8217;t good enough for me, because it seems to upload the files right away, and I didn&#8217;t want to block the server threads while they connect and upload to S3.</li>
+
+<li><a href='https://github.com/django-extensions/django-extensions'>django-extensions</a>&#8217;s management command <code>sync_media_s3</code>, which served as inspiration for my project, provides a simple management command that you can use to copy local files to S3. It does not support removing files that have been locally removed, nor does it support advanced pattern matching for files.</li>
+</ul>
+</div>
+
+<div id="related">
+  <h2>Related Posts</h2>
+  <ul>
+    
+      <li><a href="/2010/03/embrangler-moving-to-jekyll">Embrangler: Moving to Jekyll</a> &mdash; 21 Mar 2010</li>
+    
+      <li><a href="/2010/08/ajax-uploads-images-in-django">Django and AJAX image uploads</a> &mdash; 20 Aug 2010</li>
+    
+      <li><a href="/2010/03/quoteden-moving-to-kohana-3">Quoteden: Moving to Kohana 3</a> &mdash; 12 Mar 2010</li>
+    
+  </ul>
+</div>
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  (function() {
+   var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+   dsq.src = 'http://blogpaulcraciunoiu.disqus.com/embed.js';
+   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript=blogpaulcraciunoiu">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+<script type="text/javascript">
+//<![CDATA[
+(function() {
+    var links = document.getElementsByTagName('a');
+    var query = '?';
+    for(var i = 0; i < links.length; i++) {
+    if(links[i].href.indexOf('#disqus_thread') >= 0) {
+        query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
+    }
+    }
+    document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/blogpaulcraciunoiu/get_num_replies.js' + query + '"></' + 'script>');
+})();
+//]]>
+</script>
+
+    </div>
+
+    <div id="footer" role="contentinfo">
+        <div class="about">
+        <p>I am the Co-founder and CTO of <a href="http://sowink.com">SoWink Inc.</a>, a revolutionary social online network that helps you meet new people. Be sure to check out <a href="http://blog.sowink.com">our blog</a> for more about us.</p>
+        <p>Until April 2011, I worked as a web developer for <a href="http://mozilla.com">Mozilla</a>, with main focus on <a href="http://www.djangoproject.com/">Django</a>, Python, and PHP. Occasionally, I write tutorials or post other information I find interesting.</p>
+        <p>I enjoy doing freelance work for other websites, mostly non-profits. If you're interested in my services, contact me through one of the links below.</p>
+        </p>
+        </div>
+        <div class="contact">
+            <a href="http://twitter.com/embrangler/">Follow me</a> -- 
+            <a href="http://craciunoiu.net/contact/paul">Email me</a> -- 
+            <a href="http://github.com/pcraciunoiu/">My GitHub</a>
+        </div>
+        <div class="quote">
+        <p>
+            Success is a journey, not a destination. The doing is often more important than the outcome. &mdash; <a href="http://quoteden.net/author/id/337">Arthur Robert Ashe, Jr</a>
+        </p>
+        <p>&copy; Paul Craciunoiu. Some rights reserved. Brought to you by <a href="http://wiki.github.com/mojombo/jekyll/">Jekyll</a></p>
+        </div>
+    </div>
+</div><!-- site -->
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-15382775-1");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+<!-- /Google Analytics -->
+
+</body>
+</html>

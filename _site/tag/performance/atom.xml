@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+ <title>Disembrangling Programming</title>
+ <link href="http://embrangler.com/tag/performance/atom.xml" rel="self"/>
+ <link href="http://embrangler.com/tag/performance"/>
+ <updated>2012-01-12T15:10:45-08:00</updated>
+ <id>http://embrangler.com/</id>
+ <author>
+   <name>Paul Craciunoiu</name>
+   <email>paul@craciunoiu.net</email>
+ </author>
+
+ 
+ <entry>
+   <title>Serve media from Amazon S3 and keep it in sync</title>
+   <link href="http://embrangler.com/2012/01/serve-media-from-amazon-s3-and-keep-it-in-sync"/>
+   <updated>2012-01-12T00:00:00-08:00</updated>
+   <id>http://embrangler.com/2012/01/serve-media-from-amazon-s3-and-keep-it-in-sync</id>
+   <content type="html">&lt;h2 id='table_of_contents'&gt;Table of contents&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href='#summary'&gt;Summary&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='#pros_and_cons'&gt;Pros and cons&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='#get_started'&gt;Get started&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='#results'&gt;Results&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='#alternatives'&gt;Alternatives&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='#approach'&gt;Approach&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='#conclusion'&gt;Conclusion&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id='summary'&gt;Summary&lt;/h2&gt;
+
+&lt;p&gt;Amazon S3 is an affordable, web-scale storage. It has a well supported python API, thanks to &lt;a href='https://github.com/boto/boto'&gt;boto&lt;/a&gt;, and it offers &amp;#8220;99.999999999% durability, with 99.99% availability.&amp;#8221; (&lt;a href='http://aws.amazon.com/s3/#requirements'&gt;quote&lt;/a&gt;).&lt;/p&gt;
+
+&lt;p&gt;To improve the performance of a site, it helps to offload media to a different machine - that way your web server doesn&amp;#8217;t have to process additional requests for your assets. &lt;a href='https://github.com/pcraciunoiu/django-s3sync'&gt;django-s3sync&lt;/a&gt; helps you serve media such as your static media (CSS, JS, images) and user-uploaded content easily and efficiently.&lt;/p&gt;
+
+&lt;h2 id='get_started'&gt;Get started&lt;/h2&gt;
+
+&lt;p&gt;Go to &lt;a href='https://github.com/pcraciunoiu/django-s3sync'&gt;the github page&lt;/a&gt; and follow the installation instructions.&lt;/p&gt;
+
+&lt;h2 id='pros_and_cons'&gt;Pros and cons&lt;/h2&gt;
+
+&lt;p&gt;&lt;em&gt;Pros:&lt;/em&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Easy to install and get running&lt;/li&gt;
+
+&lt;li&gt;Fall back to local URLs if file is not on S3 yet&lt;/li&gt;
+
+&lt;li&gt;Separate buckets for static media VS user-uploaded media&lt;/li&gt;
+
+&lt;li&gt;Easy to set up cron jobs, management commands to keep your media in sync&lt;/li&gt;
+
+&lt;li&gt;Efficient sync of pending uploaded and deleted files&lt;/li&gt;
+
+&lt;li&gt;Automatically link to files on S3 when they have been uploaded&lt;/li&gt;
+
+&lt;li&gt;Optionally deletes files from S3 once they have been deleted locally&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;em&gt;Cons:&lt;/em&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Currently only works using Django&amp;#8217;s &lt;pre&gt;FileSystemStorage&lt;/pre&gt; backend (*)&lt;/li&gt;
+
+&lt;li&gt;Doesn&amp;#8217;t work with symlinks as far as I know&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;(*) Can be easily fixed, but I&amp;#8217;ve kept it simple for my purposes.&lt;/p&gt;
+
+&lt;h2 id='alternatives'&gt;Alternatives&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href='https://github.com/kylemacfarlane/django-cuddlybuddly-storage-s3'&gt;django-cuddlybuddly-storage-s3&lt;/a&gt;, a fork of &lt;a href='https://github.com/iserko/django-storages'&gt;django-storages&lt;/a&gt;. Wasn&amp;#8217;t good enough for me, because it seems to upload the files right away, and I didn&amp;#8217;t want to block the server threads while they connect and upload to S3.&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://github.com/django-extensions/django-extensions'&gt;django-extensions&lt;/a&gt;&amp;#8217;s management command &lt;code&gt;sync_media_s3&lt;/code&gt;, which served as inspiration for my project, provides a simple management command that you can use to copy local files to S3. It does not support removing files that have been locally removed, nor does it support advanced pattern matching for files.&lt;/li&gt;
+&lt;/ul&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>Caching Django views with nginx and memcache</title>
+   <link href="http://embrangler.com/2012/01/caching-django-views-with-nginx-and-memcache"/>
+   <updated>2012-01-08T00:00:00-08:00</updated>
+   <id>http://embrangler.com/2012/01/caching-django-views-with-nginx-and-memcache</id>
+   <content type="html">&lt;h2 id='table_of_contents'&gt;Table of contents&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href='#summary'&gt;Summary&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;&lt;a href='#motivation'&gt;Motivation&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;&lt;a href='#pros_and_cons'&gt;Pros and cons&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;&lt;a href='#results'&gt;Results&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;&lt;a href='#alternatives'&gt;Alternatives&lt;/a&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href='#research'&gt;Research&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;&lt;a href='#approach'&gt;Approach&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;&lt;a href='#conclusion'&gt;Conclusion&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id='summary'&gt;Summary&lt;/h2&gt;
+
+&lt;p&gt;I wanted a way to increase performance for some of our static pages. One way to do this is to cache Django pages somewhere, and serve that content from earlier on the request pipe.&lt;/p&gt;
+
+&lt;p&gt;A simple approach is having &lt;a href='http://nginx.org/en/'&gt;nginx&lt;/a&gt; grab the page directly from memcache, without touching Django at all. Enter &lt;a href='https://github.com/pcraciunoiu/django-nginx-memcache'&gt;nginx_memcache&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id='motivation'&gt;Motivation&lt;/h2&gt;
+
+&lt;p&gt;Performance increase. Avoiding database queries when they&amp;#8217;re unnecessary. Make your static pages load faster.&lt;/p&gt;
+
+&lt;h2 id='pros_and_cons'&gt;Pros and cons&lt;/h2&gt;
+
+&lt;p&gt;What can you do or cannot do with this approach?&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Pros:&lt;/em&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Easy to set which views are cached from Django&lt;/li&gt;
+
+&lt;li&gt;Flag for turning on and off&lt;/li&gt;
+
+&lt;li&gt;Page versioning, so you can cache multiple versions for the same page, based on your own criteria&lt;/li&gt;
+
+&lt;li&gt;User will see the same page version based on a cookie&lt;/li&gt;
+
+&lt;li&gt;Significant speedup versus loading with Django (more below).&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;em&gt;Cons:&lt;/em&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Can only cache entire page at a time (though more research may show otherwise)&lt;/li&gt;
+
+&lt;li&gt;No auto-invalidate from Django, until user visits some non-cached page (though possible to clear this cache when updating your codebase with a commit hook).&lt;/li&gt;
+
+&lt;li&gt;Can no longer embed forms on that page unless CSRF is obtained through JS.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id='results'&gt;Results&lt;/h2&gt;
+
+&lt;p&gt;Our tests showed a &lt;em&gt;10x increase&lt;/em&gt; in kbps transferred with ApacheBench tests against our landing page (run with &lt;code&gt;ab -k -c 20 -n 2000&lt;/code&gt;, before and after).&lt;/p&gt;
+
+&lt;p&gt;Deployment was very straightforward. You can &lt;a href='https://github.com/pcraciunoiu/django-nginx-memcache'&gt;read the docs&lt;/a&gt; for details.&lt;/p&gt;
+
+&lt;h2 id='alternatives'&gt;Alternatives&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href='https://www.varnish-cache.org/about'&gt;Varnish&lt;/a&gt; can also be placed in front of or behind nginx, and there are several articles showing how to do this.&lt;/p&gt;
+
+&lt;p&gt;Here&amp;#8217;s my 2 cents on django + varnish + nginx VS django + memcache + nginx:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;(+1 for memcache) Easier to configure nginx with memcache than Varnish. Configuring Varnish implied learning a whole new language (VCL), and adding one more piece of software to our technology stack.&lt;/li&gt;
+
+&lt;li&gt;(+1 for varnish) &lt;a href='http://codysoyland.com/2010/jan/17/evaluating-django-caching-options/'&gt;Some perf tests&lt;/a&gt; out there say Varnish can be quite a bit faster. However, the difference is not orders of magnitude, so I was not compelled.&lt;/li&gt;
+
+&lt;li&gt;(+1 for memcache) Django and Memcache are very well integrated. By contrast, python-varnish and django-varnish are not actively developed and have several known issues. Didn&amp;#8217;t seem a good idea for production.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id='research_links'&gt;Research links&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href='https://github.com/pcraciunoiu/django-nginx-memcache'&gt;django-nginx-memcache&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://github.com/shaunsephton/djanginxed'&gt;djangonginxed&lt;/a&gt;, an alternative to my project.&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='http://weichhold.com/2008/09/12/django-nginx-memcached-the-dynamic-trio/'&gt;django + nginx + memcache&lt;/a&gt; middleware example.&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='http://codysoyland.com/2010/jan/17/evaluating-django-caching-options/'&gt;Evaluating Django caching options&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='http://ghughes.com/blog/2011/11/11/using-varnish-with-django-for-high-performance-caching/'&gt;Using varnish with Django for high performance caching&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='http://www.quora.com/What-is-an-ideal-architecure-that-includes-nginx-and-Varnish?q=varnish+nginx'&gt;What is an ideal architecture that includes nginx and Varnish?&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='http://www.linuxpinguin.de/2011/09/nva-setup-nginx-varnish-apache/'&gt;Example set up for nginx in front of varnish&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='http://serverfault.com/questions/111678/how-to-setup-nginx-with-varnish'&gt;Example set up for varnish in front of nginx&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content>
+ </entry>
+ 
+
+</feed>

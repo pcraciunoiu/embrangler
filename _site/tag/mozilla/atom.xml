@@ -4,7 +4,7 @@
  <title>Disembrangling Programming</title>
  <link href="http://embrangler.com/tag/mozilla/atom.xml" rel="self"/>
  <link href="http://embrangler.com/tag/mozilla"/>
- <updated>2012-01-04T20:48:51-08:00</updated>
+ <updated>2012-01-12T15:10:45-08:00</updated>
  <id>http://embrangler.com/</id>
  <author>
    <name>Paul Craciunoiu</name>
@@ -17,7 +17,9 @@
    <link href="http://embrangler.com/2011/03/datastore-an-abstraction-layer"/>
    <updated>2011-03-01T00:00:00-08:00</updated>
    <id>http://embrangler.com/2011/03/datastore-an-abstraction-layer</id>
-   <content type="html">&lt;h2 id='table_of_contents'&gt;Table of contents&lt;/h2&gt;
+   <content type="html">&lt;p&gt;&lt;strong&gt;Update 2012/01:&lt;/strong&gt; I still haven&amp;#8217;t started working on this project and I&amp;#8217;ve heard much interest from others. Some have offered to pick up the project. I will update this post once the project finds a home.&lt;/p&gt;
+
+&lt;h2 id='table_of_contents'&gt;Table of contents&lt;/h2&gt;
 
 &lt;ol&gt;
 &lt;li&gt;&lt;a href='#motivation'&gt;Motivation&lt;/a&gt;&lt;/li&gt;

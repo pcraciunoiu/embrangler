@@ -4,13 +4,85 @@
  <title>Disembrangling Programming - Paul Craciunoiu</title>
  <link href="http://embrangler.com/atom.xml" rel="self"/>
  <link href="http://embrangler.com/"/>
- <updated>2012-01-08T23:07:06-08:00</updated>
+ <updated>2012-01-12T15:10:45-08:00</updated>
  <id>http://embrangler.com/</id>
  <author>
    <name>Paul Craciunoiu</name>
    <email>paul@craciunoiu.net</email>
  </author>
 
+ 
+ <entry>
+   <title>Serve media from Amazon S3 and keep it in sync</title>
+   <link href="http://embrangler.com/2012/01/serve-media-from-amazon-s3-and-keep-it-in-sync"/>
+   <updated>2012-01-12T00:00:00-08:00</updated>
+   <id>http://embrangler.com/2012/01/serve-media-from-amazon-s3-and-keep-it-in-sync</id>
+   <content type="html">&lt;h2 id='table_of_contents'&gt;Table of contents&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href='#summary'&gt;Summary&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='#pros_and_cons'&gt;Pros and cons&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='#get_started'&gt;Get started&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='#results'&gt;Results&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='#alternatives'&gt;Alternatives&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='#approach'&gt;Approach&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='#conclusion'&gt;Conclusion&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id='summary'&gt;Summary&lt;/h2&gt;
+
+&lt;p&gt;Amazon S3 is an affordable, web-scale storage. It has a well supported python API, thanks to &lt;a href='https://github.com/boto/boto'&gt;boto&lt;/a&gt;, and it offers &amp;#8220;99.999999999% durability, with 99.99% availability.&amp;#8221; (&lt;a href='http://aws.amazon.com/s3/#requirements'&gt;quote&lt;/a&gt;).&lt;/p&gt;
+
+&lt;p&gt;To improve the performance of a site, it helps to offload media to a different machine - that way your web server doesn&amp;#8217;t have to process additional requests for your assets. &lt;a href='https://github.com/pcraciunoiu/django-s3sync'&gt;django-s3sync&lt;/a&gt; helps you serve media such as your static media (CSS, JS, images) and user-uploaded content easily and efficiently.&lt;/p&gt;
+
+&lt;h2 id='get_started'&gt;Get started&lt;/h2&gt;
+
+&lt;p&gt;Go to &lt;a href='https://github.com/pcraciunoiu/django-s3sync'&gt;the github page&lt;/a&gt; and follow the installation instructions.&lt;/p&gt;
+
+&lt;h2 id='pros_and_cons'&gt;Pros and cons&lt;/h2&gt;
+
+&lt;p&gt;&lt;em&gt;Pros:&lt;/em&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Easy to install and get running&lt;/li&gt;
+
+&lt;li&gt;Fall back to local URLs if file is not on S3 yet&lt;/li&gt;
+
+&lt;li&gt;Separate buckets for static media VS user-uploaded media&lt;/li&gt;
+
+&lt;li&gt;Easy to set up cron jobs, management commands to keep your media in sync&lt;/li&gt;
+
+&lt;li&gt;Efficient sync of pending uploaded and deleted files&lt;/li&gt;
+
+&lt;li&gt;Automatically link to files on S3 when they have been uploaded&lt;/li&gt;
+
+&lt;li&gt;Optionally deletes files from S3 once they have been deleted locally&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;em&gt;Cons:&lt;/em&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Currently only works using Django&amp;#8217;s &lt;pre&gt;FileSystemStorage&lt;/pre&gt; backend (*)&lt;/li&gt;
+
+&lt;li&gt;Doesn&amp;#8217;t work with symlinks as far as I know&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;(*) Can be easily fixed, but I&amp;#8217;ve kept it simple for my purposes.&lt;/p&gt;
+
+&lt;h2 id='alternatives'&gt;Alternatives&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href='https://github.com/kylemacfarlane/django-cuddlybuddly-storage-s3'&gt;django-cuddlybuddly-storage-s3&lt;/a&gt;, a fork of &lt;a href='https://github.com/iserko/django-storages'&gt;django-storages&lt;/a&gt;. Wasn&amp;#8217;t good enough for me, because it seems to upload the files right away, and I didn&amp;#8217;t want to block the server threads while they connect and upload to S3.&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://github.com/django-extensions/django-extensions'&gt;django-extensions&lt;/a&gt;&amp;#8217;s management command &lt;code&gt;sync_media_s3&lt;/code&gt;, which served as inspiration for my project, provides a simple management command that you can use to copy local files to S3. It does not support removing files that have been locally removed, nor does it support advanced pattern matching for files.&lt;/li&gt;
+&lt;/ul&gt;</content>
+ </entry>
  
  <entry>
    <title>Caching Django views with nginx and memcache</title>
@@ -74,7 +146,7 @@
 
 &lt;li&gt;Flag for turning on and off&lt;/li&gt;
 
-&lt;li&gt;Page versioning, so you can cache multiple contents for the same page, based on your own criteria&lt;/li&gt;
+&lt;li&gt;Page versioning, so you can cache multiple versions for the same page, based on your own criteria&lt;/li&gt;
 
 &lt;li&gt;User will see the same page version based on a cookie&lt;/li&gt;
 
@@ -1274,140 +1346,6 @@
 
 &lt;li&gt;start on some 2.2 bugs&lt;/li&gt;
 &lt;/ul&gt;</content>
- </entry>
- 
- <entry>
-   <title>Access control in Django, and django-authority</title>
-   <link href="http://embrangler.com/2010/05/access-control-django"/>
-   <updated>2010-05-22T00:00:00-07:00</updated>
-   <id>http://embrangler.com/2010/05/access-control-django</id>
-   <content type="html">&lt;p&gt;The past week I&amp;#8217;ve been working with Django and permissions. I&amp;#8217;ll talk here about the available options and go into details about the one &lt;a href='https://wiki.mozilla.org/Support/Kitsune'&gt;Kitsune&lt;/a&gt; is using.&lt;/p&gt;
-
-&lt;p&gt;Here are the options I looked at:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href='#djangos_default_permissions'&gt;Django&amp;#8217;s default permissions&lt;/a&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;a href='#amos_access_app'&gt;AMO&amp;#8217;s access app&lt;/a&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;a href='#djangoauthority'&gt;django-authority&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id='djangos_default_permissions'&gt;Django&amp;#8217;s default permissions&lt;/h2&gt;
-
-&lt;p&gt;&lt;em&gt;Read more about this in &lt;a href='http://docs.djangoproject.com/en/dev/topics/auth/'&gt;Django&amp;#8217;s documentation&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;Django provides a convenient and easy to use permissions system. The documentation covers it all, so I&amp;#8217;m just going to summarize the pros and cons:&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Pros:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Comes with Django (=&amp;gt; robust, well-written and stable)&lt;/li&gt;
-
-&lt;li&gt;Permission functions attached to the user object&lt;/li&gt;
-
-&lt;li&gt;Per-group permissions and per-user permissions&lt;/li&gt;
-
-&lt;li&gt;Model-level (a.k.a. per content_type) permissions (can add custom model-level permissions as well)&lt;/li&gt;
-
-&lt;li&gt;Work with Jinja templates, simply use &lt;code&gt;user.has_perm(&amp;#39;perm_name&amp;#39;)&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;Cons:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;No per-object permissions&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id='amos_access_app'&gt;AMO&amp;#8217;s access app&lt;/h2&gt;
-
-&lt;p&gt;&lt;a href='http://github.com/davedash/zamboni/blob/master/docs/topics/acl.rst'&gt;AMO&amp;#8217;s access app&lt;/a&gt; adds some flexibility on assigning permissions with wildcards and also stores the user&amp;#8217;s groups in &lt;code&gt;request.groups&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Pros:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Flexible way to assign all permissions in a certain group&lt;/li&gt;
-
-&lt;li&gt;Does not store permissions in the models &lt;code&gt;Meta&lt;/code&gt; class&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;Cons:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Replaces django&amp;#8217;s permission system (either use one or the other)&lt;/li&gt;
-
-&lt;li&gt;No per-object permissions&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;To use this, you can do something like this in your views:&lt;/p&gt;
-&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='python'&gt;&lt;span class='kn'&gt;from&lt;/span&gt; &lt;span class='nn'&gt;access&lt;/span&gt; &lt;span class='kn'&gt;import&lt;/span&gt; &lt;span class='n'&gt;acl&lt;/span&gt;
-
-&lt;span class='c'&gt;# ...&lt;/span&gt;
-
-&lt;span class='k'&gt;def&lt;/span&gt; &lt;span class='nf'&gt;some_view_action&lt;/span&gt;&lt;span class='p'&gt;():&lt;/span&gt;
-    &lt;span class='n'&gt;acl&lt;/span&gt;&lt;span class='o'&gt;.&lt;/span&gt;&lt;span class='n'&gt;action_allowed&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='n'&gt;request&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='s'&gt;&amp;#39;Group&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='s'&gt;&amp;#39;PermissionName&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;h2 id='djangoauthority'&gt;django-authority&lt;/h2&gt;
-
-&lt;p&gt;&lt;a href='http://packages.python.org/django-authority/'&gt;django-authority&lt;/a&gt; was the most promising of the three. It adds per-object permissions and wraps Django&amp;#8217;s default permissions system without forcing an either-or choice. It also has a decent documentation, and although still in draft at the time of this writing, it was enough for me to figure out how to use.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Pros:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Per-object permissions&lt;/li&gt;
-
-&lt;li&gt;Wraps Django&amp;#8217;s default permissions system, so you can use both&lt;/li&gt;
-
-&lt;li&gt;Custom permissions&lt;/li&gt;
-
-&lt;li&gt;Add permissions to &lt;code&gt;appname/permissions.py&lt;/code&gt;, so they are completely separate from the models (unlike Django&amp;#8217;s permissions)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;Cons:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Needs a bit of work to hook in with &lt;a href='http://jinja.pocoo.org/2/documentation'&gt;Jinja&lt;/a&gt; templates&lt;/li&gt;
-
-&lt;li&gt;Admin functionality not yet complete - the admin form &lt;a href='http://packages.python.org/django-authority/handling_admin.html'&gt;generated by the &lt;code&gt;edit_permissions&lt;/code&gt;&lt;/a&gt; &lt;a href='http://docs.djangoproject.com/en/dev/ref/contrib/admin/actions/'&gt;admin action&lt;/a&gt; does not work at the time of this writing. The alternative is not too bad however, you can manually add to the Permission model using that model&amp;#8217;s admin.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id='djangoauthority_on_kitsune'&gt;django-authority on Kitsune&lt;/h3&gt;
-
-&lt;p&gt;We are currently focused on rewriting SUMO&amp;#8217;s discussion forums. For Kitsune, we have multiple forums and we wanted the ability to have different forum moderators per forum. We&amp;#8217;re also using Jinja. django-authority comes with default Django template support, so if you&amp;#8217;re using that, you don&amp;#8217;t need to write your own template functions/filters.&lt;/p&gt;
-
-&lt;p&gt;For Jinja support, just add this to some app&amp;#8217;s helpers.py&lt;/p&gt;
-&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='python'&gt;&lt;span class='kn'&gt;import&lt;/span&gt; &lt;span class='nn'&gt;jinja2&lt;/span&gt;
-&lt;span class='kn'&gt;from&lt;/span&gt; &lt;span class='nn'&gt;jingo&lt;/span&gt; &lt;span class='kn'&gt;import&lt;/span&gt; &lt;span class='n'&gt;register&lt;/span&gt;
-&lt;span class='kn'&gt;import&lt;/span&gt; &lt;span class='nn'&gt;authority&lt;/span&gt;
-
-&lt;span class='c'&gt;# ...&lt;/span&gt;
-
-&lt;span class='nd'&gt;@register.function&lt;/span&gt;
-&lt;span class='nd'&gt;@jinja2.contextfunction&lt;/span&gt;
-&lt;span class='k'&gt;def&lt;/span&gt; &lt;span class='nf'&gt;has_perm&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='n'&gt;context&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='n'&gt;perm&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='n'&gt;obj&lt;/span&gt;&lt;span class='p'&gt;):&lt;/span&gt;
-    &lt;span class='sd'&gt;&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
-&lt;span class='sd'&gt;    Check if the user has a permission on a specific object.&lt;/span&gt;
-
-&lt;span class='sd'&gt;    Returns boolean.&lt;/span&gt;
-&lt;span class='sd'&gt;    &amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
-    &lt;span class='n'&gt;check&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='n'&gt;authority&lt;/span&gt;&lt;span class='o'&gt;.&lt;/span&gt;&lt;span class='n'&gt;get_check&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='n'&gt;context&lt;/span&gt;&lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='s'&gt;&amp;#39;request&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;]&lt;/span&gt;&lt;span class='o'&gt;.&lt;/span&gt;&lt;span class='n'&gt;user&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='n'&gt;perm&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt;
-    &lt;span class='k'&gt;return&lt;/span&gt; &lt;span class='n'&gt;check&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='n'&gt;obj&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;Then, in your templates, you can just use:&lt;/p&gt;
-&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='jinja'&gt;&lt;span class='x'&gt;[% if has_perm(&amp;#39;perm_cls.codename_model&amp;#39;, object) %]&lt;/span&gt;
-&lt;span class='x'&gt;  &lt;/span&gt;&lt;span class='c'&gt;{# grats, you&amp;#39;ve got the perms! #}&lt;/span&gt;&lt;span class='x' /&gt;
-&lt;span class='x'&gt;[% endif %]&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;(Couldn&amp;#8217;t figure out how to escape braces in jekyll, so you&amp;#8217;ll need to replace the square brackets above.)&lt;/p&gt;
-
-&lt;p&gt;See &lt;a href='http://packages.python.org/django-authority/create_per_object_permission.html'&gt;this link&lt;/a&gt; for more information on the &lt;code&gt;perm_cls&lt;/code&gt; and &lt;code&gt;codename&lt;/code&gt; variables.&lt;/p&gt;
-
-&lt;p&gt;If you&amp;#8217;re interested, here&amp;#8217;s the &lt;a href='http://github.com/pcraciunoiu/kitsune/commit/f2f256b5e70ef3c89cda95dde29823ae48e057bb'&gt;Kitsune code&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Hope that helps others who may decide to go this route. Questions and suggestions for improvement are always welcome, of course.&lt;/p&gt;</content>
  </entry>
  
  

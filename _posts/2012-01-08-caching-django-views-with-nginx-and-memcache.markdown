@@ -37,7 +37,7 @@ What can you do or cannot do with this approach?
 *Pros:*
 * Easy to set which views are cached from Django
 * Flag for turning on and off
-* Page versioning, so you can cache multiple contents for the same page, based on your own criteria
+* Page versioning, so you can cache multiple versions for the same page, based on your own criteria
 * User will see the same page version based on a cookie
 * Significant speedup versus loading with Django (more below).
 

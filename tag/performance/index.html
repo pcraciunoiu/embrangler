@@ -1,0 +1,13 @@
+---
+layout: default
+title: Posts tagged "performance"
+tag: performance
+type: "Performance"
+---
+    <h1 class="title" id="performance">Posts tagged <em>performance</em></h1>
+
+    <ul>
+      {% for post in site.tags['performance'] %}
+      {% include item.html %}
+      {% endfor %}
+    </ul>
