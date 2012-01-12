@@ -4,7 +4,7 @@
  <title>Disembrangling Programming - Paul Craciunoiu</title>
  <link href="http://embrangler.com/atom.xml" rel="self"/>
  <link href="http://embrangler.com/"/>
- <updated>2012-01-12T15:10:45-08:00</updated>
+ <updated>2012-01-12T15:23:32-08:00</updated>
  <id>http://embrangler.com/</id>
  <author>
    <name>Paul Craciunoiu</name>
@@ -68,7 +68,11 @@
 &lt;p&gt;&lt;em&gt;Cons:&lt;/em&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-&lt;li&gt;Currently only works using Django&amp;#8217;s &lt;pre&gt;FileSystemStorage&lt;/pre&gt; backend (*)&lt;/li&gt;
+&lt;li&gt;Currently only works using Django&amp;#8217;s &lt;code&gt;FileSystemStorage&lt;/code&gt; backend (*)&lt;/li&gt;
+
+&lt;li&gt;You can only serve ALL of your static media from S,3 or NONE of it.&lt;/li&gt;
+
+&lt;li&gt;Similarly, you can only serve ALL of your user media from S3, or NONE of it.&lt;/li&gt;
 
 &lt;li&gt;Doesn&amp;#8217;t work with symlinks as far as I know&lt;/li&gt;
 &lt;/ul&gt;
