@@ -39,7 +39,9 @@ Go to [the github page](https://github.com/pcraciunoiu/django-s3sync) and follow
 * Optionally deletes files from S3 once they have been deleted locally
 
 *Cons:*
-* Currently only works using Django's <pre>FileSystemStorage</pre> backend (\*)
+* Currently only works using Django's `FileSystemStorage` backend (\*)
+* You can only serve ALL of your static media from S,3 or NONE of it.
+* Similarly, you can only serve ALL of your user media from S3, or NONE of it.
 * Doesn't work with symlinks as far as I know
 
 (\*) Can be easily fixed, but I've kept it simple for my purposes.
