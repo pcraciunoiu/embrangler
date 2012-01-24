@@ -62,6 +62,16 @@ a:hover {
     border-bottom: 1px solid #ddd;
 }
 
+blockquote {
+    border-left: 4px solid #dadada;
+    color: #666;
+    padding-left: 1em;
+    margin: 1em;
+}
+blockquote > p:first-child {
+    margin-top: 22px;
+}
+
 .table-wrap {
     text-align: center;
 }

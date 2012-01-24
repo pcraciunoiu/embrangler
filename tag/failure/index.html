@@ -1,0 +1,13 @@
+---
+layout: default
+title: Posts tagged "failure"
+tag: failure
+type: "Failure"
+---
+    <h1 class="title" id="failure">Posts tagged <em>failure</em></h1>
+
+    <ul>
+      {% for post in site.tags['failure'] %}
+      {% include item.html %}
+      {% endfor %}
+    </ul>
