@@ -4,7 +4,7 @@
  <title>Disembrangling Programming</title>
  <link href="http://embrangler.com/tag/failure/atom.xml" rel="self"/>
  <link href="http://embrangler.com/tag/failure"/>
- <updated>2012-01-24T00:46:15-08:00</updated>
+ <updated>2012-01-24T00:59:38-08:00</updated>
  <id>http://embrangler.com/</id>
  <author>
    <name>Paul Craciunoiu</name>
@@ -13,10 +13,10 @@
 
  
  <entry>
-   <title>SoWink: post-mortem</title>
-   <link href="http://embrangler.com/2012/01/sowink-post-mortem"/>
+   <title>SoWink: discontinued</title>
+   <link href="http://embrangler.com/2012/01/sowink-discontinued"/>
    <updated>2012-01-24T00:00:00-08:00</updated>
-   <id>http://embrangler.com/2012/01/sowink-post-mortem</id>
+   <id>http://embrangler.com/2012/01/sowink-discontinued</id>
    <content type="html">&lt;p&gt;This is the first post of a series of lessons and stories from doing my first company, SoWink Inc.&lt;/p&gt;
 
 &lt;p&gt;&lt;em&gt;Thanks to several SoWink team members for reviewing this post and providing valuable feedback.&lt;/em&gt;&lt;/p&gt;
