@@ -1,0 +1,13 @@
+---
+layout: default
+title: Posts tagged "happiness"
+tag: happiness
+type: "Happiness"
+---
+    <h1 class="title" id="happiness">Posts tagged <em>happiness</em></h1>
+
+    <ul>
+      {% for post in site.tags['happiness'] %}
+      {% include item.html %}
+      {% endfor %}
+    </ul>

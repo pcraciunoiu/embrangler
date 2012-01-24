@@ -8,8 +8,8 @@ meta_description: Paul Craciunoiu's list of things to experience in this life.
 
 Following [gandalf's idea](http://diary.braniecki.net/2009/02/13/150-things-to-do-before-you-turn-30/), I'm starting this to-do list for things I want to experience in this life.
 
-__Created on: _10/10/10___
-__Last updated: _11/07/10___
+__Created on: _10/10/10___<br>
+__Last updated: _01/12/12___
 
 1. Save someone's life.
 1. <span class="done">Cause a car accident.</span>
@@ -28,13 +28,15 @@ __Last updated: _11/07/10___
 	* Visit Key West, southernmost point of continental USA.
 1. See the Amazonian rainforest.
 1. See an African safari.
-1. Visit Sweden/Denmark.
-1. Visit Norway/Iceland. _(planned)_
+1. <span class="done">Visit Sweden</span>
+1. Visit Norway/Iceland.
 1. Visit Japan.
 1. Eat at French Laundry (or other expensive yet ridiculously delicious place).
 1. <span class="done">Sky dive.</span>
 1. <span class="done">Snorkel with tropical fish.</span>
 1. <span class="done">Surf.</span>
+1. <span class="done">Hang glide</span>
+    * I'd love to repeat.
 1. Surf at Pipeline, Oahu, Hawaii.
 1. Go to _outer space_ and see [this](http://www.astronomic.ro/wp-content/uploads/2010/06/eso1027a.jpg).
 1. Own a [hammock](http://en.wikipedia.org/wiki/Hammock).
@@ -55,12 +57,11 @@ __Last updated: _11/07/10___
 1. See an iceberg.
 1. Visit Greenland.
 1. <span class="done">See a total eclipse of the sun.</span>
-1. Go rock climbing.
+1. Go indoor rock climbing.
 1. Visit Ireland.
 1. Give a speech in front of more than a thousand people (yes, I want to be _that_ famous).
 1. Have and raise at least 2 children.
 1. Scuba dive at a tropical island.
-1. Make out during a drive-in movie.
 1. Have a really unusual wedding (hopefully unusual in a good way).
 1. Practice meditation for an entire week.
 1. Speak at least one of the following languages fluently:
@@ -76,7 +77,7 @@ __Last updated: _11/07/10___
 1. Visit Madagascar.
 1. Play a game with a chimpanzee.
 1. Reach a 6% body fat percentage.
-1. Write a book (I'm cheating, it can be about anything).
+1. Write a book (it can be about anything).
 1. <span class="done">Have sex in a car.</span>
 1. Fire a real gun.
 1. Live on an island for a month.
@@ -93,8 +94,8 @@ __Last updated: _11/07/10___
 1. Dress up for halloween and show it off.
 1. Build a large sand castle (e.g. longer than 0.5m).
 1. Ride a horse.
-1. Ski at Lake Tahoe.
-1. Be part of a start-up company.
+1. <span class="done">Snowboard at Lake Tahoe.</span>
+1. <span class="done">Be part of a start-up.</span>
 1. Be lost at sea.
 1. Visit Pucon, Chile (snow, volcano, beach)
 
