@@ -62,7 +62,7 @@ Much of our team had joined us too soon, before we had figured out our own cultu
 
 ## The good news
 
-The good news is that SoWink has been a success in its failure. Failing fast and clearly, rather than long and sluggishly = much better. In startup life, a year flies by extremely quickly. Most of the successful companies that you know today have pivoted several times and failed for several years before becoming a huge success.
+The good news is that SoWink has been a success in its failure. Failing fast and clearly, rather than slow and uncertainly = much better. In startup life, a year flies by extremely quickly. Most of the successful companies that you know today have pivoted several times and failed for several years before becoming a huge success.
 
 I really do think that failing fast means learning fast. Which is not to say I am in favor of giving up. But, sometimes, it becomes clear that is the only option: everything seems to agree to it. A year was enough for us to understand that we're failing: it was slow enough to tell it's not going to work, but not too slow to have wasted months or years looking for something that wasn't there.
 
