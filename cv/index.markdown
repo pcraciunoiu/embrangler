@@ -10,6 +10,8 @@ Paul Craciunoiu
 
 paul {at} craciunoiu {dot} net
 
+[PDF Version](http://craciunoiu.net/files/docs/paul_resume.pdf)
+
 
 Work Experience
 ===============
