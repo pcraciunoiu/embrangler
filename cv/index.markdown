@@ -12,9 +12,20 @@ paul {at} craciunoiu {dot} net
 
 [PDF Version](/files/resume.pdf)
 
+<a href='http://vizualize.me/ObD7QOQisO?r=ObD7QOQisO' title="Paul Craciunoiu's infographic CV on vizualize.me"><img src='http://vizualize.me/media/img/socialicons/viewmyviz.png'/></a>
+
 
 Work Experience
 ===============
+
+Software Engineer, Feb 2012
+---------------------------
+[Humble Bundle](http://humblebundle.com)
+
+* Joining company early as engineer #3
+* Working in a fun and stimulating environment
+* Programming with Google App Engine, python and Android
+* Focus on creating an awesome codebase overall
 
 CTO and founder, Feb 2011 - Jan 2012
 ------------------------------------
