@@ -4,7 +4,7 @@
  <title>Disembrangling Programming</title>
  <link href="http://embrangler.com/tag/ajax/atom.xml" rel="self"/>
  <link href="http://embrangler.com/tag/ajax"/>
- <updated>2012-02-28T22:54:09-08:00</updated>
+ <updated>2012-08-29T12:39:55-07:00</updated>
  <id>http://embrangler.com/</id>
  <author>
    <name>Paul Craciunoiu</name>
@@ -64,31 +64,31 @@
 &lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;The upload form, empty and ready for action: &lt;div class='img-wrap'&gt;&lt;div class='img'&gt;
-  &lt;img title='Empty upload form' src='/images/upload/upload_1.png' alt='Empty upload form' /&gt;
+  &lt;img alt='Empty upload form' src='/images/upload/upload_1.png' title='Empty upload form' /&gt;
 &lt;/div&gt;&lt;/div&gt;&lt;/p&gt;
 &lt;/li&gt;
 
 &lt;li&gt;
 &lt;p&gt;Browsing for an image: &lt;div class='img-wrap'&gt;&lt;div class='img'&gt;
-  &lt;img title='Browsing for an image' src='/images/upload/upload_2.png' alt='Browsing for an image' /&gt;
+  &lt;img alt='Browsing for an image' src='/images/upload/upload_2.png' title='Browsing for an image' /&gt;
 &lt;/div&gt;&lt;/div&gt;&lt;/p&gt;
 &lt;/li&gt;
 
 &lt;li&gt;
 &lt;p&gt;Uploading the image (in progress): &lt;div class='img-wrap'&gt;&lt;div class='img'&gt;
-  &lt;img title='Uploading the image' src='/images/upload/upload_3.png' alt='Uploading the image' /&gt;
+  &lt;img alt='Uploading the image' src='/images/upload/upload_3.png' title='Uploading the image' /&gt;
 &lt;/div&gt;&lt;/div&gt;&lt;/p&gt;
 &lt;/li&gt;
 
 &lt;li&gt;
 &lt;p&gt;The image is uploaded: &lt;div class='img-wrap'&gt;&lt;div class='img'&gt;
-  &lt;img title='Uploaded image' src='/images/upload/upload_4.png' alt='Uploaded image' /&gt;
+  &lt;img alt='Uploaded image' src='/images/upload/upload_4.png' title='Uploaded image' /&gt;
 &lt;/div&gt;&lt;/div&gt;&lt;/p&gt;
 &lt;/li&gt;
 
 &lt;li&gt;
 &lt;p&gt;Deleting the image would show a similar progress block as uploading: &lt;div class='img-wrap'&gt;&lt;div class='img'&gt;
-  &lt;img title='Delete the image' src='/images/upload/upload_5.png' alt='Delete the image' /&gt;
+  &lt;img alt='Delete the image' src='/images/upload/upload_5.png' title='Delete the image' /&gt;
 &lt;/div&gt;&lt;/div&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;

@@ -4,7 +4,7 @@
  <title>Disembrangling Programming</title>
  <link href="http://embrangler.com/tag/drupal/atom.xml" rel="self"/>
  <link href="http://embrangler.com/tag/drupal"/>
- <updated>2012-02-28T22:54:09-08:00</updated>
+ <updated>2012-08-29T12:39:55-07:00</updated>
  <id>http://embrangler.com/</id>
  <author>
    <name>Paul Craciunoiu</name>
@@ -79,51 +79,51 @@
 
 &lt;p&gt;When we first designed the website, we wanted it to be as simple as possible. This meant stripping it down of all features except the basics: a page to list quotes and a search function. Later on, this became a problem because we added other features, such as the &lt;em&gt;Top Rated&lt;/em&gt; page and categories for each quote. We wanted to add a &lt;a href='http://quoteden.net/quote/top'&gt;Top Rated&lt;/a&gt; link to the header, but there wasn&amp;#8217;t a good place for it. If it were placed next to the search bar, it seemed to be the label for the input box, but if it were placed too far away, it looked alienated.&lt;/p&gt;
 &lt;div class='img-wrap'&gt;&lt;div class='img'&gt;
-    &lt;img title='top-rated-link' src='/images/quoteden/top-rated-link.jpg' alt='Top Rated placement in previous design' /&gt;
+    &lt;img alt='Top Rated placement in previous design' src='/images/quoteden/top-rated-link.jpg' title='top-rated-link' /&gt;
     &lt;div&gt;Top Rated placement in previous design&lt;/div&gt;
 &lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;This issue was solved with the introduction of the &lt;em&gt;tabbed navigation&lt;/em&gt; menu. The &lt;em&gt;Top Rated&lt;/em&gt; tab is now located next to the &amp;#8220;Newest&amp;#8221; tab. The menu also solved another issue: the user can now see which page they are located on because the active tab changes color.&lt;/p&gt;
 &lt;div class='img-wrap'&gt;&lt;div class='img'&gt;
-    &lt;img title='navigation' src='/images/quoteden/navigation.jpg' alt='Top Rated placement in new design' /&gt;
+    &lt;img alt='Top Rated placement in new design' src='/images/quoteden/navigation.jpg' title='navigation' /&gt;
     &lt;div&gt;Top Rated placement in new design&lt;/div&gt;
 &lt;/div&gt;&lt;/div&gt;
 &lt;h3 id='categories'&gt;Categories&lt;/h3&gt;
 
 &lt;p&gt;Another feature introduced after the initial launch of the website was the addition of categories. In the old design, they were placed at the top of the quote, which caused the quote itself to receive less attention. To fix this, the new design shows the categories under the quote and reduces the font size.&lt;/p&gt;
 &lt;div class='img-wrap'&gt;&lt;div class='img'&gt;
-    &lt;img title='categories-design' src='/images/quoteden/categories-design.jpg' alt='Categories -- before (right), after (left)' /&gt;
+    &lt;img alt='Categories -- before (right), after (left)' src='/images/quoteden/categories-design.jpg' title='categories-design' /&gt;
     &lt;div&gt;Categories -- before (right), after (left)&lt;/div&gt;
 &lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;When categories were first added, there wasn&amp;#8217;t a page to list them all. They offered the benefit of seeing quotes in the same category, and were also included in search. Now, we have a &lt;em&gt;Categories&lt;/em&gt; page.&lt;/p&gt;
 &lt;div class='img-wrap'&gt;&lt;div class='img'&gt;
-    &lt;img title='categories' src='/images/quoteden/categories.jpg' alt='The new categories page' /&gt;
+    &lt;img alt='The new categories page' src='/images/quoteden/categories.jpg' title='categories' /&gt;
     &lt;div&gt;The new categories page&lt;/div&gt;
 &lt;/div&gt;&lt;/div&gt;
 &lt;h3 id='polishing_the_design'&gt;Polishing the design&lt;/h3&gt;
 
 &lt;p&gt;One of the issues with the old Quote Den was an inconsistent design. For example, the heading &amp;#8220;Top Rated Quotes&amp;#8221; did not match the general style of the website. To solve this, we removed page headings altogether. The active page is now shown by the navigation menu.&lt;/p&gt;
 &lt;div class='img-wrap'&gt;&lt;div class='img'&gt;
-    &lt;img title='headings' src='/images/quoteden/headings.jpg' alt='Top Rated page is now consistent with new design (left)' /&gt;
+    &lt;img alt='Top Rated page is now consistent with new design (left)' src='/images/quoteden/headings.jpg' title='headings' /&gt;
     &lt;div&gt;Top Rated page is now consistent with new design (left)&lt;/div&gt;
 &lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;The &lt;em&gt;search&lt;/em&gt; page looked completely different than the rest of the website. Users could click anywhere on the quote to go to the individual quote, although there was no distinction made to indicate this. The quote ID and rating were missing from the results, which diminishes their value across the website and possibly discourages users from rating. If no one would see the rating while searching, then what&amp;#8217;s the point of rating? The search page is now styled just like the other pages. In terms of usability, we made it easier for users to find what they&amp;#8217;re looking for. If users see a quote they like in the search results, they can vote on it right away.&lt;/p&gt;
 &lt;div class='img-wrap'&gt;&lt;div class='img'&gt;
-    &lt;img title='search' src='/images/quoteden/search.jpg' alt='Search uses highlighting and is also consistent' /&gt;
+    &lt;img alt='Search uses highlighting and is also consistent' src='/images/quoteden/search.jpg' title='search' /&gt;
     &lt;div&gt;Search uses highlighting and is also consistent&lt;/div&gt;
 &lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;Part of perfecting the design was to &lt;a href='http://webdesign.about.com/od/webdesignbasics/p/aabalance.htm'&gt;balance&lt;/a&gt; all the elements on the page. The first and foremost stage in this process was to make sure all the elements are equally apart from their surrounding elements. For example, the ID and Rating were closer to the bottom of the quote than the top. Second, the stars were too small to balance the visual weight of the ID. To solve these problems, we enlarged the stars and centered them with the quote area.&lt;/p&gt;
 &lt;div class='img-wrap'&gt;&lt;div class='img'&gt;
-    &lt;img title='rating-compare' src='/images/quoteden/rating-compare.jpg' alt='Balance in whitespace and larger stars (on the left)' /&gt;
+    &lt;img alt='Balance in whitespace and larger stars (on the left)' src='/images/quoteden/rating-compare.jpg' title='rating-compare' /&gt;
     &lt;div&gt;Balance in whitespace and larger stars (on the left)&lt;/div&gt;
 &lt;/div&gt;&lt;/div&gt;
 &lt;h3 id='administrative_options'&gt;Administrative Options&lt;/h3&gt;
 &lt;div class='img-wrap'&gt;&lt;div class='img'&gt;
-    &lt;img title='rating-compare' src='/images/quoteden/add-quotes.jpg' alt='Admin: quote creation form (left is new)' /&gt;
+    &lt;img alt='Admin: quote creation form (left is new)' src='/images/quoteden/add-quotes.jpg' title='rating-compare' /&gt;
     &lt;div&gt;Admin: quote creation form (left is new)&lt;/div&gt;
 &lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;Although probably none of you may see this anytime soon, one of the reasons we redesigned Quote Den was because it was a pain to add quotes. The add form was incredibly complex. To give you an idea of how BIG this thing was, you should know it had:&lt;/p&gt;
 &lt;div class='table-wrap'&gt;&lt;div class='table'&gt;
-&lt;table cellspacing='0' border='0'&gt;
+&lt;table border='0' cellspacing='0'&gt;
 &lt;tr&gt;
 &lt;th style='width: 30%'&gt;Before&lt;/th&gt;
 &lt;th style='width: 40%'&gt;and&lt;/th&gt;

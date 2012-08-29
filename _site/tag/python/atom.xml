@@ -4,13 +4,110 @@
  <title>Disembrangling Programming</title>
  <link href="http://embrangler.com/tag/python/atom.xml" rel="self"/>
  <link href="http://embrangler.com/tag/python"/>
- <updated>2012-02-28T22:54:09-08:00</updated>
+ <updated>2012-08-29T12:39:55-07:00</updated>
  <id>http://embrangler.com/</id>
  <author>
    <name>Paul Craciunoiu</name>
    <email>paul@craciunoiu.net</email>
  </author>
 
+ 
+ <entry>
+   <title>Introducing Google App Engine Paginator</title>
+   <link href="http://embrangler.com/2012/08/introducing-google-app-engine-paginator"/>
+   <updated>2012-08-29T00:00:00-07:00</updated>
+   <id>http://embrangler.com/2012/08/introducing-google-app-engine-paginator</id>
+   <content type="html">&lt;h2 id='table_of_contents'&gt;Table of contents&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href='#summary'&gt;Summary&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='#getting_started'&gt;Getting Started&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='#features'&gt;Features&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id='summary'&gt;Summary&lt;/h2&gt;
+
+&lt;p&gt;Need a way to paginate through a GQL query easily? &lt;strong&gt;gae_paginator&lt;/strong&gt; handles the generation of next/previous page URLs, paginates on both unique and non-unique properties, and wants to be as efficient and easy to use as possible.&lt;/p&gt;
+
+&lt;h2 id='getting_started'&gt;Getting Started&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Download &lt;a href='https://github.com/humble/gae_paginator'&gt;the source&lt;/a&gt; and copy the &lt;code&gt;gae_paginator/&lt;/code&gt; folder anywhere inside your App Engine project directory.&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;That&amp;#8217;s it! Use it like so, in your handlers:&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='python'&gt;&lt;span class='kn'&gt;import&lt;/span&gt; &lt;span class='nn'&gt;os&lt;/span&gt;
+
+&lt;span class='kn'&gt;from&lt;/span&gt; &lt;span class='nn'&gt;google.appengine.ext.webapp&lt;/span&gt; &lt;span class='kn'&gt;import&lt;/span&gt; &lt;span class='n'&gt;template&lt;/span&gt;
+&lt;span class='kn'&gt;import&lt;/span&gt; &lt;span class='nn'&gt;webapp2&lt;/span&gt;
+
+&lt;span class='kn'&gt;from&lt;/span&gt; &lt;span class='nn'&gt;gae_paginator&lt;/span&gt; &lt;span class='kn'&gt;import&lt;/span&gt; &lt;span class='n'&gt;Paginator&lt;/span&gt;
+
+
+&lt;span class='k'&gt;class&lt;/span&gt; &lt;span class='nc'&gt;YourHandler&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='n'&gt;webapp2&lt;/span&gt;&lt;span class='o'&gt;.&lt;/span&gt;&lt;span class='n'&gt;RequestHandler&lt;/span&gt;&lt;span class='p'&gt;):&lt;/span&gt;
+
+  &lt;span class='k'&gt;def&lt;/span&gt; &lt;span class='nf'&gt;get&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='bp'&gt;self&lt;/span&gt;&lt;span class='p'&gt;):&lt;/span&gt;
+  &lt;span class='n'&gt;paginator&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='n'&gt;Paginator&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='n'&gt;YourModel&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='s'&gt;&amp;#39;some_column = :1 AND other_column = :2&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt;
+                        &lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='s'&gt;&amp;#39;some_value&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='s'&gt;&amp;#39;other_value&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;],&lt;/span&gt; &lt;span class='n'&gt;expect_duplicates&lt;/span&gt;&lt;span class='o'&gt;=&lt;/span&gt;&lt;span class='bp'&gt;True&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt;
+                        &lt;span class='n'&gt;per_page&lt;/span&gt;&lt;span class='o'&gt;=&lt;/span&gt;&lt;span class='mi'&gt;50&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='n'&gt;paginate_on&lt;/span&gt;&lt;span class='o'&gt;=&lt;/span&gt;&lt;span class='s'&gt;&amp;#39;-created&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt;
+  &lt;span class='n'&gt;page&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='n'&gt;paginator&lt;/span&gt;&lt;span class='o'&gt;.&lt;/span&gt;&lt;span class='n'&gt;get_page&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='n'&gt;request&lt;/span&gt;&lt;span class='o'&gt;=&lt;/span&gt;&lt;span class='bp'&gt;self&lt;/span&gt;&lt;span class='o'&gt;.&lt;/span&gt;&lt;span class='n'&gt;request&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt;
+  &lt;span class='n'&gt;path&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='n'&gt;os&lt;/span&gt;&lt;span class='o'&gt;.&lt;/span&gt;&lt;span class='n'&gt;path&lt;/span&gt;&lt;span class='o'&gt;.&lt;/span&gt;&lt;span class='n'&gt;join&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='n'&gt;os&lt;/span&gt;&lt;span class='o'&gt;.&lt;/span&gt;&lt;span class='n'&gt;path&lt;/span&gt;&lt;span class='o'&gt;.&lt;/span&gt;&lt;span class='n'&gt;dirname&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='n'&gt;__file__&lt;/span&gt;&lt;span class='p'&gt;),&lt;/span&gt; &lt;span class='s'&gt;&amp;#39;index.html&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt;
+  &lt;span class='bp'&gt;self&lt;/span&gt;&lt;span class='o'&gt;.&lt;/span&gt;&lt;span class='n'&gt;response&lt;/span&gt;&lt;span class='o'&gt;.&lt;/span&gt;&lt;span class='n'&gt;out&lt;/span&gt;&lt;span class='o'&gt;.&lt;/span&gt;&lt;span class='n'&gt;write&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='n'&gt;template&lt;/span&gt;&lt;span class='o'&gt;.&lt;/span&gt;&lt;span class='n'&gt;render&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='n'&gt;path&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+    &lt;span class='s'&gt;&amp;#39;objects&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;:&lt;/span&gt; &lt;span class='nb'&gt;list&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='n'&gt;page&lt;/span&gt;&lt;span class='p'&gt;),&lt;/span&gt;
+    &lt;span class='s'&gt;&amp;#39;page&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;:&lt;/span&gt; &lt;span class='n'&gt;page&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt;
+  &lt;span class='p'&gt;})&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;In your django template:&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='html'&gt;{% if page.has_previous %}
+  &lt;span class='nt'&gt;&amp;lt;a&lt;/span&gt; &lt;span class='na'&gt;href=&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;{{ page.get_previous_url }}&amp;quot;&lt;/span&gt;&lt;span class='nt'&gt;&amp;gt;&lt;/span&gt;&lt;span class='ni'&gt;&amp;amp;laquo;&lt;/span&gt; Previous page&lt;span class='nt'&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
+{% endif %}
+{% if page.has_next %}
+  &lt;span class='nt'&gt;&amp;lt;a&lt;/span&gt; &lt;span class='na'&gt;href=&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;{{ page.get_next_url }}&amp;quot;&lt;/span&gt;&lt;span class='nt'&gt;&amp;gt;&lt;/span&gt;Next page &lt;span class='ni'&gt;&amp;amp;raquo;&lt;/span&gt;&lt;span class='nt'&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
+{% endif %}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Or jinja2 template:&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='html'&gt;{% if page.has_previous() %}
+   &lt;span class='nt'&gt;&amp;lt;a&lt;/span&gt; &lt;span class='na'&gt;href=&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;{{ page.get_previous_url() }}&amp;quot;&lt;/span&gt;&lt;span class='nt'&gt;&amp;gt;&lt;/span&gt;&lt;span class='ni'&gt;&amp;amp;laquo;&lt;/span&gt; Previous page&lt;span class='nt'&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
+{% endif %}
+{% if page.has_next() %}
+  &lt;span class='nt'&gt;&amp;lt;a&lt;/span&gt; &lt;span class='na'&gt;href=&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;{{ page.get_next_url() }}&amp;quot;&lt;/span&gt;&lt;span class='nt'&gt;&amp;gt;&lt;/span&gt;Next page &lt;span class='ni'&gt;&amp;amp;raquo;&lt;/span&gt;&lt;span class='nt'&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
+{% endif %}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;h2 id='features'&gt;Features&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Simple pagination by key&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Paginate by non-unique properties with a specified tolerance for duplicates.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Example: paginate songs by artist name, 10 songs per page, expect 100 duplicates. Set: &lt;code&gt;expect_duplicates=100&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Order and paginate by a custom column (Date/DateTime and key supported and tested).&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Show next and previous buttons only when there is actual data before/after.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</content>
+ </entry>
  
  <entry>
    <title>Python scoping: understading LEGB</title>

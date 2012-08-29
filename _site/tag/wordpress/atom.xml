@@ -4,7 +4,7 @@
  <title>Disembrangling Programming</title>
  <link href="http://embrangler.com/tag/wordpress/atom.xml" rel="self"/>
  <link href="http://embrangler.com/tag/wordpress"/>
- <updated>2012-02-28T22:54:09-08:00</updated>
+ <updated>2012-08-29T12:39:55-07:00</updated>
  <id>http://embrangler.com/</id>
  <author>
    <name>Paul Craciunoiu</name>
@@ -125,7 +125,7 @@
 &lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='php'&gt;&lt;span class='cp'&gt;&amp;lt;?php&lt;/span&gt;
 
 &lt;span class='k'&gt;if&lt;/span&gt; &lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='o'&gt;!&lt;/span&gt;&lt;span class='nv'&gt;$_POST&lt;/span&gt;&lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;payload&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;])&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
-    &lt;span class='nb'&gt;header&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;HTTP/1.0 403 Forbidden&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+    &lt;span class='nx'&gt;header&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;HTTP/1.0 403 Forbidden&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
     &lt;span class='k'&gt;exit&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt;
 &lt;span class='p'&gt;}&lt;/span&gt;
 
@@ -133,10 +133,10 @@
 &lt;span class='nv'&gt;$fh&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='nb'&gt;fopen&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nx'&gt;HOOKLOG&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='s1'&gt;&amp;#39;w&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt; &lt;span class='k'&gt;or&lt;/span&gt; &lt;span class='k'&gt;die&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s2'&gt;&amp;quot;Can&amp;#39;t open file&amp;quot;&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
 &lt;span class='nv'&gt;$data&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='s1'&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt;
 
-&lt;span class='nv'&gt;$hook&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='nx'&gt;json_decode&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nv'&gt;$_POST&lt;/span&gt;&lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;payload&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;]);&lt;/span&gt;
+&lt;span class='nv'&gt;$hook&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='nb'&gt;json_decode&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nv'&gt;$_POST&lt;/span&gt;&lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;payload&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;]);&lt;/span&gt;
 
 &lt;span class='k'&gt;if&lt;/span&gt; &lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nv'&gt;$hook&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;repository&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;owner&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;name&lt;/span&gt; &lt;span class='o'&gt;!=&lt;/span&gt; &lt;span class='s1'&gt;&amp;#39;pcraciunoiu&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
-    &lt;span class='nb'&gt;header&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;HTTP/1.0 403 Forbidden&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+    &lt;span class='nx'&gt;header&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;HTTP/1.0 403 Forbidden&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
     &lt;span class='k'&gt;exit&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt;
 &lt;span class='p'&gt;}&lt;/span&gt;
 
@@ -399,11 +399,11 @@
     &lt;span class='k'&gt;require_once&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt; &lt;span class='s1'&gt;&amp;#39;/wp-load.php&amp;#39;&lt;/span&gt; &lt;span class='p'&gt;);&lt;/span&gt;
     &lt;span class='nv'&gt;$contact_invalid&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='k'&gt;array&lt;/span&gt;&lt;span class='p'&gt;();&lt;/span&gt;
     &lt;span class='nv'&gt;$contact_data&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='k'&gt;array&lt;/span&gt;&lt;span class='p'&gt;();&lt;/span&gt;
-    &lt;span class='nv'&gt;$contact_data&lt;/span&gt;&lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;name&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;]&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='nx'&gt;filter_var&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nv'&gt;$_POST&lt;/span&gt;&lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;contact_name&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;],&lt;/span&gt;
+    &lt;span class='nv'&gt;$contact_data&lt;/span&gt;&lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;name&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;]&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='nb'&gt;filter_var&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nv'&gt;$_POST&lt;/span&gt;&lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;contact_name&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;],&lt;/span&gt;
         &lt;span class='nx'&gt;FILTER_SANITIZE_STRING&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
-    &lt;span class='nv'&gt;$contact_data&lt;/span&gt;&lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;message&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;]&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='nx'&gt;filter_var&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nv'&gt;$_POST&lt;/span&gt;&lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;contact_message&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;],&lt;/span&gt;
+    &lt;span class='nv'&gt;$contact_data&lt;/span&gt;&lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;message&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;]&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='nb'&gt;filter_var&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nv'&gt;$_POST&lt;/span&gt;&lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;contact_message&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;],&lt;/span&gt;
         &lt;span class='nx'&gt;FILTER_SANITIZE_STRING&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
-    &lt;span class='nv'&gt;$contact_data&lt;/span&gt;&lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;email&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;]&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='nx'&gt;filter_var&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nv'&gt;$_POST&lt;/span&gt;&lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;contact_email&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;],&lt;/span&gt;
+    &lt;span class='nv'&gt;$contact_data&lt;/span&gt;&lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;email&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;]&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='nb'&gt;filter_var&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nv'&gt;$_POST&lt;/span&gt;&lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;contact_email&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;],&lt;/span&gt;
         &lt;span class='nx'&gt;FILTER_VALIDATE_EMAIL&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
     &lt;span class='k'&gt;foreach&lt;/span&gt; &lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nv'&gt;$contact_data&lt;/span&gt; &lt;span class='k'&gt;as&lt;/span&gt; &lt;span class='nv'&gt;$contact_key&lt;/span&gt; &lt;span class='o'&gt;=&amp;gt;&lt;/span&gt; &lt;span class='nv'&gt;$contact_field&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
         &lt;span class='k'&gt;if&lt;/span&gt; &lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='o'&gt;!&lt;/span&gt;&lt;span class='nv'&gt;$contact_field&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
@@ -432,7 +432,7 @@
 &lt;span class='s2'&gt;            WHERE comment_ID = &amp;#39;&lt;/span&gt;&lt;span class='si'&gt;{&lt;/span&gt;&lt;span class='nv'&gt;$comment_id&lt;/span&gt;&lt;span class='si'&gt;}&lt;/span&gt;&lt;span class='s2'&gt; LIMIT 1;&amp;#39;&amp;quot;&lt;/span&gt;
         &lt;span class='p'&gt;);&lt;/span&gt;
         &lt;span class='c1'&gt;// allow contact again after one hour&lt;/span&gt;
-        &lt;span class='nb'&gt;setcookie&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;awesomemath_contact&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='mi'&gt;1&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='nb'&gt;time&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt; &lt;span class='o'&gt;+&lt;/span&gt; &lt;span class='mi'&gt;3600&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='s1'&gt;&amp;#39;/&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+        &lt;span class='nx'&gt;setcookie&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;awesomemath_contact&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='mi'&gt;1&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='nb'&gt;time&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt; &lt;span class='o'&gt;+&lt;/span&gt; &lt;span class='mi'&gt;3600&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='s1'&gt;&amp;#39;/&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
         &lt;span class='k'&gt;if&lt;/span&gt; &lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nv'&gt;$comment_id&lt;/span&gt; &lt;span class='o'&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class='o'&gt;!&lt;/span&gt;&lt;span class='nv'&gt;$comment_approved&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;spam&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
             &lt;span class='c1'&gt;// not spam!&lt;/span&gt;
             &lt;span class='nv'&gt;$contact_headers&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; 
@@ -453,7 +453,7 @@
 
 &lt;span class='s1'&gt;&amp;#39;&lt;/span&gt; &lt;span class='o'&gt;.&lt;/span&gt; &lt;span class='nv'&gt;$contact_data&lt;/span&gt;&lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;message&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;],&lt;/span&gt; &lt;span class='nv'&gt;$contact_headers&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
             &lt;span class='c1'&gt;// redirect to prevent resubmission&lt;/span&gt;
-            &lt;span class='nb'&gt;header&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s2'&gt;&amp;quot;Location: &lt;/span&gt;&lt;span class='si'&gt;{&lt;/span&gt;&lt;span class='nv'&gt;$_SERVER&lt;/span&gt;&lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;HTTP_REFERER&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;]&lt;/span&gt;&lt;span class='si'&gt;}&lt;/span&gt;&lt;span class='s2'&gt;?contacted=1&amp;quot;&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+            &lt;span class='nx'&gt;header&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s2'&gt;&amp;quot;Location: &lt;/span&gt;&lt;span class='si'&gt;{&lt;/span&gt;&lt;span class='nv'&gt;$_SERVER&lt;/span&gt;&lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;HTTP_REFERER&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;]&lt;/span&gt;&lt;span class='si'&gt;}&lt;/span&gt;&lt;span class='s2'&gt;?contacted=1&amp;quot;&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
             &lt;span class='k'&gt;die&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt;
         &lt;span class='p'&gt;}&lt;/span&gt;
     &lt;span class='p'&gt;}&lt;/span&gt;

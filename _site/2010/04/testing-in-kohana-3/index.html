@@ -166,7 +166,7 @@
 
 <p>I&#8217;m using the UI provided by the <strong>unittest</strong> module. That means I&#8217;ve added a route to it in my <strong>bootstrap.php</strong> file, and I&#8217;m accessing it at <code>http://mysite/phpunit</code>. From there, I pick the group of tests that I wish to run, and examine the results. Yep, it&#8217;s that easy.</p>
 
-<p>Here&#8217;s how it looks: <img src='/images/phpunit/fastask-running-tests.png' alt='Running PHPUnit tests in Kohana 3' /></p>
+<p>Here&#8217;s how it looks: <img alt='Running PHPUnit tests in Kohana 3' src='/images/phpunit/fastask-running-tests.png' /></p>
 
 <h2 id='writing_tests'>Writing tests</h2>
 
@@ -326,7 +326,7 @@
                           <span class='s1'>&#39;application/json&#39;</span> <span class='p'>);</span>
         <span class='nv'>$this</span><span class='o'>-&gt;</span><span class='na'>assertSame</span><span class='p'>(</span><span class='nv'>$response</span><span class='o'>-&gt;</span><span class='na'>status</span><span class='p'>,</span> <span class='nv'>$status</span><span class='p'>);</span>
 
-        <span class='nv'>$json</span> <span class='o'>=</span> <span class='nx'>json_decode</span><span class='p'>(</span><span class='nv'>$response</span><span class='o'>-&gt;</span><span class='na'>response</span><span class='p'>);</span>
+        <span class='nv'>$json</span> <span class='o'>=</span> <span class='nb'>json_decode</span><span class='p'>(</span><span class='nv'>$response</span><span class='o'>-&gt;</span><span class='na'>response</span><span class='p'>);</span>
         <span class='nv'>$count</span> <span class='o'>=</span> <span class='nb'>count</span><span class='p'>(</span><span class='nv'>$json</span><span class='o'>-&gt;</span><span class='na'>tasks</span><span class='p'>);</span>
         <span class='k'>if</span> <span class='p'>(</span><span class='nv'>$count</span> <span class='o'>&gt;</span> <span class='mi'>0</span><span class='p'>)</span> <span class='p'>{</span>
             <span class='k'>foreach</span> <span class='p'>(</span><span class='nv'>$json</span><span class='o'>-&gt;</span><span class='na'>tasks</span> <span class='k'>as</span> <span class='nv'>$task</span><span class='p'>)</span> <span class='p'>{</span>
@@ -354,11 +354,11 @@
   <h2>Related Posts</h2>
   <ul>
     
-      <li><a href="/2010/03/quoteden-moving-to-kohana-3">Quoteden: Moving to Kohana 3</a> &mdash; 12 Mar 2010</li>
+      <li><a href="/2012/08/introducing-google-app-engine-paginator">Introducing Google App Engine Paginator</a> &mdash; 29 Aug 2012</li>
     
-      <li><a href="/2010/03/embrangler-moving-to-jekyll">Embrangler: Moving to Jekyll</a> &mdash; 21 Mar 2010</li>
+      <li><a href="/2012/01/sowink-discontinued">SoWink: discontinued</a> &mdash; 24 Jan 2012</li>
     
-      <li><a href="/2010/12/migrating-large-amounts-of-data">SUMO and migrating large amounts of data</a> &mdash; 03 Dec 2010</li>
+      <li><a href="/2012/01/belated-birthday-resolutions">Belated birthday resolutions</a> &mdash; 23 Jan 2012</li>
     
   </ul>
 </div>

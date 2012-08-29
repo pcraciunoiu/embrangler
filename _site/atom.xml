@@ -4,13 +4,110 @@
  <title>Disembrangling Programming - Paul Craciunoiu</title>
  <link href="http://embrangler.com/atom.xml" rel="self"/>
  <link href="http://embrangler.com/"/>
- <updated>2012-02-28T22:54:09-08:00</updated>
+ <updated>2012-08-29T12:39:55-07:00</updated>
  <id>http://embrangler.com/</id>
  <author>
    <name>Paul Craciunoiu</name>
    <email>paul@craciunoiu.net</email>
  </author>
 
+ 
+ <entry>
+   <title>Introducing Google App Engine Paginator</title>
+   <link href="http://embrangler.com/2012/08/introducing-google-app-engine-paginator"/>
+   <updated>2012-08-29T00:00:00-07:00</updated>
+   <id>http://embrangler.com/2012/08/introducing-google-app-engine-paginator</id>
+   <content type="html">&lt;h2 id='table_of_contents'&gt;Table of contents&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href='#summary'&gt;Summary&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='#getting_started'&gt;Getting Started&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='#features'&gt;Features&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id='summary'&gt;Summary&lt;/h2&gt;
+
+&lt;p&gt;Need a way to paginate through a GQL query easily? &lt;strong&gt;gae_paginator&lt;/strong&gt; handles the generation of next/previous page URLs, paginates on both unique and non-unique properties, and wants to be as efficient and easy to use as possible.&lt;/p&gt;
+
+&lt;h2 id='getting_started'&gt;Getting Started&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Download &lt;a href='https://github.com/humble/gae_paginator'&gt;the source&lt;/a&gt; and copy the &lt;code&gt;gae_paginator/&lt;/code&gt; folder anywhere inside your App Engine project directory.&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;That&amp;#8217;s it! Use it like so, in your handlers:&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='python'&gt;&lt;span class='kn'&gt;import&lt;/span&gt; &lt;span class='nn'&gt;os&lt;/span&gt;
+
+&lt;span class='kn'&gt;from&lt;/span&gt; &lt;span class='nn'&gt;google.appengine.ext.webapp&lt;/span&gt; &lt;span class='kn'&gt;import&lt;/span&gt; &lt;span class='n'&gt;template&lt;/span&gt;
+&lt;span class='kn'&gt;import&lt;/span&gt; &lt;span class='nn'&gt;webapp2&lt;/span&gt;
+
+&lt;span class='kn'&gt;from&lt;/span&gt; &lt;span class='nn'&gt;gae_paginator&lt;/span&gt; &lt;span class='kn'&gt;import&lt;/span&gt; &lt;span class='n'&gt;Paginator&lt;/span&gt;
+
+
+&lt;span class='k'&gt;class&lt;/span&gt; &lt;span class='nc'&gt;YourHandler&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='n'&gt;webapp2&lt;/span&gt;&lt;span class='o'&gt;.&lt;/span&gt;&lt;span class='n'&gt;RequestHandler&lt;/span&gt;&lt;span class='p'&gt;):&lt;/span&gt;
+
+  &lt;span class='k'&gt;def&lt;/span&gt; &lt;span class='nf'&gt;get&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='bp'&gt;self&lt;/span&gt;&lt;span class='p'&gt;):&lt;/span&gt;
+  &lt;span class='n'&gt;paginator&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='n'&gt;Paginator&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='n'&gt;YourModel&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='s'&gt;&amp;#39;some_column = :1 AND other_column = :2&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt;
+                        &lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='s'&gt;&amp;#39;some_value&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='s'&gt;&amp;#39;other_value&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;],&lt;/span&gt; &lt;span class='n'&gt;expect_duplicates&lt;/span&gt;&lt;span class='o'&gt;=&lt;/span&gt;&lt;span class='bp'&gt;True&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt;
+                        &lt;span class='n'&gt;per_page&lt;/span&gt;&lt;span class='o'&gt;=&lt;/span&gt;&lt;span class='mi'&gt;50&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='n'&gt;paginate_on&lt;/span&gt;&lt;span class='o'&gt;=&lt;/span&gt;&lt;span class='s'&gt;&amp;#39;-created&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt;
+  &lt;span class='n'&gt;page&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='n'&gt;paginator&lt;/span&gt;&lt;span class='o'&gt;.&lt;/span&gt;&lt;span class='n'&gt;get_page&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='n'&gt;request&lt;/span&gt;&lt;span class='o'&gt;=&lt;/span&gt;&lt;span class='bp'&gt;self&lt;/span&gt;&lt;span class='o'&gt;.&lt;/span&gt;&lt;span class='n'&gt;request&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt;
+  &lt;span class='n'&gt;path&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='n'&gt;os&lt;/span&gt;&lt;span class='o'&gt;.&lt;/span&gt;&lt;span class='n'&gt;path&lt;/span&gt;&lt;span class='o'&gt;.&lt;/span&gt;&lt;span class='n'&gt;join&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='n'&gt;os&lt;/span&gt;&lt;span class='o'&gt;.&lt;/span&gt;&lt;span class='n'&gt;path&lt;/span&gt;&lt;span class='o'&gt;.&lt;/span&gt;&lt;span class='n'&gt;dirname&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='n'&gt;__file__&lt;/span&gt;&lt;span class='p'&gt;),&lt;/span&gt; &lt;span class='s'&gt;&amp;#39;index.html&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt;
+  &lt;span class='bp'&gt;self&lt;/span&gt;&lt;span class='o'&gt;.&lt;/span&gt;&lt;span class='n'&gt;response&lt;/span&gt;&lt;span class='o'&gt;.&lt;/span&gt;&lt;span class='n'&gt;out&lt;/span&gt;&lt;span class='o'&gt;.&lt;/span&gt;&lt;span class='n'&gt;write&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='n'&gt;template&lt;/span&gt;&lt;span class='o'&gt;.&lt;/span&gt;&lt;span class='n'&gt;render&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='n'&gt;path&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+    &lt;span class='s'&gt;&amp;#39;objects&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;:&lt;/span&gt; &lt;span class='nb'&gt;list&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='n'&gt;page&lt;/span&gt;&lt;span class='p'&gt;),&lt;/span&gt;
+    &lt;span class='s'&gt;&amp;#39;page&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;:&lt;/span&gt; &lt;span class='n'&gt;page&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt;
+  &lt;span class='p'&gt;})&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;In your django template:&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='html'&gt;{% if page.has_previous %}
+  &lt;span class='nt'&gt;&amp;lt;a&lt;/span&gt; &lt;span class='na'&gt;href=&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;{{ page.get_previous_url }}&amp;quot;&lt;/span&gt;&lt;span class='nt'&gt;&amp;gt;&lt;/span&gt;&lt;span class='ni'&gt;&amp;amp;laquo;&lt;/span&gt; Previous page&lt;span class='nt'&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
+{% endif %}
+{% if page.has_next %}
+  &lt;span class='nt'&gt;&amp;lt;a&lt;/span&gt; &lt;span class='na'&gt;href=&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;{{ page.get_next_url }}&amp;quot;&lt;/span&gt;&lt;span class='nt'&gt;&amp;gt;&lt;/span&gt;Next page &lt;span class='ni'&gt;&amp;amp;raquo;&lt;/span&gt;&lt;span class='nt'&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
+{% endif %}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Or jinja2 template:&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='html'&gt;{% if page.has_previous() %}
+   &lt;span class='nt'&gt;&amp;lt;a&lt;/span&gt; &lt;span class='na'&gt;href=&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;{{ page.get_previous_url() }}&amp;quot;&lt;/span&gt;&lt;span class='nt'&gt;&amp;gt;&lt;/span&gt;&lt;span class='ni'&gt;&amp;amp;laquo;&lt;/span&gt; Previous page&lt;span class='nt'&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
+{% endif %}
+{% if page.has_next() %}
+  &lt;span class='nt'&gt;&amp;lt;a&lt;/span&gt; &lt;span class='na'&gt;href=&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;{{ page.get_next_url() }}&amp;quot;&lt;/span&gt;&lt;span class='nt'&gt;&amp;gt;&lt;/span&gt;Next page &lt;span class='ni'&gt;&amp;amp;raquo;&lt;/span&gt;&lt;span class='nt'&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
+{% endif %}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;h2 id='features'&gt;Features&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Simple pagination by key&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Paginate by non-unique properties with a specified tolerance for duplicates.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Example: paginate songs by artist name, 10 songs per page, expect 100 duplicates. Set: &lt;code&gt;expect_duplicates=100&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Order and paginate by a custom column (Date/DateTime and key supported and tested).&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Show next and previous buttons only when there is actual data before/after.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</content>
+ </entry>
  
  <entry>
    <title>SoWink: discontinued</title>
@@ -1318,220 +1415,6 @@
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;Hope that helps someone.&lt;/p&gt;</content>
- </entry>
- 
- <entry>
-   <title>Django and AJAX image uploads</title>
-   <link href="http://embrangler.com/2010/08/ajax-uploads-images-in-django"/>
-   <updated>2010-08-20T00:00:00-07:00</updated>
-   <id>http://embrangler.com/2010/08/ajax-uploads-images-in-django</id>
-   <content type="html">&lt;p&gt;Table of contents:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;a href='#demo'&gt;Demo&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-
-&lt;li&gt;
-&lt;p&gt;&lt;a href='#summary'&gt;Summary&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-
-&lt;li&gt;
-&lt;p&gt;&lt;a href='#server_side_django'&gt;Server side (Django)&lt;/a&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href='#model'&gt;Model&lt;/a&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;a href='#form'&gt;Form&lt;/a&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;a href='#view_uploading_image_saving_to_disk'&gt;View&lt;/a&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;a href='#generating_the_thumbnail_with_pil'&gt;Generating the thumbnail with PIL&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-
-&lt;li&gt;
-&lt;p&gt;&lt;a href='#client_side'&gt;Client side&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-
-&lt;li&gt;
-&lt;p&gt;&lt;a href='#a_note_about_graceful_degradation'&gt;Graceful degradation&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id='demo'&gt;Demo&lt;/h2&gt;
-
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;a href='http://screencast.com/t/ZGI0NTA3'&gt;Screencast&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-
-&lt;li&gt;
-&lt;p&gt;Screenshots:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;The upload form, empty and ready for action: &lt;div class='img-wrap'&gt;&lt;div class='img'&gt;
-  &lt;img title='Empty upload form' src='/images/upload/upload_1.png' alt='Empty upload form' /&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;/li&gt;
-
-&lt;li&gt;
-&lt;p&gt;Browsing for an image: &lt;div class='img-wrap'&gt;&lt;div class='img'&gt;
-  &lt;img title='Browsing for an image' src='/images/upload/upload_2.png' alt='Browsing for an image' /&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;/li&gt;
-
-&lt;li&gt;
-&lt;p&gt;Uploading the image (in progress): &lt;div class='img-wrap'&gt;&lt;div class='img'&gt;
-  &lt;img title='Uploading the image' src='/images/upload/upload_3.png' alt='Uploading the image' /&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;/li&gt;
-
-&lt;li&gt;
-&lt;p&gt;The image is uploaded: &lt;div class='img-wrap'&gt;&lt;div class='img'&gt;
-  &lt;img title='Uploaded image' src='/images/upload/upload_4.png' alt='Uploaded image' /&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;/li&gt;
-
-&lt;li&gt;
-&lt;p&gt;Deleting the image would show a similar progress block as uploading: &lt;div class='img-wrap'&gt;&lt;div class='img'&gt;
-  &lt;img title='Delete the image' src='/images/upload/upload_5.png' alt='Delete the image' /&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id='summary'&gt;Summary&lt;/h2&gt;
-
-&lt;p&gt;In this post, we&amp;#8217;ll go through how to get AJAX uploads to work with Django, including:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href='http://en.wikipedia.org/wiki/Cross-site_request_forgery'&gt;csrf protection&lt;/a&gt; with &lt;a href='http://docs.djangoproject.com/en/dev/topics/forms/'&gt;Django&amp;#8217;s forms&lt;/a&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;a href='http://en.wikipedia.org/wiki/Graceful_degradation'&gt;graceful degradation&lt;/a&gt; (see also &lt;a href='http://en.wikipedia.org/wiki/Unobtrusive_JavaScript'&gt;unobtrusive JavaScript&lt;/a&gt;)&lt;/li&gt;
-
-&lt;li&gt;&lt;a href='http://docs.djangoproject.com/en/dev/topics/http/file-uploads/'&gt;uploading files in Django&lt;/a&gt;&lt;/li&gt;
-
-&lt;li&gt;thumbnail generation with &lt;a href='http://www.pythonware.com/products/pil/'&gt;PIL&lt;/a&gt;&lt;/li&gt;
-
-&lt;li&gt;cross-browser uploading of files through AJAX&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; I&amp;#8217;m planning to add upload progress. If you can&amp;#8217;t wait for that post (understandably), there are several ways to go about it:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;If your site isn&amp;#8217;t using multiple webheads, you can just ask the webhead to get you the size of what&amp;#8217;s been uploaded so far. Since Django can read in chunks, it can tell you how much has been processed. See &lt;a href='http://fairviewcomputing.com/blog/2008/10/21/ajax-upload-progress-bars-jquery-django-nginx/'&gt;this post&lt;/a&gt; for implementation ideas.&lt;/li&gt;
-
-&lt;li&gt;Or, regardless of the server setup, you can use the File API (in Firefox and Chrome) - easier, cleaner, no server-side interaction required.&lt;/li&gt;
-
-&lt;li&gt;Other multi-webhead approaches: writing progress to a file shared among them, or saving directly to a shared folder and e.g. returning the size uploaded so far.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id='server_side_django'&gt;Server side (Django)&lt;/h2&gt;
-
-&lt;p&gt;First, we&amp;#8217;ll look at how the server handles files sent to it.&lt;/p&gt;
-
-&lt;h3 id='model'&gt;Model&lt;/h3&gt;
-
-&lt;p&gt;I created an app called &lt;code&gt;upload&lt;/code&gt; with an ImageAttachment model, like so:&lt;/p&gt;
-
-&lt;p&gt;&lt;a href='http://github.com/pcraciunoiu/kitsune/blob/466b65ad885118f0fb8d14f706ea9efa21f49edd/apps/upload/models.py'&gt;apps/upload/models.py&lt;/a&gt;:&lt;/p&gt;
-&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='python'&gt;&lt;span class='kn'&gt;from&lt;/span&gt; &lt;span class='nn'&gt;django.conf&lt;/span&gt; &lt;span class='kn'&gt;import&lt;/span&gt; &lt;span class='n'&gt;settings&lt;/span&gt;
-&lt;span class='kn'&gt;from&lt;/span&gt; &lt;span class='nn'&gt;django.contrib.auth.models&lt;/span&gt; &lt;span class='kn'&gt;import&lt;/span&gt; &lt;span class='n'&gt;User&lt;/span&gt;
-&lt;span class='kn'&gt;from&lt;/span&gt; &lt;span class='nn'&gt;django.contrib.contenttypes.models&lt;/span&gt; &lt;span class='kn'&gt;import&lt;/span&gt; &lt;span class='n'&gt;ContentType&lt;/span&gt;
-&lt;span class='kn'&gt;from&lt;/span&gt; &lt;span class='nn'&gt;django.contrib.contenttypes&lt;/span&gt; &lt;span class='kn'&gt;import&lt;/span&gt; &lt;span class='n'&gt;generic&lt;/span&gt;
-&lt;span class='kn'&gt;from&lt;/span&gt; &lt;span class='nn'&gt;django.db&lt;/span&gt; &lt;span class='kn'&gt;import&lt;/span&gt; &lt;span class='n'&gt;models&lt;/span&gt;
-
-
-&lt;span class='k'&gt;class&lt;/span&gt; &lt;span class='nc'&gt;ImageAttachment&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='n'&gt;models&lt;/span&gt;&lt;span class='o'&gt;.&lt;/span&gt;&lt;span class='n'&gt;Model&lt;/span&gt;&lt;span class='p'&gt;):&lt;/span&gt;
-    &lt;span class='sd'&gt;&amp;quot;&amp;quot;&amp;quot;A tag on an item.&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
-    &lt;span class='nb'&gt;file&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='n'&gt;models&lt;/span&gt;&lt;span class='o'&gt;.&lt;/span&gt;&lt;span class='n'&gt;ImageField&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='n'&gt;upload_to&lt;/span&gt;&lt;span class='o'&gt;=&lt;/span&gt;&lt;span class='n'&gt;settings&lt;/span&gt;&lt;span class='o'&gt;.&lt;/span&gt;&lt;span class='n'&gt;IMAGE_UPLOAD_PATH&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt;
-    &lt;span class='n'&gt;thumbnail&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='n'&gt;models&lt;/span&gt;&lt;span class='o'&gt;.&lt;/span&gt;&lt;span class='n'&gt;ImageField&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='n'&gt;upload_to&lt;/span&gt;&lt;span class='o'&gt;=&lt;/span&gt;&lt;span class='n'&gt;settings&lt;/span&gt;&lt;span class='o'&gt;.&lt;/span&gt;&lt;span class='n'&gt;THUMBNAIL_UPLOAD_PATH&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt;
-    &lt;span class='n'&gt;creator&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='n'&gt;models&lt;/span&gt;&lt;span class='o'&gt;.&lt;/span&gt;&lt;span class='n'&gt;ForeignKey&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='n'&gt;User&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='n'&gt;related_name&lt;/span&gt;&lt;span class='o'&gt;=&lt;/span&gt;&lt;span class='s'&gt;&amp;#39;image_attachments&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt;
-    &lt;span class='n'&gt;content_type&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='n'&gt;models&lt;/span&gt;&lt;span class='o'&gt;.&lt;/span&gt;&lt;span class='n'&gt;ForeignKey&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='n'&gt;ContentType&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt;
-    &lt;span class='n'&gt;object_id&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='n'&gt;models&lt;/span&gt;&lt;span class='o'&gt;.&lt;/span&gt;&lt;span class='n'&gt;PositiveIntegerField&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt;
-
-    &lt;span class='n'&gt;content_object&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='n'&gt;generic&lt;/span&gt;&lt;span class='o'&gt;.&lt;/span&gt;&lt;span class='n'&gt;GenericForeignKey&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt;
-
-    &lt;span class='k'&gt;def&lt;/span&gt; &lt;span class='nf'&gt;__unicode__&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='bp'&gt;self&lt;/span&gt;&lt;span class='p'&gt;):&lt;/span&gt;
-        &lt;span class='k'&gt;return&lt;/span&gt; &lt;span class='bp'&gt;self&lt;/span&gt;&lt;span class='o'&gt;.&lt;/span&gt;&lt;span class='n'&gt;file&lt;/span&gt;&lt;span class='o'&gt;.&lt;/span&gt;&lt;span class='n'&gt;name&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;This represents an image attached to a piece of content (using a generic foreign key). Pretty basic stuff. The form is ridiculously simple:&lt;/p&gt;
-
-&lt;h3 id='form'&gt;Form&lt;/h3&gt;
-
-&lt;p&gt;&lt;a href='http://github.com/pcraciunoiu/kitsune/blob/466b65ad885118f0fb8d14f706ea9efa21f49edd/apps/upload/forms.py'&gt;apps/upload/forms.py&lt;/a&gt;:&lt;/p&gt;
-&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='python'&gt;&lt;span class='kn'&gt;from&lt;/span&gt; &lt;span class='nn'&gt;django&lt;/span&gt; &lt;span class='kn'&gt;import&lt;/span&gt; &lt;span class='n'&gt;forms&lt;/span&gt;
-
-
-&lt;span class='k'&gt;class&lt;/span&gt; &lt;span class='nc'&gt;ImageUploadForm&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='n'&gt;forms&lt;/span&gt;&lt;span class='o'&gt;.&lt;/span&gt;&lt;span class='n'&gt;Form&lt;/span&gt;&lt;span class='p'&gt;):&lt;/span&gt;
-    &lt;span class='sd'&gt;&amp;quot;&amp;quot;&amp;quot;Image upload form.&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
-    &lt;span class='n'&gt;image&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='n'&gt;forms&lt;/span&gt;&lt;span class='o'&gt;.&lt;/span&gt;&lt;span class='n'&gt;ImageField&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;h3 id='view_uploading_image_saving_to_disk'&gt;View (uploading image, saving to disk)&lt;/h3&gt;
-
-&lt;p&gt;The view is a bit more complicated, so I won&amp;#8217;t go into the details. But you can &lt;a href='http://github.com/pcraciunoiu/kitsune/blob/466b65ad885118f0fb8d14f706ea9efa21f49edd/apps/upload'&gt;have a look at the entire app&lt;/a&gt; and &lt;a href='#footer'&gt;contact me&lt;/a&gt; if you have questions. Basically, the view does the file upload as you see in &lt;a href='http://docs.djangoproject.com/en/dev/topics/http/file-uploads/'&gt;Django&amp;#8217;s documentation&lt;/a&gt;. The function &lt;a href='http://github.com/pcraciunoiu/kitsune/blob/466b65ad885118f0fb8d14f706ea9efa21f49edd/apps/upload/utils.py#L9'&gt;&lt;code&gt;create_image_attachment&lt;/code&gt;&lt;/a&gt; deals with the part about saving a file to disk.&lt;/p&gt;
-
-&lt;h3 id='generating_the_thumbnail_with_pil'&gt;Generating the thumbnail with PIL&lt;/h3&gt;
-
-&lt;p&gt;There is also a task for generating thumbnails, which is offloaded from the web server thread to improve performance. If you don&amp;#8217;t need that, you can just call generate_thumbnail directly, it&amp;#8217;s defined &lt;a href='http://github.com/pcraciunoiu/kitsune/blob/466b65ad885118f0fb8d14f706ea9efa21f49edd/apps/upload/tasks.py'&gt;here&lt;/a&gt;.&lt;/p&gt;
-
-&lt;h2 id='client_side'&gt;Client side&lt;/h2&gt;
-
-&lt;p&gt;Now, the magical JavaScript!&lt;/p&gt;
-
-&lt;p&gt;We&amp;#8217;re using jQuery on &lt;a href='http://support.mozilla.com'&gt;SUMO&lt;/a&gt;, so I wrote two jQuery extensions:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;jQuery.fn.ajaxSubmitInput(options) &amp;#8211; wraps an &lt;code&gt;&amp;lt;input type=&amp;quot;file&amp;quot;&amp;gt;&lt;/code&gt; in a &lt;code&gt;&amp;lt;form&amp;gt;&lt;/code&gt; and creates an &lt;code&gt;&amp;lt;iframe&amp;gt;&lt;/code&gt; to which that form posts. To get around Django&amp;#8217;s csrf protection, it also copies the &lt;code&gt;csrfmiddlewaretoken&lt;/code&gt; hidden input into the form. You can&amp;#8217;t clone a file input for security reasons (nor can you change or access its value), so you need to wrap it in a form.&lt;/li&gt;
-
-&lt;li&gt;jQuery.fn.wrapDeleteInput(options) &amp;#8211; wraps an &lt;code&gt;input&amp;lt;type=&amp;quot;submit&amp;quot;&amp;gt;&lt;/code&gt; in a &lt;code&gt;&amp;lt;form&amp;gt;&lt;/code&gt; and creates an &lt;code&gt;&amp;lt;iframe&amp;gt;&lt;/code&gt; to which that form posts.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;These two pretty much summarize the process:&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;
-&lt;p&gt;when the user changes the value of the file input, post the form&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;show some progress while the file is uploading&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-
-&lt;li&gt;
-&lt;p&gt;once the file is done uploading, show a thumbnail of the image&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;also create the delete input and wrap it in the form using &lt;code&gt;wrapDeleteInput()&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-
-&lt;li&gt;
-&lt;p&gt;when the user clicks on the delete button, post the action&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;show some progress while the file is being deleted&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h2 id='a_note_about_graceful_degradation'&gt;A note about graceful degradation&lt;/h2&gt;
-
-&lt;p&gt;To degrade gracefully, you want to post the file input to whatever view you&amp;#8217;re including it to. And you can just do something like:&lt;/p&gt;
-&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='python'&gt;&lt;span class='k'&gt;def&lt;/span&gt; &lt;span class='nf'&gt;some_view&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='n'&gt;request&lt;/span&gt;&lt;span class='p'&gt;):&lt;/span&gt;
-    &lt;span class='c'&gt;# ...&lt;/span&gt;
-    &lt;span class='c'&gt;# NOJS: upload image&lt;/span&gt;
-    &lt;span class='k'&gt;if&lt;/span&gt; &lt;span class='s'&gt;&amp;#39;upload_image&amp;#39;&lt;/span&gt; &lt;span class='ow'&gt;in&lt;/span&gt; &lt;span class='n'&gt;request&lt;/span&gt;&lt;span class='o'&gt;.&lt;/span&gt;&lt;span class='n'&gt;POST&lt;/span&gt;&lt;span class='p'&gt;:&lt;/span&gt;
-        &lt;span class='n'&gt;upload_images&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='n'&gt;request&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='n'&gt;obj&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt;
-    &lt;span class='c'&gt;# ...&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;Thanks for reading, hope it helps!&lt;/p&gt;</content>
  </entry>
  
  

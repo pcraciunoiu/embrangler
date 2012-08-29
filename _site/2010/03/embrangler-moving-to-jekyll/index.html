@@ -186,7 +186,7 @@
 <div class='highlight'><pre><code class='php'><span class='cp'>&lt;?php</span>
 
 <span class='k'>if</span> <span class='p'>(</span><span class='o'>!</span><span class='nv'>$_POST</span><span class='p'>[</span><span class='s1'>&#39;payload&#39;</span><span class='p'>])</span> <span class='p'>{</span>
-    <span class='nb'>header</span><span class='p'>(</span><span class='s1'>&#39;HTTP/1.0 403 Forbidden&#39;</span><span class='p'>);</span>
+    <span class='nx'>header</span><span class='p'>(</span><span class='s1'>&#39;HTTP/1.0 403 Forbidden&#39;</span><span class='p'>);</span>
     <span class='k'>exit</span><span class='p'>;</span>
 <span class='p'>}</span>
 
@@ -194,10 +194,10 @@
 <span class='nv'>$fh</span> <span class='o'>=</span> <span class='nb'>fopen</span><span class='p'>(</span><span class='nx'>HOOKLOG</span><span class='p'>,</span> <span class='s1'>&#39;w&#39;</span><span class='p'>)</span> <span class='k'>or</span> <span class='k'>die</span><span class='p'>(</span><span class='s2'>&quot;Can&#39;t open file&quot;</span><span class='p'>);</span>
 <span class='nv'>$data</span> <span class='o'>=</span> <span class='s1'>&#39;&#39;</span><span class='p'>;</span>
 
-<span class='nv'>$hook</span> <span class='o'>=</span> <span class='nx'>json_decode</span><span class='p'>(</span><span class='nv'>$_POST</span><span class='p'>[</span><span class='s1'>&#39;payload&#39;</span><span class='p'>]);</span>
+<span class='nv'>$hook</span> <span class='o'>=</span> <span class='nb'>json_decode</span><span class='p'>(</span><span class='nv'>$_POST</span><span class='p'>[</span><span class='s1'>&#39;payload&#39;</span><span class='p'>]);</span>
 
 <span class='k'>if</span> <span class='p'>(</span><span class='nv'>$hook</span><span class='o'>-&gt;</span><span class='na'>repository</span><span class='o'>-&gt;</span><span class='na'>owner</span><span class='o'>-&gt;</span><span class='na'>name</span> <span class='o'>!=</span> <span class='s1'>&#39;pcraciunoiu&#39;</span><span class='p'>)</span> <span class='p'>{</span>
-    <span class='nb'>header</span><span class='p'>(</span><span class='s1'>&#39;HTTP/1.0 403 Forbidden&#39;</span><span class='p'>);</span>
+    <span class='nx'>header</span><span class='p'>(</span><span class='s1'>&#39;HTTP/1.0 403 Forbidden&#39;</span><span class='p'>);</span>
     <span class='k'>exit</span><span class='p'>;</span>
 <span class='p'>}</span>
 
@@ -260,11 +260,11 @@
   <h2>Related Posts</h2>
   <ul>
     
-      <li><a href="/2010/03/quoteden-moving-to-kohana-3">Quoteden: Moving to Kohana 3</a> &mdash; 12 Mar 2010</li>
+      <li><a href="/2012/08/introducing-google-app-engine-paginator">Introducing Google App Engine Paginator</a> &mdash; 29 Aug 2012</li>
     
-      <li><a href="/2010/12/migrating-large-amounts-of-data">SUMO and migrating large amounts of data</a> &mdash; 03 Dec 2010</li>
+      <li><a href="/2012/01/sowink-discontinued">SoWink: discontinued</a> &mdash; 24 Jan 2012</li>
     
-      <li><a href="/2009/11/hacking-wordpress-check-contact-messages-for-spam-using-wordpress-built-in-akismet-spam-for-comments">Hacking Wordpress: check contact messages for spam using Wordpress' built-in Akismet spam for comments</a> &mdash; 14 Nov 2009</li>
+      <li><a href="/2012/01/belated-birthday-resolutions">Belated birthday resolutions</a> &mdash; 23 Jan 2012</li>
     
   </ul>
 </div>

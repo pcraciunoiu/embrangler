@@ -4,7 +4,7 @@
  <title>Disembrangling Programming</title>
  <link href="http://embrangler.com/tag/blog/atom.xml" rel="self"/>
  <link href="http://embrangler.com/tag/blog"/>
- <updated>2012-02-28T22:54:09-08:00</updated>
+ <updated>2012-08-29T12:39:55-07:00</updated>
  <id>http://embrangler.com/</id>
  <author>
    <name>Paul Craciunoiu</name>
@@ -125,7 +125,7 @@
 &lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='php'&gt;&lt;span class='cp'&gt;&amp;lt;?php&lt;/span&gt;
 
 &lt;span class='k'&gt;if&lt;/span&gt; &lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='o'&gt;!&lt;/span&gt;&lt;span class='nv'&gt;$_POST&lt;/span&gt;&lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;payload&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;])&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
-    &lt;span class='nb'&gt;header&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;HTTP/1.0 403 Forbidden&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+    &lt;span class='nx'&gt;header&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;HTTP/1.0 403 Forbidden&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
     &lt;span class='k'&gt;exit&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt;
 &lt;span class='p'&gt;}&lt;/span&gt;
 
@@ -133,10 +133,10 @@
 &lt;span class='nv'&gt;$fh&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='nb'&gt;fopen&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nx'&gt;HOOKLOG&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='s1'&gt;&amp;#39;w&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt; &lt;span class='k'&gt;or&lt;/span&gt; &lt;span class='k'&gt;die&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s2'&gt;&amp;quot;Can&amp;#39;t open file&amp;quot;&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
 &lt;span class='nv'&gt;$data&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='s1'&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt;
 
-&lt;span class='nv'&gt;$hook&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='nx'&gt;json_decode&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nv'&gt;$_POST&lt;/span&gt;&lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;payload&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;]);&lt;/span&gt;
+&lt;span class='nv'&gt;$hook&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='nb'&gt;json_decode&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nv'&gt;$_POST&lt;/span&gt;&lt;span class='p'&gt;[&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;payload&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;]);&lt;/span&gt;
 
 &lt;span class='k'&gt;if&lt;/span&gt; &lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nv'&gt;$hook&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;repository&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;owner&lt;/span&gt;&lt;span class='o'&gt;-&amp;gt;&lt;/span&gt;&lt;span class='na'&gt;name&lt;/span&gt; &lt;span class='o'&gt;!=&lt;/span&gt; &lt;span class='s1'&gt;&amp;#39;pcraciunoiu&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
-    &lt;span class='nb'&gt;header&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;HTTP/1.0 403 Forbidden&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+    &lt;span class='nx'&gt;header&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s1'&gt;&amp;#39;HTTP/1.0 403 Forbidden&amp;#39;&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
     &lt;span class='k'&gt;exit&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt;
 &lt;span class='p'&gt;}&lt;/span&gt;
 
