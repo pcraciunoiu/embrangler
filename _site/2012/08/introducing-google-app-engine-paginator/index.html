@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Introducing Google App Engine Paginator</title>
+    <meta name="author" content="Paul Craciunoiu" />
+    <link href="http://feeds.feedburner.com/embrangler" rel="alternate" title="Disembrangling Programming" type="application/atom+xml" />
+    
+    <link type="image/x-icon" href="/favicon.ico" rel="shortcut icon">
+
+    <!-- syntax highlighting CSS -->
+    <link rel="stylesheet" href="/css/syntax.css" type="text/css" />
+
+    <!-- Homepage CSS -->
+    <link rel="stylesheet" href="/css/main.css" type="text/css" media="screen, projection" />
+
+    
+      <!-- Tag feed -->
+      
+        <link href="/tag/appengine/atom.xml"
+	      rel="alternate"
+              type="application/atom+xml"
+              title="Disembrangling Programming (tag: appengine)" />
+      
+        <link href="/tag/python/atom.xml"
+	      rel="alternate"
+              type="application/atom+xml"
+              title="Disembrangling Programming (tag: python)" />
+      
+    
+</head>
+<body>
+
+<div class="site">
+
+    <div id="header" role="banner">
+        <h1 class="title">
+            <a href="/">Disembrangling Programming</a>
+        </h1>
+        <h2 class="subtitle">
+            <a href="/about" title="About Paul Craciunoiu">The simple life of a web developer &mdash; by Paul Craciunoiu</a>
+            <a class="the-list" href="/cv">(Resume)</a>
+            <a class="the-list" href="/list">(The List)</a>
+        </h2>
+    </div>
+    <!--<div id="promo">
+        <a href="http://sowink.com/jobs">Want to join a very exciting startup? SoWink is hiring! Check out our job descriptions &raquo;</a>
+    </div>-->
+    <div id="content" role="main">    
+    <div id="post">
+  <h1>Introducing Google App Engine Paginator</h1>
+  <div class="meta">
+    
+    <div class="tags">Tags:
+      
+        <a href="/tag/appengine/">appengine</a>,
+        
+      
+        <a href="/tag/python/">python</a>
+      
+    </div>
+    
+    <time>29 Aug 2012</time>
+  </div>
+  <h2 id='table_of_contents'>Table of contents</h2>
+
+<ul>
+<li><a href='#summary'>Summary</a></li>
+
+<li><a href='#getting_started'>Getting Started</a></li>
+
+<li><a href='#features'>Features</a></li>
+</ul>
+
+<h2 id='summary'>Summary</h2>
+
+<p>Need a way to paginate through a GQL query easily? <strong>gae_paginator</strong> handles the generation of next/previous page URLs, paginates on both unique and non-unique properties, and wants to be as efficient and easy to use as possible.</p>
+
+<h2 id='getting_started'>Getting Started</h2>
+
+<ol>
+<li>
+<p>Download <a href='https://github.com/humble/gae_paginator'>the source</a> and copy the <code>gae_paginator/</code> folder anywhere inside your App Engine project directory.</p>
+</li>
+
+<li>
+<p>That&#8217;s it! Use it like so, in your handlers:</p>
+<div class='highlight'><pre><code class='python'><span class='kn'>import</span> <span class='nn'>os</span>
+
+<span class='kn'>from</span> <span class='nn'>google.appengine.ext.webapp</span> <span class='kn'>import</span> <span class='n'>template</span>
+<span class='kn'>import</span> <span class='nn'>webapp2</span>
+
+<span class='kn'>from</span> <span class='nn'>gae_paginator</span> <span class='kn'>import</span> <span class='n'>Paginator</span>
+
+
+<span class='k'>class</span> <span class='nc'>YourHandler</span><span class='p'>(</span><span class='n'>webapp2</span><span class='o'>.</span><span class='n'>RequestHandler</span><span class='p'>):</span>
+
+  <span class='k'>def</span> <span class='nf'>get</span><span class='p'>(</span><span class='bp'>self</span><span class='p'>):</span>
+  <span class='n'>paginator</span> <span class='o'>=</span> <span class='n'>Paginator</span><span class='p'>(</span><span class='n'>YourModel</span><span class='p'>,</span> <span class='s'>&#39;some_column = :1 AND other_column = :2&#39;</span><span class='p'>,</span>
+                        <span class='p'>[</span><span class='s'>&#39;some_value&#39;</span><span class='p'>,</span> <span class='s'>&#39;other_value&#39;</span><span class='p'>],</span> <span class='n'>expect_duplicates</span><span class='o'>=</span><span class='bp'>True</span><span class='p'>,</span>
+                        <span class='n'>per_page</span><span class='o'>=</span><span class='mi'>50</span><span class='p'>,</span> <span class='n'>paginate_on</span><span class='o'>=</span><span class='s'>&#39;-created&#39;</span><span class='p'>)</span>
+  <span class='n'>page</span> <span class='o'>=</span> <span class='n'>paginator</span><span class='o'>.</span><span class='n'>get_page</span><span class='p'>(</span><span class='n'>request</span><span class='o'>=</span><span class='bp'>self</span><span class='o'>.</span><span class='n'>request</span><span class='p'>)</span>
+  <span class='n'>path</span> <span class='o'>=</span> <span class='n'>os</span><span class='o'>.</span><span class='n'>path</span><span class='o'>.</span><span class='n'>join</span><span class='p'>(</span><span class='n'>os</span><span class='o'>.</span><span class='n'>path</span><span class='o'>.</span><span class='n'>dirname</span><span class='p'>(</span><span class='n'>__file__</span><span class='p'>),</span> <span class='s'>&#39;index.html&#39;</span><span class='p'>)</span>
+  <span class='bp'>self</span><span class='o'>.</span><span class='n'>response</span><span class='o'>.</span><span class='n'>out</span><span class='o'>.</span><span class='n'>write</span><span class='p'>(</span><span class='n'>template</span><span class='o'>.</span><span class='n'>render</span><span class='p'>(</span><span class='n'>path</span><span class='p'>,</span> <span class='p'>{</span>
+    <span class='s'>&#39;objects&#39;</span><span class='p'>:</span> <span class='nb'>list</span><span class='p'>(</span><span class='n'>page</span><span class='p'>),</span>
+    <span class='s'>&#39;page&#39;</span><span class='p'>:</span> <span class='n'>page</span><span class='p'>,</span>
+  <span class='p'>})</span>
+</code></pre>
+</div></li>
+
+<li>
+<p>In your django template:</p>
+<div class='highlight'><pre><code class='html'>{% if page.has_previous %}
+  <span class='nt'>&lt;a</span> <span class='na'>href=</span><span class='s'>&quot;{{ page.get_previous_url }}&quot;</span><span class='nt'>&gt;</span><span class='ni'>&amp;laquo;</span> Previous page<span class='nt'>&lt;/a&gt;</span>
+{% endif %}
+{% if page.has_next %}
+  <span class='nt'>&lt;a</span> <span class='na'>href=</span><span class='s'>&quot;{{ page.get_next_url }}&quot;</span><span class='nt'>&gt;</span>Next page <span class='ni'>&amp;raquo;</span><span class='nt'>&lt;/a&gt;</span>
+{% endif %}
+</code></pre>
+</div>
+<p>Or jinja2 template:</p>
+<div class='highlight'><pre><code class='html'>{% if page.has_previous() %}
+   <span class='nt'>&lt;a</span> <span class='na'>href=</span><span class='s'>&quot;{{ page.get_previous_url() }}&quot;</span><span class='nt'>&gt;</span><span class='ni'>&amp;laquo;</span> Previous page<span class='nt'>&lt;/a&gt;</span>
+{% endif %}
+{% if page.has_next() %}
+  <span class='nt'>&lt;a</span> <span class='na'>href=</span><span class='s'>&quot;{{ page.get_next_url() }}&quot;</span><span class='nt'>&gt;</span>Next page <span class='ni'>&amp;raquo;</span><span class='nt'>&lt;/a&gt;</span>
+{% endif %}
+</code></pre>
+</div>
+</li>
+</ol>
+<h2 id='features'>Features</h2>
+
+<ul>
+<li>
+<p>Simple pagination by key</p>
+</li>
+
+<li>
+<p>Paginate by non-unique properties with a specified tolerance for duplicates.</p>
+
+<ul>
+<li>Example: paginate songs by artist name, 10 songs per page, expect 100 duplicates. Set: <code>expect_duplicates=100</code></li>
+</ul>
+</li>
+
+<li>
+<p>Order and paginate by a custom column (Date/DateTime and key supported and tested).</p>
+</li>
+
+<li>
+<p>Show next and previous buttons only when there is actual data before/after.</p>
+</li>
+</ul>
+</div>
+
+<div id="related">
+  <h2>Related Posts</h2>
+  <ul>
+    
+      <li><a href="/2012/01/sowink-discontinued">SoWink: discontinued</a> &mdash; 24 Jan 2012</li>
+    
+      <li><a href="/2012/01/belated-birthday-resolutions">Belated birthday resolutions</a> &mdash; 23 Jan 2012</li>
+    
+      <li><a href="/2012/01/serve-media-from-amazon-s3-and-keep-it-in-sync">Serve media from Amazon S3 and keep it in sync</a> &mdash; 12 Jan 2012</li>
+    
+  </ul>
+</div>
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  (function() {
+   var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+   dsq.src = 'http://blogpaulcraciunoiu.disqus.com/embed.js';
+   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript=blogpaulcraciunoiu">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+<script type="text/javascript">
+//<![CDATA[
+(function() {
+    var links = document.getElementsByTagName('a');
+    var query = '?';
+    for(var i = 0; i < links.length; i++) {
+    if(links[i].href.indexOf('#disqus_thread') >= 0) {
+        query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
+    }
+    }
+    document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/blogpaulcraciunoiu/get_num_replies.js' + query + '"></' + 'script>');
+})();
+//]]>
+</script>
+
+    </div>
+
+    <div id="footer" role="contentinfo">
+        <div class="about">
+        <p>I am currently a software engineer at <a href="http://humblebundle.com">Humble Bundle</a>, changing digital distribution on the internets.</p>
+        <p>Until January 2012, I was the Co-founder and CTO of <a href="http://sowink.com">SoWink Inc.</a>, a revolutionary social online network that helps you meet new people. Be sure to check out <a href="http://blog.sowink.com">our blog</a> for more details.</p>
+        <p>Until April 2011, I worked as a web developer for <a href="http://mozilla.com">Mozilla</a>, with main focus on <a href="http://www.djangoproject.com/">Django</a>, Python, and PHP.</p>
+        <p>I enjoy doing freelance work for other websites, mostly non-profits. If you're interested in my services, contact me through one of the links below.</p>
+        </p>
+        </div>
+        <div class="contact">
+            <a href="http://twitter.com/embrangler/">Follow me</a> -- 
+            <span>paul [at] craciunoiu {dot} net</span> -- 
+            <a href="http://github.com/pcraciunoiu/">My GitHub</a>
+        </div>
+        <div class="quote">
+        <p>
+            Success is a journey, not a destination. The doing is often more important than the outcome. &mdash; <a href="http://quoteden.net/author/id/337">Arthur Robert Ashe, Jr</a>
+        </p>
+        <p>&copy; Paul Craciunoiu. Some rights reserved. Brought to you by <a href="http://wiki.github.com/mojombo/jekyll/">Jekyll</a></p>
+        </div>
+    </div>
+</div><!-- site -->
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-15382775-1");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+<!-- /Google Analytics -->
+
+</body>
+</html>
